@@ -12,16 +12,22 @@ class BuildNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<BottomNavBarOperationCubit, CubitStates>(
       builder: (context, state) {
-        return CurvedNavigationBar(height: 65.h,animationCurve: Curves.bounceInOut,
+        return CurvedNavigationBar(
+          height: 65.h,
+          animationCurve: Curves.bounceInOut,
           color: AppColors.mainAppColor,
           backgroundColor: AppColors.white,
+          index: context.read<BottomNavBarOperationCubit>().selectedIndex,
+          // letIndexChange: (index) =>
+          //     context.read<BottomNavBarOperationCubit>().onSelectedItem(index),
           items: List.generate(
               AppAssets().navBar.length,
               (index) => SizedBox(
                   height: 30.h,
                   width: 30.w,
                   child: CustomSvg(asset: AppAssets().navBar[index]))),
-          onTap: (index)=> context.read<BottomNavBarOperationCubit>().onSelectedItem(index),
+          onTap: (index) =>
+              context.read<BottomNavBarOperationCubit>().onSelectedItem(index),
         );
       },
     );

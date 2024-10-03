@@ -109,7 +109,9 @@
   "create": "أنشاء",
   "account": "حساب",
   "phoneError":	"رقم الهاتف غير صحيح ",
-  "passwordError":	"كلمة المرور يجب أن تكون أكثر من 6 أحرف "
+  "passwordError":	"كلمة المرور يجب أن تكون أكثر من 6 أحرف ",
+  "notificationTitle": "الإشعارات",
+  "schedule": "الجداول"
 }
 
 

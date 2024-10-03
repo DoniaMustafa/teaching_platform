@@ -36,16 +36,18 @@ class BuildSubscription extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             children: [
               CustomListView(
+                  shrinkWrap: true,
                   separatorWidget: (context, index) => SizedBox(
                         width: 20.w,
                       ),
                   itemCount: state is LoadedState
-                      ? state.data.groups.length
+                      ? state.data.courses.length
                       : AppConstants.nShimmerItems,
                   widget: (context, index) => CustomItem(
-                        groupsModel: state.data.groups[index],
+                        coursesModel: state.data.courses[index],
                       )),
               CustomListView(
+                  shrinkWrap: true,
                   separatorWidget: (context, index) => SizedBox(
                         width: 20.w,
                       ),

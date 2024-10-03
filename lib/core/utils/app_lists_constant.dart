@@ -8,7 +8,7 @@ import 'package:teaching/features/chat/presentation/pages/chat_screen.dart';
 import 'package:teaching/features/home/presentation/pages/home_screen.dart';
 import 'package:teaching/features/notification/presentation/pages/notification_screen.dart';
 import 'package:teaching/features/on_boarding/presentation/widgets/build_first_widget.dart';
-import 'package:teaching/features/on_boarding/presentation/widgets/build_second_widget.dart';
+import 'package:teaching/features/on_boarding/presentation/widgets/build_inductor_widget.dart';
 import 'package:teaching/features/schedule/presentation/pages/schedule_screen.dart';
 import 'package:teaching/features/subscription/presentation/pages/subscription_screen.dart';
 import 'package:teaching/features/wallet/presentation/pages/wallet_screen.dart';
@@ -83,7 +83,7 @@ class AppListsConstant {
     ),
   ];
 
-  static List<Widget> widgetsScreen = [
+  static List<Widget> widgetsScreen = const [
     NotificationScreen(),
     ScheduleScreen(),
     SubscriptionScreen(),
@@ -166,8 +166,6 @@ class AppListsConstant {
       title: AppStrings().tasks.trans,
     ),
   ];
-
-
 
   static List<GenericModel> drawerItems = [
     GenericModel(

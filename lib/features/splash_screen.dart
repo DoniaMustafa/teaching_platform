@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:teaching/features/auth/presentation/manager/user_cubit/user_cubit.dart';
 
 import '../core/export/export.dart';
+import 'on_boarding/presentation/manager/onboarding_manager_cubit.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -21,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen>
     // TODO: implement initState
     super.initState();
     // hideKeyboard;
-    initSlidingAnimation(); // Initialize the sliding animation
+    // initSlidingAnimation(); // Initialize the sliding animation
     nextScreen(); // Determine the next screen to navigate to
   }
 
@@ -44,9 +45,9 @@ class _SplashScreenState extends State<SplashScreen>
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       bool isLanguageSaved =
           await AppService().getBlocData<LanguageCubit>().getSavedLanguage();
-      // bool isNew = await AppService()
-      //     .getBlocData<OnboardingManagerCubit>()
-      //     .isNewInstalled();
+      bool isNew = await AppService()
+          .getBlocData<OnboardingManagerCubit>()
+          .isNewInstalled();
       UserModel? user = await AppService().getBlocData<UserCubit>().getUser();
       String token = await AppService().getBlocData<UserCubit>().getToken();
       String deviceToken =
@@ -97,32 +98,41 @@ class _SplashScreenState extends State<SplashScreen>
       //   //   route = Routes.loginRoute;
       //   // }
       // });
+      // Timer.periodic(Duration(milliseconds: 1000),(timer){
+        if(isNew.isTrue){
+          Routes.mainRoute.moveToAndRemoveCurrent;
+        }else{
+          if (user.isNotNull && token.isNotNullOrEmpty) {
+            Routes.bottomNavigationRoute.moveToAndRemoveCurrent;
+          }
+          else {
+            Routes.loginRoute.moveToAndRemoveCurrent;
+          }
+        }
 
-      if (user.isNotNull && token.isNotNullOrEmpty) {
-        Routes.bottomNavigationRoute.moveToAndRemoveCurrent;
-      } else {
-        Routes.loginRoute.moveToAndRemoveCurrent;
-      }
-    });
-  }
+      });
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    animationController.dispose();
-  }
 
-  void initSlidingAnimation() {
-    animationController = AnimationController(
-      vsync: this,
-      duration: Duration(seconds: 3),
-    );
-    slidingAnimation =
-        Tween<Offset>(begin: const Offset(0, 2), end: Offset.zero)
-            .animate(animationController);
-    animationController.forward();
+    // });
   }
+  // void initSlidingAnimation() {
+  //   animationController = AnimationController(
+  //     vsync: this,
+  //     duration: Duration(seconds: 3),
+  //   );
+  //   slidingAnimation =
+  //       Tween<Offset>(begin: const Offset(0, 2), end: Offset.zero)
+  //           .animate(animationController);
+  //   animationController.forward();
+  // }
+  // @override
+  // void dispose() {
+  //   animationController.dispose();
+  //   super.dispose();
+  //
+  // }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -130,15 +140,17 @@ class _SplashScreenState extends State<SplashScreen>
         backgroundColor: AppColors.fillColor,
         body: Directionality(
           textDirection: TextDirection.ltr,
-          child: animationMethod(
-              widget: Center(
+          // child: animationMethod(
+        child: Center(
                   child: CustomImageWidget(
                 asset: AppAssets().logo,
                 height: 150.h,
                 width: 150.w,
               )),
-              slidingController: slidingAnimation),
-        ));
+              // slidingController: slidingAnimation),
+        ))
+
+    ;
   }
 
   Widget animationMethod({widget, slidingController}) {

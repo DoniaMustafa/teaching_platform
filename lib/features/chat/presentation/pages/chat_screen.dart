@@ -5,6 +5,19 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return CustomSharedFullScreen(
+      title: AppStrings().chat.trans,
+      widget: Column(
+        children: [
+
+
+        ],
+      ),
+      // CustomListView(
+      //     axisDirection: Axis.vertical,
+      //     shrinkWrap: true,
+      //     itemCount: 20,
+      //     widget: (context, index) => BuildScheduleItem()),
+    );
   }
 }

@@ -100,7 +100,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
     return TextFormField(
       style: widget.textStyle ??
           getBoldTextStyle(
-            color: AppColors.mainAppColor,
+            color: AppColors.black,
             fontFamily: FontFamilies.elMessiriFamily,
             // letterSpacing: context.locale.languageCode == AppLocalizationsConstants().enLanguage ? 2 : 0,
             fontSize: getFontSize(16),

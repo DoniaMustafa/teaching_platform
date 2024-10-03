@@ -60,6 +60,8 @@ class AppStrings {
   final String eduType = 'eduType';
   final String curriculum = 'curriculum';
   final String stage = 'stage';
+  final String start = 'start';
+  final String startNow = 'startNow';
 
   final String material = 'material';
   final String phoneError = 'phoneError';
@@ -74,6 +76,10 @@ class AppStrings {
 
   final String confirmPasswordError = 'confirmPasswordError';
   final String reportError = 'reportError';
+  final String notificationTitle = 'notificationTitle';
+
+  final String schedule = 'schedule';
+  final String chat = 'chat';
 
   // /// ***************** validators ***********************
 
@@ -110,6 +116,9 @@ class AppStrings {
   final String assistant = "assistant";
   final String parent = 'parent';
   final String course = 'course';
+  final String myCourses = 'myCourses';
+  final String myGroups = 'myGroups';
+
   final String emailHint = 'emailHint';
   final String login = 'login';
   final String country = 'country';
@@ -134,6 +143,8 @@ class AppStrings {
   // final String allowWhileUsing = "allowWhileUsing";
   final String courses = "courses";
   final String groups = "groups";
+  final String store = "store";
+
   final String teachers = "teachers";
   final String mySubscriptions = "mySubscriptions";
   final String features = "features";

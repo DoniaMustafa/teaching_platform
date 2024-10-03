@@ -88,7 +88,7 @@ class CustomElevatedButton extends StatelessWidget {
               textScaler: TextScaler.linear(1),
               textAlign: TextAlign.center,
               style: style ??
-                  getMediumTextStyle(fontSize: 18, color: textColor, height: 2),
+                  getMediumTextStyle(fontSize: 18, color: textColor, height: 1),
             ),
           ),
           if (rightIcon.isNotNull) 7.97.hs,

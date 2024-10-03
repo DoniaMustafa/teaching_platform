@@ -4,12 +4,11 @@ import 'package:teaching/core/list_states.dart';
 
 class BottomNavBarOperationCubit extends Cubit<CubitStates> {
   BottomNavBarOperationCubit() : super(InitialState());
-  
-  int selectedIndex=2;
-  void onSelectedItem(int index){
-    selectedIndex=index;
+
+  int selectedIndex = 3;
+  onSelectedItem(int index) {
+    selectedIndex = index;
     print(selectedIndex);
     emit(LoadedState(data: null));
-    
   }
 }

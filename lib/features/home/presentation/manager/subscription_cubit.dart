@@ -7,11 +7,14 @@ import 'package:teaching/features/home/domain/use_cases/student/subscription_use
 class SubscriptionCubit extends Cubit<CubitStates> {
   SubscriptionCubit(this.useCase) : super(InitialState());
   SubscriptionUseCase useCase;
+
   getSubscription() {
     managerExecute<CoursesAndGroupsDataModel>(
       useCase.getSubscription(),
-      onSuccess: (data) =>
-          emit(LoadedState<CoursesAndGroupsDataModel>(data: data!)),
+      onSuccess: (data) {
+
+        emit(LoadedState<CoursesAndGroupsDataModel>(data: data!));
+      },
       onFail: (message) => emit(FailedState(message: message)),
     );
   }

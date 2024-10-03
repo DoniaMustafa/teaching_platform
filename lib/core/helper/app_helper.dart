@@ -326,7 +326,7 @@ Future<R?> executeWithDialog<R>(
   R? data;
 
   /// Show a custom dialog with the `startingMessage` using `AppService.showCustomDialog`.
-  // AppService().showCustomDialog(isAlert: false, message: startingMessage);
+  AppService().showCustomDialog(isAlert: false, message: startingMessage);
 
   /// Await the result of the `either` future and handle it using `fold`.
   (await either).fold((Failure failure) async {
@@ -452,12 +452,12 @@ Future<ResponseModel> cacheWrite(
     response = ResponseModel(
         code: ResponseCode.CACHE_WRITE_SUCCESS,
         success: true,
-        message: ResponseMessage().CACHE_WRITE_SUCCESS,
+        message: ResponseMessage().CACHE_WRITE_SUCCESS.trans,
         data: isCached);
   } else {
     response = ResponseModel(
         code: ResponseCode.CACHE_WRITE_ERROR,
-        message: ResponseMessage().CACHE_WRITE_ERROR,
+        message: ResponseMessage().CACHE_WRITE_ERROR.trans,
         success: false,
         data: isCached);
   }
@@ -492,7 +492,7 @@ Future<ResponseModel> cacheRead<T>(
       responseModel = ResponseModel(
         code: ResponseCode.CACHE_READ_SUCCESS,
         success: true,
-        message: ResponseMessage().CACHE_READ_SUCCESS,
+        message: ResponseMessage().CACHE_READ_SUCCESS.trans,
         data: saveData,
       );
       if (afterCaching.isNotNull) {
@@ -502,14 +502,14 @@ Future<ResponseModel> cacheRead<T>(
       responseModel = ResponseModel(
         code: ResponseCode.CACHE_READ_ERROR,
         success: false,
-        message: ResponseMessage().CACHE_READ_ERROR,
+        message: ResponseMessage().CACHE_READ_ERROR.trans,
       );
     }
   } else {
     responseModel = ResponseModel(
       code: ResponseCode.NOT_FOUND_IN_CACHE,
       success: true,
-      message: ResponseMessage().NOT_FOUND_IN_CACHE,
+      message: ResponseMessage().NOT_FOUND_IN_CACHE.trans,
     );
     return responseModel;
   }
@@ -581,7 +581,7 @@ Future<Either<Failure, ResponseModel>> execute(
           ResponseModel localResponse = await local!.call(value.data);
           if (localResponse.success.isFalse) {
             return Left(Failure(ResponseCode.CACHE_WRITE_ERROR,
-                ResponseMessage().CACHE_WRITE_ERROR));
+                ResponseMessage().CACHE_WRITE_ERROR.trans));
           }
         }
         return Right(value);

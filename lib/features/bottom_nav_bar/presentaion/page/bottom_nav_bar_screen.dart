@@ -11,14 +11,28 @@ class BottomNavBarScreen extends StatelessWidget {
       builder: (context, state) {
         return CustomBackground(
           showSafeArea: true,
+          // appbarColor:
+          //     context.read<BottomNavBarOperationCubit>().selectedIndex == 0
+          //         ? AppColors.mainAppColor
+          //         : null,
+          // showBack:
+          //     context.read<BottomNavBarOperationCubit>().selectedIndex == 0
+          //         ? true
+          //         : false,
+          // showAppbar:
+          //     context.read<BottomNavBarOperationCubit>().selectedIndex == 0
+          //         ? true
+          //         : false,
+          // showSafeArea: true,
           drawer: context.read<BottomNavBarOperationCubit>().selectedIndex == 3
               ? buildDrawer()
               : null,
-          statusBarColor: AppColors.white,
+          statusBarColor:
+              context.read<BottomNavBarOperationCubit>().selectedIndex == 3
+                  ? AppColors.white:AppColors.mainAppColor,
           bottomNavigationBar: const BuildNavBar(),
-          child: AppListsConstant.widgetsScreen[3
-              // context.read<BottomNavBarOperationCubit>().selectedIndex
-              ],
+          child: AppListsConstant.widgetsScreen[
+              context.read<BottomNavBarOperationCubit>().selectedIndex],
         );
       },
     );

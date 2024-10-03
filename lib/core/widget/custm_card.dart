@@ -13,7 +13,7 @@ class CustomCard extends StatelessWidget {
       this.borderColor,
       this.gradient,  this.radiusDirectional,
       this.backgroundColor,
-      required this.child});
+       this.child});
   final double? height;
   final double? width;
   final double? radius;
@@ -21,7 +21,7 @@ class CustomCard extends StatelessWidget {
   final double? borderWidth;
   final Color? borderColor;
   final Color? backgroundColor;
-  final Widget child;
+  final Widget? child;
   final Gradient? gradient;
   final EdgeInsetsDirectional? padding;
   final EdgeInsetsDirectional? margin;

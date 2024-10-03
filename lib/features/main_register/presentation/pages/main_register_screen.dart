@@ -23,9 +23,75 @@ class _MainRegisterScreenState extends State<MainRegisterScreen> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                Align(
+                  alignment: AlignmentDirectional.topStart,
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.only(top: 20,start: 20),
+                    child: SizedBox(
+                      width: 150.w,
+                      child: PopupMenuButton(
+                          color: AppColors.white,
+                          position: PopupMenuPosition.under,
+                          icon: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              CustomSvg(
+                                asset: AppAssets().language,
+                                color: AppColors.mainAppColor,
+                              ),
+                              9.hs,
+                              CustomTextWidget(
+                                text: context.read<LanguageCubit>().isEn
+                                    ? AppStrings().en.trans
+                                    : AppStrings().ar.trans,
+                                style: getMediumTextStyle(
+                                  fontFamily: FontFamilies.interFamily,
+                                  fontSize: 16,
+                                  color: AppColors.mainAppColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                          itemBuilder: (context) => [
+                            PopupMenuItem(
+                              onTap: () {
+                                context
+                                    .setLocale(AppLocalizationsConstants().arLocale);
+                                context.read<LanguageCubit>().toArabic();
+                                // context.read<LanguageCubit>().getSavedLanguage();
+                              },
+                              child: CustomTextWidget(
+                                text: AppStrings().arabic.trans,
+                                style: getMediumTextStyle(
+                                  fontFamily: FontFamilies.interFamily,
+                                  fontSize: 16,
+                                  color: AppColors.darkMainAppColor,
+                                ),
+                              ),
+                            ),
+                            PopupMenuItem(
+                              onTap: () {
+                                context
+                                    .setLocale(AppLocalizationsConstants().enLocale);
+                                context.read<LanguageCubit>().toEnglish();
+                                // context.read<LanguageCubit>().getSavedLanguage();
+                              },
+                              child: CustomTextWidget(
+                                text: AppStrings().english.trans,
+                                style: getMediumTextStyle(
+                                  fontFamily: FontFamilies.interFamily,
+                                  fontSize: 16,
+                                  color: AppColors.darkMainAppColor,
+                                ),
+                              ),
+                            )
+                          ]),
+                    ),
+                  ),
+                ),
                 // _buildLang,
-                _buildLanguage,
-                24.vs,
+                // _buildLanguage,
+               SizedBox(height:  24,),
                 CustomTextWidget(
                   text: AppStrings().welcome.trans,
                   style: getBoldTextStyle(
@@ -59,7 +125,7 @@ class _MainRegisterScreenState extends State<MainRegisterScreen> {
   get _buildLanguage => Align(
         alignment: AlignmentDirectional.topStart,
         child: Padding(
-          padding: getPadding(start: 20.w, top: 20.h),
+          padding: EdgeInsetsDirectional.only(top: 20,start: 20),
           child: SizedBox(
             width: 150.w,
             child: PopupMenuButton(

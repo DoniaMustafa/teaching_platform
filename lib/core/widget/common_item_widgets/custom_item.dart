@@ -5,14 +5,14 @@ import 'package:teaching/core/widget/build_rating_bar.dart';
 import '../../export/export.dart';
 
 class CustomItem extends StatelessWidget {
-  const CustomItem(
+  CustomItem(
       {super.key,
-      this.isCircle = false,
-      this.isStar = false,
+      this.isSubScribe = false,
       this.groupsModel,
+      this.onTap,
       this.coursesModel});
-  final bool isCircle;
-  final bool isStar;
+  bool? isSubScribe;
+  final void Function()? onTap;
   final GroupsModel? groupsModel;
   final CoursesModel? coursesModel;
   @override
@@ -30,6 +30,7 @@ class CustomItem extends StatelessWidget {
         padding: getPadding(top: 15.h, bottom: 10.h, horizontal: 20.w),
         backgroundColor: AppColors.white,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // isCircle
             //     ? CustomNetworkImage.circular(
@@ -44,16 +45,20 @@ class CustomItem extends StatelessWidget {
                   ? '${EndPoints.baseUrl}${coursesModel!.teacherPicture!}'
                   : '${EndPoints.baseUrl}${groupsModel!.teacherPicture!}',
             ),
-            10.vs,
+            isSubScribe.isTrue ? 15.vs : 10.vs,
             Expanded(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   // RoleType.student.isTrue
                   //     ?
                   CustomTextWidget(
+                    textScalar: TextScaler.linear(0.9),
+                    lines: 1,
+                    align: TextAlign.center,
                     text: coursesModel.isNotNull
-                        ? '${AppStrings().course.trans} ${context.read<LanguageCubit>().isEn ? coursesModel!.courseTitleEn : coursesModel!.subjectName!}}'
-                        : '${AppStrings().groups.trans} ${context.read<LanguageCubit>().isEn ? groupsModel!.groupNameEn : groupsModel!.subjectName!}',
+                        ? '${context.read<LanguageCubit>().isEn ? coursesModel!.courseTitleEn : coursesModel!.subjectName!}'
+                        : '${context.read<LanguageCubit>().isEn ? groupsModel!.groupNameEn : groupsModel!.subjectName!}',
                     style: getBoldTextStyle(
                       fontSize: 16,
                       fontFamily: FontFamilies.abhayaLibreFamily,
@@ -102,15 +107,24 @@ class CustomItem extends StatelessWidget {
                   //     //           debugPrint('$rating');
                   //     //         },
                   //     //       ):
-                  GestureDetector(
-                    child: CustomTextWidget(
-                      text: 'ابدء الان',
-                      style: getBoldTextStyle(
-                          fontSize: 16,
-                          fontFamily: FontFamilies.abhayaLibreFamily,
-                          color: AppColors.mainAppColor),
-                    ),
-                  ),
+
+                  isSubScribe!
+                      ? CustomElevatedButton(
+                          padding: getPadding(bottom: 5),
+                          height: 35.h,
+                          width: 80.w,
+                          // margin: getMargin(horizontal: 10.w),
+                          onPressed: () => onTap!(),
+                          text: AppStrings().start.trans)
+                      : GestureDetector(
+                          child: CustomTextWidget(
+                            text: AppStrings().startNow.trans,
+                            style: getBoldTextStyle(
+                                fontSize: 16,
+                                fontFamily: FontFamilies.abhayaLibreFamily,
+                                color: AppColors.mainAppColor),
+                          ),
+                        ),
                 ],
               ),
             )

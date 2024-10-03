@@ -24,6 +24,12 @@ import 'package:teaching/features/home/presentation/manager/ads_cubit.dart';
 import 'package:teaching/features/home/presentation/manager/school_cubit.dart';
 import 'package:teaching/features/home/presentation/manager/subscription_cubit.dart';
 import 'package:teaching/features/home/presentation/manager/teachers_of_student_cubit.dart';
+import 'package:teaching/features/on_boarding/data/data_sources/onboarding_local_data_source.dart';
+import 'package:teaching/features/on_boarding/data/repositories/onboarding_repo_impl.dart';
+import 'package:teaching/features/on_boarding/domain/repositories/onboarding_repo.dart';
+import 'package:teaching/features/on_boarding/domain/usecase/onborading_usecases.dart';
+import 'package:teaching/features/on_boarding/presentation/manager/onboarding_manager_cubit.dart';
+import 'package:teaching/features/subscription/presentation/manager/subscriptipn_operation_cubit.dart';
 
 import 'core/export/export.dart';
 import 'core/network/impl/dio_impl/dio-consumer.dart';
@@ -56,14 +62,16 @@ class ServiceLocator {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     getIt.registerLazySingleton<SharedPreferences>(() => preferences);
     registerLanguage;
+    // await registerPrefs;
     registerUser;
-    registerOnBoarding;
+    registerError;
     registerNetwork;
     registerTeachersOfStudent;
     registerSubscription;
     registerAds;
     registerNearSchool;
     registerCoursesGroups;
+    registerOnboarding;
     // registerCategories;
     // registerServices;
     // registerInfo;
@@ -80,23 +88,43 @@ class ServiceLocator {
     // registerProductDetails;
     // registerSettings;
     // registerConsultation;
+    //
+    // getIt.registerFactory<LanguageLocalDataSource>(() => LanguageImplWithPrefs(sharedPreferences: getIt()));
+    // getIt.registerFactory<LanguageRepo>(() => LanguageRepoImpl(languageLocalDataSource: getIt()));
+    // getIt.registerFactory<LanguageUseCases>(() => LanguageUseCases(languageRepo: getIt()));
+    // getIt.registerFactory<LanguageCubit>(() => LanguageCubit(languageUseCases: getIt()));
+    //
+    //
   }
 
-  // get registerPrefs async {
-  //
-  // }
+//   get registerPrefs async {
+// ;
+//   }
+
   get registerLanguage {
     getIt.registerLazySingleton<LanguageLocalDataSource>(
         () => LanguageImplWithPrefs(sharedPreferences: getIt()));
-    getIt.registerLazySingleton<LanguageRepo>(
-        () => LanguageRepoImpl(languageLocalDataSource: getIt()));
-    getIt.registerLazySingleton<LanguageUseCases>(
-        () => LanguageUseCases(languageRepo: getIt()));
-    getIt.registerLazySingleton<LanguageCubit>(
-        () => LanguageCubit(languageUseCases: getIt()));
+    getIt.registerLazySingleton<LanguageRepo>(() => LanguageRepoImpl(
+        languageLocalDataSource:
+            LanguageImplWithPrefs(sharedPreferences: getIt())));
+    getIt.registerLazySingleton<LanguageUseCases>(() => LanguageUseCases(
+        languageRepo: LanguageRepoImpl(languageLocalDataSource: getIt())));
+    getIt.registerFactory<LanguageCubit>(() => LanguageCubit(
+        languageUseCases: LanguageUseCases(languageRepo: getIt())));
   }
 
-  get registerOnBoarding {
+  get registerOnboarding {
+    getIt.registerLazySingleton<OnBoardingLocalDataSource>(() =>
+        OnBoardingLocalDataSourceImplWithPrefs(sharedPreferences: getIt()));
+    getIt.registerLazySingleton<OnBoardingRepo>(
+        () => OnBoardingRepoImpl(onBoardingLocalDataSource: getIt()));
+    getIt.registerLazySingleton<OnBoardingUsesCases>(
+        () => OnBoardingUsesCases(onBoardingRepo: getIt()));
+    getIt.registerLazySingleton<OnboardingManagerCubit>(
+        () => OnboardingManagerCubit(onBoardingUsesCases: getIt()));
+  }
+
+  get registerError {
     getIt.registerLazySingleton<ErrorCubit>(() => ErrorCubit());
     // getIt.registerLazySingleton<LanguageRepo>(
     //     () => LanguageRepoImpl(languageLocalDataSource: getIt()));
@@ -121,59 +149,59 @@ class ServiceLocator {
       ..dioInit());
     /*********************************** end of network  ****************************************/
   }
+
   get registerTeachersOfStudent {
     getIt.registerLazySingleton<TeachersOfStudentDataSource>(
         () => TeachersOfStudentWithServer(getIt()));
     getIt.registerLazySingleton<TeacherOfStudentRepo>(
-        () => TeacherOfStudentImplement( getIt()));
+        () => TeacherOfStudentImplement(getIt()));
     getIt.registerLazySingleton<TeacherOfStudentUseCase>(
         () => TeacherOfStudentUseCase(getIt()));
     getIt.registerLazySingleton<TeachersOfStudentCubit>(
         () => TeachersOfStudentCubit(getIt()));
   }
+
   get registerSubscription {
     getIt.registerLazySingleton<SubscriptionsDataSource>(
-            () => SubscriptionsWithServer(getIt()));
+        () => SubscriptionsWithServer(getIt()));
     getIt.registerLazySingleton<SubscriptionRepo>(
-            () => SubscriptionImplement( getIt()));
+        () => SubscriptionImplement(getIt()));
     getIt.registerLazySingleton<SubscriptionUseCase>(
-            () => SubscriptionUseCase(getIt()));
+        () => SubscriptionUseCase(getIt()));
     getIt.registerLazySingleton<SubscriptionCubit>(
-            () => SubscriptionCubit(getIt()));
+        () => SubscriptionCubit(getIt()));
+    getIt.registerLazySingleton<SubscriptionOperationCubit>(
+        () => SubscriptionOperationCubit());
   }
-
 
   get registerAds {
-    getIt.registerLazySingleton<AdsDataSource>(
-        () => AdsWithServer(getIt()));
-    getIt.registerLazySingleton<AdsRepo>(
-        () => AdsImplement( getIt()));
-    getIt.registerLazySingleton<AdsUseCase>(
-        () => AdsUseCase( getIt()));
-    getIt.registerLazySingleton<AdsCubit>(
-        () => AdsCubit( getIt()));
-  }
-  get registerCoursesGroups{
-    getIt.registerLazySingleton<CoursesGroupsDataSource>(
-            () =>CoursesGroupsWithServer(getIt()));
-    getIt.registerLazySingleton<CoursesGroupsRepo>(
-            () => CoursesGroupsImplement(getIt()));
-    getIt.registerLazySingleton<CoursesGroupsUseCase>(
-            () => CoursesGroupsUseCase( getIt()));
-    getIt.registerLazySingleton<CoursesGroupsCubit>(
-            () => CoursesGroupsCubit( getIt()));
-  }
-  get registerNearSchool{
-    getIt.registerLazySingleton<NearSchoolDataSource>(
-            () =>NearSchoolWithServer(getIt()));
-    getIt.registerLazySingleton<NearSchoolRepo>(
-            () => NearSchoolImplement(getIt()));
-    getIt.registerLazySingleton<NearSchoolUseCase>(
-            () =>NearSchoolUseCase( getIt()));
-    getIt.registerLazySingleton<NearSchoolCubit>(
-            () => NearSchoolCubit( getIt()));
+    getIt.registerLazySingleton<AdsDataSource>(() => AdsWithServer(getIt()));
+    getIt.registerLazySingleton<AdsRepo>(() => AdsImplement(getIt()));
+    getIt.registerLazySingleton<AdsUseCase>(() => AdsUseCase(getIt()));
+    getIt.registerLazySingleton<AdsCubit>(() => AdsCubit(getIt()));
   }
 
+  get registerCoursesGroups {
+    getIt.registerLazySingleton<CoursesGroupsDataSource>(
+        () => CoursesGroupsWithServer(getIt()));
+    getIt.registerLazySingleton<CoursesGroupsRepo>(
+        () => CoursesGroupsImplement(getIt()));
+    getIt.registerLazySingleton<CoursesGroupsUseCase>(
+        () => CoursesGroupsUseCase(getIt()));
+    getIt.registerLazySingleton<CoursesGroupsCubit>(
+        () => CoursesGroupsCubit(getIt()));
+  }
+
+  get registerNearSchool {
+    getIt.registerLazySingleton<NearSchoolDataSource>(
+        () => NearSchoolWithServer(getIt()));
+    getIt.registerLazySingleton<NearSchoolRepo>(
+        () => NearSchoolImplement(getIt()));
+    getIt.registerLazySingleton<NearSchoolUseCase>(
+        () => NearSchoolUseCase(getIt()));
+    getIt
+        .registerLazySingleton<NearSchoolCubit>(() => NearSchoolCubit(getIt()));
+  }
 
   get registerUser {
     getIt.registerLazySingleton<UserLocalDataSource>(
@@ -188,36 +216,8 @@ class ServiceLocator {
         () => UserCubit(userUsecases: getIt()..getUser()));
     // getIt.registerLazySingleton<EditOperationCubit>(() => EditOperationCubit());
   }
-// //
-// //   get registerLanguage {
-// //     /*   getIt.registerLazySingleton<LanguageLocalDataSource>(() => LanguageImplWithPrefs(sharedPreferences: getIt()));
-// //     getIt.registerLazySingleton<LanguageRepo>(() => LanguageRepoImpl(languageLocalDataSource: getIt()));
-// //     getIt.registerLazySingleton<LanguageUseCases>(() => LanguageUseCases(languageRepo: getIt()));
-// //     getIt.registerLazySingleton<LanguageCubit>(() => LanguageCubit(languageUseCases: getIt()));
-// //     getIt.registerLazySingleton<LanguageOperationCubit>(() => LanguageOperationCubit());
-// // */
-// //   }
 //
-//   get registerNetwork {
-//     getIt.registerLazySingleton<Dio>(() => Dio());
-//     getIt.registerLazySingleton<DioInterceptor>(() => DioInterceptor());
-//     getIt.registerLazySingleton<LogInterceptor>(() => LogInterceptor(
-//         request: true,
-//         requestBody: true,
-//         requestHeader: true,
-//         responseBody: true,
-//         responseHeader: true,
-//         error: true));
-//     getIt.registerLazySingleton<DioConsumer>(() => DioConsumer(
-//         client: getIt(), dioInterceptor: getIt(), logInterceptor: getIt())
-//       ..dioInit());
-//     /*********************************** end of network  ****************************************/
-//   }
-//
-//   get registerPrefs async {
-//     SharedPreferences preferences = await SharedPreferences.getInstance();
-//     getIt.registerLazySingleton<SharedPreferences>(() => preferences);
-//   }
+
 //
 //   get registerOnboarding {
 //     getIt.registerLazySingleton<OnBoardingLocalDataSource>(() =>
@@ -242,21 +242,7 @@ class ServiceLocator {
 //     getIt.registerLazySingleton<AdsCubit>(() => AdsCubit(adsUseCases: getIt()));
 //   }
 //
-//   get registerGoogleService {
-//     /* getIt.registerLazySingleton<GoogleRemoteDataSource>(() => GoogleRemoteImplWithDio(dioConsumer: getIt()));
-//     getIt.registerLazySingleton<GoogleRepo>(() => GoogleRepoImpl(googleRemote: getIt()));
-//
-//     getIt.registerLazySingleton<GetAddressFromCoordinatesUseCase>(() => GetAddressFromCoordinatesUseCase(googleRepo: getIt()));
-//     getIt.registerLazySingleton<GetDistanceAndTimeUseCase>(() => GetDistanceAndTimeUseCase(googleRepo: getIt()));
-//     getIt.registerLazySingleton<GetAddressFromName>(() => GetAddressFromName(googleRepo: getIt()));
-//     getIt.registerLazySingleton<GetAddressFromIdUseCase>(() => GetAddressFromIdUseCase(googleRepo: getIt()));
-//     getIt.registerLazySingleton<MyLocationCubit>(
-//         () => MyLocationCubit(getAddressFromCoordinatesUseCase: getIt(), getAddressFromIdUseCase: getIt()));
-//     getIt.registerLazySingleton<DestinationCubit>(
-//         () => DestinationCubit(getAddressFromCoordinatesUseCase: getIt(), getAddressFromIdUseCase: getIt()));
-//     getIt.registerLazySingleton<DistanceAndTimeCubit>(() => DistanceAndTimeCubit(getDistanceAndTimeUseCase: getIt()));
-//  */
-//   }
+
 //
 //   get registerPermission =>
 //       getIt.registerLazySingleton(() => PermissionManager());

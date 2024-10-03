@@ -5,6 +5,7 @@ import 'package:teaching/features/bottom_nav_bar/presentaion/page/bottom_nav_bar
 import 'package:teaching/providers.dart';
 import '../core/export/export.dart';
 import 'config/themes/themes.dart';
+import 'features/on_boarding/presentation/pages/on_boarding_creen.dart';
 
 class TeachingApp extends StatelessWidget {
   const TeachingApp({super.key});
@@ -32,7 +33,7 @@ class TeachingApp extends StatelessWidget {
       locale: context.locale,
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
-      // home: LoginScreen(),
+      // home: OnBoardingScreen(),
     );
   }
 }

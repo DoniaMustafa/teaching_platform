@@ -91,5 +91,7 @@
   "not_found_in_cache": "We couldn't find the data you requested in your device's storage",
   "cache_read_success": "Data loaded from cache.",
   "phoneError":	"Invalid phone number",
-  "passwordError":"Password must be more than 6 character"
+  "passwordError":"Password must be more than 6 character",
+  "notificationTitle": "Notification",
+  "schedule": "The Schedule"
 }

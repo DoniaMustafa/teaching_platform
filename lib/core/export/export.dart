@@ -79,3 +79,6 @@ export'package:teaching/core/widget/custom_empty_widget.dart';
 export'package:teaching/core/widget/common_item_widgets/custom_item.dart';
 export'package:teaching/features/home/presentation/manager/courses_groups_cubit.dart';
 export'../../../../core/widget/custom_error_widget.dart';
+export 'package:teaching/core/widget/common_widgets/custom_sared_full_screen.dart';
+
+

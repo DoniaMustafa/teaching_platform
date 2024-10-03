@@ -59,7 +59,7 @@ mixin PngImages {
   String person_info = "$imagesPath/person_info.png";
 
   String logout = "$imagesPath/logout.png";
-
+  String exam =  "$imagesPath/exam.png";
   List<String> listOfStudentCategories = [
     "$imagesPath/exam.png",
 
