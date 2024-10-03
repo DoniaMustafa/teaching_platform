@@ -16,10 +16,8 @@ class AppService {
   /// Private constructor
   AppService._() {}
 
-  static final GlobalKey<NavigatorState> navigatorKey =
-      GlobalKey<NavigatorState>();
-  static get getContext => navigatorKey.currentState?.context;
-  NavigatorState? get getCurrentState => navigatorKey.currentState;
+
+
   // BehaviorSubject<int> homePageIndex = BehaviorSubject<int>();
   // BehaviorSubject<bool> refreshAssignedOrders = BehaviorSubject<bool>();
   // BehaviorSubject<bool> refreshWalletBalance = BehaviorSubject<bool>();

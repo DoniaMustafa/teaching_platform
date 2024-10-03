@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:teaching/core/utils/extensions.dart';
 import 'package:teaching/service/app.service.dart';
+final GlobalKey<NavigatorState> navigatorKey =
+GlobalKey<NavigatorState>();
+
+ get getContext => navigatorKey.currentState?.context;
+NavigatorState? get getCurrentState => navigatorKey.currentState;
 
 Future<T?> pushRoute<T>(
   String route, {
@@ -14,25 +19,25 @@ Future<T?> pushRoute<T>(
         ? false
         : true)*/
     return await Navigator.pushNamedAndRemoveUntil(
-        AppService.getContext,
+        getContext,
         route,
         exceptRoute.isNotNull
             ? ModalRoute.withName(exceptRoute!)
             : (route) => false,
         arguments: arguments);
   } else if (isToReplace) {
-    return await Navigator.pushReplacementNamed(AppService.getContext, route,
+    return await Navigator.pushReplacementNamed(getContext, route,
         arguments: arguments);
   } else {
-    return await Navigator.pushNamed(AppService.getContext, route,
+    return await Navigator.pushNamed(getContext, route,
         arguments: arguments);
   }
 }
 
 /// Dispose current screens or close current dialog
 void pop([Object? object]) {
-  if (Navigator.canPop(AppService.getContext))
-    Navigator.pop(AppService.getContext, object);
+  if (Navigator.canPop(getContext))
+    Navigator.pop(getContext, object);
 }
 
 /// Dispose current screen or close current dialog

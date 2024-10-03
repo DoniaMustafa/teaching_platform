@@ -1,11 +1,13 @@
 class AppStrings {
+  AppStrings._internal();
+  static final AppStrings _instance = AppStrings._internal();
+  factory AppStrings() => _instance;
+
   final String birthDateError = "birthDateError";
 
   final String drivingLicenceExpiryError = "drivingLicenceExpiryError";
 
-  AppStrings._internal();
-  static final AppStrings _instance = AppStrings._internal();
-  factory AppStrings() => _instance;
+
   final String create = 'create';
   final String account = 'account';
 

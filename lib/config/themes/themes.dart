@@ -5,7 +5,7 @@ import '../../core/utils/app_colors.dart';
 import '../../core/utils/size_utils.dart';
 import '../constants.dart';
 
-ThemeData getAppTheme(BuildContext context) => ThemeData(
+ThemeData getAppTheme(BuildContext context) => ThemeData(useMaterial3: true,
       colorScheme: ColorScheme.fromSeed(
           seedColor: AppColors.gray,
           primary: AppColors.primaryColor,

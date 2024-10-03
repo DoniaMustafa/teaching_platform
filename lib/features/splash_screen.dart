@@ -43,15 +43,13 @@ class _SplashScreenState extends State<SplashScreen>
     //     }
     //   });
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      bool isLanguageSaved =
-          await AppService().getBlocData<LanguageCubit>().getSavedLanguage();
+      // bool isLanguageSaved =
+      //     await AppService().getBlocData<LanguageCubit>().getSavedLanguage();
       bool isNew = await AppService()
           .getBlocData<OnboardingManagerCubit>()
           .isNewInstalled();
       UserModel? user = await AppService().getBlocData<UserCubit>().getUser();
       String token = await AppService().getBlocData<UserCubit>().getToken();
-      String deviceToken =
-          await AppService().getBlocData<UserCubit>().getToken();
       //  bool isLocationEnabled = await checkLocationPermission(context);
 
 //      bool isNotificationInit = (await NotificationsService().initialize()).orFalse;
@@ -100,13 +98,13 @@ class _SplashScreenState extends State<SplashScreen>
       // });
       // Timer.periodic(Duration(milliseconds: 1000),(timer){
         if(isNew.isTrue){
-          Routes.mainRoute.moveToAndRemoveCurrent;
+          Routes.onBoardRoute.moveToAndRemoveCurrent;
         }else{
           if (user.isNotNull && token.isNotNullOrEmpty) {
             Routes.bottomNavigationRoute.moveToAndRemoveCurrent;
           }
           else {
-            Routes.loginRoute.moveToAndRemoveCurrent;
+            Routes.mainRoute.moveToAndRemoveCurrent;
           }
         }
 

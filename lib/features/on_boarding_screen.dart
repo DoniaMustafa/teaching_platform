@@ -13,7 +13,29 @@ class OnBoardingScreen extends StatefulWidget {
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
   PageController _pageController = PageController();
 
-  // // bool _isNavigating = false;
+  // bool _isNavigating = false;
+
+  void _navigateToNext() async {
+    // setState(() {
+    //   _isNavigating = true;
+    // });
+    if (context.read<OnboardingManagerCubit>().currentPage != 1) {
+      _pageController.nextPage(
+          duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
+    } else {
+      // setState(() {
+      //   _isNavigating = false;
+      // });
+
+      Routes.mainRoute.pushAndRemoveAllUntil;
+      await context.read<OnboardingManagerCubit>().cachedNewInstall();
+    }
+
+    // Future.delayed(const Duration(milliseconds: 3000), () {
+    //
+    //
+    // });
+  }
   @override
   void dispose() {
     super.dispose();
@@ -28,7 +50,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             _buildUpWidget,
-            BuildInductorWidget()
+            _buildDownWidget
+            // BuildInductorWidget()
             // Row(
             //   mainAxisAlignment: MainAxisAlignment.center,
             //   children: List.generate(2, (index)=>CustomCard(
@@ -67,95 +90,71 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         ),
       );
 
-  // get _buildDownWidget => Container(
-//       width: 400,
-//       height: 500,
-//       // color: AppColors.red,
-//       // padding: getPadding(
-//       //   horizontal: 20,
-//       // ),
-//       child: Column(
-//         // crossAxisAlignment: CrossAxisAlignment.center,
-//         // mainAxisAlignment: MainAxisAlignment.start,
-//         children: [
-//           // BuildInductorWidget(),
-//
-//           10.vs,
-//
-//           // CustomCircleWidget(
-//           //   height: 80.h,
-//           //   width: 50.w,  radius: 25,
-//           //   margin: getMargin(
-//           //       top: 5.h,
-//           //       end: context.read<OnboardingManagerCubit>().currentPage == 0
-//           //           ? 0
-//           //           : 5.w),
-//           //   color: AppColors.black,
-//           //   borderColor: AppColors.mainAppColor,
-//           //   // child: CustomCircleWidget(
-//           //   //   color: AppColors.mainAppColor,
-//           //   //   radius: 30,
-//           //   //   height: 50.h,
-//           //   //   width: 50.w,
-//           //   //   child: const CustomIcon(
-//           //   //     icon: Icons.arrow_forward,
-//           //   //     color: AppColors.white,
-//           //   //   ),
-//           //   // ),
-//           // ),
-//           // 16.52.vs,
-//           // GestureDetector(
-//           //   onTap: () => Routes.mainRoute.pushAndRemoveAllUntil,
-//           //   child: CustomTextWidget(
-//           //     text: AppStrings().skip.trans,
-//           //     style: getSemiboldTextStyle(),
-//           //   ),
-//           // ),
-//           // 19.48.vs,
-//           // SizedBox(
-//           //   width: 50,
-//           //   height: 50,
-//           //   child: GestureDetector(
-//           //     onTap: () => _navigateToNext(),
-//           //     child: Stack(
-//           //       alignment:
-//           //           context.read<OnboardingManagerCubit>().currentPage == 0
-//           //               ? AlignmentDirectional.topCenter
-//           //               : AlignmentDirectional.centerEnd,
-//           //       children: [
-//           //         CustomCircleWidget(
-//           //           margin: getMargin(
-//           //               top: 5.h,
-//           //               end: context
-//           //                           .read<OnboardingManagerCubit>()
-//           //                           .currentPage ==
-//           //                       0
-//           //                   ? 0
-//           //                   : 5.w),
-//           //           color: AppColors.white,
-//           //           borderColor: AppColors.mainAppColor,
-//           //           child: CustomCircleWidget(
-//           //             color: AppColors.mainAppColor,
-//           //             radius: 30,
-//           //             height: 50.h,
-//           //             width: 50.w,
-//           //             child: const CustomIcon(
-//           //               icon: Icons.arrow_forward,
-//           //               color: AppColors.white,
-//           //             ),
-//           //           ),
-//           //         ),
-//           //         CustomCircleWidget(
-//           //           width: 10.w,
-//           //           height: 10.h,
-//           //           color: AppColors.mainAppColor,
-//           //         ),
-//           //       ],
-//           //     ),
-//           //   ),
-//           // ),
-//           // 102.vs,
-//         ],
-//       ),
-//     );
+  get _buildDownWidget => Container(
+        width: 400,
+        height: 500,
+        // color: AppColors.red,
+        // padding: getPadding(
+        //   horizontal: 20,
+        // ),
+        child: Column(
+          // crossAxisAlignment: CrossAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            BuildInductorWidget(),
+            16.52.vs,
+            GestureDetector(
+              onTap: () => Routes.mainRoute.pushAndRemoveAllUntil,
+              child: CustomTextWidget(
+                text: AppStrings().skip.trans,
+                style: getSemiboldTextStyle(),
+              ),
+            ),
+            19.48.vs,
+            SizedBox(
+              width: 50,
+              height: 50,
+              child: GestureDetector(
+                onTap: () => _navigateToNext(),
+                child: Stack(
+                  alignment:
+                      context.read<OnboardingManagerCubit>().currentPage == 0
+                          ? AlignmentDirectional.topCenter
+                          : AlignmentDirectional.centerEnd,
+                  children: [
+                    CustomCircleWidget(
+                      margin: getMargin(
+                          top: 5.h,
+                          end: context
+                                      .read<OnboardingManagerCubit>()
+                                      .currentPage ==
+                                  0
+                              ? 0
+                              : 5.w),
+                      color: AppColors.white,
+                      borderColor: AppColors.mainAppColor,
+                      child: CustomCircleWidget(
+                        color: AppColors.mainAppColor,
+                        radius: 30,
+                        height: 50.h,
+                        width: 50.w,
+                        child: const CustomIcon(
+                          icon: Icons.arrow_forward,
+                          color: AppColors.white,
+                        ),
+                      ),
+                    ),
+                    CustomCircleWidget(
+                      width: 10.w,
+                      height: 10.h,
+                      color: AppColors.mainAppColor,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            // 102.vs,
+          ],
+        ),
+      );
 }

@@ -4,6 +4,7 @@ import 'package:teaching/features/auth/presentation/pages/login_screen.dart';
 import 'package:teaching/features/bottom_nav_bar/presentaion/page/bottom_nav_bar_screen.dart';
 import 'package:teaching/providers.dart';
 import '../core/export/export.dart';
+import 'config/routes/app_routes_helper.dart';
 import 'config/themes/themes.dart';
 import 'features/on_boarding/presentation/pages/on_boarding_creen.dart';
 
@@ -26,7 +27,7 @@ class TeachingApp extends StatelessWidget {
   _buildApp(BuildContext context) {
     return MaterialApp(
       title: AppStrings().appName,
-      navigatorKey: AppService.navigatorKey,
+      navigatorKey: navigatorKey,
       onGenerateRoute: RouteGenerator.getRoute,
       theme: getAppTheme(context),
       debugShowCheckedModeBanner: false,

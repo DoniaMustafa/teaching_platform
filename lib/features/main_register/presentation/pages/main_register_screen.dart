@@ -15,83 +15,16 @@ class _MainRegisterScreenState extends State<MainRegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return CustomBackground(
-      showSafeArea: true,
+      showSafeArea: true,statusBarColor: AppColors.white,
       child: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics:const BouncingScrollPhysics(),
         child: BlocBuilder<LanguageCubit, LanguageState>(
           builder: (context, state) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Align(
-                  alignment: AlignmentDirectional.topStart,
-                  child: Padding(
-                    padding: EdgeInsetsDirectional.only(top: 20,start: 20),
-                    child: SizedBox(
-                      width: 150.w,
-                      child: PopupMenuButton(
-                          color: AppColors.white,
-                          position: PopupMenuPosition.under,
-                          icon: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              CustomSvg(
-                                asset: AppAssets().language,
-                                color: AppColors.mainAppColor,
-                              ),
-                              9.hs,
-                              CustomTextWidget(
-                                text: context.read<LanguageCubit>().isEn
-                                    ? AppStrings().en.trans
-                                    : AppStrings().ar.trans,
-                                style: getMediumTextStyle(
-                                  fontFamily: FontFamilies.interFamily,
-                                  fontSize: 16,
-                                  color: AppColors.mainAppColor,
-                                ),
-                              ),
-                            ],
-                          ),
-                          itemBuilder: (context) => [
-                            PopupMenuItem(
-                              onTap: () {
-                                context
-                                    .setLocale(AppLocalizationsConstants().arLocale);
-                                context.read<LanguageCubit>().toArabic();
-                                // context.read<LanguageCubit>().getSavedLanguage();
-                              },
-                              child: CustomTextWidget(
-                                text: AppStrings().arabic.trans,
-                                style: getMediumTextStyle(
-                                  fontFamily: FontFamilies.interFamily,
-                                  fontSize: 16,
-                                  color: AppColors.darkMainAppColor,
-                                ),
-                              ),
-                            ),
-                            PopupMenuItem(
-                              onTap: () {
-                                context
-                                    .setLocale(AppLocalizationsConstants().enLocale);
-                                context.read<LanguageCubit>().toEnglish();
-                                // context.read<LanguageCubit>().getSavedLanguage();
-                              },
-                              child: CustomTextWidget(
-                                text: AppStrings().english.trans,
-                                style: getMediumTextStyle(
-                                  fontFamily: FontFamilies.interFamily,
-                                  fontSize: 16,
-                                  color: AppColors.darkMainAppColor,
-                                ),
-                              ),
-                            )
-                          ]),
-                    ),
-                  ),
-                ),
-                // _buildLang,
-                // _buildLanguage,
-               SizedBox(height:  24,),
+                _buildLanguage,
+                24.vs,
                 CustomTextWidget(
                   text: AppStrings().welcome.trans,
                   style: getBoldTextStyle(
@@ -113,7 +46,7 @@ class _MainRegisterScreenState extends State<MainRegisterScreen> {
                   width: 337.w,
                 ),
                 40.vs,
-                _buildRegisterButton,
+                _buildRegistrationButtons,
               ],
             );
           },
@@ -125,7 +58,7 @@ class _MainRegisterScreenState extends State<MainRegisterScreen> {
   get _buildLanguage => Align(
         alignment: AlignmentDirectional.topStart,
         child: Padding(
-          padding: EdgeInsetsDirectional.only(top: 20,start: 20),
+          padding: EdgeInsetsDirectional.only(top: 20, start: 20),
           child: SizedBox(
             width: 150.w,
             child: PopupMenuButton(
@@ -189,7 +122,7 @@ class _MainRegisterScreenState extends State<MainRegisterScreen> {
         ),
       );
 
-  get _buildRegisterButton => Padding(
+  get _buildRegistrationButtons => Padding(
         padding: getPadding(start: 33, end: 21),
         child: Column(
           children: [
