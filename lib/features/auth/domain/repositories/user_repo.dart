@@ -2,13 +2,16 @@ import 'package:dartz/dartz.dart';
 import '../../../../core/export/export.dart';
 
 abstract class UserRepo {
-//   Future<Either<Failure, ResponseModel>> signUp({UserModel? user});
+  Future<Either<Failure, ResponseModel>> registerByPhoneNumber(
+      {required UserModel user});
   Future<Either<Failure, ResponseModel>> login({required String phone, required String password, String fcmToken});
-//   // Future<Either<Failure, ResponseModel>> updatePassword({required String oldPassword, required String newPassword});
+  Future<Either<Failure, ResponseModel>> register({UserModel? user});
+
+
+  //   // Future<Either<Failure, ResponseModel>> updatePassword({required String oldPassword, required String newPassword});
 //   Future<Either<Failure, ResponseModel>> logout();
 //   // Future<Either<Failure, UserResponseModel>> changeUserInfo({required UserModel user});
-//   Future<Either<Failure, ResponseModel>> verifyOTP(
-//       {required String phone, required String verificationCode, required String fcmToken});
+  Future<Either<Failure, ResponseModel>> verifyOTP({required UserModel user});
 //   Future<Either<Failure, ResponseModel>> forgetPassword({
 //     required String phone,
 //   });

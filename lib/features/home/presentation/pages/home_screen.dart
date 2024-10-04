@@ -69,6 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
               // 8.vs,
               // const BuildLecturer(),
               _buildTitle(
+                  all: AppStrings().all.trans,
                   text: AppStrings().closeSchools.trans,
                   asset: AppAssets().schoolIcon),
               5.vs,
@@ -80,18 +81,23 @@ class _HomeScreenState extends State<HomeScreen> {
               // BuildNews(),
               // 20.vs,
               _buildTitle(
+                  onTap: () => Routes.coursesGroupsRoute.moveTo,
+                  all: AppStrings().all.trans,
                   text: AppStrings().course.trans,
                   asset: AppAssets().coursesIcon),
               5.vs,
-              BuildCourses(),
+              const BuildCourses(),
               20.vs,
               _buildTitle(
+                  onTap: () => Routes.coursesGroupsRoute.moveTo,
+                  all: AppStrings().all.trans,
                   text: AppStrings().groups.trans,
                   asset: AppAssets().groupsIcon),
               5.vs,
-              BuildGroups(),
+              const BuildGroups(),
               20.vs,
               _buildTitle(
+                  all: AppStrings().all.trans,
                   text: AppStrings().teachers.trans,
                   asset: AppAssets().teacherIcon),
               5.vs,
@@ -115,7 +121,12 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildTitle({required String text, String? asset}) => Padding(
+  Widget _buildTitle(
+          {required String text,
+          Function? onTap,
+          String? asset,
+          String? all}) =>
+      Padding(
         padding: getPadding(start: 20.w),
         child: Row(
           children: [
@@ -130,7 +141,30 @@ class _HomeScreenState extends State<HomeScreen> {
                 asset: asset!,
                 width: 20.w,
                 height: 20.h,
-              )
+              ),
+            if (all.isNotNull) const Spacer(),
+            if (all.isNotNull)
+              GestureDetector(
+                onTap: () => onTap!(),
+                child: Padding(
+                  padding: getPadding(end: 20.w),
+                  child: Row(
+                    children: [
+                      CustomTextWidget(
+                        text: all!,
+                        style: getSemiboldTextStyle(
+                            fontSize: 14,
+                            fontFamily: FontFamilies.elMessiriFamily),
+                      ),
+                      2.hs,
+                      CustomIcon(
+                        icon: Icons.arrow_forward_ios,
+                        size: 12,
+                      )
+                    ],
+                  ),
+                ),
+              ),
           ],
         ),
       );

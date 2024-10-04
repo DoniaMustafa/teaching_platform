@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:teaching/features/auth/presentation/manager/user_cubit/user_cubit.dart';
 
 import '../core/export/export.dart';
+import '../local_notification.dart';
 import 'on_boarding/presentation/manager/onboarding_manager_cubit.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -51,7 +52,10 @@ class _SplashScreenState extends State<SplashScreen>
       UserModel? user = await AppService().getBlocData<UserCubit>().getUser();
       String token = await AppService().getBlocData<UserCubit>().getToken();
       //  bool isLocationEnabled = await checkLocationPermission(context);
-
+      // bool isGranted = await checkNotificationPermission(context);
+      // if (isGranted.isTrue) {
+      //
+      // }
 //      bool isNotificationInit = (await NotificationsService().initialize()).orFalse;
       //     print("is notification granted$isNotificationInit");
       //   print("new install ${isNew}");
@@ -96,22 +100,18 @@ class _SplashScreenState extends State<SplashScreen>
       //   //   route = Routes.loginRoute;
       //   // }
       // });
-      // Timer.periodic(Duration(milliseconds: 1000),(timer){
-        if(isNew.isTrue){
+      Timer(Duration(seconds: 5), () {
+        if (isNew.isTrue) {
           Routes.onBoardRoute.moveToAndRemoveCurrent;
-        }else{
-          if (user.isNotNull && token.isNotNullOrEmpty) {
-            Routes.bottomNavigationRoute.moveToAndRemoveCurrent;
-          }
-          else {
-            Routes.mainRoute.moveToAndRemoveCurrent;
+        } else {
+          if (token.isNotNullOrEmpty) {
+            Routes.bottomNavigationRoute.pushAndRemoveAllUntil;
+          } else {
+            Routes.mainRoute.pushAndRemoveAllUntil;
           }
         }
-
       });
-
-
-    // });
+    });
   }
   // void initSlidingAnimation() {
   //   animationController = AnimationController(
@@ -130,36 +130,28 @@ class _SplashScreenState extends State<SplashScreen>
   //
   // }
 
-
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: AppColors.fillColor,
-        body: Directionality(
-          textDirection: TextDirection.ltr,
-          // child: animationMethod(
+    return CustomBackground(
+       statusBarColor: AppColors.white,
+        // backgroundColor: AppColors.fillColor,
         child: Center(
-                  child: CustomImageWidget(
-                asset: AppAssets().logo,
-                height: 150.h,
-                width: 150.w,
-              )),
-              // slidingController: slidingAnimation),
-        ))
-
-    ;
+            child: CustomImageWidget(
+          asset: AppAssets().logo,
+          height: 150.h,
+          width: 150.w,
+        )));
   }
 
-  Widget animationMethod({widget, slidingController}) {
-    return AnimatedBuilder(
-      animation: slidingController,
-      builder: (BuildContext context, _) {
-        return SlideTransition(
-          position: slidingController,
-          child: widget,
-        );
-      },
-    );
-  }
+  // Widget animationMethod({widget, slidingController}) {
+  //   return AnimatedBuilder(
+  //     animation: slidingController,
+  //     builder: (BuildContext context, _) {
+  //       return SlideTransition(
+  //         position: slidingController,
+  //         child: widget,
+  //       );
+  //     },
+  //   );
+  // }
 }

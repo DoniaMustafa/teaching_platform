@@ -34,6 +34,9 @@ class AppColors {
   static const Color lightBlue2 = Color(0xFF5C20E4);
   static const Color appBarColor = Color(0xFF5B1EE8);
   static const Color appBarTitleColor = Color(0xFF370E8E);
+  static const Color borderErrorColor = Color(0xFFE95E5B);
+  static const Color textFieldShadow1 = Color(0xFFBBC3CE);
+  static const Color textFieldShadow2 = Color(0xFFFDFFFF);
 
   // static Color blackWithOpacity = Color.fromRGBO(0, 0, 0, 0.72);
   // static Color blackWithOpacity2 = Color.fromRGBO(0, 0, 0, 1);

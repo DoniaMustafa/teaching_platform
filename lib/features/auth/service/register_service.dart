@@ -5,17 +5,17 @@ class RegisterService {
   static String registerType(type) {
     print(type);
     switch (RoleType.values.byName(type)) {
-      case RoleType.lecture:
+      case RoleType.ProfessionalLecturer:
         return '${AppStrings().create.trans} ${AppStrings().lecture.trans} ${AppStrings().account.trans}';
-      case RoleType.teacher:
+      case RoleType.Teacher:
         return '${AppStrings().create.trans} ${AppStrings().teacher.trans} ${AppStrings().account.trans}';
-      case RoleType.student:
+      case RoleType.Student:
         return '${AppStrings().create.trans} ${AppStrings().student.trans} ${AppStrings().account.trans}';
-      case RoleType.parent:
+      case RoleType.Parent:
         return '${AppStrings().create.trans} ${AppStrings().parent.trans} ${AppStrings().account.trans}';
-      case RoleType.assistant:
+      case RoleType.Assistant:
         return '${AppStrings().create.trans} ${AppStrings().assistant.trans} ${AppStrings().account.trans}';
-      case RoleType.school:
+      case RoleType.School:
         return '${AppStrings().create.trans} ${AppStrings().school.trans} ${AppStrings().account.trans}';
       default:
         return '${AppStrings().create.trans} ${AppStrings().professionalCourse.trans} ${AppStrings().account.trans}';

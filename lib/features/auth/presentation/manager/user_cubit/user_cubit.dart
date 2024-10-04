@@ -1,4 +1,8 @@
 import 'package:teaching/core/export/export.dart';
+import 'package:teaching/features/auth/data/models/step_no_respons_model.dart';
+import 'package:teaching/features/auth/presentation/manager/countries_cubit.dart';
+import 'package:teaching/features/auth/presentation/pages/verification_screen.dart';
+import '../../../../../local_notification.dart';
 import '../../../domain/use_cases/user_usecases.dart';
 
 part 'user_state.dart';
@@ -57,8 +61,68 @@ class UserCubit extends Cubit<UserState> {
     );
   }
 
-  ///***********************************************************\\\
+  ///**************************register by phone*********************************\\\
+  registerByPhone({
+    required UserModel user,
+  }) async {
+    executeWithDialog<VerificationDataModel>(
+      either: userUsecases.registerByPhoneNumber(user: user),
+      startingMessage: AppStrings().signUp.trans,
+      onError: (message) {
+        emit(SignupErrorState(massage: message));
+      },
+      onSuccess: (VerificationDataModel? code) async {
+        if (code.isNotNull) {
+          await NotificationsService().showSimpleNotification(
+            title: AppStrings().otpCode.trans,
+            description: code!.verificationCode!,
+          );
+          Routes.verificationRoute.pushReplacementWithData({
+            // "route": Routes.signUpRoute,
+            VerificationScreen.phoneKey: user.phoneNumber,
+          });
+          emit(SignUpSuccessState(otp: code.verificationCode!));
+        }
+      },
+    );
+  }
 
+  ///***********************************************************\\\
+  verifyOTP({required UserModel user}) async {
+    // String fcmToken = (await FirebaseService().getDeviceToken())!;
+    // bool isTokenCached = false;
+    // bool isFcmTokenCached = false;
+    executeWithDialog<StepNoDataModel?>(
+      onStart: () {
+        emit(verifyOTPStartingState());
+      },
+      either: userUsecases.verifyOTP(user: user),
+      startingMessage: AppStrings().verifying.trans,
+      onError: (message) {
+        emit(VerifyOTPErrorState(massage: message));
+      },
+      // beforeSuccess: (data) async {
+      //   // userDataModel = data;
+      //   // if (userDataModel.isNotNull) {
+      //   //   user = userDataModel!.user;
+      //   //   isTokenCached = await cacheToken(userDataModel!.token!);
+      //   //   isFcmTokenCached = await cacheFcm(fcmToken);
+      //   }
+      // },
+      onSuccess: (StepNoDataModel? data) {
+        // if (data.isNotNull) {
+        // user = data!.user;
+// AppService().getBlocData<CountriesCubit>().getCountries();
+        // if (isTokenCached.isTrue && isFcmTokenCached.isTrue && userDataModel.isNotNull) {
+        // AppService().getBlocData<BottomNavOperationCubit>().changeIndex(0);
+        Routes.signUpRoute.pushAndRemoveAllUntil;
+        // }
+
+        emit(VerifyOtpSuccessState(step: data!.stepNo!));
+        // }
+      },
+    );
+  }
 // logout() async {
   //   executeWithDialog<ResponseModel>(
   //     either: userUsecases.logout(),
@@ -181,41 +245,7 @@ class UserCubit extends Cubit<UserState> {
   //   );
   // }
   //
-  // verifyOTP({required String phone, required String verificationCode}) async {
-  //   String fcmToken = (await FirebaseService().getDeviceToken())!;
-  //   bool isTokenCached = false;
-  //   bool isFcmTokenCached = false;
-  //   executeWithDialog<UserDataModel?>(
-  //     onStart: () {
-  //       emit(verifyOTPStartingState());
-  //     },
-  //     either: userUsecases.verifyOTP(verificationCode: verificationCode, phone: phone, fcmToken: fcmToken),
-  //     startingMessage: AppStrings().verifying.trans,
-  //     onError: (message) {
-  //       emit(VerifyOTPErrorState(massage: message));
-  //     },
-  //     beforeSuccess: (data) async {
-  //       userDataModel = data;
-  //       if (userDataModel.isNotNull) {
-  //         user = userDataModel!.user;
-  //         isTokenCached = await cacheToken(userDataModel!.token!);
-  //         isFcmTokenCached = await cacheFcm(fcmToken);
-  //       }
-  //     },
-  //     onSuccess: (data) {
-  //       if (data.isNotNull) {
-  //         user = data!.user;
-  //
-  //         if (isTokenCached.isTrue && isFcmTokenCached.isTrue && userDataModel.isNotNull) {
-  //           // AppService().getBlocData<BottomNavOperationCubit>().changeIndex(0);
-  //           Routes.bottomNavigationRoute.moveToAndRemoveCurrent();
-  //         }
-  //
-  //         emit(VerifyOtpSuccessState(user: data.user!));
-  //       }
-  //     },
-  //   );
-  // }
+
   //
   // verifyForgetPassword({required String phone, required String verificationCode}) async {
   //   executeWithDialog<UserDataModel?>(

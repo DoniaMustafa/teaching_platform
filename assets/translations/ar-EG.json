@@ -40,13 +40,13 @@
   "password": "كلمة المرور",
   "forgetPassword": "هل نسيت كلمة المرور؟",
   "haveAccount": "ليس لديك حساب؟",
-  "teacher":"معلم",
-  "student": "طالب",
+  "Teacher":"معلم",
+  "Student": "طالب",
   "lecture": "محاضر",
-  "assistant": "مساعد",
-  "school": "مدرسة", "video": "فديو", "url": "رابط",
+  "Assistant": "مساعد",
+  "School": "مدرسة", "video": "فديو", "url": "رابط",
   "qualificationEducation": "مؤهلك الدراسي",
-  "parent": "ولي الامر",
+  "Parent": "ولي الامر",
   "professionalCourse": "كورسات مهنية",
   "chooseRole": "اختار دورك",
 "orSignUp": "او التسجيل عن طريق",
@@ -108,10 +108,11 @@
   "childrenSubscription": "اشتركات الابناء",
   "create": "أنشاء",
   "account": "حساب",
-  "phoneError":	"رقم الهاتف غير صحيح ",
-  "passwordError":	"كلمة المرور يجب أن تكون أكثر من 6 أحرف ",
+  "phoneError":	"رقم الهاتف غير صحيح",
+  "passwordError":	"كلمة المرور يجب أن تكون أكثر من 6 أحرف",
   "notificationTitle": "الإشعارات",
-  "schedule": "الجداول"
+  "schedule": "الجداول",
+  "otpCodeError": "يجب أن يتكون رمز Otp من 4 أحرف "
 }
 
 

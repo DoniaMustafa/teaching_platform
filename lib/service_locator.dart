@@ -1,9 +1,15 @@
 import 'package:get_it/get_it.dart';
+import 'package:teaching/features/auth/data/data_sources/country_remote_datasource.dart';
 import 'package:teaching/features/auth/data/data_sources/user_local_datasource.dart';
 import 'package:teaching/features/auth/data/data_sources/user_remote_datasource.dart';
+import 'package:teaching/features/auth/data/repositories/country_implement.dart';
 import 'package:teaching/features/auth/data/repositories/user_repo_impl.dart';
+import 'package:teaching/features/auth/domain/repositories/countries_repo.dart';
 import 'package:teaching/features/auth/domain/repositories/user_repo.dart';
+import 'package:teaching/features/auth/domain/use_cases/countries_use_case.dart';
 import 'package:teaching/features/auth/domain/use_cases/user_usecases.dart';
+import 'package:teaching/features/auth/presentation/manager/countries_cubit.dart';
+import 'package:teaching/features/courses_groups/presentation/manager/coures_group_operation_cubit.dart';
 import 'package:teaching/features/home/data/data_sources/student/ads_data_source.dart';
 import 'package:teaching/features/home/data/data_sources/student/courses_groups_data_source.dart';
 import 'package:teaching/features/home/data/data_sources/student/near_school_data_source.dart';
@@ -34,6 +40,7 @@ import 'package:teaching/features/subscription/presentation/manager/subscriptipn
 import 'core/export/export.dart';
 import 'core/network/impl/dio_impl/dio-consumer.dart';
 import 'core/network/impl/dio_impl/dio_interceptors.dart';
+import 'core/permission_handler.dart';
 import 'features/auth/presentation/manager/user_cubit/user_cubit.dart';
 import 'features/bottom_nav_bar/presentaion/manager/onboading_operation_cubit.dart';
 import 'features/home/data/data_sources/student/teachers_of_student_data_source.dart';
@@ -62,9 +69,11 @@ class ServiceLocator {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     getIt.registerLazySingleton<SharedPreferences>(() => preferences);
     registerLanguage;
+    registerPermission;
+    registerCountries;
     // await registerPrefs;
     registerUser;
-    registerError;
+    registerErrorAndOperation;
     registerNetwork;
     registerTeachersOfStudent;
     registerSubscription;
@@ -124,12 +133,12 @@ class ServiceLocator {
         () => OnboardingManagerCubit(onBoardingUsesCases: getIt()));
   }
 
-  get registerError {
+  get registerErrorAndOperation {
     getIt.registerLazySingleton<ErrorCubit>(() => ErrorCubit());
-    // getIt.registerLazySingleton<LanguageRepo>(
-    //     () => LanguageRepoImpl(languageLocalDataSource: getIt()));
-    // getIt.registerLazySingleton<LanguageUseCases>(
-    //     () => LanguageUseCases(languageRepo: getIt()));
+    getIt.registerLazySingleton<CoursesGroupOperationCubit>(
+        () => CoursesGroupOperationCubit());
+    // getIt.registerLazySingleton<CoursesGroupOperationCubit>(
+    //     () => CoursesGroupOperationCubit());
     getIt.registerLazySingleton<BottomNavBarOperationCubit>(
         () => BottomNavBarOperationCubit());
   }
@@ -244,8 +253,8 @@ class ServiceLocator {
 //
 
 //
-//   get registerPermission =>
-//       getIt.registerLazySingleton(() => PermissionManager());
+  get registerPermission =>
+      getIt.registerLazySingleton(() => PermissionManager());
 //
 //   get registerCategories {
 //     getIt.registerLazySingleton<CategoriesRemoteDatasource>(
@@ -303,17 +312,15 @@ class ServiceLocator {
 //         () => InfoUseCases(infoRepo: getIt<InfoRepo>()));
 //   }
 //
-//   get registerProducts {
-//     getIt.registerLazySingleton<ProductRemoteDataSource>(
-//         () => ProductRemoteDataSourceImpl(dioConsumer: getIt()));
-//     getIt.registerLazySingleton<ProductRepo>(
-//         () => ProductRepoImpl(productRemoteDataSource: getIt()));
-//     getIt.registerLazySingleton<ProductUseCases>(
-//         () => ProductUseCases(productRepo: getIt()));
-//     getIt.registerLazySingleton<ProductCubit>(
-//         () => ProductCubit(productUseCases: getIt()));
-//   }
-//
+  get registerCountries {
+    getIt.registerLazySingleton<CountryRemoteDatasource>(
+        () => CountryWithServer(dioConsumer: getIt()));
+    getIt.registerLazySingleton<CountriesRepo>(() => CountryImplement(getIt()));
+    getIt.registerLazySingleton<CountriesUseCase>(
+        () => CountriesUseCase(getIt()));
+    getIt.registerLazySingleton<CountriesCubit>(() => CountriesCubit(getIt()));
+  }
+
 //   get registerCart {
 //     getIt.registerLazySingleton<CartDataSource>(
 //         () => CartWithServer(dioConsumer: getIt()));

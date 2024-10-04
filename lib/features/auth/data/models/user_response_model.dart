@@ -65,6 +65,8 @@ class UserDataModel {
 class UserModel {
   final String? phoneNumber;
   final String? userId;
+  final String? verifyCode;
+
   final int? stepsNo;
   final String? name;
   final String? image;
@@ -81,6 +83,7 @@ class UserModel {
     this.userId,
     this.stepsNo,
     this.name,
+    this.verifyCode,
     this.countryId,
     this.profilePicture,
     this.userRole,
@@ -103,13 +106,14 @@ class UserModel {
       );
 
   Map<String, dynamic> toJson() => {
-        "phoneNumber": phoneNumber,
-        "userId": userId,
+        "PhoneNumber": phoneNumber,
+        "UserId": userId,
         "StepNo": stepsNo,
         "Email": email,
         "Name": name,
-        // "profilePicture": profilePicture,
-        // "userRole": userRole,
+        "profilePicture": profilePicture,
+        "UserType": int.parse(userRole!),
+        "Code": verifyCode,
         "CountryId": countryId,
         "Password": password,
       };

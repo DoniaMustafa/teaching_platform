@@ -31,9 +31,12 @@ class _ExpansionTileDropDownState extends State<ExpansionTileDropDown> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: AppColors.white,
+          color: AppColors.transparent,
           borderRadius: BorderRadius.circular(19.h),
-          boxShadow: [BoxShadow(color: AppColors.white, spreadRadius: 1, blurRadius: 1)]),
+          boxShadow: const [
+            BoxShadow(
+                color: AppColors.transparent, spreadRadius: 1, blurRadius: 1)
+          ]),
       child: ExpansionTile(
           maintainState: true,
           key: GlobalKey(),
@@ -42,7 +45,7 @@ class _ExpansionTileDropDownState extends State<ExpansionTileDropDown> {
           dense: true,
           initiallyExpanded: isExpanded,
           /*padding*/
-          tilePadding: getPadding(start: 60, end: 10, vertical: 7),
+          tilePadding: getPadding(horizontal: 15.w, vertical: 7),
           childrenPadding: getPadding(vertical: 10.h),
           /*colors*/
           onExpansionChanged: (value) {
@@ -52,29 +55,31 @@ class _ExpansionTileDropDownState extends State<ExpansionTileDropDown> {
           },
           iconColor: AppColors.iconsGray,
           collapsedIconColor: AppColors.iconsGray,
-          backgroundColor: AppColors.transparent, //whole widget color while expanding
+          backgroundColor:
+              AppColors.transparent, //whole widget color while expanding
           trailing: getTrailingWidget,
           collapsedBackgroundColor: AppColors.transparent, //collapse color
           minTileHeight: 0, //make min height 0
           // childrenPadding: getPadding(horizontal: 100),
           /*shapes*/
           collapsedShape: RoundedRectangleBorder(
-            side: BorderSide(color: AppColors.white),
-            borderRadius: BorderRadius.circular(19),
+            side: BorderSide(color: AppColors.borderColor),
+            borderRadius: BorderRadius.circular(10.r),
           ), //collapse shape
           shape: RoundedRectangleBorder(
               side: BorderSide(
                 width: 1,
                 color: widget.borderColor ?? AppColors.borderColor,
               ),
-              borderRadius: BorderRadius.circular(19.h)), //the whole widget shape while expanding
+              borderRadius: BorderRadius.circular(
+                  19.h)), //the whole widget shape while expanding
           title: Row(
             children: [
               Text(
                 activeText.isNotEmpty ? activeText : widget.title,
                 style: widget.titleStyle ??
                     getRegularTextStyle(
-                      color: AppColors.black.withOpacity(0.5),
+                      color: AppColors.darkMainAppColor,
                       fontSize: 14,
                     ),
               ),
@@ -82,7 +87,7 @@ class _ExpansionTileDropDownState extends State<ExpansionTileDropDown> {
           ),
           children: List.generate(
             widget.items.length,
-                (index) => buildExpandedItem(index),
+            (index) => buildExpandedItem(index),
           )),
     );
   }
@@ -100,7 +105,9 @@ class _ExpansionTileDropDownState extends State<ExpansionTileDropDown> {
         padding: getPadding(vertical: 10, horizontal: 10),
         margin: getMargin(horizontal: 20, bottom: 15),
         decoration: BoxDecoration(
-          color: activeText == widget.items[index].name ? AppColors.primaryColor : AppColors.grey.withOpacity(0.1),
+          color: activeText == widget.items[index].name
+              ? AppColors.primaryColor
+              : AppColors.grey.withOpacity(0.1),
           borderRadius: const BorderRadius.all(Radius.circular(10)),
         ),
         child: Row(
@@ -110,7 +117,9 @@ class _ExpansionTileDropDownState extends State<ExpansionTileDropDown> {
               widget.items[index].name,
               style: getRegularTextStyle(
                 fontSize: 15,
-                color: activeText == widget.items[index].name ? AppColors.white : null,
+                color: activeText == widget.items[index].name
+                    ? AppColors.white
+                    : null,
               ),
               textAlign: TextAlign.start,
             ),
@@ -134,17 +143,17 @@ class _ExpansionTileDropDownState extends State<ExpansionTileDropDown> {
           );
         }
       } else {
-        return SizedBox.shrink();
+        return const SizedBox.shrink();
       }
     }
     return _buildLoadingTrailingWidget;
   }
 
-  get _buildLoadingTrailingWidget => SizedBox(
-    height: 8,
-    width: 8,
-    child: CircularProgressIndicator(
-      color: AppColors.darkMainAppColor,
-    ),
-  );
+  get _buildLoadingTrailingWidget => const SizedBox(
+        height: 8,
+        width: 8,
+        child: CircularProgressIndicator(
+          color: AppColors.darkMainAppColor,
+        ),
+      );
 }

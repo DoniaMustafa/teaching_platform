@@ -18,7 +18,7 @@ class BuildQualificationEducationType extends StatefulWidget {
 
 class _BuildQualificationEducationTypeState
     extends State<BuildQualificationEducationType>
-    with QualificationEducationVariables {
+    with QualificationEducationVariables, SignUpByPhoneVariables  {
   @override
   Widget build(BuildContext context) {
     return ExpansionTileDropDown(

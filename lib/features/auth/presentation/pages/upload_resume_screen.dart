@@ -8,7 +8,7 @@ class UploadResumeScreen extends StatefulWidget {
   State<UploadResumeScreen> createState() => _UploadResumeScreenState();
 }
 
-class _UploadResumeScreenState extends State<UploadResumeScreen> {
+class _UploadResumeScreenState extends State<UploadResumeScreen> with SignUpByPhoneVariables{
   //Initial definition of radio button value
   @override
   Widget build(BuildContext context) {

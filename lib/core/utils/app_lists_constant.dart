@@ -34,9 +34,9 @@ class AppListsConstant {
       role: AppStrings().parent,
     ),
     GenericModel(
-      id: 4,
+      id: 7,
       image: AppAssets().professionalCourses,
-      role: AppStrings().course,
+      role: AppStrings().professionalCourses,
       title: AppStrings().professionalCourse.trans,
     ),
     GenericModel(
@@ -56,6 +56,10 @@ class AppListsConstant {
     AppStrings().video.trans,
     AppStrings().url.trans,
   ];
+  static List<String> subscribeTab = [
+    AppStrings().courses.trans,
+    AppStrings().groups.trans,
+  ];
 
   static List<GenericModel> onBoardingBody = [
     GenericModel(
@@ -72,13 +76,15 @@ class AppListsConstant {
 
   static List<GenericModel> coursesRole = [
     GenericModel(
+      id: 1,
       image: AppAssets().student,
       role: AppStrings().student,
       title: AppStrings().student.trans,
     ),
     GenericModel(
+      id: 8,
       image: AppAssets().teacher,
-      role: AppStrings().lecture,
+      role: AppStrings().professionalLecturer,
       title: AppStrings().lecture.trans,
     ),
   ];

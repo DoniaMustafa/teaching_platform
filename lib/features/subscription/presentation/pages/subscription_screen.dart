@@ -1,10 +1,11 @@
 import 'package:teaching/core/widget/common_widgets/custom_tab_bar.dart';
 import 'package:teaching/features/subscription/presentation/manager/subscriptipn_operation_cubit.dart';
-import 'package:teaching/features/subscription/presentation/widgets/build_subscription_subjects.dart';
+import 'package:teaching/features/subscription/presentation/widgets/custom_subject_list.dart';
 import 'package:teaching/features/subscription/presentation/widgets/build_subscription_tab_bar.dart';
 import 'package:teaching/features/subscription/presentation/widgets/build_subscription_tab_bar_view.dart';
 
 import '../../../../core/export/export.dart';
+import '../../../home/presentation/manager/subscription_cubit.dart';
 
 class SubscriptionScreen extends StatefulWidget {
   const SubscriptionScreen({super.key});
@@ -18,7 +19,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    context.read<CoursesGroupsCubit>().getCourserAndGroups();
+    context.read<SubscriptionCubit>().getSubscription();
   }
 
   @override
@@ -27,10 +28,10 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
       title: AppStrings().schedule.trans,
       widget: Column(
         children: [
-          BuildSubscriptionSubjects(),
+         CustomSubjectList(label: 'لغة عربيه',onTap: (){},image:AppAssets().exam,),
           20.vs,
-          CustomTabBar(),
-          BuildSubscriptionTabBarView(),
+        const  BuildSubscriptionTabBar(),
+         const BuildSubscriptionTabBarView(),
           BlocBuilder<SubscriptionOperationCubit, CubitStates>(
             builder: (context, state) {
               return CustomElevatedButton(
@@ -44,11 +45,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
           10.vs,
         ],
       ),
-      // CustomListView(
-      //     axisDirection: Axis.vertical,
-      //     shrinkWrap: true,
-      //     itemCount: 20,
-      //     widget: (context, index) => BuildScheduleItem()),
+
     );
   }
 }

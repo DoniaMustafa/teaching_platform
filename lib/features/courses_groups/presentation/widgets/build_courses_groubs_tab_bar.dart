@@ -2,19 +2,21 @@ import 'package:teaching/core/export/export.dart';
 import 'package:teaching/core/widget/common_widgets/custom_tab_bar.dart';
 import 'package:teaching/features/subscription/presentation/manager/subscriptipn_operation_cubit.dart';
 
-class BuildSubscriptionTabBar extends StatelessWidget {
-  const BuildSubscriptionTabBar({super.key});
+import '../manager/coures_group_operation_cubit.dart';
+
+class BuildCoursesGroupsTabBar extends StatelessWidget {
+  const BuildCoursesGroupsTabBar({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SubscriptionOperationCubit, CubitStates>(
+    return BlocBuilder<CoursesGroupOperationCubit, CubitStates>(
       builder: (context, state) {
         return CustomTabBar(
           onTap: (index) => context
-              .read<SubscriptionOperationCubit>()
+              .read<CoursesGroupOperationCubit>()
               .onChangeTabIndex(index),
           text: AppListsConstant.subscribeTab,
-          selectedIndex: context.read<SubscriptionOperationCubit>().tabIndex,
+          selectedIndex: context.read<CoursesGroupOperationCubit>().tabIndex,
         );
       },
     );

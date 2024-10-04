@@ -1,20 +1,21 @@
 import 'package:teaching/core/export/export.dart';
 import 'package:teaching/core/widget/shimmer_widget.dart';
+import 'package:teaching/features/courses_groups/presentation/manager/coures_group_operation_cubit.dart';
 import 'package:teaching/features/home/presentation/manager/subscription_cubit.dart';
 import 'package:teaching/features/subscription/presentation/manager/subscriptipn_operation_cubit.dart';
 
-class BuildSubscriptionTabBarView extends StatelessWidget {
-  const BuildSubscriptionTabBarView({super.key});
+class BuildCoursesGroupTabBarView extends StatelessWidget {
+  const BuildCoursesGroupTabBarView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: BlocBuilder<SubscriptionCubit, CubitStates>(
+      child: BlocBuilder<CoursesGroupsCubit, CubitStates>(
         builder: (context, state) {
           if (state is FailedState) {
             return CustomErrorWidget(
               onTap: () =>
-                  context.read<SubscriptionCubit>().getSubscription(),
+                  context.read<CoursesGroupsCubit>().getCourserAndGroups(),
               message: state.message,
             );
           }
@@ -28,9 +29,9 @@ class BuildSubscriptionTabBarView extends StatelessWidget {
   }
 
   Widget buildTabBarView(CubitStates state) =>
-      BlocBuilder<SubscriptionOperationCubit, CubitStates>(
+      BlocBuilder<CoursesGroupOperationCubit, CubitStates>(
         builder: (context, state) {
-          return BlocBuilder<SubscriptionCubit, CubitStates>(
+          return BlocBuilder<CoursesGroupsCubit, CubitStates>(
             builder: (context, state) {
               return GridView.count(
                 crossAxisCount: 2,
@@ -41,14 +42,14 @@ class BuildSubscriptionTabBarView extends StatelessWidget {
                 childAspectRatio: 0.5 / 0.55,
                 children: List.generate(
                   state is LoadedState
-                      ? (context.read<SubscriptionOperationCubit>().tabIndex ==
+                      ? (context.read<CoursesGroupOperationCubit>().tabIndex ==
                               0
                           ? state.data.courses.length
                           : state.data.groups.length)
                       : AppConstants.nShimmerItems,
                   (index) {
                     if (state is LoadedState) {
-                      if (context.read<SubscriptionOperationCubit>().tabIndex ==
+                      if (context.read<CoursesGroupOperationCubit>().tabIndex ==
                           0) {
                         return CustomItem(
                             onTap: () {},

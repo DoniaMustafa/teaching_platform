@@ -1,4 +1,9 @@
+import 'package:teaching/features/auth/presentation/manager/countries_cubit.dart';
+
+import 'package:teaching/features/auth/presentation/manager/countries_cubit.dart';
+
 import '../../../../core/export/export.dart';
+import '../../data/models/contry_response_model.dart';
 
 mixin SignUpScreenVariables {
   TextEditingController email = TextEditingController();
@@ -9,7 +14,7 @@ mixin SignUpScreenVariables {
   final _formKey = GlobalKey<FormState>();
   String selectedCountry = '';
   int? selected;
-  List<String>countries=['مصر','امارات','قصر','امارات'];
+  List<String> countries = ['مصر', 'امارات', 'قصر', 'امارات'];
 }
 
 class SignUpScreen extends StatefulWidget {
@@ -20,7 +25,7 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen>
-    with SignUpScreenVariables {
+    with SignUpScreenVariables, SignUpByPhoneVariables {
   @override
   Widget build(BuildContext context) {
     return BuildBackgroundWithAppBar(
@@ -46,26 +51,26 @@ class _SignUpScreenState extends State<SignUpScreen>
               200.vs,
 
               // if (SignUpByPhoneScreen.userType != 'parent')
-              BuildNextButton(
-                onTap: () {
-                  // _formKey.currentState!.validate();
-                  // if (AppService()
-                  //     .getBlocData<ErrorCubit>()
-                  //     .errors
-                  //     .isEmpty) {
-                  if (SignUpByPhoneScreen.userType != 'parent' &&
-                      SignUpByPhoneScreen.userType != 'lecture') {
-                    Routes.educationTypeRoute.moveTo;
-                  } else if (SignUpByPhoneScreen.userType == 'lecture') {
-                    Routes.uploadResumeRoute.moveTo;
-                  }
+              // BuildNextButton(
+              //   onTap: () {
+              //     // _formKey.currentState!.validate();
+              //     // if (AppService()
+              //     //     .getBlocData<ErrorCubit>()
+              //     //     .errors
+              //     //     .isEmpty) {
+              //     if (SignUpByPhoneScreen.userType != 'Parent' &&
+              //         SignUpByPhoneScreen.userType != 'lecture') {
+              //       Routes.educationTypeRoute.moveTo;
+              //     } else if (SignUpByPhoneScreen.userType == 'lecture') {
+              //       Routes.uploadResumeRoute.moveTo;
+              //     }
 
-                  // }
-                },
-                text: SignUpByPhoneScreen.userType == 'parent'
-                    ? AppStrings().createAccount.trans
-                    : AppStrings().continuation.trans,
-              ),
+              // }
+              // },
+              //   text: SignUpByPhoneScreen.userType == 'parent'
+              //       ? AppStrings().createAccount.trans
+              //       : AppStrings().continuation.trans,
+              // ),
               40.vs,
             ],
           ),
@@ -89,11 +94,30 @@ class _SignUpScreenState extends State<SignUpScreen>
               controller: email,
             ),
             26.vs,
-            ExpansionTileDropDown(
-              items: countries,
-              onSelected: (int id) {},
-              title: AppStrings().country.trans,
-              status:ListStatus.listLoaded,
+            BlocBuilder<CountriesCubit, CubitStates>(
+              builder: (context, state) {
+                return Column(
+                  children: [
+                    ExpansionTileDropDown(
+                      items: getItems(state),
+                      onSelected: (int id) {},
+                      title: AppStrings().country.trans,
+                      status: getListStatus(state),
+                    ),
+                    BlocBuilder<ErrorCubit, ErrorState>(
+                      builder: (context, state) {
+                        return ErrorText(
+                          showError: context
+                              .read<ErrorCubit>()
+                              .errors
+                              .contains(Errors.CONFIRM_PASSWORD_ERROR),
+                          text: getError[Errors.CONFIRM_PASSWORD_ERROR]!,
+                        );
+                      },
+                    )
+                  ],
+                );
+              },
             ),
 
             // 26.vs,
@@ -104,4 +128,16 @@ class _SignUpScreenState extends State<SignUpScreen>
           ],
         ),
       );
+
+  List<CountryDataModel> getItems(CubitStates state) {
+    if (state is LoadedState) return state.data;
+    return [];
+  }
+
+  ListStatus getListStatus(CubitStates state) {
+    if (state is FailedState) return ListStatus.listError;
+    if (state is LoadedState) return ListStatus.listLoaded;
+    if (state is LoadingState) return ListStatus.listLoading;
+    return ListStatus.initial;
+  }
 }

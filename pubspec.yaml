@@ -55,8 +55,8 @@ dependencies:
   easy_localization:
   shared_preferences:
   dartz:
-
-
+  flutter_local_notifications:
+  permission_handler:
 
 
 

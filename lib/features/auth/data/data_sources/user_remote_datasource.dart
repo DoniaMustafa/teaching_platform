@@ -1,19 +1,19 @@
 import 'package:teaching/features/auth/data/models/post_params_education_model.dart';
 
 import '../../../../core/export/export.dart';
+import '../models/step_no_respons_model.dart';
 
 abstract class UserRemoteDataSource {
-  Future<ResponseModel> registerByPhoneNumber(
-      {required String phone, required int roleId});
-  Future<ResponseModel> verifyOTP({
-    required String phone,
-    required String verificationCode,
-  });
+  Future<ResponseModel> registerByPhoneNumber({required UserModel user});
+  Future<ResponseModel> verifyOTP({required UserModel user});
 
   Future<ResponseModel> register({UserModel? user});
   Future<ResponseModel> sendEducationData({PostParamsEducationModel? user});
 
-Future<ResponseModel> login({required String phone, required String password,});
+  Future<ResponseModel> login({
+    required String phone,
+    required String password,
+  });
   // Future<ResponseModel> editUserData({required UserModel user});
   // Future<ResponseModel> forgetPassword({
   //   required String phone,
@@ -36,27 +36,20 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource {
 
   @override
   Future<ResponseModel> registerByPhoneNumber(
-          {required String phone, required int roleId}) async =>
+          {required UserModel user}) async =>
       await remoteExecute(
           request: dioConsumer.postRequest(
             path: EndPoints.registerByPhone,
-            body: {
-              "PhoneNumber": phone,
-              "UserType": roleId,
-            },
+            body: user.toJson(),
           ),
           fromJsonFunction: (data) => VerificationResponseModel.fromJson(data));
   @override
-  Future<ResponseModel> verifyOTP({
-    required String phone,
-    required String verificationCode,
-  }) =>
-      remoteExecute(
-          request: dioConsumer.postRequest(path: EndPoints.verify, body: {
-            "PhoneNumber": phone,
-            "Code": verificationCode,
-          }),
-          fromJsonFunction: ResponseModel.fromJson);
+  Future<ResponseModel> verifyOTP({required UserModel user}) => remoteExecute(
+      request: dioConsumer.postRequest(path: EndPoints.verify, body: {
+        "PhoneNumber": "${user.phoneNumber}",
+        "Code": "${user.verifyCode}"
+      }),
+      fromJsonFunction: StepNoResponseModel.fromJson);
   @override
   Future<ResponseModel> register({UserModel? user}) async => remoteExecute(
         request: dioConsumer.postRequest(
@@ -79,18 +72,19 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource {
         fromJsonFunction: ResponseModel.fromJson,
       );
 
-
-@override
-  Future<ResponseModel> login({required String phone, required String password}) async => await remoteExecute(
-      request: dioConsumer.postRequest(
-        path: EndPoints.login,
-        body: {
-          "UserName": phone,
-          "Password": password,
-          "grant_type":"password",
-                  },
-      ),
-      fromJsonFunction: (data) => LoginUserResponseModel.fromJson(data));
+  @override
+  Future<ResponseModel> login(
+          {required String phone, required String password}) async =>
+      await remoteExecute(
+          request: dioConsumer.postRequest(
+            path: EndPoints.login,
+            body: {
+              "UserName": phone,
+              "Password": password,
+              "grant_type": "password",
+            },
+          ),
+          fromJsonFunction: (data) => LoginUserResponseModel.fromJson(data));
   //
   // @override
   // Future<ResponseModel> forgetPassword({

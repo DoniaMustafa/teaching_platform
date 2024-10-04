@@ -5,18 +5,18 @@ abstract class UserState {}
 
 class SignupInitial extends UserState {}
 
-// class SignupLoadingState extends UserState {}
-//
-// class SignUpSuccessState extends UserState {
-//   final String? otp;
-//   SignUpSuccessState({required this.otp});
-// }
-//
-// class SignupErrorState extends UserState {
-//   final String massage;
-//
-//   SignupErrorState({required this.massage});
-// }
+class SignupLoadingState extends UserState {}
+
+class SignUpSuccessState extends UserState {
+  final String? otp;
+  SignUpSuccessState({required this.otp});
+}
+
+class SignupErrorState extends UserState {
+  final String massage;
+
+  SignupErrorState({required this.massage});
+}
 
 ///*************************************///
 // class AddAccountLoadingState extends UserState {
@@ -102,19 +102,20 @@ class LoginErrorState extends UserState {
 //
 //   OtpErrorState({required this.massage});
 // }
-//
-// class verifyOTPStartingState extends UserState {}
-//
-// class VerifyOtpSuccessState extends UserState {
-//   final UserModel user;
-//   VerifyOtpSuccessState({required this.user});
-// }
-//
-// class VerifyOTPErrorState extends UserState {
-//   final String massage;
-//
-//   VerifyOTPErrorState({required this.massage});
-// }
+
+class verifyOTPStartingState extends UserState {}
+
+class VerifyOtpSuccessState extends UserState {
+  final int step;
+
+  VerifyOtpSuccessState({required this.step});
+}
+
+class VerifyOTPErrorState extends UserState {
+  final String massage;
+
+  VerifyOTPErrorState({required this.massage});
+}
 //
 // class ForgetPasswordStartingState extends UserState {}
 //

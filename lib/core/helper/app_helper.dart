@@ -2,10 +2,13 @@ import 'dart:convert';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dartz/dartz.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../../service_locator.dart';
 import '../export/export.dart';
 import '../network/error_handler/error_handler.dart';
+import '../permission_handler.dart';
+import '../widget/permission_dialog.dart';
 
 // PermissionManager permissionManager = ServiceLocator().getIt<PermissionManager>();
 
@@ -164,8 +167,8 @@ Map<String, dynamic>? getArguments(BuildContext context) =>
 // }
 //
 // /// returns true if network is available
-// PermissionManager permissionManager =
-//     ServiceLocator().getIt<PermissionManager>();
+PermissionManager permissionManager =
+    ServiceLocator().getIt<PermissionManager>();
 // Future<bool> checkConnection() async {
 //   final List<ConnectivityResult> connectivityResult =
 //       await (Connectivity().checkConnectivity());
@@ -601,20 +604,20 @@ Future<Either<Failure, ResponseModel>> execute(
   }
 }
 //
-// Future<bool> checkNotificationPermission(
-//   BuildContext context,
-// ) async {
-//   permissionManager.setPermissionTypeAndContext(
-//     context: context,
-//     type: Permission.notification.value,
-//     dialog: PermissionDialog(
-//       title: AppStrings().notifications.trans,
-//       asset: AppAssets().notificationDialog,
-//       description: AppStrings().notificationPermission.trans,
-//     ),
-//   );
-//   return await permissionManager.getPermission();
-// }
+Future<bool> checkNotificationPermission(
+  BuildContext context,
+) async {
+  permissionManager.setPermissionTypeAndContext(
+    context: context,
+    type: Permission.notification.value,
+    dialog: PermissionDialog(
+      title: 'AppStrings().notifications.trans',
+      asset: 'AppAssets().notificationDialog',
+      description: AppStrings().notificationPermission.trans,
+    ),
+  );
+  return await permissionManager.getPermission();
+}
 //
 // Future<bool> checkCameraPermission(
 //   BuildContext context,

@@ -1,4 +1,4 @@
-enum RoleType { student, parent, teacher, course, school, assistant, lecture }
+enum RoleType { Student, Parent, Teacher, ProfessionalCourses, School, Assistant, ProfessionalLecturer }
 enum ListStatus {
   listLoaded,
   listError,

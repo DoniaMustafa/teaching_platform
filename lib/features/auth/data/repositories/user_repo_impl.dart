@@ -23,6 +23,26 @@ class UserRepoImpl extends UserRepo {
                 password: password,
               ),
           local: (data) => userLocalDataSource.cacheUser(user: data.user));
+  @override
+  Future<Either<Failure, ResponseModel>> registerByPhoneNumber(
+          {required UserModel user}) async =>
+      execute(
+        () => userRemoteDataSource.registerByPhoneNumber(user: user),
+      );
+
+  @override
+  Future<Either<Failure, ResponseModel>> register({UserModel? user}) async =>
+      execute(
+        () => userRemoteDataSource.register(user: user),
+      );
+
+  @override
+  Future<Either<Failure, ResponseModel>> verifyOTP(
+          {required UserModel user}) async =>
+      execute(
+        () => userRemoteDataSource.verifyOTP(user: user),
+      );
+
 //   @override
 //   Future<Either<Failure, ResponseModel>> forgetPassword({
 //     required String phone,
@@ -148,6 +168,7 @@ class UserRepoImpl extends UserRepo {
   @override
   Future<Either<Failure, ResponseModel>> cacheToken(String token) =>
       executeCache(() => userLocalDataSource.cacheToken(token: token));
+
 //
 //   @override
 //   Future<Either<Failure, ResponseModel>> cacheImage(String image) =>

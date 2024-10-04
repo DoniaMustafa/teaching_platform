@@ -13,7 +13,7 @@ class BuildCategories extends StatelessWidget {
         separatorWidget: (context, index) => SizedBox(
           width: 10.w,
         ),
-        itemCount: RoleType.student.isTrue
+        itemCount: RoleType.Student.isTrue
             ? AppListsConstant.listOfStudentCategories.length
             : AppListsConstant.listOfTeacherCategories.length,
         widget: (context, index) => Column(
@@ -35,7 +35,7 @@ class BuildCategories extends StatelessWidget {
                     asset: AppAssets().listOfStudentCategories[index])),
             5.vs,
             CustomTextWidget(
-              text: RoleType.student.isTrue
+              text: RoleType.Student.isTrue
                   ? AppListsConstant.listOfStudentCategories[index].title!
                   : AppListsConstant.listOfTeacherCategories[index].title!,
               style: getRegularTextStyle(

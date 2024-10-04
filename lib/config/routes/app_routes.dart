@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teaching/core/utils/app_colors.dart';
 import 'package:teaching/core/utils/extensions.dart';
+import 'package:teaching/features/auth/presentation/manager/countries_cubit.dart';
+import 'package:teaching/features/courses_groups/presentation/pages/courses_groups_screen.dart';
 import 'package:teaching/features/main_register/presentation/pages/main_register_screen.dart';
 import 'package:teaching/features/auth/presentation/pages/choose_role_screen.dart';
 import 'package:teaching/features/auth/presentation/pages/chosse_professional_courses_screen.dart';
@@ -13,6 +15,7 @@ import 'package:teaching/features/auth/presentation/pages/sign_up_py_phone_scree
 import 'package:teaching/features/auth/presentation/pages/sign_up_screen.dart';
 import 'package:teaching/features/auth/presentation/pages/verification_screen.dart';
 import 'package:teaching/features/splash_screen.dart';
+import 'package:teaching/service_locator.dart';
 
 import '../../features/bottom_nav_bar/presentaion/page/bottom_nav_bar_screen.dart';
 import '../../features/language/presentation/managers/language_cubit/language_cubit.dart';
@@ -24,7 +27,7 @@ enum PageRouteAnimation { Fade, Scale, Rotate, Slide, SlideBottomTop }
 class Routes {
   Routes._internal();
   static const String splashRoute = "/";
-  // static const String onBoardingRoute = "On Boarding Screen";
+  static const String coursesGroupsRoute = "Courses Groups Screen";
 
   static const String mainRoute = "main";
   static const String loginRoute = "login";
@@ -36,7 +39,7 @@ class Routes {
 
   static const String educationTypeRoute = " education Type Trip";
   static const String forgetPassRoute = "forget Password";
-  static const String verificationRoute = "verification";
+  static const String verificationRoute = "/verification";
   static const String resetPasswordRoute = "/reset_passsword";
   static const String bottomNavigationRoute = "bottom Navigation Route";
   static const String setPassRoute = "set Password";
@@ -113,9 +116,9 @@ class RouteGenerator {
         return buildPageRoute(
             child: SignUpScreen(), routeSettings: routeSettings);
 
-      // case Routes.chooseCountryRoute:
-      //   return buildPageRoute(
-      //       child: ChooseCountryScreen(), routeSettings: routeSettings);
+      case Routes.coursesGroupsRoute:
+        return buildPageRoute(
+            child: CoursesGroupsScreen(), routeSettings: routeSettings);
       case Routes.uploadResumeRoute:
         return buildPageRoute(
             child: UploadResumeScreen(), routeSettings: routeSettings);

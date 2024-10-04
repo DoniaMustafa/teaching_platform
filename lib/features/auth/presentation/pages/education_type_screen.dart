@@ -13,7 +13,7 @@ class EducationTypeScreen extends StatefulWidget {
 }
 
 class _EducationTypeScreenState extends State<EducationTypeScreen>
-    with QualificationEducationVariables {
+    with SignUpByPhoneVariables, QualificationEducationVariables {
   @override
   Widget build(BuildContext context) {
     return BuildBackgroundWithAppBar(
@@ -29,13 +29,10 @@ class _EducationTypeScreenState extends State<EducationTypeScreen>
               height: 190.h,
             ),
             20.vs,
-            if (SignUpByPhoneScreen.userType == AppStrings().student)
-              _buildStudentEducation,
-            // // if (SignUpScreen.userType == 'teacher') 48.vs,
-            if (SignUpByPhoneScreen.userType == AppStrings().teacher)
-              _buildTeacherEducation,
-            if (SignUpByPhoneScreen.userType == AppStrings().assistant)
-              _buildAssistantEducation,
+            if (SignUpByPhoneScreen.userType == AppStrings().student) _buildStudentEducation,
+            // // if (SignUpScreen.SignUpByPhoneScreen.userType == 'teacher') 48.vs,
+            if (SignUpByPhoneScreen.userType == AppStrings().teacher) _buildTeacherEducation,
+            if (SignUpByPhoneScreen.userType == AppStrings().assistant) _buildAssistantEducation,
             const Spacer(),
             Align(
                 alignment: AlignmentDirectional.bottomEnd,

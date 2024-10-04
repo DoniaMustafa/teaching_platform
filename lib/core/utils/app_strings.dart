@@ -6,8 +6,11 @@ class AppStrings {
   final String birthDateError = "birthDateError";
 
   final String drivingLicenceExpiryError = "drivingLicenceExpiryError";
+  final String signUp = 'signUp';
 
+  final String otpCode = 'otpCode';
 
+  final String otpCodeError = 'otpCodeError';
   final String create = 'create';
   final String account = 'account';
 
@@ -71,7 +74,7 @@ class AppStrings {
   // final String userNameError = 'userNameError';
   final String passwordError = 'passwordError';
   final String cacheWriteSuccess = "cache_write_success";
-  final String otpCodeError = 'otpCodeError';
+  final String deny = 'deny';
   final String notFoundInCache = "not_found_in_cache";
 
   final String cacheReadSuccess = "cache_read_success";
@@ -79,6 +82,7 @@ class AppStrings {
   final String confirmPasswordError = 'confirmPasswordError';
   final String reportError = 'reportError';
   final String notificationTitle = 'notificationTitle';
+  final String coursesAndGroups = 'coursesAndGroups';
 
   final String schedule = 'schedule';
   final String chat = 'chat';
@@ -108,15 +112,19 @@ class AppStrings {
   final String en = "EN";
   final String arabic = "arabic";
   final String english = "english";
-  final String student = "student";
+  final String student = "Student";
   final String serverError = 'serverError';
   // final String otpCode = 'otpCode';
   // final String massageError = 'massageError';
-  final String teacher = 'teacher';
+  final String teacher = 'Teacher';
   final String school = "school";
   final String lecture = "lecture";
-  final String assistant = "assistant";
-  final String parent = 'parent';
+  final String assistant = "Assistant";
+  final String parent = 'Parent';
+
+  final String professionalLecturer = 'ProfessionalLecturer';
+
+  final String professionalCourses= 'ProfessionalCourses';
   final String course = 'course';
   final String myCourses = 'myCourses';
   final String myGroups = 'myGroups';
@@ -206,14 +214,14 @@ class AppStrings {
   //
   // //////////////////////////////////////////////////////
 
-  // final String notifications = "notifications";
-  // final String notificationPermission = "notificationPermission";
+  final String notifications = "notifications";
+  final String notificationPermission = "notificationPermission";
   // final String cameraPermission = "cameraPermission";
   // final String locationPermission = "locationPermission";
   // final String location = "location";
   // final String locatingYou = "locatingYou";
   // final String locationPermissionFailed = "locationPermissionFailed";
-  // final String notificationPermissionFailed = "notificationPermissionFailed";
+  final String notificationPermissionFailed = "notificationPermissionFailed";
   // final String findingLocationFailed = "findingLocationFailed";
   //
 
@@ -222,7 +230,7 @@ class AppStrings {
 
   // final String enterOldPassword = 'enterOldPassword';
   //
-  // final String allow = "allow";
+  final String allow = "allow";
   // final String precise = "precise";
 
   //
@@ -246,7 +254,7 @@ class AppStrings {
   //
   // final String addressRequired = '"addressRequired';
   //
-  // final String all = "all";
+  final String all = "all";
   //
   // final String appTitle = "appTitle";
   //
@@ -711,7 +719,7 @@ class AppStrings {
   //
   // final String verifyTitle = 'verifyTitle';
   //
-  // final String verifying = 'verifying';
+  final String verifying = 'verifying';
   //
   // final String viaCash = 'viaCash';
   //

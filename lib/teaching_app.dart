@@ -14,14 +14,15 @@ class TeachingApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-        providers: BlocProviders.providers,
-        child: GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: () {
-            AppService().hideKeyboard;
-          },
-          child: _buildApp(context),
-        ));
+      providers: BlocProviders.providers,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          AppService().hideKeyboard;
+        },
+        child: _buildApp(context),
+      ),
+    );
   }
 
   _buildApp(BuildContext context) {
@@ -34,7 +35,7 @@ class TeachingApp extends StatelessWidget {
       locale: context.locale,
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
-      // home: OnBoardingScreen(),
+      home: LoginScreen(),
     );
   }
 }

@@ -73,7 +73,7 @@ abstract class EndPoints {
 //
 //
 //   static const String categories = '${api}category/list';
-//   static const String services = '${api}category/service/';
+  static const String country = '${api}Country/GetCountries';
 //
 //   static const String info = "${api}info";
 }

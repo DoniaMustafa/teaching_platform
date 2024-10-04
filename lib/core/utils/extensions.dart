@@ -4,14 +4,10 @@
 //
 // import '../../config/routes/app_routes_helper.dart';
 import 'dart:convert';
-
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
 import 'package:inspection/inspection.dart';
 import 'package:teaching/config/routes/app_routes_helper.dart';
-import 'package:teaching/core/utils/size_utils.dart';
-
-import '../../config/constants.dart';
+import 'package:teaching/core/export/export.dart';
 
 extension StringExtension on String {
   String get removeSpaces => replaceAll(' ', '');
@@ -56,6 +52,14 @@ extension StringExtension on String {
 //
 //   /// Returns true if given String is null or isEmpty
   bool get isEmptyOrNull => (isEmpty) || (this == 'null');
+
+  bool get validateOtp {
+    if (isNullOrEmpty || length < AppConstants.otpLength) {
+      return false;
+    }
+    return true;
+  }
+
   // String validate({String value = ''}) {
   //   if (isEmptyOrNull) {
   //     return value;
@@ -166,6 +170,11 @@ extension CutomMethodsOnNullObject on Object? {
   String get fromJsonToString => jsonEncode(this);
   bool get isNull => this == null;
   bool get isNotNull => this != null;
+  bool get isNotNullAndIsFalse => this != null && this == false;
+  bool get isNotNullAndIsTrue => this != null && this == true;
+  bool get isNullOrIsFalse => this == null || this == true;
+  bool get isNotNullOrFalse => this != null || this != true;
+
   bool get isTrue => this == true;
   bool get isFalse => this == false;
   Widget isNotNullGetWidget(Widget widget) =>
@@ -196,8 +205,8 @@ extension StringNullExtension on String? {
   bool get isNullOrEmpty => this == null || this!.isEmpty;
   bool get validatePhone => Inspection()
           .inspect(this,
-              'required|numeric|min:8|max:8',
-              message: 'AppStrings().phoneError', name: this)
+              'required|numeric|min:11|max:11',
+              message: AppStrings().phoneError.trans, name: this)
           .isNullOrEmpty
       ? true
       : false;
