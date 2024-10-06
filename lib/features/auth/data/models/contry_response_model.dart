@@ -6,25 +6,25 @@ import 'dart:convert';
 
 import 'package:teaching/core/export/export.dart';
 
-CountryResponseModel countryResponseModelFromJson(String str) => CountryResponseModel.fromJson(json.decode(str));
+PublicResponseModel countryResponseModelFromJson(String str) => PublicResponseModel.fromJson(json.decode(str));
 
-String countryResponseModelToJson(CountryResponseModel data) => json.encode(data.toJson());
+String countryResponseModelToJson(PublicResponseModel data) => json.encode(data.toJson());
 
-class CountryResponseModel extends ResponseModel{
+class PublicResponseModel extends ResponseModel{
 
 
-  CountryResponseModel({
+  PublicResponseModel({
     super.success,
     super.message,
     super.code,
     super.data,
   });
 
-  factory CountryResponseModel.fromJson(Map<String, dynamic> json) => CountryResponseModel(
+  factory PublicResponseModel.fromJson(Map<String, dynamic> json) => PublicResponseModel(
     success: json["Success"],
     message: json["Message"],
     code: json["Code"],
-    data: json["Data"] == null ? [] : List<CountryDataModel>.from(json["Data"]!.map((x) => CountryDataModel.fromJson(x))),
+    data: json["Data"] == null ? [] : List<PublicDataModel>.from(json["Data"]!.map((x) => PublicDataModel.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -35,16 +35,16 @@ class CountryResponseModel extends ResponseModel{
   };
 }
 
-class CountryDataModel {
+class PublicDataModel {
   final int? id;
   final String? name;
 
-  CountryDataModel({
+  PublicDataModel({
     this.id,
     this.name,
   });
 
-  factory CountryDataModel.fromJson(Map<String, dynamic> json) => CountryDataModel(
+  factory PublicDataModel.fromJson(Map<String, dynamic> json) => PublicDataModel(
     id: json["Id"],
     name: json["Name"],
   );

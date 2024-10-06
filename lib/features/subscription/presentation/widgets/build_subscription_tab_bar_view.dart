@@ -38,7 +38,7 @@ class BuildSubscriptionTabBarView extends StatelessWidget {
                 mainAxisSpacing: 15.h,
                 crossAxisSpacing: 20.w,
                 shrinkWrap: true,
-                childAspectRatio: 0.5 / 0.55,
+                childAspectRatio: 0.5 / 0.6,
                 children: List.generate(
                   state is LoadedState
                       ? (context.read<SubscriptionOperationCubit>().tabIndex ==

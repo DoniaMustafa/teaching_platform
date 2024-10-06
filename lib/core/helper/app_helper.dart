@@ -406,7 +406,7 @@ Future<ResponseModel> remoteExecute({
       responseModel = ResponseModel(
         code: response.statusCode,
         success: false,
-        message: "${error.runtimeType}\n$error",
+        message: "${error.runtimeType}\n${error.toString()}",
       );
     }
   } else {
@@ -417,6 +417,7 @@ Future<ResponseModel> remoteExecute({
       responseModel = ResponseModel.fromJson(jsonDecode(data));
     } on FormatException {
       /// If JSON decoding fails (e.g., invalid format), create a generic error `ResponseModel`.
+      ///
       responseModel = ResponseModel(
           code: response.statusCode, message: data, success: false);
     }
@@ -603,6 +604,7 @@ Future<Either<Failure, ResponseModel>> execute(
     return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
   }
 }
+
 //
 Future<bool> checkNotificationPermission(
   BuildContext context,

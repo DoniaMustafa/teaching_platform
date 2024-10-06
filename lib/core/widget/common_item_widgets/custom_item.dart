@@ -10,10 +10,12 @@ class CustomItem extends StatelessWidget {
       this.isSubScribe = false,
       this.groupsModel,
       this.onTap,
+      this.scalar,
       this.coursesModel});
   bool? isSubScribe;
   final void Function()? onTap;
   final GroupsModel? groupsModel;
+  final TextScaler? scalar;
   final CoursesModel? coursesModel;
   @override
   Widget build(BuildContext context) {
@@ -30,98 +32,71 @@ class CustomItem extends StatelessWidget {
         padding: getPadding(top: 15.h, bottom: 10.h, horizontal: 20.w),
         backgroundColor: AppColors.white,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // isCircle
-            //     ? CustomNetworkImage.circular(
-            //         radius: 70.r,
-            //         imageUrl: AppAssets().student,
-            //       )
-            //     :
-            CustomNetworkImage.rectangle(
-              width: 70.w,
-              height: 80.h,
+            CustomNetworkImage.circular(
+              radius: 90.r,
               imageUrl: coursesModel.isNotNull
                   ? '${EndPoints.baseUrl}${coursesModel!.teacherPicture!}'
                   : '${EndPoints.baseUrl}${groupsModel!.teacherPicture!}',
             ),
-            isSubScribe.isTrue ? 15.vs : 10.vs,
+            15.vs,
             Expanded(
               child: Column(
+                // mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   // RoleType.student.isTrue
                   //     ?
+
                   CustomTextWidget(
-                    textScalar: TextScaler.linear(0.9),
-                    lines: 1,
-                    align: TextAlign.center,
                     text: coursesModel.isNotNull
-                        ? '${context.read<LanguageCubit>().isEn ? coursesModel!.courseTitleEn : coursesModel!.subjectName!}'
-                        : '${context.read<LanguageCubit>().isEn ? groupsModel!.groupNameEn : groupsModel!.subjectName!}',
-                    style: getBoldTextStyle(
-                      fontSize: 16,
-                      fontFamily: FontFamilies.abhayaLibreFamily,
+                        ? coursesModel!.teacherName!
+                        : groupsModel!.teacherName!,
+                    overflow: TextOverflow.ellipsis,
+                    lines: 1,
+                    textScalar: const TextScaler.linear(1),
+                    style: getSemiboldTextStyle(
+                      fontSize: 14,
                     ),
                   ),
-                  //     :
-                  // Column(
-                  //         children: [
-                  //           CustomTextWidget(
-                  //             text: 'مجموعة لغه عربية',
-                  //             style: getBoldTextStyle(
-                  //               fontSize: 16,
-                  //               fontFamily: FontFamilies.abhayaLibreFamily,
-                  //             ),
-                  //           ),
-                  //           5.vs,
-                  //           CustomTextWidget(
-                  //             text: 'Amgad Amgad Amgad ',
-                  //             style: getBoldTextStyle(
-                  //               fontSize: 16,
-                  //               fontFamily: FontFamilies.dubaiFamily,
-                  //             ),
-                  //           ),
-                  //         ],
-                  //       ),
-                  5.vs,
-                  // isStar
-                  //     ? BuildRatingBar(
-                  //         itemSize: 20,
-                  //         itemCount: 5,
-                  //         rate: 5,
-                  //       )
-                  //     // RatingBar.builder(
-                  //     //         initialRating: 3,
-                  //     //         minRating: 1,
-                  //     //         direction: Axis.horizontal,
-                  //     //         allowHalfRating: true,
-                  //     //         itemSize: 20,
-                  //     //         itemCount: 5,
-                  //     //         // itemPadding: getPadding(horizontal: 2.w),
-                  //     //         itemBuilder: (context, _) => const CustomIcon(
-                  //     //           icon: Icons.star,
-                  //     //           color: AppColors.yellow,
-                  //     //         ),
-                  //     //         onRatingUpdate: (rating) {
-                  //     //           debugPrint('$rating');
-                  //     //         },
-                  //     //       ):
+                  isSubScribe.isTrue  ?10.vs: 5.vs,
+                  CustomTextWidget(
+                    textScalar: const TextScaler.linear(1),
+                    lines: 1,
+                    align: TextAlign.center,
+                    // text: "dfdafdfd",
+                    text: coursesModel.isNotNull
+                        ? '${context.read<LanguageCubit>().isEn ? coursesModel!.courseTitleEn : coursesModel!.subjectName}'
+                        : '${context.read<LanguageCubit>().isEn ? groupsModel!.groupNameEn : groupsModel!.subjectName}',
+                    style: getBoldTextStyle(
+                      height: 1,
+                      fontSize: 16,
+                    ),
+                  ),
 
+                isSubScribe.isTrue  ?5.vs:12.vs,
                   isSubScribe!
-                      ? CustomElevatedButton(
-                          padding: getPadding(bottom: 5),
-                          height: 35.h,
-                          width: 80.w,
-                          // margin: getMargin(horizontal: 10.w),
-                          onPressed: () => onTap!(),
-                          text: AppStrings().start.trans)
+                      ? BuildRatingBar(
+                          itemSize: 20,
+                          itemCount: 5,
+                          rate: 5,
+                        )
+                      // CustomElevatedButton(
+                      //         padding: getPadding(bottom: 5),
+                      //         height: 35.h,
+                      //         width: 80.w,
+                      //         // margin: getMargin(horizontal: 10.w),
+                      //         onPressed: () => onTap!(),
+                      //         text: AppStrings().start.trans)
                       : GestureDetector(
                           child: CustomTextWidget(
                             text: AppStrings().startNow.trans,
                             style: getBoldTextStyle(
                                 fontSize: 16,
-                                fontFamily: FontFamilies.abhayaLibreFamily,
+                                // fontFamily: FontFamilies.abhayaLibreFamily,
                                 color: AppColors.mainAppColor),
                           ),
                         ),

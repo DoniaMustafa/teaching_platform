@@ -11,8 +11,9 @@ class BuildSubscription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-        height: 200.h,
+    return AspectRatio(
+        aspectRatio: 1.5 / 0.9,
+        // height: 250.h,
         child: BlocBuilder<SubscriptionCubit, CubitStates>(
             builder: (context, state) {
           if (state is FailedState) {
@@ -24,7 +25,7 @@ class BuildSubscription extends StatelessWidget {
           if (state is LoadedState &&
               state.data.courses.isEmpty &&
               state.data.groups.isEmpty) {
-            return const CustomEmptyWidget();
+            return const SizedBox.shrink();
           }
           return buildTeachersOfStudentList(state);
         }));
@@ -44,6 +45,7 @@ class BuildSubscription extends StatelessWidget {
                       ? state.data.courses.length
                       : AppConstants.nShimmerItems,
                   widget: (context, index) => CustomItem(
+                        isSubScribe: true,
                         coursesModel: state.data.courses[index],
                       )),
               CustomListView(
@@ -55,6 +57,7 @@ class BuildSubscription extends StatelessWidget {
                       ? state.data.groups.length
                       : AppConstants.nShimmerItems,
                   widget: (context, index) => CustomItem(
+                        isSubScribe: true,
                         groupsModel: state.data.groups[index],
                       )),
             ],

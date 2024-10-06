@@ -14,7 +14,7 @@ class VerificationScreen extends StatelessWidget {
 
   final formKey = GlobalKey<FormState>();
   static const String phoneKey = 'phoneKey';
-  String phone = 'phone';
+  static String phone = 'phone';
   @override
   Widget build(BuildContext context) {
     Map<String, dynamic>? data = getArguments(context);
@@ -68,7 +68,7 @@ class VerificationScreen extends StatelessWidget {
       );
 
   get _buildEditPhone => GestureDetector(
-        onTap: () => pop(),
+        onTap: () => pop([phone]),
         child: CustomTextWidget(
           text: 'تعديل الرقم',
           style: getRegularTextStyle(

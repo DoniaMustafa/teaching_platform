@@ -63,7 +63,7 @@ export 'package:teaching/core/utils/app_strings.dart';
 export 'package:teaching/features/auth/presentation/widgets/sign_up/build_dotte_border.dart';
 export 'package:teaching/core/enums.dart';
 export 'package:teaching/core/widget/custom_divider.dart';
-export  'package:teaching/features/auth/service/register_service.dart';
+export 'package:teaching/core/enum_service.dart';
 export 'package:teaching/features/auth/presentation/widgets/sign_up/build_upload_promo.dart';
 
 export 'package:teaching/core/network/constants/endpoinst.dart';
@@ -75,10 +75,13 @@ export 'package:teaching/core/model/couses_model.dart';
 export 'package:teaching/core/model/groups_model.dart';
 export 'package:teaching/features/home/data/models/courses_groups_response_model.dart';
 export '../../../../../core/model/generic_response_model.dart';
-export'package:teaching/core/widget/custom_empty_widget.dart';
-export'package:teaching/core/widget/common_item_widgets/custom_item.dart';
-export'package:teaching/features/home/presentation/manager/courses_groups_cubit.dart';
-export'../../../../core/widget/custom_error_widget.dart';
+export 'package:teaching/core/widget/custom_empty_widget.dart';
+export 'package:teaching/core/widget/common_item_widgets/custom_item.dart';
+export 'package:teaching/features/home/presentation/manager/courses_groups_cubit.dart';
+export '../../../../core/widget/custom_error_widget.dart';
 export 'package:teaching/core/widget/common_widgets/custom_sared_full_screen.dart';
+export 'package:teaching/config/routes/app_routes_helper.dart';
+export 'package:teaching/config/themes/themes.dart';
 
-
+export 'package:teaching/features/on_boarding/presentation/pages/on_boarding_screen.dart';
+export 'package:teaching/providers.dart';

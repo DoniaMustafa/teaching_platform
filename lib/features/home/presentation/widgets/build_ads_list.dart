@@ -19,10 +19,7 @@ class BuildAdsList extends StatelessWidget {
         );
       }
       if (state is LoadedState && state.data.isEmpty) {
-        return CustomEmptyWidget(
-          // onTap: () => context.read<AdsCubit>().getAds(),
-          // message: state.,
-        );
+        return const SizedBox.shrink();
       }
       return _buildAdsSlider(state);
     });
@@ -34,7 +31,7 @@ class BuildAdsList extends StatelessWidget {
       itemBuilder: (context, index, realIndex) {
         if (state is LoadedState) {
           return CustomCard(
-            padding: getPadding(horizontal: 5.w),
+            margin: getPadding(horizontal: 5.w),
             backgroundColor: AppColors.lightPurple,
             child: CustomNetworkImage.rectangle(
               width: width,
@@ -48,7 +45,7 @@ class BuildAdsList extends StatelessWidget {
       },
       options: CarouselOptions(
         height: 150.h,
-        viewportFraction: 0.9,
+        viewportFraction: 1,
         // padEnds: true,
         // aspectRatio:0.6/0.4,
         initialPage: 0,

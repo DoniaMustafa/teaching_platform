@@ -1,6 +1,5 @@
 import 'package:teaching/core/export/export.dart';
 import 'package:teaching/features/auth/data/models/step_no_respons_model.dart';
-import 'package:teaching/features/auth/presentation/manager/countries_cubit.dart';
 import 'package:teaching/features/auth/presentation/pages/verification_screen.dart';
 import '../../../../../local_notification.dart';
 import '../../../domain/use_cases/user_usecases.dart';
@@ -30,6 +29,12 @@ class UserCubit extends Cubit<UserState> {
   Future<String> getToken() async =>
       (await managerExecute<String?>(userUsecases.getToken())).validate;
 
+  // logout() {
+  //   userUsecases.logout();
+  //   Routes.loginRoute.pushAndRemoveAllUntil;
+  //   user = null;
+  // }
+
   ///*********************** Login ***************************************\\\
 
   login({required String phone, required String password}) async {
@@ -54,7 +59,7 @@ class UserCubit extends Cubit<UserState> {
       },
       onSuccess: (data) async {
         if (isTokenCached.isTrue && userDataModel.isNotNull) {
-          Routes.bottomNavigationRoute.pushAndRemoveAllUntil();
+          Routes.bottomNavigationRoute.pushAndRemoveAllUntil;
           //   AppService().getBlocData<BottomNavOperationCubit>().changeIndex(0);
         }
       },
@@ -66,10 +71,11 @@ class UserCubit extends Cubit<UserState> {
     required UserModel user,
   }) async {
     executeWithDialog<VerificationDataModel>(
+      onStart: () => emit(SignUpByPhoneLoadingState()),
       either: userUsecases.registerByPhoneNumber(user: user),
       startingMessage: AppStrings().signUp.trans,
       onError: (message) {
-        emit(SignupErrorState(massage: message));
+        emit(SignUpByPhoneErrorState(massage: message));
       },
       onSuccess: (VerificationDataModel? code) async {
         if (code.isNotNull) {
@@ -78,10 +84,9 @@ class UserCubit extends Cubit<UserState> {
             description: code!.verificationCode!,
           );
           Routes.verificationRoute.pushReplacementWithData({
-            // "route": Routes.signUpRoute,
             VerificationScreen.phoneKey: user.phoneNumber,
           });
-          emit(SignUpSuccessState(otp: code.verificationCode!));
+          emit(SignUpByPhoneSuccessState(otp: code.verificationCode!));
         }
       },
     );
@@ -89,9 +94,6 @@ class UserCubit extends Cubit<UserState> {
 
   ///***********************************************************\\\
   verifyOTP({required UserModel user}) async {
-    // String fcmToken = (await FirebaseService().getDeviceToken())!;
-    // bool isTokenCached = false;
-    // bool isFcmTokenCached = false;
     executeWithDialog<StepNoDataModel?>(
       onStart: () {
         emit(verifyOTPStartingState());
@@ -99,30 +101,45 @@ class UserCubit extends Cubit<UserState> {
       either: userUsecases.verifyOTP(user: user),
       startingMessage: AppStrings().verifying.trans,
       onError: (message) {
+        print('message?????????????????????${message.toString()}');
+
         emit(VerifyOTPErrorState(massage: message));
       },
-      // beforeSuccess: (data) async {
-      //   // userDataModel = data;
-      //   // if (userDataModel.isNotNull) {
-      //   //   user = userDataModel!.user;
-      //   //   isTokenCached = await cacheToken(userDataModel!.token!);
-      //   //   isFcmTokenCached = await cacheFcm(fcmToken);
-      //   }
-      // },
       onSuccess: (StepNoDataModel? data) {
-        // if (data.isNotNull) {
-        // user = data!.user;
-// AppService().getBlocData<CountriesCubit>().getCountries();
-        // if (isTokenCached.isTrue && isFcmTokenCached.isTrue && userDataModel.isNotNull) {
-        // AppService().getBlocData<BottomNavOperationCubit>().changeIndex(0);
-        Routes.signUpRoute.pushAndRemoveAllUntil;
-        // }
-
         emit(VerifyOtpSuccessState(step: data!.stepNo!));
-        // }
+        Routes.signUpRoute.pushReplacementWithData(
+            {SignUpScreen.phoneKey: VerificationScreen.phone});
       },
     );
   }
+
+  ///***********************************************************\\\
+
+  register({required UserModel user, required int stepsNo}) async {
+    executeWithDialog<UserDataModel?>(
+      onStart: () {
+        emit(SignupLoadingState());
+      },
+      either: userUsecases.register(user: user, stepsNo: stepsNo),
+      startingMessage: AppStrings().signUp.trans,
+      onError: (message) {
+        print('message>>>>>>>>>>$message');
+        print(user.stepsNo);
+        emit(SignupErrorState(massage: message));
+      },
+      onSuccess: (UserDataModel? data) {
+        if (stepsNo == 2) {
+          Routes.educationTypeRoute.pushAndRemoveAllUntil;
+        } else {
+          Routes.loginRoute.pushAndRemoveAllUntil;
+        }
+
+        print(user.stepsNo);
+        emit(SignUpSuccessState(step: data!.stepNo.toString()));
+      },
+    );
+  }
+
 // logout() async {
   //   executeWithDialog<ResponseModel>(
   //     either: userUsecases.logout(),

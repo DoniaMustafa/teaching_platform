@@ -1,4 +1,4 @@
-abstract class CubitStates {}
+class CubitStates {}
 
 class InitialState extends CubitStates {}
 

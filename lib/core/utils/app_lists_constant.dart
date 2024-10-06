@@ -4,6 +4,7 @@ import 'package:teaching/core/export/export.dart';
 import 'package:teaching/core/model/generic_model.dart';
 import 'package:teaching/core/utils/app_assets.dart';
 import 'package:teaching/core/utils/app_strings.dart';
+import 'package:teaching/features/auth/presentation/manager/user_cubit/user_cubit.dart';
 import 'package:teaching/features/chat/presentation/pages/chat_screen.dart';
 import 'package:teaching/features/home/presentation/pages/home_screen.dart';
 import 'package:teaching/features/notification/presentation/pages/notification_screen.dart';
@@ -60,6 +61,10 @@ class AppListsConstant {
     AppStrings().courses.trans,
     AppStrings().groups.trans,
   ];
+  static List<String> chatting = [
+    AppStrings().chat.trans,
+    AppStrings().groups.trans,
+  ];
 
   static List<GenericModel> onBoardingBody = [
     GenericModel(
@@ -89,13 +94,13 @@ class AppListsConstant {
     ),
   ];
 
-  static List<Widget> widgetsScreen = const [
-    NotificationScreen(),
-    ScheduleScreen(),
-    SubscriptionScreen(),
-    HomeScreen(),
+  static List<Widget> widgetsScreen = [
+    const NotificationScreen(),
+    const ScheduleScreen(),
+    const SubscriptionScreen(),
+    const HomeScreen(),
     ChatScreen(),
-    WalletScreen()
+    const WalletScreen()
   ];
 
   static List<GenericModel> listOfStudentCategories = [
@@ -173,12 +178,68 @@ class AppListsConstant {
     ),
   ];
 
-  static List<GenericModel> drawerItems = [
+  static List<GenericModel> studentDrawerItems = [
     GenericModel(
       // image: AppAssets().student,
       // role: 'student',
-      title: AppStrings().personalInformation.trans,
+      title: AppStrings().childrenSubscription.trans,
     ),
+    GenericModel(
+      // image: AppAssets().teacher,
+      // role: 'lecture',
+      title: AppStrings().tasks.trans,
+    ),
+    GenericModel(
+      // image: AppAssets().teacher,
+      // role: 'lecture',
+      title: AppStrings().courses.trans,
+    ),
+    GenericModel(
+      // image: AppAssets().teacher,
+      // role: 'lecture',
+      title: AppStrings().parent.trans,
+    ),
+    GenericModel(
+      // image: AppAssets().student,
+      // role: 'student',
+      title: AppStrings().challenges.trans,
+    ),
+    GenericModel(
+      // image: AppAssets().teacher,
+      // role: 'lecture',
+      title: AppStrings().myGrades.trans,
+    ),
+    GenericModel(
+      // image: AppAssets().teacher,
+      // role: 'lecture',
+      title: AppStrings().firstStudents.trans,
+    ),
+    //
+    GenericModel(
+      // image: AppAssets().teacher,
+      // role: 'lecture',
+      title: AppStrings().childrenGrades.trans,
+    ),
+    //
+    // GenericModel(
+    //   image: AppAssets().teacher,
+    //   // role: 'lecture',
+    //   title: AppStrings().homeWork.trans,
+    // ),
+    GenericModel(
+      // image: AppAssets().teacher,
+      // role: 'lecture',
+      title: AppStrings().settings.trans,
+    ),
+    GenericModel(
+      // onTap: AppService().getBlocData<UserCubit>().logout(),
+      // image: AppAssets().teacher,
+      // role: 'lecture',
+      title: AppStrings().logout.trans,
+    ),
+  ];
+
+  static List<GenericModel> drawerItems = [
     GenericModel(
       // image: AppAssets().student,
       // role: 'student',
@@ -205,6 +266,11 @@ class AppListsConstant {
       title: AppStrings().childrenGrades.trans,
     ),
     GenericModel(
+      // image: AppAssets().student,
+      // role: 'student',
+      title: AppStrings().challenges.trans,
+    ),
+    GenericModel(
       // image: AppAssets().teacher,
       // role: 'lecture',
       title: AppStrings().homeWork.trans,
@@ -215,9 +281,38 @@ class AppListsConstant {
       title: AppStrings().settings.trans,
     ),
     GenericModel(
+      // onTap: AppService().getBlocData<UserCubit>().logout(),
       // image: AppAssets().teacher,
       // role: 'lecture',
       title: AppStrings().logout.trans,
+    ),
+  ];
+
+  static List<GenericModel> featuresItems = [
+    GenericModel(
+      // image: AppAssets().student,
+      // role: 'student',
+      title: 'اضافة ولي امر',
+    ),
+    GenericModel(
+      // image: AppAssets().teacher,
+      // role: 'lecture',
+      title: 'اضافة طالب',
+    ),
+    GenericModel(
+      // image: AppAssets().teacher,
+      // role: 'lecture',
+      title: 'اضافة مجموعات',
+    ),
+    GenericModel(
+      // image: AppAssets().teacher,
+      // role: 'lecture',
+      title: 'اضافة كورسات',
+    ),
+    GenericModel(
+      // image: AppAssets().teacher,
+      // role: 'lecture',
+      title: 'ادارة المساعدين',
     ),
   ];
 }

@@ -21,7 +21,7 @@ class AppPrefs {
   static const String prefsGetStatedKey = "GET_STARTED";
   static const String governoratesKey = "cities";
   static const String _newUserKey = "new user";
-  static const String prefsUserKey = "User id";
+  static const String prefsUserKey = "CACHED_User";
   static const String userFavouritesKey = "User favourites";
   static const String prefsTokenKey = 'TOKEN';
   static const String prefsDeviceTokenKey = 'DEVICE_TOKEN';

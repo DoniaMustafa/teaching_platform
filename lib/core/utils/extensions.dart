@@ -204,8 +204,7 @@ extension StringNullExtension on String? {
   // bool get isNotNullOrEmpty => this != null || this.isNotEmpty;
   bool get isNullOrEmpty => this == null || this!.isEmpty;
   bool get validatePhone => Inspection()
-          .inspect(this,
-              'required|numeric|min:11|max:11',
+          .inspect(this, 'required|numeric|min:2|max:11',
               message: AppStrings().phoneError.trans, name: this)
           .isNullOrEmpty
       ? true

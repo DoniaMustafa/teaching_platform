@@ -13,6 +13,8 @@ class AppColors {
   static const Color heavyBlack = Color(0xFF545151);
   static const Color primaryShadow = Color(0xFF90CAF9);
 
+  static Color fillBackgroundColor = Color(0xFFF7F6F9);
+
   static Color fillColor = Color(0xFFF5F5F5);
   // static const grayRegular = Color(0xFF707070);
   // static Color mediumGray = '#606268'.colorFromString;
@@ -56,7 +58,7 @@ class AppColors {
   // static const Color hintColor = Color(0xFF90A4AE);
   // static Color splashLinearGradientColor1 = '#549DEA'.colorFromString;
   // static Color lightBlue = '#EFF3FC'.colorFromString;
-  // static Color green = Colors.green;
+  static Color green = Colors.green;
   // static Color smokeyGrey = '#757374'.colorFromString;
   static const Color gunsmoke = Color(0xff878787);
   // static Color platinum = const Color(0xFFE2E2E2);
@@ -75,7 +77,7 @@ class AppColors {
   static const Color black = Colors.black;
 
   // static Color midGray = '#E6E6E6'.colorFromString;
-  // static Color deepGray = const Color(0xFF263238);
+  static Color deepGray = const Color(0xFF222222);
   // static const Color red = Colors.red;
   static const Color grey = Colors.grey;
   // static const Color borderErrorColor = Color(0xFFE95E5B);
@@ -99,6 +101,9 @@ class AppColors {
 
   static const Color borderColor = const Color(0xFF6341A0);
   static const borderColor2 = Color(0xFFC8B9D0);
+  static const dividerColor = Color(0xFF5F5959);
+
+
   static const mainAppColor = Color(0xFF5A1EE8);
   static const darkMainAppColor = Color(0xFF341775);
   static const titleColorPurple = Color(0xffA525D1);

@@ -10,9 +10,10 @@ class UserUsecases {
   UserUsecases({required this.repo});
   Future<Either<Failure, ResponseModel>> registerByPhoneNumber(
           {required UserModel user}) async =>
-      await repo.registerByPhoneNumber(
-          user:
-              user); // Future<Either<Failure, ResponseModel>> forgetPassword({
+      await repo.registerByPhoneNumber(user: user);
+  Future<Either<Failure, ResponseModel>> register({UserModel? user,int? stepsNo}) async =>
+      repo.register(user: user,stepsNo: stepsNo);
+  // Future<Either<Failure, ResponseModel>> forgetPassword({
   //   required String phone,
   // }) async =>
   //     await repo.forgetPassword(
@@ -52,5 +53,7 @@ class UserUsecases {
   // Future<Either<Failure,ResponseModel>> editUserData({required UserModel user})=>repo.editUserData(user: user);
   Future<Either<Failure, ResponseModel>> cacheToken(String token) async =>
       repo.cacheToken(token);
+
+  // logout()=>repo.logout();
   // Future<Either<Failure, ResponseModel>> cacheFcmToken(String fcmToken) async => await repo.cacheFcmToken(fcmToken);
 }

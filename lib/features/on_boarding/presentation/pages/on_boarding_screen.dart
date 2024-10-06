@@ -1,7 +1,7 @@
 import 'package:teaching/features/on_boarding/presentation/manager/onboarding_manager_cubit.dart';
 import 'package:teaching/features/on_boarding/presentation/widgets/build_inductor_widget.dart';
 
-import '../core/export/export.dart';
+import '../../../../core/export/export.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   OnBoardingScreen({super.key});

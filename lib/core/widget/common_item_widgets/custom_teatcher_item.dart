@@ -28,7 +28,6 @@ class CustomTeacherItem extends StatelessWidget {
         backgroundColor: AppColors.white,
         child: Column(
           children: [
-
             CustomNetworkImage.circular(
                 radius: 70.r,
                 imageUrl: '${EndPoints.baseUrl}${teacher.profileImage!}'),
@@ -42,15 +41,15 @@ class CustomTeacherItem extends StatelessWidget {
                         text: teacher.name!,
                         style: getBoldTextStyle(
                           fontSize: 16,
-                          fontFamily: FontFamilies.abhayaLibreFamily,
+                          // fontFamily: FontFamilies.abhayaLibreFamily,
                         ),
                       ),
                       5.vs,
                       CustomTextWidget(
                         text: teacher.subjects!,
-                        style: getBoldTextStyle(
-                          fontSize: 16,
-                          fontFamily: FontFamilies.dubaiFamily,
+                        style: getSemiboldTextStyle(
+                          fontSize: 14,
+                          // fontFamily: FontFamilies.dubaiFamily,
                         ),
                       ),
                     ],

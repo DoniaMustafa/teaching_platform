@@ -1,4 +1,5 @@
 import 'package:teaching/core/widget/common_widgets/custom_tab_bar.dart';
+import 'package:teaching/features/courses_groups/presentation/manager/coures_group_operation_cubit.dart';
 import 'package:teaching/features/subscription/presentation/manager/subscriptipn_operation_cubit.dart';
 import 'package:teaching/features/subscription/presentation/widgets/custom_subject_list.dart';
 import 'package:teaching/features/subscription/presentation/widgets/build_subscription_tab_bar.dart';
@@ -25,18 +26,38 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
   @override
   Widget build(BuildContext context) {
     return CustomSharedFullScreen(
-      title: AppStrings().schedule.trans,
+      title: AppStrings().mySubscriptions.trans,
       widget: Column(
         children: [
-         CustomSubjectList(label: 'لغة عربيه',onTap: (){},image:AppAssets().exam,),
+          CustomSubjectList(
+            label: 'لغة عربيه',
+            onTap: () {},
+            image: AppAssets().exam,
+          ),
           20.vs,
-        const  BuildSubscriptionTabBar(),
-         const BuildSubscriptionTabBarView(),
+          const BuildSubscriptionTabBar(),
+          const BuildSubscriptionTabBarView(),
           BlocBuilder<SubscriptionOperationCubit, CubitStates>(
             builder: (context, state) {
               return CustomElevatedButton(
                   margin: getMargin(horizontal: 130.w),
-                  onPressed: () {},
+                  onPressed: () {
+                    switch (
+                        context.read<SubscriptionOperationCubit>().tabIndex) {
+                      case 0:
+                        Routes.coursesGroupsRoute.moveTo;
+                        context
+                            .read<CoursesGroupOperationCubit>()
+                            .onChangeTabIndex(0);
+                        break;
+                      case 1:
+                        Routes.coursesGroupsRoute.moveTo;
+                        context
+                            .read<CoursesGroupOperationCubit>()
+                            .onChangeTabIndex(1);
+                        break;
+                    }
+                  },
                   text: context.read<SubscriptionOperationCubit>().tabIndex == 0
                       ? '${AppStrings().courses.trans} ${AppStrings().store.trans}'
                       : '${AppStrings().groups.trans} ${AppStrings().store.trans}');
@@ -45,7 +66,6 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
           10.vs,
         ],
       ),
-
     );
   }
 }

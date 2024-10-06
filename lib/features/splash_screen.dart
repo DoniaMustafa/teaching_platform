@@ -59,13 +59,15 @@ class _SplashScreenState extends State<SplashScreen>
 //      bool isNotificationInit = (await NotificationsService().initialize()).orFalse;
       //     print("is notification granted$isNotificationInit");
       //   print("new install ${isNew}");
-      print("token is ${token}");
+      print("token is ${AppPrefs.token}");
       // print("driver is ${driver!.isAvailable}");
       // print("driver is ${driver.image}");
       // print("driver is ${driver.name}");      print("driver is ${driver.email}");
 
       // print("device token is ${deviceToken}");
       print("token from prefs is ${AppPrefs.token}");
+      // print('user Role  from prefs>>>>>>>>>>>>>>> ${AppPrefs.user!.userRole}');
+
       // print("device token from prefs is ${AppPrefs.deviceToken}");
       // if (driver.isNotNull) {
       //   print("driver step is ${driver.step}");
@@ -76,7 +78,7 @@ class _SplashScreenState extends State<SplashScreen>
       //   route = Routes.onBoardingRoute;
       // } else {
       //   if (user.isNotNull) {
-      //     print('driver isNotEmpty ????????????????? $user');
+      //     print('driver isNotEmpty ?????????????????96 $user');
       //     (user);
       //     if (token.isNotEmpty ) {
       //       print('token isNotEmpty ????????????????? $token');
@@ -104,7 +106,7 @@ class _SplashScreenState extends State<SplashScreen>
         if (isNew.isTrue) {
           Routes.onBoardRoute.moveToAndRemoveCurrent;
         } else {
-          if (token.isNotNullOrEmpty) {
+          if (AppPrefs.user.isNotNull && AppPrefs.token.isNotNullOrEmpty) {
             Routes.bottomNavigationRoute.pushAndRemoveAllUntil;
           } else {
             Routes.mainRoute.pushAndRemoveAllUntil;
@@ -133,8 +135,8 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return CustomBackground(
-       statusBarColor: AppColors.white,
-        // backgroundColor: AppColors.fillColor,
+        statusBarColor: AppColors.fillBackgroundColor,
+        backgroundColor: AppColors.fillBackgroundColor,
         child: Center(
             child: CustomImageWidget(
           asset: AppAssets().logo,

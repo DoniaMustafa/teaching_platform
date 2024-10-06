@@ -1,7 +1,6 @@
 import 'package:teaching/features/auth/presentation/widgets/choose_role/build_choose_role_list.dart';
 
 import '../../../../core/export/export.dart';
-import '../manager/countries_cubit.dart';
 
 class ChooseRoleScreen extends StatelessWidget {
   const ChooseRoleScreen({super.key});

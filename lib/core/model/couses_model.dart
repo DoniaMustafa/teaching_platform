@@ -25,9 +25,10 @@ class CoursesModel {
 
   factory CoursesModel.fromJson(Map<String, dynamic> json) => CoursesModel(
         courseId: json["CourseId"],
-        courseTitle: json["CourseTitle"] == null ? '' :json["CourseTitle"]!,
+        courseTitle:
+            json["CourseTitle"] == null ? 'arabic' : json["CourseTitle"]!,
         courseTitleEn:
-            json["CourseTitleEN"] == null ? '' : json["CourseTitleEN"]!,
+            json["CourseTitleEN"] == null ? 'arabic' : json["CourseTitleEN"]!,
         teacherId: json["TeacherId"],
         teacherName: json["TeacherName"],
         teacherPicture: json["TeacherPicture"],

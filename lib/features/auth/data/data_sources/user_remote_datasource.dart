@@ -7,7 +7,7 @@ abstract class UserRemoteDataSource {
   Future<ResponseModel> registerByPhoneNumber({required UserModel user});
   Future<ResponseModel> verifyOTP({required UserModel user});
 
-  Future<ResponseModel> register({UserModel? user});
+  Future<ResponseModel> register({UserModel? user, int? stepsNo});
   Future<ResponseModel> sendEducationData({PostParamsEducationModel? user});
 
   Future<ResponseModel> login({
@@ -40,7 +40,7 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource {
       await remoteExecute(
           request: dioConsumer.postRequest(
             path: EndPoints.registerByPhone,
-            body: user.toJson(),
+            body: {"PhoneNumber": user.phoneNumber, "UserType": user.userRole},
           ),
           fromJsonFunction: (data) => VerificationResponseModel.fromJson(data));
   @override
@@ -51,13 +51,14 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource {
       }),
       fromJsonFunction: StepNoResponseModel.fromJson);
   @override
-  Future<ResponseModel> register({UserModel? user}) async => remoteExecute(
+  Future<ResponseModel> register({UserModel? user, int? stepsNo}) async =>
+      remoteExecute(
         request: dioConsumer.postRequest(
-          path: EndPoints.registerStudent,
-          queryParams: user!.toJson(),
-          body: user.toJson(),
+          path: EnumService.registrationEndPointType(SignUpByPhoneScreen.userType),
+          queryParams: {"StepNo": '$stepsNo'},
+          body: user!.toJson(),
         ),
-        fromJsonFunction: ResponseModel.fromJson,
+        fromJsonFunction: LoginUserResponseModel.fromJson,
       );
 
   @override

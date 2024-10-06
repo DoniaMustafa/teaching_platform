@@ -14,7 +14,7 @@ class CountryWithServer extends CountryRemoteDatasource {
   path: EndPoints.country,
 
   ),
-  fromJsonFunction: CountryResponseModel.fromJson);
+  fromJsonFunction: PublicResponseModel.fromJson);
 
 
 }

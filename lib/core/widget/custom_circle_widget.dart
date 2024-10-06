@@ -8,6 +8,7 @@ class CustomCircleWidget extends StatelessWidget {
       this.padding,
       this.height,
       this.width,
+        this.borderWidth,
       this.child,
       this.color,
       this.borderColor,
@@ -16,7 +17,8 @@ class CustomCircleWidget extends StatelessWidget {
       this.radius});
   final EdgeInsetsDirectional? padding;
   final double? height;
-  final double? width;
+  final double? width;  final double? borderWidth;
+
   final Widget? child;
   final Color? borderColor;
   final Color? color;
@@ -35,7 +37,7 @@ class CustomCircleWidget extends StatelessWidget {
             color: color ?? AppColors.mainAppColor,
             borderRadius: BorderRadius.circular(radius ?? 40.h),
             border: Border.all(
-                color: borderColor ?? AppColors.transparent, width: 1.w)),
+                color: borderColor ?? AppColors.transparent, width: borderWidth??1.w)),
         child: child);
   }
 }

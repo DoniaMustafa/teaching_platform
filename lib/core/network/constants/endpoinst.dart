@@ -1,7 +1,6 @@
 abstract class EndPoints {
   static const String baseUrl = 'http://mesmet-001-site5.dtempurl.com/'; //base url
   static const String api = '/api/';
-  // static const String user = '${api}user/';
   // static const String profile = '${api}profile/';
   // static const String editProfile = '${api}profile/updateProfile';
 
@@ -13,11 +12,15 @@ abstract class EndPoints {
 
   static const String registerStudent = '${account}RegisterStudent';
   static const String login = 'token';
+  static const String registerLecturer = '${account}RegisterProfessionalLecturer';
+  static const String registerParent= '${account}RegisterParent';
+  static const String registerTeacher = '${account}RegisterTeacher';
+  static const String registerAssistant = '${account}RegisterAssistant';
+
   // static const String verifyForgetPassword = '${api}verifyForgetPassword';
   // static const String forgetPassword = '${api}forgetPassword';
   // static const String resetPassword = '${api}resetPassword';
   // static const String userLogout = '${api}logout';
-  // static const String confirmationCode = '${api}send_sms';
 // ///////////////////////////// profile ////////////////////////////
 //   static const String profileInfo = '${user}profile';
 //   static const String profileDeatils = '${user}profile/detail';
@@ -32,8 +35,8 @@ abstract class EndPoints {
 
   // static const String products = '${api}Product/list';
 //
-// //////////////////////// services /////////////////////////////////
-//   static const String getSubServices = '${api}Sub_Service';
+//////////////////////// teacher home /////////////////////////////////
+//   static const String GetHomeTeacherCoursese = '${api}Home/GetHomeTeacherCoursese';
 //   static const String getSubServicesDetails = '${api}Sub_Service/show';
 //   static const String addConsultation = '${api}Consultation/add';
 //
@@ -68,11 +71,11 @@ abstract class EndPoints {
 //   static const String autoCompleteApi = 'place/autocomplete/json';
 //   static const String addressInfo = 'place/details/json';
 //   static const String direction = 'directions/json';
-//   static const String geocodeApi = 'geocode/json';
-//   static const String googleDirectionApi = 'directions/json';
+  static const String getGrades= '${api}Grade/GetGradesByEducationProgramType';
+  static const String educationProgram = '${api}EducationProgram/GetEducationPrograms';
 //
 //
-//   static const String categories = '${api}category/list';
+  static const String educationType = '${api}EducationType/GetEducationTypes';
   static const String country = '${api}Country/GetCountries';
 //
 //   static const String info = "${api}info";

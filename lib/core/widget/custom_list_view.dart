@@ -9,6 +9,7 @@ class CustomListView extends StatelessWidget {
       required this.widget,
       this.shrinkWrap = false,
       this.padding,
+        this.scroll=const BouncingScrollPhysics(),
       this.axisDirection = Axis.horizontal,
       this.separatorWidget});
   final int itemCount;
@@ -16,6 +17,7 @@ class CustomListView extends StatelessWidget {
   final Widget? Function(BuildContext context, int index) widget;
   final Widget Function(BuildContext context, int index)? separatorWidget;
   final bool? shrinkWrap;
+  final ScrollPhysics? scroll;
   final EdgeInsetsDirectional? padding;
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class CustomListView extends StatelessWidget {
         scrollDirection: axisDirection!,
         // primary: true,
         shrinkWrap: shrinkWrap!,
-        physics: BouncingScrollPhysics(),
+        physics:scroll ,
         padding: padding ?? getPadding(all: 10),
         itemBuilder: widget,
         separatorBuilder:

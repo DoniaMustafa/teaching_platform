@@ -5,11 +5,25 @@ abstract class UserState {}
 
 class SignupInitial extends UserState {}
 
+class SignUpByPhoneLoadingState extends UserState {}
+
+class SignUpByPhoneSuccessState extends UserState {
+  final String? otp;
+  SignUpByPhoneSuccessState({required this.otp});
+}
+
+class SignUpByPhoneErrorState extends UserState {
+  final String massage;
+
+  SignUpByPhoneErrorState({required this.massage});
+}
+///*************************************///
+
 class SignupLoadingState extends UserState {}
 
 class SignUpSuccessState extends UserState {
-  final String? otp;
-  SignUpSuccessState({required this.otp});
+  final String? step;
+  SignUpSuccessState({required this.step});
 }
 
 class SignupErrorState extends UserState {

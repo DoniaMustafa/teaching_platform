@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:teaching/core/utils/app_colors.dart';
 import 'package:teaching/core/utils/extensions.dart';
-import 'package:teaching/features/auth/presentation/manager/countries_cubit.dart';
 import 'package:teaching/features/courses_groups/presentation/pages/courses_groups_screen.dart';
 import 'package:teaching/features/main_register/presentation/pages/main_register_screen.dart';
 import 'package:teaching/features/auth/presentation/pages/choose_role_screen.dart';
@@ -15,12 +14,10 @@ import 'package:teaching/features/auth/presentation/pages/sign_up_py_phone_scree
 import 'package:teaching/features/auth/presentation/pages/sign_up_screen.dart';
 import 'package:teaching/features/auth/presentation/pages/verification_screen.dart';
 import 'package:teaching/features/splash_screen.dart';
-import 'package:teaching/service_locator.dart';
-
 import '../../features/bottom_nav_bar/presentaion/page/bottom_nav_bar_screen.dart';
 import '../../features/language/presentation/managers/language_cubit/language_cubit.dart';
 import '../../features/auth/presentation/pages/upload_resume_screen.dart';
-import '../../features/on_boarding_screen.dart';
+import '../../features/on_boarding/presentation/pages/on_boarding_screen.dart';
 
 enum PageRouteAnimation { Fade, Scale, Rotate, Slide, SlideBottomTop }
 
@@ -29,8 +26,8 @@ class Routes {
   static const String splashRoute = "/";
   static const String coursesGroupsRoute = "Courses Groups Screen";
 
-  static const String mainRoute = "main";
-  static const String loginRoute = "login";
+  static const String mainRoute = "/main Route";
+  static const String loginRoute = "/login Route";
   static const String chooseRoleRoute = "/choose Role";
   static const String signUpRoute = "sign Up";
   static const String onBoardRoute = "/Route onBoard";
@@ -104,7 +101,7 @@ class RouteGenerator {
             child: const SplashScreen(), routeSettings: routeSettings);
       case Routes.onBoardRoute:
         return buildPageRoute(
-    child: OnBoardingScreen(), routeSettings: routeSettings);
+            child: OnBoardingScreen(), routeSettings: routeSettings);
 
       case Routes.mainRoute:
         return buildPageRoute(

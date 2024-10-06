@@ -7,27 +7,20 @@ class BuildFeatures extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 150.h,
-      child: CustomListView(
-          separatorWidget: (context, index) => SizedBox(
-                width: 20.w,
-              ),
-          itemCount: AppListsConstant.listOfStudentCategories.length,
-          widget: (context, index) => _buildFeaturesItem),
-      // child: GridView.builder(
-      //   shrinkWrap: true,
-      //   physics: NeverScrollableScrollPhysics(),
-      //   padding: getPadding(horizontal: 20.w),
-      //   itemCount: AppListsConstant.listOfTeacherCategories.length,
-      //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(childAspectRatio: 0.9/0.68,
-      //       crossAxisCount: 2, mainAxisSpacing: 5, crossAxisSpacing: 6),
-      //   itemBuilder: (_, index) => _buildFeaturesItem,
-      // ),
+    return GridView.count(
+      padding: getPadding(horizontal: 20.w),
+      physics: const NeverScrollableScrollPhysics(),
+      crossAxisSpacing: 20,
+      mainAxisSpacing: 5,
+      crossAxisCount: 2,
+      shrinkWrap: true,
+      childAspectRatio: 0.9 / 0.9,
+      children: List.generate(AppListsConstant.featuresItems.length,
+          (index) => _buildFeaturesItem(index)),
     );
   }
 
-  get _buildFeaturesItem => CustomCard(
+  Widget _buildFeaturesItem(int index) => CustomCard(
           boxShadow: [
             BoxShadow(
                 color: AppColors.black.withOpacity(0.1),
@@ -41,6 +34,7 @@ class BuildFeatures extends StatelessWidget {
           padding: getPadding(vertical: 15.h, horizontal: 20.w),
           backgroundColor: AppColors.white,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CustomNetworkImage.rectangle(
                 width: 50.w,
@@ -50,7 +44,7 @@ class BuildFeatures extends StatelessWidget {
               20.vs,
               Expanded(
                   child: CustomTextWidget(
-                text: 'درس لغه عربية',
+                text: AppListsConstant.featuresItems[index].title!,
                 style: getBoldTextStyle(
                   fontSize: 16,
                   fontFamily: FontFamilies.abhayaLibreFamily,

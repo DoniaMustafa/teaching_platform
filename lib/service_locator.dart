@@ -1,14 +1,22 @@
 import 'package:get_it/get_it.dart';
 import 'package:teaching/features/auth/data/data_sources/country_remote_datasource.dart';
+import 'package:teaching/features/auth/data/data_sources/education_type_remote_datasource.dart';
 import 'package:teaching/features/auth/data/data_sources/user_local_datasource.dart';
 import 'package:teaching/features/auth/data/data_sources/user_remote_datasource.dart';
 import 'package:teaching/features/auth/data/repositories/country_implement.dart';
+import 'package:teaching/features/auth/data/repositories/education_type_implement.dart';
 import 'package:teaching/features/auth/data/repositories/user_repo_impl.dart';
 import 'package:teaching/features/auth/domain/repositories/countries_repo.dart';
+import 'package:teaching/features/auth/domain/repositories/education_type_repo.dart';
 import 'package:teaching/features/auth/domain/repositories/user_repo.dart';
 import 'package:teaching/features/auth/domain/use_cases/countries_use_case.dart';
+import 'package:teaching/features/auth/domain/use_cases/education_type_use_case.dart';
 import 'package:teaching/features/auth/domain/use_cases/user_usecases.dart';
-import 'package:teaching/features/auth/presentation/manager/countries_cubit.dart';
+import 'package:teaching/features/auth/presentation/manager/countries/countries_cubit.dart';
+import 'package:teaching/features/auth/presentation/manager/education/education_cubit.dart';
+import 'package:teaching/features/auth/presentation/manager/education/program/prgram_cubit.dart';
+import 'package:teaching/features/auth/presentation/manager/education/stage/stage_cubit.dart';
+import 'package:teaching/features/chat/presentation/manager/chat_operation_cubit.dart';
 import 'package:teaching/features/courses_groups/presentation/manager/coures_group_operation_cubit.dart';
 import 'package:teaching/features/home/data/data_sources/student/ads_data_source.dart';
 import 'package:teaching/features/home/data/data_sources/student/courses_groups_data_source.dart';
@@ -96,7 +104,7 @@ class ServiceLocator {
     // registerAccount;
     // registerProductDetails;
     // registerSettings;
-    // registerConsultation;
+    registerEducation;
     //
     // getIt.registerFactory<LanguageLocalDataSource>(() => LanguageImplWithPrefs(sharedPreferences: getIt()));
     // getIt.registerFactory<LanguageRepo>(() => LanguageRepoImpl(languageLocalDataSource: getIt()));
@@ -137,6 +145,10 @@ class ServiceLocator {
     getIt.registerLazySingleton<ErrorCubit>(() => ErrorCubit());
     getIt.registerLazySingleton<CoursesGroupOperationCubit>(
         () => CoursesGroupOperationCubit());
+    getIt.registerLazySingleton<ChatOperationCubit>(
+            () => ChatOperationCubit());
+
+
     // getIt.registerLazySingleton<CoursesGroupOperationCubit>(
     //     () => CoursesGroupOperationCubit());
     getIt.registerLazySingleton<BottomNavBarOperationCubit>(
@@ -228,16 +240,19 @@ class ServiceLocator {
 //
 
 //
-//   get registerOnboarding {
-//     getIt.registerLazySingleton<OnBoardingLocalDataSource>(() =>
-//         OnBoardingLocalDataSourceImplWithPrefs(sharedPreferences: getIt()));
-//     getIt.registerLazySingleton<OnBoardingRepo>(
-//         () => OnBoardingRepoImpl(onBoardingLocalDataSource: getIt()));
-//     getIt.registerLazySingleton<OnBoardingUsesCases>(
-//         () => OnBoardingUsesCases(onBoardingRepo: getIt()));
-//     getIt.registerLazySingleton<OnboardingManagerCubit>(
-//         () => OnboardingManagerCubit(onBoardingUsesCases: getIt()));
-//   }
+  get registerEducation {
+    getIt.registerLazySingleton<EducationTypeRemoteDatasource>(
+        () => EducationTypeWithServer(dioConsumer: getIt()));
+    getIt.registerLazySingleton<EducationTypeRepo>(
+        () => EducationTypeImplement(getIt()));
+    getIt.registerLazySingleton<EducationTypeUseCase>(
+        () => EducationTypeUseCase(getIt()));
+    getIt.registerLazySingleton<EducationCubit>(() => EducationCubit(getIt()));
+    getIt.registerLazySingleton<StageCubit>(() => StageCubit(getIt()));
+    getIt.registerLazySingleton<ProgramCubit>(() => ProgramCubit(getIt()));
+
+
+  }
 //
 //   get registerAds {
 //     getIt.registerLazySingleton<AdsRemoteDataSource>(

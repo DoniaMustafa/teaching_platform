@@ -35,7 +35,7 @@ class BuildWelcomeUser extends StatelessWidget {
                     ),
                     2.hs,
                     CustomTextWidget(
-                      text: 'Yazen',
+                      text: AppPrefs.user!.name![0],
                       textScalar: const TextScaler.linear(0.9),
                       style: getBoldTextStyle(
                           fontFamily: FontFamilies.abhayaLibreFamily,
@@ -61,30 +61,30 @@ class BuildWelcomeUser extends StatelessWidget {
               ],
             ),
           ),
-          // if (RoleType.student.isTrue)
-          CustomCard(
-            backgroundColor: AppColors.mainAppColor,
-            padding: getPadding(horizontal: 5.w, vertical: 5.h),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const CustomIcon(
-                  icon: Icons.keyboard_arrow_down_outlined,
-                  size: 15,
-                  color: AppColors.white,
-                ),
-                // 10.hs,
-                CustomTextWidget(
-                  textScalar: const TextScaler.linear(0.9),
-                  text: AppStrings().additionalCourses.trans,
-                  style: getMediumTextStyle(
-                      fontFamily: FontFamilies.abhayaLibreFamily,
-                      fontSize: 14,
-                      color: AppColors.white),
-                ),
-              ],
-            ),
-          )
+          if (AppPrefs.user!.userRole == '1')
+            CustomCard(
+              backgroundColor: AppColors.mainAppColor,
+              padding: getPadding(horizontal: 5.w, vertical: 5.h),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const CustomIcon(
+                    icon: Icons.keyboard_arrow_down_outlined,
+                    size: 15,
+                    color: AppColors.white,
+                  ),
+                  // 10.hs,
+                  CustomTextWidget(
+                    textScalar: const TextScaler.linear(0.9),
+                    text: AppStrings().additionalCourses.trans,
+                    style: getMediumTextStyle(
+                        fontFamily: FontFamilies.abhayaLibreFamily,
+                        fontSize: 14,
+                        color: AppColors.white),
+                  ),
+                ],
+              ),
+            )
         ],
       ),
     );

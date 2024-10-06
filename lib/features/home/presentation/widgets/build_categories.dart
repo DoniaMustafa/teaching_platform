@@ -13,9 +13,8 @@ class BuildCategories extends StatelessWidget {
         separatorWidget: (context, index) => SizedBox(
           width: 10.w,
         ),
-        itemCount: RoleType.Student.isTrue
-            ? AppListsConstant.listOfStudentCategories.length
-            : AppListsConstant.listOfTeacherCategories.length,
+        itemCount:
+            EnumService.userCategoryType(AppPrefs.user!.userRole!).length,
         widget: (context, index) => Column(
           children: [
             CustomCard(
@@ -27,7 +26,7 @@ class BuildCategories extends StatelessWidget {
                       AppColors.gradient1
                     ]),
                 radius: 10.r,
-                padding: getPadding(vertical: 10.h,horizontal: 15.w),
+                padding: getPadding(vertical: 10.h, horizontal: 15.w),
                 backgroundColor: AppColors.mainAppColor,
                 child: CustomImageWidget(
                     height: 40.h,
@@ -35,9 +34,9 @@ class BuildCategories extends StatelessWidget {
                     asset: AppAssets().listOfStudentCategories[index])),
             5.vs,
             CustomTextWidget(
-              text: RoleType.Student.isTrue
-                  ? AppListsConstant.listOfStudentCategories[index].title!
-                  : AppListsConstant.listOfTeacherCategories[index].title!,
+              text:
+                  EnumService.userCategoryType(AppPrefs.user!.userRole!)[index]
+                      .title!,
               style: getRegularTextStyle(
                   fontSize: 14, fontFamily: FontFamilies.dubaiFamily),
             )

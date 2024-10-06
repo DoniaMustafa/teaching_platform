@@ -31,9 +31,9 @@ class UserRepoImpl extends UserRepo {
       );
 
   @override
-  Future<Either<Failure, ResponseModel>> register({UserModel? user}) async =>
+  Future<Either<Failure, ResponseModel>> register({UserModel? user,int? stepsNo}) async =>
       execute(
-        () => userRemoteDataSource.register(user: user),
+        () => userRemoteDataSource.register(user: user,stepsNo: stepsNo),
       );
 
   @override
@@ -76,7 +76,7 @@ class UserRepoImpl extends UserRepo {
 //   @override
 //   Future<Either<Failure, ResponseModel>> logout() async => execute(() async {
 //         ResponseModel response = await userRemoteDataSource.logout();
-//         if (response.status.isTrue) {
+//         if (response.success.isTrue) {
 //           userLocalDataSource.clearCachedUser();
 //           userLocalDataSource.clearCachedDeviceToken();
 //           userLocalDataSource.clearCachedToken();
@@ -157,17 +157,21 @@ class UserRepoImpl extends UserRepo {
 //   Future<Either<Failure, ResponseModel>> getFcmToken() =>
 //       executeCache(() => userLocalDataSource.getCachedFcmToken());
 //
-//   @override
+  @override
   Future<Either<Failure, ResponseModel>> getToken() =>
       executeCache(() => userLocalDataSource.getCachedToken());
 
-//   @override
-//   Future<Either<Failure, ResponseModel>> cacheFcmToken(String fcmToken) =>
-//       executeCache(() => userLocalDataSource.cacheFcmToken(fcmToken: fcmToken));
-//
   @override
   Future<Either<Failure, ResponseModel>> cacheToken(String token) =>
       executeCache(() => userLocalDataSource.cacheToken(token: token));
+
+ //  @override
+ // logout() {
+ //    userLocalDataSource.clearCachedUser();
+ //    userLocalDataSource.clearCachedToken();
+ //    AppPrefs.user = null;
+ //    AppPrefs.token = null;
+ //  }
 
 //
 //   @override

@@ -68,18 +68,20 @@ class _HomeScreenState extends State<HomeScreen> {
               // _buildTitle(text: AppStrings().lecturers.trans),
               // 8.vs,
               // const BuildLecturer(),
-              _buildTitle(
-                  all: AppStrings().all.trans,
-                  text: AppStrings().closeSchools.trans,
-                  asset: AppAssets().schoolIcon),
-              5.vs,
-              BuildNearSchool(),
-              // 20.vs,
-              // _buildTitle(
-              //     text: AppStrings().latestNews.trans,
-              //     asset: AppAssets().newsIcon),
-              // BuildNews(),
-              // 20.vs,
+              if (AppPrefs.user!.userRole == '1' ||
+                  AppPrefs.user!.userRole == '2')
+                _buildTitle(
+                    text: AppStrings().closeSchools.trans,
+                    asset: AppAssets().schoolIcon),
+              if (AppPrefs.user!.userRole == '1') 5.vs,
+              if (AppPrefs.user!.userRole == '1') const BuildNearSchool(),
+              if (AppPrefs.user!.userRole == '1') 20.vs,
+              if (AppPrefs.user!.userRole == '1')
+                _buildTitle(
+                    text: AppStrings().latestNews.trans,
+                    asset: AppAssets().newsIcon),
+              if (AppPrefs.user!.userRole == '1') const BuildNews(),
+              20.vs,
               _buildTitle(
                   onTap: () => Routes.coursesGroupsRoute.moveTo,
                   all: AppStrings().all.trans,
@@ -95,25 +97,28 @@ class _HomeScreenState extends State<HomeScreen> {
                   asset: AppAssets().groupsIcon),
               5.vs,
               const BuildGroups(),
+              if (AppPrefs.user!.userRole == '1') 20.vs,
+              if (AppPrefs.user!.userRole == '1')
+                _buildTitle(
+                    all: AppStrings().all.trans,
+                    text: AppStrings().teachers.trans,
+                    asset: AppAssets().teacherIcon),
+              if (AppPrefs.user!.userRole == '1') 5.vs,
+              if (AppPrefs.user!.userRole == '1') BuildTeachers(),
+              if (AppPrefs.user!.userRole == '1') 20.vs,
+              if (AppPrefs.user!.userRole == '1')
+                _buildTitle(text: AppStrings().mySubscriptions.trans),
+              if (AppPrefs.user!.userRole == '1') 5.vs,
+              if (AppPrefs.user!.userRole == '1')const BuildSubscription(),
               20.vs,
-              _buildTitle(
-                  all: AppStrings().all.trans,
-                  text: AppStrings().teachers.trans,
-                  asset: AppAssets().teacherIcon),
-              5.vs,
-              BuildTeachers(),
-              20.vs,
-              _buildTitle(text: AppStrings().mySubscriptions.trans),
-              5.vs,
-              BuildSubscription(),
-              20.vs,
-              _buildTitle(
-                  text: AppStrings().features.trans,
-                  asset: AppAssets().featuresIcon),
-              5.vs,
-
-              BuildFeatures(),
-              // 20.vs
+              if (AppPrefs.user!.userRole == '2')
+                _buildTitle(
+                    text: AppStrings().features.trans,
+                    asset: AppAssets().featuresIcon),
+              10.vs,
+              if (AppPrefs.user!.userRole == '2')
+                const SizedBox(child: BuildFeatures()),
+              20.vs
             ],
           ),
         ),
@@ -180,11 +185,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: AppColors.mainAppColor,
               ),
             ),
-            10.hs,
-            const CustomIcon(
-              icon: Icons.light_mode_rounded,
-              color: AppColors.mainAppColor,
-            ),
+            // 10.hs,
+            // const CustomIcon(
+            //   icon: Icons.light_mode_rounded,
+            //   color: AppColors.mainAppColor,
+            // ),
             const Spacer(),
             const CustomIcon(
               icon: Icons.search,

@@ -22,10 +22,7 @@ class BuildNearSchool extends StatelessWidget {
             );
           }
           if (state is LoadedState && state.data.isEmpty) {
-            return CustomEmptyWidget(
-                // onTap: () => context.read<AdsCubit>().getAds(),
-                // message: state.,
-                );
+            return const SizedBox.shrink();
           }
           return CustomListView(
             separatorWidget: (context, index) => SizedBox(

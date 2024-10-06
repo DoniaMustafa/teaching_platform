@@ -174,7 +174,7 @@ class AppStrings {
   //
   final String promoUpload = "promoUpload";
   //
-  // final String carLicenceError = "carLicenceError";
+  final String challenges = "challenges";
   final String uploadLatestCertificate = 'uploadLatestCertificate';
   final String uploadCV = "uploadCV";
   //

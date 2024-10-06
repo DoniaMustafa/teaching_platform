@@ -3,15 +3,15 @@ import '../models/user_response_model.dart';
 
 abstract class UserLocalDataSource {
   Future<ResponseModel> getCachedUser();
-  Future<ResponseModel> cacheImage({required String  image});
+  Future<ResponseModel> cacheImage({required String image});
   Future<ResponseModel> cacheUser({required UserModel user});
   Future<bool> clearCachedUser();
   Future<ResponseModel> cacheToken({required String token});
   Future<bool> clearCachedToken();
   Future<ResponseModel> getCachedToken();
-  Future<ResponseModel> cacheFcmToken({required String fcmToken});
+  // Future<ResponseModel> cacheFcmToken({required String fcmToken});
   Future<bool> clearCachedDeviceToken();
-  Future<ResponseModel> getCachedFcmToken();
+  // Future<ResponseModel> getCachedFcmToken();
 }
 
 class UserImplWithPrefs implements UserLocalDataSource {
@@ -59,10 +59,11 @@ class UserImplWithPrefs implements UserLocalDataSource {
   Future<ResponseModel> cacheUser({required UserModel user}) => cacheWrite(
         sharedPreferences,
         AppPrefs.prefsUserKey,
-        user.toJson(),
-        afterCaching: (data) {
-          AppPrefs.user = user;
-        },
+        user.userToJson(),
+        // afterCaching: (data) {
+        //   AppPrefs.user = user;
+        //   print('AppPrefs.user cacheUser>>>>>>>>>>>>>>> ${AppPrefs.user!.userRole}');
+        // },
       );
   @override
   Future<ResponseModel> cacheToken({required String token}) => cacheWrite(
@@ -73,15 +74,15 @@ class UserImplWithPrefs implements UserLocalDataSource {
           AppPrefs.token = token;
         },
       );
-  @override
-  Future<ResponseModel> cacheFcmToken({required String fcmToken}) => cacheWrite(
-        sharedPreferences,
-        AppPrefs.prefsDeviceTokenKey,
-        fcmToken,
-        afterCaching: (data) {
-          AppPrefs.userToken = fcmToken;
-        },
-      );
+  // @override
+  // Future<ResponseModel> cacheFcmToken({required String fcmToken}) => cacheWrite(
+  //       sharedPreferences,
+  //       AppPrefs.prefsDeviceTokenKey,
+  //       fcmToken,
+  //       afterCaching: (data) {
+  //         AppPrefs.userToken = fcmToken;
+  //       },
+  //     );
   @override
   Future<ResponseModel> getCachedUser() => cacheRead<UserModel?>(
         sharedPreferences,
@@ -89,16 +90,17 @@ class UserImplWithPrefs implements UserLocalDataSource {
         fromJson: UserModel.fromJson,
         afterCaching: (data) {
           AppPrefs.user = data;
+          // print('AppPrefs.user >>>>>>>>>>>>>>> ${AppPrefs.user!.userRole}');
         },
       );
-  @override
-  Future<ResponseModel> getCachedFcmToken() => cacheRead<String?>(
-        sharedPreferences,
-        AppPrefs.prefsDeviceTokenKey,
-        afterCaching: (data) {
-          AppPrefs.userToken = data;
-        },
-      );
+  // @override
+  // Future<ResponseModel> getCachedFcmToken() => cacheRead<String?>(
+  //       sharedPreferences,
+  //       AppPrefs.prefsDeviceTokenKey,
+  //       afterCaching: (data) {
+  //         AppPrefs.userToken = data;
+  //       },
+  //     );
 
   @override
   Future<ResponseModel> getCachedToken() => cacheRead<String?>(
@@ -111,11 +113,11 @@ class UserImplWithPrefs implements UserLocalDataSource {
 
   @override
   Future<ResponseModel> cacheImage({required String image}) => cacheWrite(
-      sharedPreferences,
-      AppPrefs.profileImage!,
-      image,
-      afterCaching: (data) {
-        // AppPrefs.profileImage = image;
-      },
-  );
+        sharedPreferences,
+        AppPrefs.profileImage!,
+        image,
+        afterCaching: (data) {
+          // AppPrefs.profileImage = image;
+        },
+      );
 }

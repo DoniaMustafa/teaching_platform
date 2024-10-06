@@ -1,3 +1,5 @@
+import 'package:teaching/features/auth/presentation/manager/user_cubit/user_cubit.dart';
+
 import '../../../../core/export/export.dart';
 
 Drawer buildDrawer() => Drawer(
@@ -6,17 +8,17 @@ Drawer buildDrawer() => Drawer(
         child: Column(
           children: [
             40.vs,
-            CustomNetworkImage.circular(
-              imageUrl: 'https://cdn-icons-png.flaticon.com/512/149/149071.png',
-              radius: 100.r,
-              defaultAsset: '',
-            ),
+            // CustomNetworkImage.circular(
+            //   imageUrl: '${EndPoints.baseUrl}${AppService().getBlocData<UserCubit>().user!.profilePicture!}',
+            //   radius: 100.r,
+            //   defaultAsset: '',
+            // ),
             10.vs,
-            CustomTextWidget(
-              text: 'Amgad maged',
-              style: getSemiboldTextStyle(
-                  fontSize: 18, fontFamily: FontFamilies.interFamily),
-            ),
+            // CustomTextWidget(
+            //   text: AppPrefs.user!.name!,
+            //   style: getSemiboldTextStyle(
+            //       fontSize: 18, fontFamily: FontFamilies.interFamily),
+            // ),
             12.vs,
             CustomCard(
               child: CustomTextWidget(
@@ -33,28 +35,35 @@ Drawer buildDrawer() => Drawer(
     );
 get _buildItems => Column(
       children: List.generate(
-          AppListsConstant.drawerItems.length,
-          (index) => CustomCard(
-              padding: getPadding(horizontal: 15.w, vertical: 12.h),
-              child: Row(
-                children: [
-                  CustomImageWidget(
-                    asset: AppAssets().drawer[index],
-                    width: 25.w,
-                    height: 25.h,
-                  ),
-                  10.hs,
-                  CustomTextWidget(
-                    text: AppListsConstant.drawerItems[index].title!,
-                    style: getMediumTextStyle(
-                        fontFamily: FontFamilies.interFamily, fontSize: 18),
-                  ),
-                  const Spacer(),
-                  const CustomIcon(
-                    icon: Icons.arrow_forward_ios,
-                    size: 18,
-                    color: AppColors.softBlack,
-                  )
-                ],
-              ))),
+          EnumService.userDrawerType(AppPrefs.user!.userRole!).length,
+          (index) => GestureDetector(
+                onTap: () =>
+                    EnumService.userDrawerType(AppPrefs.user!.userRole!)[index]
+                        .onTap!(),
+                child: CustomCard(
+                    padding: getPadding(horizontal: 15.w, vertical: 12.h),
+                    child: Row(
+                      children: [
+                        // CustomImageWidget(
+                        //
+                        //   asset: AppAssets().drawer[index],
+                        //   width: 25.w,
+                        //   height: 25.h,
+                        // ),
+                        10.hs,
+                        CustomTextWidget(
+                          text: EnumService.userDrawerType(
+                                  AppPrefs.user!.userRole!)[index]
+                              .title!,
+                          style: getMediumTextStyle(fontSize: 14),
+                        ),
+                        const Spacer(),
+                        const CustomIcon(
+                          icon: Icons.arrow_forward_ios,
+                          size: 18,
+                          color: AppColors.softBlack,
+                        )
+                      ],
+                    )),
+              )),
     );

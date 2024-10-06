@@ -122,7 +122,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         String? value = await widget.onTap?.call();
       },
       enabled: widget.enabled,
-      textDirection: widget.textDirection,
+      textDirection: context.read<LanguageCubit>().isEn?TextDirection.ltr:TextDirection.rtl,
       onChanged: (String value) {
         widget.onChanged?.call(value);
       },

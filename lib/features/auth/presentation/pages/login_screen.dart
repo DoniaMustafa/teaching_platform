@@ -39,8 +39,8 @@ class LoginScreen extends StatelessWidget {
   }
 
   get _buildInputForms => Form(
-    key: _formKey,
-    child: Column(
+        key: _formKey,
+        child: Column(
           children: [
             PhoneWidget(
               controller: _phoneController,
@@ -51,7 +51,7 @@ class LoginScreen extends StatelessWidget {
             ),
           ],
         ),
-  );
+      );
 
   get _buildForgetPass => GestureDetector(
         onTap: () => Routes.forgetPassRoute.moveTo,

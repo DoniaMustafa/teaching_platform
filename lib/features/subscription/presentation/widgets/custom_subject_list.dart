@@ -12,13 +12,13 @@ class CustomSubjectList extends StatelessWidget {
   final VoidCallback onTap;
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: SizedBox(
-        height: 130.h,
-        child: CustomListView(
-            itemCount: 5,
-            widget: (context, index) => Column(
+    return SizedBox(
+      height: 130.h,
+      child: CustomListView(
+          itemCount: 5,
+          widget: (context, index) => GestureDetector(
+            onTap: onTap,
+            child: Column(
                   children: [
                     Expanded(
                       child: CustomCard(
@@ -40,8 +40,8 @@ class CustomSubjectList extends StatelessWidget {
                       ),
                     )
                   ],
-                )),
-      ),
+                ),
+          )),
     );
   }
 }

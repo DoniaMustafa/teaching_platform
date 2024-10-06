@@ -39,17 +39,20 @@ class UserDataModel {
   final String? tokenType;
   final int? expiresIn;
   final UserModel? user;
+  final int? stepNo;
 
   UserDataModel({
     this.accessToken,
     this.tokenType,
     this.expiresIn,
+    this.stepNo,
     this.user,
   });
 
   factory UserDataModel.fromJson(Map<String, dynamic> json) => UserDataModel(
         accessToken: json["access_token"],
         tokenType: json["token_type"],
+        stepNo: json["StepNo"],
         expiresIn: int.tryParse('${json["expires_in"]}'),
         user: json["user"] == null ? null : UserModel.fromJson(json["user"]),
       );
@@ -77,14 +80,19 @@ class UserModel {
   final String? userRole;
   final String? wallet;
   final String? priviliges;
-
+  final int? educationTypeId;
+  final int? programTypeId;
+  final int? gradeIds;
   UserModel({
     this.phoneNumber,
     this.userId,
     this.stepsNo,
     this.name,
+    this.gradeIds,
     this.verifyCode,
     this.countryId,
+    this.programTypeId,
+    this.educationTypeId,
     this.profilePicture,
     this.userRole,
     this.image,
@@ -107,18 +115,28 @@ class UserModel {
 
   Map<String, dynamic> toJson() => {
         "PhoneNumber": phoneNumber,
-        "UserId": userId,
-        "StepNo": stepsNo,
+        // "StepNo": stepsNo,
         "Email": email,
         "Name": name,
-        "profilePicture": profilePicture,
-        "UserType": int.parse(userRole!),
+        // "EducationTypeIds":  educationTypeId.isNotNull? [educationTypeId]: null,
+        //     "ProgramTypeIds": programTypeId.isNotNull? [programTypeId]: null,
+        //     "GradeIds": gradeIds.isNotNull? [gradeIds]: null,
         "Code": verifyCode,
         "CountryId": countryId,
         "Password": password,
       };
-}
 
+  Map<String, dynamic> userToJson() => {
+        "phoneNumber": phoneNumber,
+        "userId": userId,
+        "StepNo": stepsNo,
+        "name": name,
+        "profilePicture": profilePicture,
+        "userRole": userRole,
+        "wallet": wallet,
+        "priviliges": priviliges,
+      };
+}
 // class UserResponseModel extends ResponseModel {
 //   UserResponseModel({
 //     super.success,

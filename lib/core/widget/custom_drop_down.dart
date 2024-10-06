@@ -99,6 +99,7 @@ class _ExpansionTileDropDownState extends State<ExpansionTileDropDown> {
         activeText = widget.items[index].name;
         widget.onSelected(widget.items[index].id);
         isExpanded = false;
+        debugPrint(widget.items[index].id.toString());
         setState(() {});
       },
       child: Container(

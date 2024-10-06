@@ -1,9 +1,10 @@
 enum RoleType { Student, Parent, Teacher, ProfessionalCourses, School, Assistant, ProfessionalLecturer }
+
 enum ListStatus {
   listLoaded,
   listError,
   listLoading,
-  initial,
+  // initial,
 }
 enum AlertTypes {
   loading,

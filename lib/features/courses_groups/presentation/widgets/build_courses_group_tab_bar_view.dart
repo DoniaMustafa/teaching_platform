@@ -39,7 +39,7 @@ class BuildCoursesGroupTabBarView extends StatelessWidget {
                 mainAxisSpacing: 15.h,
                 crossAxisSpacing: 20.w,
                 shrinkWrap: true,
-                childAspectRatio: 0.5 / 0.55,
+                childAspectRatio: 0.5 / 0.6,
                 children: List.generate(
                   state is LoadedState
                       ? (context.read<CoursesGroupOperationCubit>().tabIndex ==
@@ -53,12 +53,12 @@ class BuildCoursesGroupTabBarView extends StatelessWidget {
                           0) {
                         return CustomItem(
                             onTap: () {},
-                            isSubScribe: true,
+                            // isSubScribe: true,
                             coursesModel: state.data.courses[index]);
                       } else {
                         return CustomItem(
                             onTap: () {},
-                            isSubScribe: true,
+                            // isSubScribe: true,
                             groupsModel: state.data.groups[index]);
                       }
                     } else {

@@ -55,7 +55,7 @@ class SignUpByPhoneScreen extends StatelessWidget with SignUpByPhoneVariables {
                 fontFamily: FontFamilies.elMessiriFamily),
           ),
           CustomTextWidget(
-            text: RegisterService.registerType(userType),
+            text: EnumService.registerType(userType),
             style: getSemiboldTextStyle(
                 color: AppColors.darkMainAppColor,
                 fontSize: 16,

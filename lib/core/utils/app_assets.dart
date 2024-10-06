@@ -9,6 +9,10 @@ mixin class SvgImages {
   String about = "$svgPath/about.svg";
   String upload = "$svgPath/upload.svg";
   String uploadVideo = "$svgPath/upload_video.svg";
+  String transaction = "$svgPath/transaction.svg";
+
+
+
 ///////////////////////////////  svg  ////////////////////////////////////
   List<String> navBar = [
     "$svgPath/notification.svg",
@@ -40,6 +44,7 @@ mixin PngImages {
   String onlineLearning = "$imagesPath/online-learning.png";
   String forgetPass = "$imagesPath/forget_pass.png";
   String pinCode = "$imagesPath/pin_code.png";
+  String qrCode = "$imagesPath/qr_code.png";
 
   String coursesIcon = "$imagesPath/courses_icon.png";
   String groupsIcon = "$imagesPath/groups_icon.png";

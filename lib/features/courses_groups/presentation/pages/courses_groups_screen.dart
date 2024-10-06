@@ -33,7 +33,7 @@ class _CoursesGroupsScreenState extends State<CoursesGroupsScreen> {
             20.vs,
             const BuildCoursesGroupsTabBar(),
             const BuildCoursesGroupTabBarView(),
-            10.vs,
+            // 10.vs,
           ],
         ),
         // CustomListView(

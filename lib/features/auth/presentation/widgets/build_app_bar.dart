@@ -16,7 +16,7 @@ class BuildBackgroundWithAppBar extends StatelessWidget {
           children: [
             Expanded(
               child: CustomTextWidget(
-                text: RegisterService.registerType(SignUpByPhoneScreen.userType),
+                text: EnumService.registerType(SignUpByPhoneScreen.userType),
                 overflow: TextOverflow.visible,
                 style: getSemiboldTextStyle(
                     color: AppColors.white,

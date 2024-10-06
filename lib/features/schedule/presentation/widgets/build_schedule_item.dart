@@ -8,12 +8,17 @@ class BuildScheduleItem extends StatelessWidget {
     return Align(
       alignment: AlignmentDirectional.topCenter,
       child: CustomCard(
-boxShadow: [BoxShadow(color: AppColors.borderColor2.withOpacity(0.5),blurRadius: 5,offset: Offset(0.2, 0.5))],
+        boxShadow: [
+          BoxShadow(
+              color: AppColors.borderColor2.withOpacity(0.5),
+              blurRadius: 5,
+              offset: Offset(0.2, 0.5))
+        ],
         margin: getMargin(horizontal: 10.w, top: 30.h, bottom: 20.h),
         radius: 10.r,
         borderColor: AppColors.borderColor2,
         borderWidth: 0.5,
-        padding: getPadding(start: 15.w,end: 20.w, vertical: 20.h),
+        padding: getPadding(start: 15.w, end: 20.w, vertical: 20.h),
         child: Row(
           children: [
             CustomTextWidget(

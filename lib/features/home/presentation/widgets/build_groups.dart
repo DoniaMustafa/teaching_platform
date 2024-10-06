@@ -8,22 +8,21 @@ class BuildGroups extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-        height: 200.h,
-        child: BlocBuilder<CoursesGroupsCubit, CubitStates>(
-            builder: (context, state) {
-          if (state is FailedState) {
-            return CustomErrorWidget(
-              onTap: () =>
-                  context.read<CoursesGroupsCubit>().getCourserAndGroups(),
-              message: state.message,
-            );
-          }
-          if (state is LoadedState && state.data.groups.isEmpty) {
-            return const CustomEmptyWidget();
-          }
-          return buildCoursesList(state);
-        }));
+    return  BlocBuilder<CoursesGroupsCubit, CubitStates>(
+        builder: (context, state) {
+      if (state is FailedState) {
+        return CustomErrorWidget(
+          onTap: () =>
+              context.read<CoursesGroupsCubit>().getCourserAndGroups(),
+          message: state.message,
+        );
+      }
+      if (state is LoadedState && state.data.groups.isEmpty) {
+        return const SizedBox.shrink();
+      }
+      return AspectRatio(
+          aspectRatio: 1.5/0.9,child: buildCoursesList(state));
+    });
   }
 
   Widget buildCoursesList(CubitStates state) {
