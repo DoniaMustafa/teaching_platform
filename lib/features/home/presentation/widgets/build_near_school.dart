@@ -42,14 +42,17 @@ class BuildNearSchool extends StatelessWidget {
                         boxShadow: [
                           BoxShadow(
                               color: AppColors.black.withOpacity(0.2),
-                              offset: Offset(0, 2),
+                              offset:const Offset(0, 2),
                               blurRadius: 5)
                         ],
                         radius: 10.r,
                         borderColor: AppColors.textGrayColor1.withOpacity(0.2),
                         padding: getPadding(vertical: 20.h, horizontal: 25.w),
                         backgroundColor: AppColors.white,
-                        child: CustomNetworkImage.rectangle(imageUrl: state.data[index].image,defaultAsset: AppAssets().emptyImage,)),
+                        child: CustomNetworkImage.rectangle(
+                          imageUrl: state.data[index].image,
+                          defaultAsset: AppAssets().emptyImage,
+                        )),
                     8.vs,
                     Expanded(
                       child: CustomTextWidget(

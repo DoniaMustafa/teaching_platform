@@ -1,4 +1,3 @@
-import 'package:teaching/core/enums.dart';
 import 'package:teaching/features/auth/data/models/contry_response_model.dart';
 import 'package:teaching/features/auth/presentation/manager/education/program/prgram_cubit.dart';
 
@@ -20,7 +19,7 @@ class BuildEducationCurriculum extends StatelessWidget {
               items: getItems(state),
               onSelected: (int id) {
                 context.read<ProgramCubit>().curriculumId = id;
-                AppService().getBlocData<StageCubit>().getGrade(
+                context.read<StageCubit>().getGrade(
                       educationProgramsId:
                           context.read<ProgramCubit>().curriculumId!,
                       educationTypeId: context.read<EducationCubit>().typeId!,
@@ -48,13 +47,15 @@ class BuildEducationCurriculum extends StatelessWidget {
 
   List<PublicDataModel> getItems(ProgramState state) {
     if (state is EducationProgramsLoadedState) return state.data;
-    return [];
+
+      return [];
+
   }
 
   ListStatus? getListStatus(ProgramState state) {
-    if (state is EducationProgramsLoadingState) return ListStatus.listError;
-    if (state is EducationProgramsLoadedState) return ListStatus.listLoaded;
+    if (state is EducationProgramsFailureState) return ListStatus.listError;
+    // if (state is EducationProgramsLoadedState) return ListStatus.listLoaded;
     if (state is EducationProgramsLoadingState) return ListStatus.listLoading;
-    return null;
+    return ListStatus.listLoaded;
   }
 }

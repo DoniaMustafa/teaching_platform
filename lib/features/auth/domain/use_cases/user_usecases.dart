@@ -1,27 +1,28 @@
 // import '../../../../exports.dart';
 import 'package:dartz/dartz.dart';
 import 'package:teaching/core/export/export.dart';
+import 'package:teaching/features/auth/data/models/post_params_resume_model.dart';
 
 import '../../data/models/user_response_model.dart';
 import '../repositories/user_repo.dart';
 
-class UserUsecases {
+class UserUseCases {
   UserRepo repo;
-  UserUsecases({required this.repo});
+  UserUseCases({required this.repo});
   Future<Either<Failure, ResponseModel>> registerByPhoneNumber(
           {required UserModel user}) async =>
       await repo.registerByPhoneNumber(user: user);
-  Future<Either<Failure, ResponseModel>> register({UserModel? user,int? stepsNo}) async =>
-      repo.register(user: user,stepsNo: stepsNo);
-  // Future<Either<Failure, ResponseModel>> forgetPassword({
-  //   required String phone,
-  // }) async =>
-  //     await repo.forgetPassword(
-  //       phone: phone,
-  //     );
-  // Future<Either<Failure, ResponseModel>> logout() async => await repo.logout();
-  // // Future<Either<Failure, OtpResponseModel>> resendOTP({required String phone}) async =>
-  // //     await repositories.resendOTP(phone: phone);
+  Future<Either<Failure, ResponseModel>> register({PostParamsResumeModel? resumeModel,
+
+    UserModel? user,int? stepsNo,PostParamsEducationModel? education,}) async =>
+      repo.register(user: user,stepsNo: stepsNo,education: education,resumeModel: resumeModel);
+  Future<Either<Failure, ResponseModel>> forgetPassword({
+    required String phone,
+  }) async =>
+      await repo.forgetPassword(
+        phone: phone,
+      );
+  Future<Either<Failure, ResponseModel>> logout() async => await repo.logout();
   Future<Either<Failure, ResponseModel>> verifyOTP(
           {required UserModel user}) async =>
       await repo.verifyOTP(user: user);
@@ -33,10 +34,15 @@ class UserUsecases {
         phone: phone,
         password: password,
       );
-  // Future<Either<Failure, ResponseModel>> resetPassword(String phone, String newPassword) async =>
-  //     await repo.resetPassword(phone, newPassword);
-  // Future<Either<Failure, ResponseModel>> verifyForgetPassword({required String verificationCode, required String phone}) =>
-  //     repo.verifyForgetPassword(phone: phone, verificationCode: verificationCode);
+  Future<Either<Failure, ResponseModel>> resetPassword( {required UserModel user}) async =>
+      await repo.resetPassword(user:user);
+  Future<Either<Failure, ResponseModel>> verifyForgetPassword({required String verificationCode, required String phone}) =>
+      repo.verifyForgetPassword(phone: phone, verificationCode: verificationCode);
+
+
+  // // Future<Either<Failure, OtpResponseModel>> resendOTP({required String phone}) async =>
+  // //     await repositories.resendOTP(phone: phone);
+
   // Future<Either<Failure, ResponseModel>> deleteAccount() =>
   //     repo.deleteAccount();
   // Future<Either<Failure, ResponseModel>> addAccount({required UserModel user}) =>

@@ -8,10 +8,11 @@ class AppColors {
   static const Color primaryBaseColor = Color(0xFF39A7FF);
   static const Color darkPrimaryColor = Color(0xFF0F63A6);
 
-  static const secondBorderColor = Color(0xFF0F63A6);
+  // static const secondBorderColor = Color(0xFF0F63A6);
   static const Color divider = Color(0xFF666666);
   static const Color heavyBlack = Color(0xFF545151);
   static const Color primaryShadow = Color(0xFF90CAF9);
+  static const secondBorderColor = Color(0xFF939393);
 
   static Color fillBackgroundColor = Color(0xFFF7F6F9);
 
@@ -26,7 +27,7 @@ class AppColors {
   // static const Color textHint = Color(0xFFC8C7CC);
   // static const Color textFieldShadow1 = Color(0xFFBBC3CE);
   // static const Color textFieldShadow2 = Color(0xFFFDFFFF);
-  // static const descriptionColor = Color(0xFF606268);
+  static const grayColor1 = Color(0xFF888B8E);
 
   static const Color textGrayColor1 = Color(0xFFB9B4BB);
   static const Color white = Colors.white;
@@ -76,7 +77,7 @@ class AppColors {
   // static Color descColor = '#878787'.colorFromString;
   static const Color black = Colors.black;
 
-  // static Color midGray = '#E6E6E6'.colorFromString;
+  static Color midGray = const Color(0xFF151729);
   static Color deepGray = const Color(0xFF222222);
   // static const Color red = Colors.red;
   static const Color grey = Colors.grey;
@@ -89,7 +90,7 @@ class AppColors {
   // static const regularGray = Color(0xFF424242);
   static Color gray = '#757374'.colorFromString;
   static Color iconsGray = '#ADADAD'.colorFromString;
-  // static Color yellowColor = Color(0xFFFFC100);
+  static Color statusBarColor = const Color(0xFF4B1BBF);
   // static Color profileDivider = const Color(0xffB8B8D1);
   // static Color lightGray = '#F5F5F5'.colorFromString;
   // static Color lightGray2 = '#E2E2E2'.colorFromString;
@@ -102,9 +103,11 @@ class AppColors {
   static const Color borderColor = const Color(0xFF6341A0);
   static const borderColor2 = Color(0xFFC8B9D0);
   static const dividerColor = Color(0xFF5F5959);
+  static Color darkGrey = const Color(0xFF161719);
 
+  static const subTitleColor = Color(0xFF3F3F3F);
 
-  static const mainAppColor = Color(0xFF5A1EE8);
+  static const mainAppColor = Color(0xFF6424FF);
   static const darkMainAppColor = Color(0xFF341775);
   static const titleColorPurple = Color(0xffA525D1);
   static const subMainAppColor = Color(0xffF5E6FD);

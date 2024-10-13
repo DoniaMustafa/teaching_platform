@@ -6,6 +6,10 @@ abstract class EducationTypeRemoteDatasource {
   Future<ResponseModel> getEducationPrograms({required int id});
   Future<ResponseModel> getGrade(
       {required int educationProgramsId, required int educationTypeId});
+  Future<ResponseModel> getSubjects(
+      {required int educationProgramsId,
+      required int educationTypeId,
+      required int gradeId});
 }
 
 class EducationTypeWithServer extends EducationTypeRemoteDatasource {
@@ -38,5 +42,19 @@ class EducationTypeWithServer extends EducationTypeRemoteDatasource {
                 "educationTypeId": educationTypeId,
                 "programTypeId": educationProgramsId
               }),
+          fromJsonFunction: PublicResponseModel.fromJson);
+
+  @override
+  Future<ResponseModel> getSubjects(
+          {required int educationProgramsId,
+          required int educationTypeId,
+          required int gradeId}) async =>
+      remoteExecute(
+          request:
+              dioConsumer.getRequest(path: EndPoints.getSubject, queryParams: {
+            "educationTypeId": educationTypeId,
+            "programTypeId": educationProgramsId,
+            "gradeId": gradeId
+          }),
           fromJsonFunction: PublicResponseModel.fromJson);
 }

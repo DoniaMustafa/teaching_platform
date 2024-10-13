@@ -315,4 +315,9 @@ class AppListsConstant {
       title: 'ادارة المساعدين',
     ),
   ];
+
+  static List<String> lessonsTabBar = [
+    AppStrings().sessions.trans,
+    AppStrings().groupInfo.trans
+  ];
 }

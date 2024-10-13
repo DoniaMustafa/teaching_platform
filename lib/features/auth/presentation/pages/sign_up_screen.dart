@@ -61,41 +61,41 @@ class _SignUpScreenState extends State<SignUpScreen>
               _buildInputForms,
               120.vs,
 
-              if (SignUpByPhoneScreen.userType != 'Parent')
-                BuildNextButton(
-                  onTap: () {
-                    print(name.text);
-                    print(VerificationScreen.phone);
-                    print(email.text);
-                    print(password.text);
-                    print(selectedCountryId.toString());
-                    _formKey.currentState!.validate();
-                    if (AppService().getBlocData<ErrorCubit>().errors.isEmpty) {
-                      AppService().getBlocData<UserCubit>().register(
-                          stepsNo: 2,
-                          user: UserModel(
-                              phoneNumber: VerificationScreen.phone,
-                              name: name.text,
-                              email: email.text,
-                              password: password.text,
-                              countryId: selectedCountryId.toString()));
+              // if (SignUpByPhoneScreen.userType != 'Parent')
+              BuildNextButton(
+                onTap: () {
+                  print(name.text);
+                  print(VerificationScreen.phone);
+                  print(email.text);
+                  print(password.text);
+                  print(selectedCountryId.toString());
+                  _formKey.currentState!.validate();
+                  if (AppService().getBlocData<ErrorCubit>().errors.isEmpty) {
+                    AppService().getBlocData<UserCubit>().register(
+                        stepsNo: 2,
+                        user: UserModel(
+                            phoneNumber: VerificationScreen.phone,
+                            name: name.text,
+                            email: email.text,
+                            password: password.text,
+                            countryId: selectedCountryId.toString()));
 
-                      // if (SignUpByPhoneScreen.userType != AppStrings().parent &&
-                      //     SignUpByPhoneScreen.userType !=
-                      //         AppStrings().professionalLecturer) {
-                      //   Routes.educationTypeRoute.moveTo;
-                      // } else if (SignUpByPhoneScreen.userType ==
-                      //         AppStrings().professionalLecturer ||
-                      //     SignUpByPhoneScreen.userType ==
-                      //         AppStrings().teacher) {
-                      //   Routes.uploadResumeRoute.moveTo;
-                      // }
-                    }
-                  },
-                  text: SignUpByPhoneScreen.userType == 'Parent'
-                      ? AppStrings().createAccount.trans
-                      : AppStrings().continuation.trans,
-                ),
+                    // if (SignUpByPhoneScreen.userType != AppStrings().parent &&
+                    //     SignUpByPhoneScreen.userType !=
+                    //         AppStrings().professionalLecturer) {
+                    //   Routes.educationTypeRoute.moveTo;
+                    // } else if (SignUpByPhoneScreen.userType ==
+                    //         AppStrings().professionalLecturer ||
+                    //     SignUpByPhoneScreen.userType ==
+                    //         AppStrings().teacher) {
+                    //   Routes.uploadResumeRoute.moveTo;
+                    // }
+                  }
+                },
+                text: SignUpByPhoneScreen.userType == 'Parent'
+                    ? AppStrings().createAccount.trans
+                    : AppStrings().continuation.trans,
+              ),
               40.vs,
             ],
           ),

@@ -4,6 +4,7 @@ import '../../../../core/export/export.dart';
 import '../../domain/repositories/user_repo.dart';
 import '../data_sources/user_local_datasource.dart';
 import '../data_sources/user_remote_datasource.dart';
+import '../models/post_params_resume_model.dart';
 import '../models/user_response_model.dart';
 
 class UserRepoImpl extends UserRepo {
@@ -31,9 +32,14 @@ class UserRepoImpl extends UserRepo {
       );
 
   @override
-  Future<Either<Failure, ResponseModel>> register({UserModel? user,int? stepsNo}) async =>
+  Future<Either<Failure, ResponseModel>> register({
+    UserModel? user,
+    int? stepsNo, PostParamsResumeModel? resumeModel,
+    PostParamsEducationModel? education,
+  }) async =>
       execute(
-        () => userRemoteDataSource.register(user: user,stepsNo: stepsNo),
+        () => userRemoteDataSource.register(resumeModel: resumeModel,
+            user: user, stepsNo: stepsNo, education: education),
       );
 
   @override
@@ -43,15 +49,38 @@ class UserRepoImpl extends UserRepo {
         () => userRemoteDataSource.verifyOTP(user: user),
       );
 
-//   @override
-//   Future<Either<Failure, ResponseModel>> forgetPassword({
-//     required String phone,
-//   }) =>
-//       execute(() => userRemoteDataSource.forgetPassword(
-//             phone: phone,
-//           ));
-//
-//   // @override
+  @override
+  Future<Either<Failure, ResponseModel>> forgetPassword({
+    required String phone,
+  }) =>
+      execute(() => userRemoteDataSource.forgetPassword(
+            phone: phone,
+          ));
+  @override
+  Future<Either<Failure, ResponseModel>> verifyForgetPassword(
+      {required String phone, required String verificationCode}) =>
+      execute(
+            () async => userRemoteDataSource.verifyForgetPassword(
+            phone: phone, verificationCode: verificationCode),
+      );
+  @override
+  Future<Either<Failure, ResponseModel>> resetPassword(
+      {required UserModel user}) async =>
+      execute(() => userRemoteDataSource.resetPassword(user: user));
+  @override
+  Future<Either<Failure, ResponseModel>> logout() async => execute(() async {
+    ResponseModel response = await userRemoteDataSource.logout();
+    if (response.success.isTrue) {
+      userLocalDataSource.clearCachedUser();
+      userLocalDataSource.clearCachedToken();
+      AppPrefs.user = null;
+      AppPrefs.token = null;
+    }
+    return response;
+  });
+
+
+  //   // @override
 //   // Future<Either<Failure, ResponseModel>> updatePassword(
 //   //     {required String oldPassword, required String newPassword}) async {
 //   //   try {
@@ -73,36 +102,20 @@ class UserRepoImpl extends UserRepo {
 //   //   }
 //   // }
 //
-//   @override
-//   Future<Either<Failure, ResponseModel>> logout() async => execute(() async {
-//         ResponseModel response = await userRemoteDataSource.logout();
-//         if (response.success.isTrue) {
-//           userLocalDataSource.clearCachedUser();
-//           userLocalDataSource.clearCachedDeviceToken();
-//           userLocalDataSource.clearCachedToken();
-//           AppPrefs.user = null;
-//           AppPrefs.token = null;
-//           AppPrefs.deviceToken = null;
-//         }
-//         return response;
-//       });
-//
-//   @override
-//   Future<Either<Failure, ResponseModel>> resetPassword(
-//           String phone, String newPassword) async =>
-//       execute(() => userRemoteDataSource.resetPassword(phone, newPassword));
-//
-//   /* Future<Either<Failure, LoginUserResponseModel>> executeAndCacheUser(
-//       {required Future<LoginUserResponseModel> Function() function}) {
-//     return execute<LoginUserResponseModel>(() async {
-//       LoginUserResponseModel userResponse = await function.call();
-//       bool isCached = await userLocalDataSource.cacheUser(userResponse.user!);
-//       if (isCached) {
-//         AppPrefs.user = userResponse.user!;
-//       }
-//       return userResponse;
-//     });
-//   }
+
+
+
+  /* Future<Either<Failure, LoginUserResponseModel>> executeAndCacheUser(
+      {required Future<LoginUserResponseModel> Function() function}) {
+    return execute<LoginUserResponseModel>(() async {
+      LoginUserResponseModel userResponse = await function.call();
+      bool isCached = await userLocalDataSource.cacheUser(userResponse.user!);
+      if (isCached) {
+        AppPrefs.user = userResponse.user!;
+      }
+      return userResponse;
+    });
+  }
 // */
 //
 //   // @override
@@ -165,13 +178,13 @@ class UserRepoImpl extends UserRepo {
   Future<Either<Failure, ResponseModel>> cacheToken(String token) =>
       executeCache(() => userLocalDataSource.cacheToken(token: token));
 
- //  @override
- // logout() {
- //    userLocalDataSource.clearCachedUser();
- //    userLocalDataSource.clearCachedToken();
- //    AppPrefs.user = null;
- //    AppPrefs.token = null;
- //  }
+  //  @override
+  // logout() {
+  //    userLocalDataSource.clearCachedUser();
+  //    userLocalDataSource.clearCachedToken();
+  //    AppPrefs.user = null;
+  //    AppPrefs.token = null;
+  //  }
 
 //
 //   @override
@@ -180,13 +193,7 @@ class UserRepoImpl extends UserRepo {
 //
 
 //
-//   @override
-//   Future<Either<Failure, ResponseModel>> verifyForgetPassword(
-//           {required String phone, required String verificationCode}) =>
-//       execute(
-//         () async => userRemoteDataSource.verifyForgetPassword(
-//             phone: phone, verificationCode: verificationCode),
-//       );
+
 //
 //   @override
 //   Future<Either<Failure, ResponseModel>> editUserData(

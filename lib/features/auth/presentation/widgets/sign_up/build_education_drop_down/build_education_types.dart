@@ -24,6 +24,7 @@ class _BuildEducationMaterialState extends State<BuildEducationMaterial> {
               items: getItems(state),
               onSelected: (int id) {
                 context.read<EducationCubit>().typeId = id;
+                print(context.read<EducationCubit>().typeId);
                 context.read<ProgramCubit>().getEducationPrograms(
                     id: context.read<EducationCubit>().typeId!);
               },
@@ -54,8 +55,8 @@ class _BuildEducationMaterialState extends State<BuildEducationMaterial> {
 
   ListStatus? getListStatus(EducationState state) {
     if (state is EducationTypeFailureState) return ListStatus.listError;
-    if (state is EducationTypeLoadedState) return ListStatus.listLoaded;
+    // if (state is EducationTypeLoadedState) return ListStatus.listLoaded;
     if (state is EducationTypeLoadingState) return ListStatus.listLoading;
-    return null;
+    return ListStatus.listLoaded;
   }
 }

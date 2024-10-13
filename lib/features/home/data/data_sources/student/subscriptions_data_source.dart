@@ -1,3 +1,5 @@
+import 'package:teaching/features/subscription/data/models/subscription_response_model.dart';
+
 import '../../../../../core/export/export.dart';
 
 abstract class SubscriptionsDataSource {
@@ -11,7 +13,7 @@ class  SubscriptionsWithServer extends SubscriptionsDataSource{
       request: dioConsumer.getRequest(
         path: EndPoints.getStudentSubscriptions,
       ),
-      fromJsonFunction: CourserAndGroupsResponseModel.fromJson);
+      fromJsonFunction: CountryResponseModel.fromJson);
 
   SubscriptionsWithServer(this.dioConsumer);
 }

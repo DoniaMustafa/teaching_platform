@@ -28,4 +28,13 @@ class EducationTypeImplement extends EducationTypeRepo {
             educationProgramsId: educationProgramsId,
             educationTypeId: educationTypeId),
       );
+
+  @override
+  Future<Either<Failure, ResponseModel>> getSubjects({required int educationProgramsId,
+    required int educationTypeId, required int gradeId}) async =>
+      execute(
+            () => datasource.getSubjects(
+            educationProgramsId: educationProgramsId,
+            educationTypeId: educationTypeId,gradeId: gradeId),
+      );
 }

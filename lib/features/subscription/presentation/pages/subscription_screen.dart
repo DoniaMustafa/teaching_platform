@@ -1,7 +1,5 @@
-import 'package:teaching/core/widget/common_widgets/custom_tab_bar.dart';
 import 'package:teaching/features/courses_groups/presentation/manager/coures_group_operation_cubit.dart';
 import 'package:teaching/features/subscription/presentation/manager/subscriptipn_operation_cubit.dart';
-import 'package:teaching/features/subscription/presentation/widgets/custom_subject_list.dart';
 import 'package:teaching/features/subscription/presentation/widgets/build_subscription_tab_bar.dart';
 import 'package:teaching/features/subscription/presentation/widgets/build_subscription_tab_bar_view.dart';
 
@@ -21,6 +19,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
     // TODO: implement initState
     super.initState();
     context.read<SubscriptionCubit>().getSubscription();
+    context.read<SubjectsCubit>().getSubjects();
   }
 
   @override
@@ -29,11 +28,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
       title: AppStrings().mySubscriptions.trans,
       widget: Column(
         children: [
-          CustomSubjectList(
-            label: 'لغة عربيه',
-            onTap: () {},
-            image: AppAssets().exam,
-          ),
+          CustomSubjectList(),
           20.vs,
           const BuildSubscriptionTabBar(),
           const BuildSubscriptionTabBarView(),
@@ -48,13 +43,13 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                         Routes.coursesGroupsRoute.moveTo;
                         context
                             .read<CoursesGroupOperationCubit>()
-                            .onChangeTabIndex(0);
+                            .onChangePublicTabIndex(0);
                         break;
                       case 1:
                         Routes.coursesGroupsRoute.moveTo;
                         context
                             .read<CoursesGroupOperationCubit>()
-                            .onChangeTabIndex(1);
+                            .onChangePublicTabIndex(1);
                         break;
                     }
                   },

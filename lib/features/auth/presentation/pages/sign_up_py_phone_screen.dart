@@ -5,7 +5,7 @@ import '../../../../core/export/export.dart';
 mixin SignUpByPhoneVariables {
 
   String userTypeAsString = '';
-  int? userId;
+
   final _formKey = GlobalKey<FormState>();
   TextEditingController phone = TextEditingController();
 }
@@ -14,7 +14,7 @@ class SignUpByPhoneScreen extends StatelessWidget with SignUpByPhoneVariables {
   SignUpByPhoneScreen({super.key});
   static const String userTypeKey = 'userTypeKey';
   static const String userTypeIdKey = 'userTypeIdKey';
-
+  static int? userId;
   static const String userTypeStringKey = 'userTypeStringKey';
   static String userType = '';
   @override

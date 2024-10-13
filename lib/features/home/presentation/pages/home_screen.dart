@@ -1,6 +1,6 @@
 import 'package:teaching/core/enums.dart';
 import 'package:teaching/features/home/presentation/manager/ads_cubit.dart';
-import 'package:teaching/features/home/presentation/manager/courses_groups_cubit.dart';
+import 'package:teaching/features/home/presentation/manager/courses_cubit.dart';
 import 'package:teaching/features/home/presentation/manager/school_cubit.dart';
 import 'package:teaching/features/home/presentation/manager/subscription_cubit.dart';
 import 'package:teaching/features/home/presentation/manager/teachers_of_student_cubit.dart';
@@ -19,6 +19,8 @@ import 'package:teaching/features/home/presentation/widgets/build_teachers.dart'
 import 'package:teaching/features/home/presentation/widgets/build_welcome_user.dart';
 
 import '../../../../core/export/export.dart';
+import '../../../main_register/presentation/widgets/build_language.dart';
+import '../manager/groups_cubit.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -32,97 +34,101 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((data) {
+      context.read<CoursesCubit>().getCourser();
       context.read<AdsCubit>().getAds();
-      context.read<CoursesGroupsCubit>().getCourserAndGroups();
+      context.read<GroupsCubit>().getGroups();
       context.read<NearSchoolCubit>().getNearSchool();
       context.read<SubscriptionCubit>().getSubscription();
-
       context.read<TeachersOfStudentCubit>().getTeacherOfStudent();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _buildAppBar(context),
-        Expanded(
-          child: ListView(
-            children: [
-              20.vs,
-              const BuildWelcomeUser(),
-              20.vs,
+    return BlocBuilder<LanguageCubit, LanguageState>(
+      builder: (context, state) {
+        return Column(
+          children: [
+            _buildAppBar(context),
+            Expanded(
+              child: ListView(
+                children: [
+                  20.vs,
+                  const BuildWelcomeUser(),
+                  20.vs,
 
-              const BuildCategories(),
-              const BuildAdsList(),
+                  const BuildCategories(),
+                  const BuildAdsList(),
 
-              // // 5.vs,
-              30.vs,
+                  // // 5.vs,
+                  30.vs,
 
-              // const BuildFields(), 20.vs,
-              // _buildTitle(
-              //   text: AppStrings().choseForYou.trans,
-              // ),
-              // 8.vs,
-              // const BuildChooseToYou(), 20.vs,
-              // _buildTitle(text: AppStrings().lecturers.trans),
-              // 8.vs,
-              // const BuildLecturer(),
-              if (AppPrefs.user!.userRole == '1' ||
-                  AppPrefs.user!.userRole == '2')
-                _buildTitle(
-                    text: AppStrings().closeSchools.trans,
-                    asset: AppAssets().schoolIcon),
-              if (AppPrefs.user!.userRole == '1') 5.vs,
-              if (AppPrefs.user!.userRole == '1') const BuildNearSchool(),
-              if (AppPrefs.user!.userRole == '1') 20.vs,
-              if (AppPrefs.user!.userRole == '1')
-                _buildTitle(
-                    text: AppStrings().latestNews.trans,
-                    asset: AppAssets().newsIcon),
-              if (AppPrefs.user!.userRole == '1') const BuildNews(),
-              20.vs,
-              _buildTitle(
-                  onTap: () => Routes.coursesGroupsRoute.moveTo,
-                  all: AppStrings().all.trans,
-                  text: AppStrings().course.trans,
-                  asset: AppAssets().coursesIcon),
-              5.vs,
-              const BuildCourses(),
-              20.vs,
-              _buildTitle(
-                  onTap: () => Routes.coursesGroupsRoute.moveTo,
-                  all: AppStrings().all.trans,
-                  text: AppStrings().groups.trans,
-                  asset: AppAssets().groupsIcon),
-              5.vs,
-              const BuildGroups(),
-              if (AppPrefs.user!.userRole == '1') 20.vs,
-              if (AppPrefs.user!.userRole == '1')
-                _buildTitle(
-                    all: AppStrings().all.trans,
-                    text: AppStrings().teachers.trans,
-                    asset: AppAssets().teacherIcon),
-              if (AppPrefs.user!.userRole == '1') 5.vs,
-              if (AppPrefs.user!.userRole == '1') BuildTeachers(),
-              if (AppPrefs.user!.userRole == '1') 20.vs,
-              if (AppPrefs.user!.userRole == '1')
-                _buildTitle(text: AppStrings().mySubscriptions.trans),
-              if (AppPrefs.user!.userRole == '1') 5.vs,
-              if (AppPrefs.user!.userRole == '1')const BuildSubscription(),
-              20.vs,
-              if (AppPrefs.user!.userRole == '2')
-                _buildTitle(
-                    text: AppStrings().features.trans,
-                    asset: AppAssets().featuresIcon),
-              10.vs,
-              if (AppPrefs.user!.userRole == '2')
-                const SizedBox(child: BuildFeatures()),
-              20.vs
-            ],
-          ),
-        ),
-      ],
+                  // const BuildFields(), 20.vs,
+                  // _buildTitle(
+                  //   text: AppStrings().choseForYou.trans,
+                  // ),
+                  // 8.vs,
+                  // const BuildChooseToYou(), 20.vs,
+                  // _buildTitle(text: AppStrings().lecturers.trans),
+                  // 8.vs,
+                  // const BuildLecturer(),
+                  if (AppPrefs.user!.userRole == '1' ||
+                      AppPrefs.user!.userRole == '2')
+                    _buildTitle(
+                        text: AppStrings().closeSchools.trans,
+                        asset: AppAssets().schoolIcon),
+                  if (AppPrefs.user!.userRole == '1') 5.vs,
+                  if (AppPrefs.user!.userRole == '1') const BuildNearSchool(),
+                  if (AppPrefs.user!.userRole == '1') 20.vs,
+                  if (AppPrefs.user!.userRole == '1')
+                    _buildTitle(
+                        text: AppStrings().latestNews.trans,
+                        asset: AppAssets().newsIcon),
+                  if (AppPrefs.user!.userRole == '1') const BuildNews(),
+                  20.vs,
+                  _buildTitle(
+                      onTap: () => Routes.publicCoursesGroupsRoute.moveTo,
+                      all: AppStrings().all.trans,
+                      text: AppStrings().courses.trans,
+                      asset: AppAssets().coursesIcon),
+                  5.vs,
+                  const BuildCourses(),
+                  20.vs,
+                  _buildTitle(
+                      onTap: () => Routes.publicCoursesGroupsRoute.moveTo,
+                      all: AppStrings().all.trans,
+                      text: AppStrings().groups.trans,
+                      asset: AppAssets().groupsIcon),
+                  5.vs,
+                  const BuildGroups(),
+                  if (AppPrefs.user!.userRole == '1') 20.vs,
+                  if (AppPrefs.user!.userRole == '1')
+                    _buildTitle(
+                        all: AppStrings().all.trans,
+                        text: AppStrings().teachers.trans,
+                        asset: AppAssets().teacherIcon),
+                  if (AppPrefs.user!.userRole == '1') 5.vs,
+                  if (AppPrefs.user!.userRole == '1') const BuildTeachers(),
+                  if (AppPrefs.user!.userRole == '1') 20.vs,
+                  if (AppPrefs.user!.userRole == '1')
+                    _buildTitle(text: AppStrings().mySubscriptions.trans),
+                  if (AppPrefs.user!.userRole == '1') 5.vs,
+                  if (AppPrefs.user!.userRole == '1') const BuildSubscription(),
+                  20.vs,
+                  if (AppPrefs.user!.userRole == '2')
+                    _buildTitle(
+                        text: AppStrings().features.trans,
+                        asset: AppAssets().featuresIcon),
+                  10.vs,
+                  if (AppPrefs.user!.userRole == '2')
+                    const SizedBox(child: BuildFeatures()),
+                  20.vs
+                ],
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -191,6 +197,7 @@ class _HomeScreenState extends State<HomeScreen> {
             //   color: AppColors.mainAppColor,
             // ),
             const Spacer(),
+            const BuildLanguage(),
             const CustomIcon(
               icon: Icons.search,
               color: AppColors.mainAppColor,

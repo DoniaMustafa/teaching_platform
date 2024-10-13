@@ -14,9 +14,12 @@ class BuildWelcomeUser extends StatelessWidget {
       padding: getPadding(horizontal: 10.w, vertical: 10.h),
       child: Row(
         children: [
-          const CustomIcon(
-            icon: Icons.info,
-            color: AppColors.black,
+          GestureDetector(
+            onTap: ()=>Routes.profileRoute.moveTo,
+            child: const CustomIcon(
+              icon: Icons.info,
+              color: AppColors.black,
+            ),
           ),
           10.hs,
           Expanded(

@@ -147,12 +147,13 @@ class CustomNetworkImage extends StatelessWidget {
                                 image: AssetImage(asset!), fit: BoxFit.fill)),
                       )
             : Container(
-          height: height,
-          width: width,
-          decoration: BoxDecoration(
-            // color: AppColors.primaryColor,
-              image: DecorationImage(
-                  image: AssetImage(defaultAsset!), fit: BoxFit.fill)),
-        ),
+                height: height,
+                width: width,
+                decoration: BoxDecoration(
+                  // color: AppColors.mainAppColor,
+                  image: DecorationImage(
+                      image: AssetImage(defaultAsset!), fit: BoxFit.fill)
+                ),
+              ),
       );
 }

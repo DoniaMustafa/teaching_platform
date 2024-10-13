@@ -38,15 +38,16 @@ class PublicResponseModel extends ResponseModel{
 class PublicDataModel {
   final int? id;
   final String? name;
-
+  final String?  image;
   PublicDataModel({
     this.id,
-    this.name,
+    this.name,  this.image,
   });
 
   factory PublicDataModel.fromJson(Map<String, dynamic> json) => PublicDataModel(
     id: json["Id"],
     name: json["Name"],
+    image:json['Image'],
   );
 
   Map<String, dynamic> toJson() => {

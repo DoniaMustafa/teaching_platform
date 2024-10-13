@@ -41,26 +41,17 @@ class CustomBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle(
-        statusBarColor: statusBarColor,
-        statusBarBrightness: statusBarColor.isEqualTo(AppColors.white) ||
-                statusBarColor.isEqualTo(AppColors.fillColor)
-            ? Brightness.dark
-            : Brightness.light,
-        statusBarIconBrightness: statusBarColor.isEqualTo(AppColors.white) ||
-                statusBarColor.isEqualTo(AppColors.transparent) ||
-                statusBarColor.isEqualTo(AppColors.fillColor)
-            ? Brightness.dark
-            : Brightness.light,
-      ),
+      value: systemUiOverlayStyle,
       child: Scaffold(
-          drawer: drawer, drawerEnableOpenDragGesture: false,
+          drawer: drawer,
+          drawerEnableOpenDragGesture: false,
           backgroundColor: backgroundColor,
           key: scaffoldKey,
           appBar: showAppbar.isTrue
               ? AppBar(
+                  systemOverlayStyle: systemUiOverlayStyle,
                   backgroundColor: appbarColor,
-                  automaticallyImplyLeading: false,
+                  automaticallyImplyLeading: true,
                   titleSpacing: 0,
                   title: widget.isNotNull ? widget : const SizedBox.shrink(),
                   leading: showBack.isTrueGetWidget(GestureDetector(
@@ -70,7 +61,7 @@ class CustomBackground extends StatelessWidget {
                       size: 20,
                       color: backgroundColor.isNotNull
                           ? AppColors.white
-                          : AppColors.primaryColor,
+                          : AppColors.mainAppColor,
                     ),
                     // child: CustomCircleWidget(
                     //   height: 20.h,
@@ -93,4 +84,17 @@ class CustomBackground extends StatelessWidget {
 
   get buildChild => showSafeArea.isTrueGetWidgetOrAnotherWidget(
       SafeArea(child: child), child);
+
+  get systemUiOverlayStyle => SystemUiOverlayStyle(
+        statusBarColor: statusBarColor,
+        statusBarBrightness: statusBarColor.isEqualTo(AppColors.white) ||
+                statusBarColor.isEqualTo(AppColors.fillColor)
+            ? Brightness.dark
+            : Brightness.light,
+        statusBarIconBrightness: statusBarColor.isEqualTo(AppColors.white) ||
+                statusBarColor.isEqualTo(AppColors.transparent) ||
+                statusBarColor.isEqualTo(AppColors.fillColor)
+            ? Brightness.dark
+            : Brightness.light,
+      );
 }

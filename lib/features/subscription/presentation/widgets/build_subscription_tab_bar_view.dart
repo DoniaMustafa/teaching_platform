@@ -13,8 +13,7 @@ class BuildSubscriptionTabBarView extends StatelessWidget {
         builder: (context, state) {
           if (state is FailedState) {
             return CustomErrorWidget(
-              onTap: () =>
-                  context.read<SubscriptionCubit>().getSubscription(),
+              onTap: () => context.read<SubscriptionCubit>().getSubscription(),
               message: state.message,
             );
           }
@@ -51,7 +50,8 @@ class BuildSubscriptionTabBarView extends StatelessWidget {
                       if (context.read<SubscriptionOperationCubit>().tabIndex ==
                           0) {
                         return CustomItem(
-                            onTap: () {},
+                            onNavigateTap: () =>
+                                Routes.subscriptionOfCourseDetailsRoute.moveTo,
                             isSubScribe: true,
                             coursesModel: state.data.courses[index]);
                       } else {

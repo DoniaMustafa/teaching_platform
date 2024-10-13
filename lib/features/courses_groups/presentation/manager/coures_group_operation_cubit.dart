@@ -6,13 +6,20 @@ import 'package:teaching/core/export/export.dart';
 class CoursesGroupOperationCubit extends Cubit<CubitStates> {
   CoursesGroupOperationCubit() : super(InitialState());
 
-  int tabIndex=0;
-  onChangeTabIndex(int index){
-    tabIndex=index;
+  int publicTapIndex=0;
+  onChangePublicTabIndex(int index){
+    publicTapIndex=index;
     if (kDebugMode) {
-      print(tabIndex);
+      print(publicTapIndex);
     }
-    emit(LoadedState<int>(data: tabIndex));
+    emit(LoadedState<int>(data: publicTapIndex));
   }
-
+  int tapIndex=0;
+  onChangeTabIndex(int index){
+    publicTapIndex=index;
+    if (kDebugMode) {
+      print(publicTapIndex);
+    }
+    emit(LoadedState<int>(data: publicTapIndex));
+  }
 }

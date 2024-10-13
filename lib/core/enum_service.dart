@@ -82,25 +82,43 @@ class EnumService {
     }
   }
 
-  static String groupsAndCoursesEndPointType(type) {
+  static String coursesEndPointType(type) {
     print(type);
-    switch (RoleType.values.byName(type)) {
-      case RoleType.ProfessionalLecturer:
+    switch (type) {
+      case '8':
+        return EndPoints.homeStudentCourses;
+      case '2':
+        return EndPoints.getHomeTeacherCourses;
+      case '1':
+        return EndPoints.homeStudentCourses;
+      case '3':
+        return EndPoints.homeStudentCourses;
+      case '6':
+        return EndPoints.homeStudentCourses;
+      case '5':
+        return EndPoints.homeStudentCourses;
+      default:
+        return EndPoints.homeStudentCourses;
+    }
+  }
+
+  static String groupsEndPointType(type) {
+    print(type);
+    switch (type) {
+      case '8':
         return EndPoints.registerLecturer;
-      case RoleType.Teacher:
-        return EndPoints.registerTeacher;
-      case RoleType.Student:
-        return EndPoints.registerStudent;
-      case RoleType.Parent:
+      case '2':
+        return EndPoints.getHomeTeacherGroups;
+      case '1':
+        return EndPoints.homeStudentGroups;
+      case '3':
         return EndPoints.registerParent;
-      case RoleType.Assistant:
+      case '6':
         return EndPoints.registerAssistant;
-      case RoleType.School:
+      case '5':
         return EndPoints.registerStudent;
       default:
         return EndPoints.registerStudent;
     }
   }
-
-
 }

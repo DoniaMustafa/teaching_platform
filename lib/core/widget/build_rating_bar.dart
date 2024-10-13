@@ -1,11 +1,16 @@
 import '../export/export.dart';
 
 class BuildRatingBar extends StatefulWidget {
-  BuildRatingBar({super.key, this.itemSize, this.itemCount, this.rate});
+  BuildRatingBar(
+      {super.key,
+      this.isIgnoreRate = false,
+      this.itemSize,
+      this.itemCount,
+      this.rate});
   final double? itemSize;
 
   final int? itemCount;
-
+  final bool isIgnoreRate;
   double? rate;
   @override
   State<BuildRatingBar> createState() => _BuildRatingBarState();
@@ -15,8 +20,8 @@ class _BuildRatingBarState extends State<BuildRatingBar> {
   @override
   Widget build(BuildContext context) {
     return RatingBar.builder(
-      initialRating: 0,
-      minRating:0,
+      initialRating: widget.rate!,
+      minRating: 0, ignoreGestures: widget.isIgnoreRate,
       direction: Axis.horizontal,
       // allowHalfRating: f,
       itemSize: widget.itemSize!,

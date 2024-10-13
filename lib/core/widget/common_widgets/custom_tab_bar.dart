@@ -5,12 +5,15 @@ class CustomTabBar extends StatelessWidget {
   const CustomTabBar(
       {super.key,
       this.isDivider = true,
-      this.text,
-      this.onTap,
+      this.fontSize,
+        this.text,
+
+        this.onTap,
       this.selectedIndex});
   final List<String>? text;
   final void Function(int)? onTap;
   final int? selectedIndex;
+  final double? fontSize;
   final bool? isDivider;
   @override
   Widget build(BuildContext context) {
@@ -19,7 +22,7 @@ class CustomTabBar extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: List.generate(
-              2,
+              text!.length,
               (index) => GestureDetector(
                     onTap: () => onTap!(index),
                     child: Column(
@@ -27,7 +30,7 @@ class CustomTabBar extends StatelessWidget {
                         CustomTextWidget(
                           text: text![index],
                           style: getBoldTextStyle(
-                              fontSize: 18,
+                              fontSize: fontSize??18,
                               color: selectedIndex == index
                                   ? AppColors.mainAppColor
                                   : AppColors.black),

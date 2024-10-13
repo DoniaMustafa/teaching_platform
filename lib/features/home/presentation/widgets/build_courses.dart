@@ -1,4 +1,6 @@
 import 'package:teaching/core/widget/shimmer_widget.dart';
+import 'package:teaching/features/course/courses_details/data/models/course_details_response_model.dart';
+import 'package:teaching/features/course/courses_details/presentation/manager/courses_details/courses_details_cubit.dart';
 
 import '../../../../core/export/export.dart';
 
@@ -7,20 +9,18 @@ class BuildCourses extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CoursesGroupsCubit, CubitStates>(
-        builder: (context, state) {
+    return BlocBuilder<CoursesCubit, CubitStates>(builder: (context, state) {
       if (state is FailedState) {
         return CustomErrorWidget(
-          onTap: () =>
-              context.read<CoursesGroupsCubit>().getCourserAndGroups(),
+          onTap: () => context.read<CoursesCubit>().getCourser(),
           message: state.message,
         );
       }
-      if (state is LoadedState && state.data.courses.isEmpty) {
+      if (state is LoadedState && state.data.isEmpty) {
         return const SizedBox.shrink();
       }
       return AspectRatio(
-          aspectRatio: 1.5/0.9,child: buildCoursesList(state));
+          aspectRatio: 1.5 / 0.9, child: buildCoursesList(state));
     });
   }
 
@@ -30,14 +30,23 @@ class BuildCourses extends StatelessWidget {
               width: 20.w,
             ),
         itemCount: state is LoadedState
-            ? state.data.courses.length
+            ? state.data.length
             : AppConstants.nShimmerItems,
         widget: (context, index) => state is LoadedState
             ? CustomItem(
-                coursesModel: state.data.courses[index],
+                onTap: () {
+                  print(state.data[index].subjectId);
+                  context.read<CoursesDetailsCubit>().getCoursesDetails(
+                      TeacherModel(
+                          subjectId: state.data[index].subjectId!,
+                          teacherId: state.data[index].teacherId!));
+                  Routes.coursesDetailsRoute.moveTo;
+                },
+                coursesModel: state.data[index],
               )
             : CustomShimmer.fromRectangle(
                 height: 150.h,
+                borderRadius: BorderRadiusDirectional.circular(20.r),
                 width: 200,
               ));
   }

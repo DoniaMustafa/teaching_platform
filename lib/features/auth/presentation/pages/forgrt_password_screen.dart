@@ -1,8 +1,11 @@
+import 'package:teaching/features/auth/presentation/manager/user_cubit/user_cubit.dart';
+
 import '../../../../core/export/export.dart';
 
 class ForgetPasswordScreen extends StatelessWidget {
   ForgetPasswordScreen({super.key});
   TextEditingController controller = TextEditingController();
+  final _formKey=GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return CustomBackground(
@@ -21,14 +24,14 @@ class ForgetPasswordScreen extends StatelessWidget {
               children: [
                 80.vs,
                 CustomTextWidget(
-                  text: 'نسيت كلمة المرور؟',
+                  text: AppStrings().forgetPassword.trans,
                   style: getMediumTextStyle(
                       fontFamily: FontFamilies.elMessiriFamily,
                       fontSize: 22,
                       color: AppColors.mainAppColor),
                 ),
                 CustomTextWidget(
-                  text: 'ادخل رقم الهاتف هنا لاعادة تعين كلمة المرور',
+                  text: AppStrings().forgetPasswordTitle.trans,
                   style: getRegularTextStyle(
                       fontFamily: FontFamilies.elMessiriFamily,
                       fontSize: 16,
@@ -41,10 +44,23 @@ class ForgetPasswordScreen extends StatelessWidget {
                   height: 150.h,
                 ),
                 30.vs,
-                PhoneWidget(controller: controller),
+                Form(
+                    key: _formKey,
+                    child: PhoneWidget(controller: controller)),
                 // Spacer(),
                 100.vs,
-                BuildNextButton(text: 'استمر',onTap: ()=>Routes.verificationRoute.moveTo,),
+                BuildNextButton(
+                  text: AppStrings().continuation.trans,
+                  onTap: () {
+                    _formKey.currentState!.validate();
+                    if (AppService().getBlocData<ErrorCubit>().errors.isEmpty) {
+                      AppService().getBlocData<UserCubit>().forgetPassword(
+                        phone: controller.text,
+                        // password: _passwordController.text,
+                      );
+                    }
+                  },
+                ),
               ],
             ),
           ),

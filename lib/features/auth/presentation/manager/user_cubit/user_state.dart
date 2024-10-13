@@ -89,20 +89,20 @@ class LoginErrorState extends UserState {
 // }
 //
 // ///*************************///
-// class ResetPasswordLoadingState extends UserState {}
-//
-// class ResetPasswordLoadedState extends UserState {
-//   // ResponseModel response;
-//   UserModel userModel;
-//   ResetPasswordLoadedState({required this.userModel});
-// }
-//
-// class ResetPasswordErrorState extends UserState {
-//   String massage;
-//
-//   ResetPasswordErrorState({required this.massage});
-// }
-//
+class ResetPasswordLoadingState extends UserState {}
+
+class ResetPasswordLoadedState extends UserState {
+  // ResponseModel response;
+  UserModel userModel;
+  ResetPasswordLoadedState({required this.userModel});
+}
+
+class ResetPasswordErrorState extends UserState {
+  String massage;
+
+  ResetPasswordErrorState({required this.massage});
+}
+
 // ///*****************************************///
 // class OtpLoadingState extends UserState {}
 //
@@ -131,29 +131,29 @@ class VerifyOTPErrorState extends UserState {
   VerifyOTPErrorState({required this.massage});
 }
 //
-// class ForgetPasswordStartingState extends UserState {}
-//
-// class ForgetPasswordSuccessState extends UserState {
-//   // final OtpResponseModel response;
-//
-//   ForgetPasswordSuccessState();
-// }
-//
-// class ForgetPasswordErrorState extends UserState {
-//   final String massage;
-//
-//   ForgetPasswordErrorState({required this.massage});
-// }
-//
-// class LogoutLoadingState extends UserState {}
-//
-// class LogoutLoadedState extends UserState {}
-//
-// class LogoutErrorState extends UserState {
-//   String message;
-//
-//   LogoutErrorState({required this.message});
-// }
+class ForgetPasswordStartingState extends UserState {}
+
+class ForgetPasswordSuccessState extends UserState {
+  // final OtpResponseModel response;
+
+  ForgetPasswordSuccessState();
+}
+
+class ForgetPasswordErrorState extends UserState {
+  final String massage;
+
+  ForgetPasswordErrorState({required this.massage});
+}
+
+class LogoutLoadingState extends UserState {}
+
+class LogoutLoadedState extends UserState {}
+
+class LogoutErrorState extends UserState {
+  String message;
+
+  LogoutErrorState({required this.message});
+}
 //
 // /******************** getting user states **************************/
 // class GettingUserState extends UserState {

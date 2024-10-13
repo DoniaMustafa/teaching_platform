@@ -4,8 +4,14 @@ import 'package:teaching/core/widget/common_widgets/custom_shared_body.dart';
 import '../../export/export.dart';
 
 class CustomSharedFullScreen extends StatelessWidget {
-  const CustomSharedFullScreen({super.key, required this.title, required this.widget});
+  const CustomSharedFullScreen(
+      {super.key,
+      required this.title,
+      required this.widget,
+      this.isBackIcon = false});
   final String title;
+  final bool? isBackIcon;
+
   final Widget widget;
 
   @override
@@ -13,8 +19,13 @@ class CustomSharedFullScreen extends StatelessWidget {
     return Stack(
       fit: StackFit.expand,
       children: [
-        BuildSharedAppBar(title:  title,),
-          CustomSharedBody(widget:widget ,)
+        BuildSharedAppBar(
+          title: title,
+          isBackIcon: isBackIcon!,
+        ),
+        CustomSharedBody(
+          widget: widget,
+        )
       ],
     );
   }

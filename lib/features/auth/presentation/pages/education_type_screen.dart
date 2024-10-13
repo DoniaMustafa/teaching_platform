@@ -1,10 +1,13 @@
 import 'package:teaching/features/auth/presentation/manager/education/education_cubit.dart';
 import 'package:teaching/features/auth/presentation/manager/education/program/prgram_cubit.dart';
 import 'package:teaching/features/auth/presentation/manager/education/stage/stage_cubit.dart';
+import 'package:teaching/features/auth/presentation/manager/education/subject/subject_cubit.dart';
 import 'package:teaching/features/auth/presentation/manager/user_cubit/user_cubit.dart';
+import 'package:teaching/features/auth/presentation/pages/sign_up_py_phone_screen.dart';
 import 'package:teaching/features/auth/presentation/pages/verification_screen.dart';
 import 'package:teaching/features/auth/presentation/widgets/sign_up/build_education_drop_down/build_education_curriculum.dart';
 import 'package:teaching/features/auth/presentation/widgets/sign_up/build_education_drop_down/build_education_stage.dart';
+import 'package:teaching/features/auth/presentation/widgets/sign_up/build_education_drop_down/build_education_subject.dart';
 import 'package:teaching/features/auth/presentation/widgets/sign_up/build_education_drop_down/build_education_types.dart';
 import 'package:teaching/features/auth/presentation/widgets/sign_up/build_education_drop_down/build_qualification_education_type.dart';
 
@@ -22,7 +25,7 @@ class _EducationTypeScreenState extends State<EducationTypeScreen>
   @override
   Widget build(BuildContext context) {
     return BuildBackgroundWithAppBar(
-      userType: AppStrings().student,
+      userType: SignUpByPhoneScreen.userType,
       child: Padding(
         padding: getPadding(horizontal: 20.w),
         child: Column(
@@ -42,44 +45,17 @@ class _EducationTypeScreenState extends State<EducationTypeScreen>
                     20.vs,
                     if (SignUpByPhoneScreen.userType == AppStrings().student)
                       _buildStudentEducation,
+                    if (SignUpByPhoneScreen.userType == AppStrings().teacher)
+                      _buildTeacherEducation,
                     200.vs,
-                    Align(
-                        alignment: AlignmentDirectional.bottomEnd,
-                        child: BuildNextButton(
-                          onTap: () {
-                            if (SignUpByPhoneScreen.userType ==
-                                AppStrings().student) {
-                              AppService().getBlocData<UserCubit>().register(
-                                  user: UserModel(
-                                    phoneNumber: VerificationScreen.phone,
-                                    educationTypeId:
-                                        context.read<EducationCubit>().typeId,
-                                    programTypeId: context
-                                        .read<ProgramCubit>()
-                                        .curriculumId,
-                                    gradeIds:
-                                        context.read<StageCubit>().gradeId,
-                                  ),
-                                  stepsNo: 3);
-                            }
-                            if (SignUpByPhoneScreen.userType ==
-                                AppStrings().teacher) {
-                              Routes.uploadResumeRoute.moveTo;
-                            }
-                          },
-                          text: SignUpByPhoneScreen.userType ==
-                                  AppStrings().student
-                              ? AppStrings().createAccount.trans
-                              : AppStrings().continuation.trans,
-                        )),
+                    _buildContinuaButton,
                     40.vs,
                   ],
                 ),
               ),
-            )
-            // // // if (SignUpScreen.SignUpByPhoneScreen.userType == 'teacher') 48.vs,
-            // if (SignUpByPhoneScreen.userType == AppStrings().teacher)
-            //   _buildTeacherEducation,
+            ),
+            // // if (SignUpScreen.SignUpByPhoneScreen.userType == 'teacher') 48.vs,
+
             // if (SignUpByPhoneScreen.userType == AppStrings().assistant)
             //   _buildAssistantEducation,
             // const Spacer(),
@@ -107,6 +83,7 @@ class _EducationTypeScreenState extends State<EducationTypeScreen>
                     builder: (context, state) {
                   if (context.read<ProgramCubit>().isEducationTypeDone.isTrue) {
                     return Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         if (context
                             .read<ProgramCubit>()
@@ -128,34 +105,57 @@ class _EducationTypeScreenState extends State<EducationTypeScreen>
           ),
           20.vs,
           BlocBuilder<StageCubit, StageState>(builder: (context, state) {
-            if (AppService()
-                .getBlocData<StageCubit>()
-                .isProgramDone
-                .isTrue) {
+            if (AppService().getBlocData<StageCubit>().isProgramDone.isTrue) {
               return BuildEducationStage();
             }
             return SizedBox.shrink();
           }),
         ],
       );
-  get _buildTeacherEducation => Column(
-        children: [
-          Row(
+  get _buildTeacherEducation => BlocBuilder<ProgramCubit, ProgramState>(
+        builder: (context, state) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Expanded(child: BuildEducationMaterial()),
-              10.hs,
-              Expanded(child: BuildEducationCurriculum()),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                // crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(child: BuildEducationMaterial()),
+                  if (context.read<ProgramCubit>().isEducationTypeDone.isTrue)
+                    10.hs,
+                  if (context.read<ProgramCubit>().isEducationTypeDone.isTrue)
+                    Expanded(child: BuildEducationCurriculum()),
+                ],
+              ),
+              20.vs,
+              BlocBuilder<SubjectCubit, SubjectState>(
+                builder: (context, state) {
+                  return BlocBuilder<StageCubit, StageState>(
+                    builder: (context, state) {
+                      print(context.read<SubjectCubit>().isSubjectsDone);
+                      return Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          if (context.read<StageCubit>().isProgramDone.isTrue)
+                            Expanded(child: BuildEducationStage()),
+                          10.hs,
+                          if (context
+                              .read<SubjectCubit>()
+                              .isSubjectsDone
+                              .isTrue)
+                            Expanded(child: BuildEducationSubject()),
+                        ],
+                      );
+                    },
+                  );
+                },
+              ),
             ],
-          ),
-          15.vs,
-          Row(
-            children: [
-              Expanded(child: BuildEducationStage()),
-              10.hs,
-              Expanded(child: BuildEducationCurriculum()),
-            ],
-          ),
-        ],
+          );
+        },
       );
 
   get _buildAssistantEducation => Column(
@@ -170,4 +170,37 @@ class _EducationTypeScreenState extends State<EducationTypeScreen>
           // 100.vs,
         ],
       );
+
+  get _buildContinuaButton => Align(
+      alignment: AlignmentDirectional.bottomEnd,
+      child: BuildNextButton(
+        onTap: () {
+          // if (SignUpByPhoneScreen.userType == AppStrings().student) {
+          AppService().getBlocData<UserCubit>().register(
+              education: PostParamsEducationModel(
+                  phoneNumber: VerificationScreen.phone,
+                  educationTypeIds: [context.read<EducationCubit>().typeId!],
+                  programTypeIds: [context.read<ProgramCubit>().curriculumId!],
+                  gradeIds: [context.read<StageCubit>().gradeId!],
+                  subjectIds:
+                      SignUpByPhoneScreen.userType == AppStrings().student
+                          ? null
+                          : [context.read<SubjectCubit>().subjectsId!]),
+              stepsNo: 3);
+          // }
+          // if (SignUpByPhoneScreen.userType == AppStrings().teacher) {
+          //   AppService().getBlocData<UserCubit>().register(
+          //       education: PostParamsEducationModel(
+          //         phoneNumber: VerificationScreen.phone,
+          //         educationTypeId: context.read<EducationCubit>().typeId,
+          //         programTypeId: context.read<ProgramCubit>().curriculumId,
+          //         gradeIds: context.read<StageCubit>().gradeId,
+          //       ),
+          //       stepsNo: 3);
+          // }
+        },
+        text: SignUpByPhoneScreen.userType == AppStrings().student
+            ? AppStrings().createAccount.trans
+            : AppStrings().continuation.trans,
+      ));
 }

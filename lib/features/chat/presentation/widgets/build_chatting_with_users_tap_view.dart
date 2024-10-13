@@ -1,10 +1,6 @@
 import 'package:teaching/core/export/export.dart';
-import 'package:teaching/core/widget/shimmer_widget.dart';
 import 'package:teaching/features/chat/presentation/manager/chat_operation_cubit.dart';
 import 'package:teaching/features/chat/presentation/widgets/custom_online_image.dart';
-import 'package:teaching/features/courses_groups/presentation/manager/coures_group_operation_cubit.dart';
-import 'package:teaching/features/home/presentation/manager/subscription_cubit.dart';
-import 'package:teaching/features/subscription/presentation/manager/subscriptipn_operation_cubit.dart';
 
 class BuildChattingWithUsersTapView extends StatelessWidget {
   const BuildChattingWithUsersTapView({super.key});

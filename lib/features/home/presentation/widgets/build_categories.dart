@@ -33,12 +33,16 @@ class BuildCategories extends StatelessWidget {
                     width: 41.w,
                     asset: AppAssets().listOfStudentCategories[index])),
             5.vs,
-            CustomTextWidget(
-              text:
-                  EnumService.userCategoryType(AppPrefs.user!.userRole!)[index]
+            BlocBuilder<LanguageCubit, LanguageState>(
+              builder: (context, state) {
+                return CustomTextWidget(
+                  text: EnumService.userCategoryType(
+                          AppPrefs.user!.userRole!)[index]
                       .title!,
-              style: getRegularTextStyle(
-                  fontSize: 14, fontFamily: FontFamilies.dubaiFamily),
+                  style: getRegularTextStyle(
+                      fontSize: 14, fontFamily: FontFamilies.dubaiFamily),
+                );
+              },
             )
           ],
         ),

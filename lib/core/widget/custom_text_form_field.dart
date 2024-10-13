@@ -19,6 +19,7 @@ class CustomTextFormField extends StatefulWidget {
   final Widget? suffix;
   final BoxConstraints? suffixConstraints;
   final bool isPassword;
+  final bool isFill;
   final FocusNode? focusNode;
   final TextDirection? textDirection;
   final TextAlign textAlign;
@@ -50,6 +51,7 @@ class CustomTextFormField extends StatefulWidget {
       this.focusNode,
       this.prefix,
       this.showError = false,
+      this.isFill = false,
       this.startPadding = 20,
       this.padding,
       this.topPadding = 0,
@@ -97,83 +99,88 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
     print("build custom aga9j");
-    return TextFormField(
-      style: widget.textStyle ??
-          getBoldTextStyle(
-            color: AppColors.black,
-            fontFamily: FontFamilies.elMessiriFamily,
-            // letterSpacing: context.locale.languageCode == AppLocalizationsConstants().enLanguage ? 2 : 0,
-            fontSize: getFontSize(16),
-          ),
-      controller: widget.controller,
-      focusNode: widget.focusNode,
-      maxLines: widget.isPassword ? AppConstants.one : widget.maxLines,
-      keyboardType: widget.isPassword
-          ? TextInputType.visiblePassword
-          : widget.textInputType,
-      textInputAction: widget.textInputAction,
-      minLines: widget.minLines,
-      obscureText: widget.isPassword && hidePassword.isTrue,
-      cursorColor: AppColors.gunsmoke,
-      cursorWidth: 2,
-      maxLength: widget.maxLength,
-      obscuringCharacter: "*",
-      onTap: () async {
-        String? value = await widget.onTap?.call();
-      },
-      enabled: widget.enabled,
-      textDirection: context.read<LanguageCubit>().isEn?TextDirection.ltr:TextDirection.rtl,
-      onChanged: (String value) {
-        widget.onChanged?.call(value);
-      },
-      decoration: InputDecoration(
-          // filled: true,
-          // fillColor: AppColors.white,
-          enabledBorder: widget.enabledBorder,
-          focusedBorder: widget.enabledBorder,
-          contentPadding: widget.contentPadding,
-          labelText: widget.label,
-          prefix: widget.prefix,
-          hintText: widget.hintText,
-          hintFadeDuration: 20.milliseconds,
-          border: widget.border,
-          suffixIconConstraints: widget.suffixConstraints,
-          hintStyle: widget.hintStyle ??
-              getRegularTextStyle(
-                color: AppColors.darkMainAppColor,
-                fontFamily: FontFamilies.elMessiriFamily,
-                fontSize: 14,
-              ),
-          suffixIcon: widget.isPassword
-              ? buildSuffixPassword
-              : widget.suffixIcon.isNotNull
-                  ? GestureDetector(
-                      onTap: widget.suffixOnTap,
-                      child: Padding(
-                        padding: getPadding(end: 10.w, vertical: 7.h),
-                        child: CircleAvatar(
-                          radius: 20,
-                          backgroundColor: AppColors.transparent,
-                          child: CustomSvg(
-                            asset: widget.suffixIcon!,
-                            // matchTextDirection: true,
+    return Container(
+      margin: widget.padding,
+      child: TextFormField(
+        style: widget.textStyle ??
+            getBoldTextStyle(
+              color: AppColors.black,
+              fontFamily: FontFamilies.elMessiriFamily,
+              // letterSpacing: context.locale.languageCode == AppLocalizationsConstants().enLanguage ? 2 : 0,
+              fontSize: getFontSize(16),
+            ),
+        controller: widget.controller,
+        focusNode: widget.focusNode,
+        maxLines: widget.isPassword ? AppConstants.one : widget.maxLines,
+        keyboardType: widget.isPassword
+            ? TextInputType.visiblePassword
+            : widget.textInputType,
+        textInputAction: widget.textInputAction,
+        minLines: widget.minLines,
+        obscureText: widget.isPassword && hidePassword.isTrue,
+        cursorColor: AppColors.gunsmoke,
+        cursorWidth: 2,
+        maxLength: widget.maxLength,
+        obscuringCharacter: "*",
+        onTap: () async {
+          String? value = await widget.onTap?.call();
+        },
+        enabled: widget.enabled,
+        textDirection: context.read<LanguageCubit>().isEn
+            ? TextDirection.ltr
+            : TextDirection.rtl,
+        onChanged: (String value) {
+          widget.onChanged?.call(value);
+        },
+        decoration: InputDecoration(
+            filled: widget.isFill,
+            fillColor: widget.isFill.isTrue ? AppColors.white : null,
+            enabledBorder: widget.enabledBorder,
+            focusedBorder: widget.enabledBorder,
+            contentPadding: widget.contentPadding,
+            labelText: widget.label,
+            prefix: widget.prefix,
+            hintText: widget.hintText,
+            hintFadeDuration: 20.milliseconds,
+            border: widget.border,
+            suffixIconConstraints: widget.suffixConstraints,
+            hintStyle: widget.hintStyle ??
+                getRegularTextStyle(
+                  color: AppColors.darkMainAppColor,
+                  fontFamily: FontFamilies.elMessiriFamily,
+                  fontSize: 14,
+                ),
+            suffixIcon: widget.isPassword
+                ? buildSuffixPassword
+                : widget.suffixIcon.isNotNull
+                    ? GestureDetector(
+                        onTap: widget.suffixOnTap,
+                        child: Padding(
+                          padding: getPadding(end: 10.w, vertical: 7.h),
+                          child: CircleAvatar(
+                            radius: 20,
+                            backgroundColor: AppColors.transparent,
+                            child: CustomSvg(
+                              asset: widget.suffixIcon!,
+                              // matchTextDirection: true,
+                            ),
                           ),
                         ),
-                      ),
-                    )
-                  : null,
-          prefixIcon: widget.prefixIcon.isNotNull
-              ? Padding(
-                  padding: getPadding(horizontal: 15, vertical: 10),
-                  child: CustomSvg(
-                    asset: widget.prefixIcon!,
-                    // matchTextDirection: true,
-                  ),
-                )
-              : null),
-      validator: widget.validator,
-      onSaved: widget.onSaved,
-      onEditingComplete: widget.onEditingComplete,
+                      )
+                    : null,
+            prefixIcon: widget.prefixIcon.isNotNull
+                ? Padding(
+                    padding: getPadding(horizontal: 15, vertical: 10),
+                    child: CustomSvg(
+                      asset: widget.prefixIcon!,
+                      // matchTextDirection: true,
+                    ),
+                  )
+                : null),
+        validator: widget.validator,
+        onSaved: widget.onSaved,
+        onEditingComplete: widget.onEditingComplete,
+      ),
     );
   }
 

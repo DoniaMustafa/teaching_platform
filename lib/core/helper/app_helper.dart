@@ -1,7 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dartz/dartz.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../service_locator.dart';
@@ -15,13 +18,20 @@ import '../widget/permission_dialog.dart';
 Map<String, dynamic>? getArguments(BuildContext context) =>
     (ModalRoute.of(context))!.settings.arguments as Map<String, dynamic>?;
 
-// Future getCameraImage({bool isCamera = true}) async {
-//   final pickedImage = await ImagePicker().pickImage(
-//       imageQuality: 60,
-//       source: isCamera ? ImageSource.camera : ImageSource.gallery);
-//
-//   return File(pickedImage!.path);
-// }
+Future getCameraImage({bool isCamera = true}) async {
+  final pickedImage = await ImagePicker().pickImage(
+      imageQuality: 60,
+      source: isCamera ? ImageSource.camera : ImageSource.gallery);
+
+  return File(pickedImage!.path);
+}
+
+Future getGalleryVideo() async {
+  final pickedImage = await ImagePicker().pickVideo(
+      maxDuration: Duration(seconds: 3), source: ImageSource.gallery);
+  return File(pickedImage!.path);
+}
+
 //
 // Future<List<File>> getMultipleImageSource({bool isCamera = true}) async {
 //   final List<XFile> pickedImage = await ImagePicker().pickMultiImage(
@@ -30,14 +40,19 @@ Map<String, dynamic>? getArguments(BuildContext context) =>
 //   return pickedImage.map((e) => File(e.path)).toList();
 // }
 //
+
 // Future<String> get getFromGallery async {
 //   List<File> files = await getMultipleImageSource();
 //   return files[0].path;
 // }
-//
+
 // Future<String> get getImageFromCamera async {
 //   File file = await getCameraImage();
 //
+//   return file.path;
+// }
+// Future<String> get getImageFromGallery async {
+//   File file = await  getCameraImage(isCamera: false);
 //   return file.path;
 // }
 //

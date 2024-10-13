@@ -11,9 +11,10 @@ class CustomCard extends StatelessWidget {
       this.margin,
       this.borderWidth,
       this.borderColor,
-      this.gradient,  this.radiusDirectional,
+      this.gradient,
+      this.radiusDirectional,
       this.backgroundColor,
-       this.child});
+      this.child});
   final double? height;
   final double? width;
   final double? radius;
@@ -25,7 +26,7 @@ class CustomCard extends StatelessWidget {
   final Gradient? gradient;
   final EdgeInsetsDirectional? padding;
   final EdgeInsetsDirectional? margin;
-final BorderRadiusDirectional? radiusDirectional;
+  final BorderRadiusDirectional? radiusDirectional;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -40,7 +41,8 @@ final BorderRadiusDirectional? radiusDirectional;
               : null,
           gradient: gradient,
           boxShadow: boxShadow,
-          borderRadius:radiusDirectional?? BorderRadius.circular(radius ?? 10.r)),
+          borderRadius:
+              radiusDirectional ?? BorderRadius.circular(radius ?? 10.r)),
       child: child,
     );
   }

@@ -1,45 +1,45 @@
-import 'package:teaching/core/widget/common_item_widgets/custom_item.dart';
-import 'package:teaching/core/widget/shimmer_widget.dart';
+import 'package:teaching/features/group/groups_details/presentation/manager/group_details/group_details_cubit.dart';
 
 import '../../../../core/export/export.dart';
+import '../manager/groups_cubit.dart';
 
 class BuildGroups extends StatelessWidget {
   const BuildGroups({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return  BlocBuilder<CoursesGroupsCubit, CubitStates>(
-        builder: (context, state) {
+    return BlocBuilder<GroupsCubit, CubitStates>(builder: (context, state) {
       if (state is FailedState) {
-        return CustomErrorWidget(
-          onTap: () =>
-              context.read<CoursesGroupsCubit>().getCourserAndGroups(),
-          message: state.message,
-        );
+        return SizedBox.shrink();
       }
-      if (state is LoadedState && state.data.groups.isEmpty) {
+      if (state is LoadedState && state.data.isEmpty) {
         return const SizedBox.shrink();
       }
       return AspectRatio(
-          aspectRatio: 1.5/0.9,child: buildCoursesList(state));
+          aspectRatio: 1.5 / 0.9, child: buildCoursesList(state));
     });
   }
 
   Widget buildCoursesList(CubitStates state) {
     return CustomListView(
-        separatorWidget: (context, index) => SizedBox(
-              width: 20.w,
-            ),
+        separatorWidget: (context, index) => 20.hs,
         itemCount: state is LoadedState
-            ? state.data.groups.length
+            ? state.data.length
             : AppConstants.nShimmerItems,
         widget: (context, index) => state is LoadedState
             ? CustomItem(
-                groupsModel: state.data.groups[index],
+                onTap: () {
+                  context
+                      .read<GroupDetailsCubit>()
+                      .getGroupDetails(teacherId: state.data[index].teacherId);
+                  Routes.groupsDetailsRoute.moveTo;
+                },
+                groupsModel: state.data[index],
               )
             : CustomShimmer.fromRectangle(
-                height: 150.h,
-                width: 1,
+                borderRadius: BorderRadiusDirectional.circular(20.r),
+                height: 100.h,
+                width: 110,
               ));
   }
 }

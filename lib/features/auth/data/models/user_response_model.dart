@@ -118,9 +118,7 @@ class UserModel {
         // "StepNo": stepsNo,
         "Email": email,
         "Name": name,
-        // "EducationTypeIds":  educationTypeId.isNotNull? [educationTypeId]: null,
-        //     "ProgramTypeIds": programTypeId.isNotNull? [programTypeId]: null,
-        //     "GradeIds": gradeIds.isNotNull? [gradeIds]: null,
+
         "Code": verifyCode,
         "CountryId": countryId,
         "Password": password,

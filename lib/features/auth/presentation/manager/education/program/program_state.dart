@@ -3,7 +3,7 @@ part of 'prgram_cubit.dart';
 @immutable
 abstract class ProgramState {}
 
-class StageInitial extends ProgramState {}
+class ProgramInitial extends ProgramState {}
 
 class EducationProgramsLoadingState extends ProgramState {}
 class EducationProgramsLoadedState extends ProgramState {

@@ -62,7 +62,8 @@ class _SplashScreenState extends State<SplashScreen>
       print("token is ${AppPrefs.token}");
       // print("driver is ${driver!.isAvailable}");
       // print("driver is ${driver.image}");
-      // print("driver is ${driver.name}");      print("driver is ${driver.email}");
+      // print("driver is ${driver.name}");
+      print("New is ${isNew}");
 
       // print("device token is ${deviceToken}");
       print("token from prefs is ${AppPrefs.token}");

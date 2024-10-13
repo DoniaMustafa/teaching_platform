@@ -14,12 +14,16 @@ class VerificationScreen extends StatelessWidget {
 
   final formKey = GlobalKey<FormState>();
   static const String phoneKey = 'phoneKey';
+  static const String whichScreenKey = 'whichScreenKey';
+  static String whichScreen = 'whichScreen';
+
   static String phone = 'phone';
   @override
   Widget build(BuildContext context) {
     Map<String, dynamic>? data = getArguments(context);
     if (data.isNotNull) {
       phone = data![phoneKey];
+      whichScreen = data[whichScreenKey];
     }
 
     return CustomBackground(
@@ -59,10 +63,16 @@ class VerificationScreen extends StatelessWidget {
         onTap: () {
           formKey.currentState!.validate();
           if (AppService().getBlocData<ErrorCubit>().errors.isEmpty) {
-            AppService().getBlocData<UserCubit>().verifyOTP(
-                user: UserModel(
-                    phoneNumber: phone,
-                    verifyCode: BuildPinCode.pinController.text));
+            if (whichScreen.contains(AppStrings().forgetPassword)) {
+              AppService().getBlocData<UserCubit>().verifyForgetPassword(
+                  phone: phone,
+                  verificationCode: BuildPinCode.pinController.text);
+            } else {
+              AppService().getBlocData<UserCubit>().verifyOTP(
+                  user: UserModel(
+                      phoneNumber: phone,
+                      verifyCode: BuildPinCode.pinController.text));
+            }
           }
         },
       );

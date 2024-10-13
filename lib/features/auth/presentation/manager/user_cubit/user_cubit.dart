@@ -1,4 +1,5 @@
 import 'package:teaching/core/export/export.dart';
+import 'package:teaching/features/auth/data/models/post_params_resume_model.dart';
 import 'package:teaching/features/auth/data/models/step_no_respons_model.dart';
 import 'package:teaching/features/auth/presentation/pages/verification_screen.dart';
 import '../../../../../local_notification.dart';
@@ -8,7 +9,7 @@ part 'user_state.dart';
 
 class UserCubit extends Cubit<UserState> {
   UserCubit({required this.userUsecases}) : super(SignupInitial());
-  UserUsecases userUsecases;
+  UserUseCases userUsecases;
   UserModel? user;
   UserDataModel? userDataModel;
   String currentScreen = '';
@@ -28,12 +29,6 @@ class UserCubit extends Cubit<UserState> {
   //
   Future<String> getToken() async =>
       (await managerExecute<String?>(userUsecases.getToken())).validate;
-
-  // logout() {
-  //   userUsecases.logout();
-  //   Routes.loginRoute.pushAndRemoveAllUntil;
-  //   user = null;
-  // }
 
   ///*********************** Login ***************************************\\\
 
@@ -60,6 +55,8 @@ class UserCubit extends Cubit<UserState> {
       onSuccess: (data) async {
         if (isTokenCached.isTrue && userDataModel.isNotNull) {
           Routes.bottomNavigationRoute.pushAndRemoveAllUntil;
+          getUser();
+          getToken();
           //   AppService().getBlocData<BottomNavOperationCubit>().changeIndex(0);
         }
       },
@@ -85,6 +82,7 @@ class UserCubit extends Cubit<UserState> {
           );
           Routes.verificationRoute.pushReplacementWithData({
             VerificationScreen.phoneKey: user.phoneNumber,
+            VerificationScreen.whichScreenKey:AppStrings().registerByPhone
           });
           emit(SignUpByPhoneSuccessState(otp: code.verificationCode!));
         }
@@ -115,41 +113,58 @@ class UserCubit extends Cubit<UserState> {
 
   ///***********************************************************\\\
 
-  register({required UserModel user, required int stepsNo}) async {
+  register({
+    UserModel? user,
+    int? stepsNo,
+    PostParamsResumeModel? resumeModel,
+    PostParamsEducationModel? education,
+  }) async {
     executeWithDialog<UserDataModel?>(
       onStart: () {
         emit(SignupLoadingState());
       },
-      either: userUsecases.register(user: user, stepsNo: stepsNo),
+      either: userUsecases.register(
+          resumeModel: resumeModel,
+          user: user,
+          stepsNo: stepsNo,
+          education: education),
       startingMessage: AppStrings().signUp.trans,
       onError: (message) {
         print('message>>>>>>>>>>$message');
-        print(user.stepsNo);
+        // print(user!.stepsNo);
         emit(SignupErrorState(massage: message));
       },
       onSuccess: (UserDataModel? data) {
         if (stepsNo == 2) {
-          Routes.educationTypeRoute.pushAndRemoveAllUntil;
+          if (SignUpByPhoneScreen.userType == AppStrings().parent) {
+            return Routes.loginRoute.pushAndRemoveAllUntil;
+          } else {
+            Routes.educationTypeRoute.pushAndRemoveAllUntil;
+          }
+        } else if (stepsNo == 3) {
+          if (SignUpByPhoneScreen.userType == AppStrings().student) {
+            return Routes.loginRoute.pushAndRemoveAllUntil;
+          }
+          Routes.uploadResumeRoute.pushAndRemoveAllUntil;
         } else {
-          Routes.loginRoute.pushAndRemoveAllUntil;
+          return Routes.loginRoute.pushAndRemoveAllUntil;
         }
 
-        print(user.stepsNo);
         emit(SignUpSuccessState(step: data!.stepNo.toString()));
       },
     );
   }
 
-// logout() async {
-  //   executeWithDialog<ResponseModel>(
-  //     either: userUsecases.logout(),
-  //     startingMessage: AppStrings().logout,
-  //     onSuccess: (data) {
-  //       Routes.loginRoute.pushAndRemoveAllUntil();
-  //       user = null;
-  //     },
-  //   );
-  // }
+  logout() async {
+    executeWithDialog<ResponseModel>(
+      either: userUsecases.logout(),
+      startingMessage: AppStrings().logout,
+      onSuccess: (data) {
+        Routes.loginRoute.pushAndRemoveAllUntil();
+        user = null;
+      },
+    );
+  }
 
   // Future<bool> cacheFcm(String fcmToken) async => (await managerExecute<bool?>(userUsecases.cacheFcmToken(fcmToken))).orFalse;
 
@@ -264,78 +279,76 @@ class UserCubit extends Cubit<UserState> {
   //
 
   //
-  // verifyForgetPassword({required String phone, required String verificationCode}) async {
-  //   executeWithDialog<UserDataModel?>(
-  //     either: userUsecases.verifyForgetPassword(verificationCode: verificationCode, phone: phone),
-  //     startingMessage: AppStrings().verifying.trans,
-  //     onError: (message) {
-  //       emit(VerifyOTPErrorState(massage: message));
-  //     },
-  //     onSuccess: (data) {
-  //       Routes.resetPasswordRoute.pushReplacementWithData({
-  //         "phone": phone,
-  //       });
-  //     },
-  //   );
-  // }
+  verifyForgetPassword(
+      {required String phone, required String verificationCode}) async {
+    executeWithDialog<StepNoDataModel?>(
+      either: userUsecases.verifyForgetPassword(
+          verificationCode: verificationCode, phone: phone),
+      startingMessage: AppStrings().verifying.trans,
+      onError: (message) {
+        emit(VerifyOTPErrorState(massage: message));
+      },
+      onSuccess: (data) {
+        Routes.resetPasswordRoute.pushReplacementWithData({
+          "phone": phone,
+        });
+      },
+    );
+  }
+
+  forgetPassword({required String phone}) async {
+    // currentScreen = Routes.forgetPassRoute;
+    executeWithDialog<VerificationDataModel?>(
+      onStart: () {
+        emit(ForgetPasswordStartingState());
+      },
+      either: userUsecases.forgetPassword(
+        phone: phone,
+      ),
+      startingMessage: AppStrings().loading,
+      onError: (message) {
+        emit(ForgetPasswordErrorState(massage: message));
+      },
+      onSuccess: (VerificationDataModel? data) {
+        NotificationsService().showSimpleNotification(
+            title: AppStrings().otpCode.trans,
+            description: data!.verificationCode.toString());
+        Routes.verificationRoute.pushReplacementWithData({
+          VerificationScreen.phoneKey: phone,
+          VerificationScreen.whichScreenKey:AppStrings().forgetPassword
+        });
+
+        emit(ForgetPasswordSuccessState());
+      },
+    );
+  }
+
   //
-  // forgetPassword({required String phone}) async {
-  //   currentScreen = Routes.forgetPassRoute;
-  //   executeWithDialog<String?>(
-  //     onStart: () {
-  //       emit(ForgetPasswordStartingState());
-  //     },
-  //     either: userUsecases.forgetPassword(
-  //       phone: phone,
-  //     ),
-  //     startingMessage: AppStrings().loading,
-  //     onError: (message) {
-  //       emit(ForgetPasswordErrorState(massage: message));
-  //     },
-  //     onSuccess: (data) {
-  //       // NotificationsService().showSimpleNotification(title: AppStrings().otpCode, description: data.toString());
-  //       Routes.verificationRoute.pushReplacementWithData({
-  //         "route": Routes.forgetPassRoute,
-  //         "phone": phone,
-  //       });
-  //       emit(ForgetPasswordSuccessState());
-  //     },
-  //   );
-  // }
   //
   //
-  //
-  // resetPassword({required String phone, required String newPassword}) async {
-  //   String fcmToken = (await FirebaseService().getDeviceToken())!;
-  //   bool isTokenCached = false;
-  //   bool isFcmTokenCached = false;
-  //   executeWithDialog<UserDataModel>(
-  //     onStart: () {
-  //       emit(ResetPasswordLoadingState());
-  //     },
-  //     either: userUsecases.resetPassword(phone, newPassword),
-  //     startingMessage: AppStrings().done,
-  //     beforeSuccess: (data) async {
-  //       userDataModel = data;
-  //       if (userDataModel.isNotNull) {
-  //         user = userDataModel!.user;
-  //         isTokenCached = await cacheToken(userDataModel!.token!);
-  //         isFcmTokenCached = await cacheFcm(fcmToken);
-  //       }
-  //     },
-  //     onError: (message) {
-  //       emit(ResetPasswordErrorState(massage: message));
-  //     },
-  //     onSuccess: (data) {
-  //       if (isTokenCached.isTrue && isFcmTokenCached.isTrue && userDataModel.isNotNull) {
-  //         Routes.bottomNavigationRoute.pushAndRemoveAllUntil();
-  //         //  emit(ResetPasswordLoadedState(userModel: user));
-  //         //   AppService().getBlocData<BottomNavOperationCubit>().changeIndex(0);
-  //       }
-  //     },
-  //   );
-  // }
-  //
+  resetPassword({required UserModel user}) async {
+    executeWithDialog<UserDataModel>(
+      onStart: () {
+        emit(ResetPasswordLoadingState());
+      },
+      either: userUsecases.resetPassword(user: user),
+      startingMessage: AppStrings().done,
+      beforeSuccess: (data) async {
+        userDataModel = data;
+        if (userDataModel.isNotNull) {
+          user = userDataModel!.user!;
+        }
+      },
+      onError: (message) {
+        emit(ResetPasswordErrorState(massage: message));
+      },
+      onSuccess: (data) {
+        Routes.loginRoute.pushAndRemoveAllUntil;
+        emit(ResetPasswordLoadedState(userModel: user));
+      },
+    );
+  }
+
   // editUserData({required UserModel user}) => executeWithDialog<UserModel>(
   //     either: userUsecases.editUserData(user: user),
   //     onStart: () => emit(EditUserDataLoadingState()),

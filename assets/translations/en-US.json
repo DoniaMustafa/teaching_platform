@@ -1,4 +1,6 @@
 {
+
+"courseDetails": "Course Details",
   "ar": "AR",
   "en": "EN",
   "arabic": "Arabic",
@@ -15,7 +17,22 @@
   "memoirs": "Memoirs",  "lecturers": "Lecturers",
   "live": "Live","latestNews": "Latest News",
   "closeSchools": "The closest schools to you",
-  "courses": "Courses",  "groups": "Groups",
+  "courses": "Courses",
+  "groups": "Groups","startNow": "Start now",
+  "coursesAndGroups": "Courses And Groups",
+  "groupInfo": "Group Info",  "sessions": "Sessions",
+  "subscribeNow": "Subscribe Now",
+  "price": "Price",
+  "date": "Date",
+  "addComment": "Add comment",
+  "lesson": "lesson",
+  "lessons": "lessons",
+  "profile": "My Profile",
+  "startDate": "Start Date",
+  "subscriptionDuration": "Subscription Duration",
+  "sessionsNumber": "Sessions Number",
+  "session": "session",
+
   "teachers": "Teachers",
   "mySubscriptions": "My Subscriptions",
   "features": "Features",
@@ -94,5 +111,8 @@
   "passwordError":"Password must be more than 6 character",
   "notificationTitle": "Notification",
   "schedule": "The Schedule",
-  "otpCodeError": "Otp Code must be 4 character"
+  "otpCodeError": "Otp Code must be 4 character",
+  "all": "All",
+  "forgetPasswordTitle": "Enter your phone number here to reset your password",
+  "resetPassword": "Reset Password"
 }

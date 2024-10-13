@@ -14,7 +14,6 @@ class StageCubit extends Cubit<StageState> {
   bool isProgramDone = false;
 
   int? gradeId;
-
   getGrade({
     required int educationProgramsId,
     required int educationTypeId,
@@ -26,6 +25,7 @@ class StageCubit extends Cubit<StageState> {
         onStart: () => emit(GradeLoadingState()),
         onSuccess: (List<PublicDataModel>? data) {
           isProgramDone = true;
+
           emit(GradeLoadedState(data: data!));
         },
         onFail: (message) => emit(GradeFailureState(message: message)));

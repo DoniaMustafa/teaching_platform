@@ -7,6 +7,7 @@ class AppStrings {
 
   final String drivingLicenceExpiryError = "drivingLicenceExpiryError";
   final String signUp = 'signUp';
+  final String registerByPhone = 'registerByPhone';
 
   final String otpCode = 'otpCode';
 
@@ -27,6 +28,8 @@ class AppStrings {
   final String phone = "phone";
   final String password = 'password';
   final String forgetPassword = 'forgetPassword';
+  final String forgetPasswordTitle = 'forgetPasswordTitle';
+
   final String haveAccount = 'haveAccount';
   final String continuation = 'continue';
   final String orSignUp = 'orSignUp';
@@ -83,6 +86,8 @@ class AppStrings {
   final String reportError = 'reportError';
   final String notificationTitle = 'notificationTitle';
   final String coursesAndGroups = 'coursesAndGroups';
+  final String coursesDetails = 'courseDetails';
+  // final String subscribeDetails = 'subscribeDetails';
 
   final String schedule = 'schedule';
   final String chat = 'chat';
@@ -134,14 +139,14 @@ class AppStrings {
   final String country = 'country';
   final String professionalCourse = 'professionalCourse';
   // final String confirmEmptyError = 'confirmEmptyError';
-  // final String chooseAction = "chooseAction";
+  final String chooseAction = "chooseAction";
   // final String useCommentError = 'useCommentError';
   final String verificationCode = "verificationCode";
   final String confirmCode = "confirmCode";
 
   final String choseForYou = "choseForYou";
-// final String removeImage = 'removeImage';
-// final String selectProfilePicture = "selectProfilePicture";
+final String removeImage = 'removeImage';
+final String selectProfilePicture = "selectProfilePicture";
 // final String changeImage = "changeImage";
   final String lecturers = "lecturers";
   final String latestNews = "latestNews";
@@ -159,16 +164,16 @@ class AppStrings {
   final String mySubscriptions = "mySubscriptions";
   final String features = "features";
 
-  // final String forgetPasswordTitle = 'forgetPasswordTitle';
+  final String sessions = 'sessions';
   final String personalInformation = 'personalInformation';
   final String childrenSubscription = "childrenSubscription";
   final String firstStudents = 'firstStudents';
   final String childrenGrades = 'childrenGrades';
   //
-  // final String modelError = "modelError";
-  //
-  // final String yearError = "yearError";
-  // final String governorateError = 'governorateError';
+  final String groupInfo = "groupInfo";
+
+  final String lesson = "lesson";
+  final String lessons = 'lessons';
   //
   final String browse = "browse";
   //
@@ -180,19 +185,19 @@ class AppStrings {
   //
   // final String vehicleColor = "vehicleColor";
   //
-  // final String colorError = "colorError";
+  final String price = "price";
   //
-  // final String criminalRecordError = "criminalRecordError";
+  final String date = "date";
   //
-  // final String frontNationalIdError = "frontNationalIdError";
+  final String startDate = "startDate";
   //
-  // final String backNationalIdError = "backNationalIdError";
+  final String subscriptionDuration = "subscriptionDuration";
   //
-  // final String frontDriverLicenseError = "frontDriverLicenseError";
+  final String sessionsNumber = "sessionsNumber";
   //
-  // final String backDriverLicenseError = "backDriverLicenseError";
+  final String session = "session";
   //
-  // final String frontVehicleLicenseError = "frontVehicleLicenseError";
+  final String addComment = "addComment";
   //
   // final String backVehicleLicenseError = "backVehicleLicenseError";
   //
@@ -274,7 +279,7 @@ class AppStrings {
   //
   // final String caceledTrip = 'caceledTrip';
   //
-  // final String camera = 'camera';
+  final String camera = 'camera';
   //
   // final String cancel = 'cancel';
   // final String reject = 'reject';
@@ -362,7 +367,9 @@ class AppStrings {
   // final String eWallet = 'eWallet';
   //
   // final String edit = 'edit';
-  //
+  final String profile = 'profile';
+
+
   // final String editProfile = 'editProfile';
   //
   // final String egp = 'egp';
@@ -389,7 +396,7 @@ class AppStrings {
   // final String faqs = 'faqs';
   // final String fqsQ = '';
   // final String from = 'from';
-  // final String gallery = 'gallery';
+  final String gallery = 'gallery';
   // final String golden = 'golden';
   //
   // final String haveBags = "haveBags";
@@ -424,7 +431,7 @@ class AppStrings {
   // final String licenceExpiryRequired = 'licenceExpiryRequired';
   // final String licenceRequired = 'licenceRequired';
   // final String license = 'license';
-  // final String loading = 'loading';
+  final String loading = 'loading';
   // final String locationHint = 'locationHint';
   // final String logIln = 'logIln';
 
@@ -564,7 +571,7 @@ class AppStrings {
   //
   final String resend = 'resend';
   //
-  // final String resetPassword = 'resetPassword';
+  final String resetPassword = 'resetPassword';
   //
   // final String rideDetails = 'rideDetails';
   //
@@ -646,7 +653,7 @@ class AppStrings {
   //
   // final String submitReport = 'submitReport';
   //
-  // final String subscribeNow = 'subscribeNow';
+  final String subscribeNow = 'subscribeNow';
   //
   // final String subscribed = 'subscribed';
   //

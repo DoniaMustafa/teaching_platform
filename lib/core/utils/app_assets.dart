@@ -11,6 +11,10 @@ mixin class SvgImages {
   String uploadVideo = "$svgPath/upload_video.svg";
   String transaction = "$svgPath/transaction.svg";
 
+  String star = "$svgPath/star.svg";
+  String ask = "$svgPath/ask.svg";
+  String favorite = "$svgPath/favorite.svg";
+  String send = "$svgPath/send.svg";
 
 
 ///////////////////////////////  svg  ////////////////////////////////////

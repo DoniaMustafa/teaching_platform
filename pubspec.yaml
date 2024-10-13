@@ -57,6 +57,13 @@ dependencies:
   dartz:
   flutter_local_notifications:
   permission_handler:
+  file_picker:
+  image_picker:
+  video_player: ^2.9.0
+  flick_video_player: ^0.9.0
+  chewie: ^1.8.5
+
+
 
 
 

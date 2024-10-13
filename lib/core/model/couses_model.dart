@@ -9,7 +9,8 @@ class CoursesModel {
   final String? subjectName;
   final double? price;
   final String? currencyName;
-
+  final double? rate;
+  final int? followersCount;
   CoursesModel({
     this.courseId,
     this.courseTitle,
@@ -19,7 +20,9 @@ class CoursesModel {
     this.teacherPicture,
     this.subjectId,
     this.subjectName,
+    this.followersCount,
     this.price,
+    this.rate,
     this.currencyName,
   });
 
@@ -35,6 +38,8 @@ class CoursesModel {
         subjectId: json["SubjectId"],
         subjectName: json["SubjectName"],
         price: json["Price"],
+        rate: json["Rate"]?.toDouble() ?? 0.0,
+        followersCount: json["FollowersCount"] ?? 0,
         currencyName: json["CurrencyName"] == null ? '' : json["CurrencyName"]!,
       );
 
