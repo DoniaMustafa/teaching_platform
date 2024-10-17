@@ -1,19 +1,23 @@
-import '../../../../core/export/export.dart';
-import '../manager/public_coures_group_cubit.dart';
+import 'package:teaching/features/course/courses_details/data/models/course_details_response_model.dart';
+import 'package:teaching/features/course/courses_details/presentation/manager/courses_details/courses_details_cubit.dart';
+import 'package:teaching/features/course/courses_details/presentation/pages/courses_details_screen.dart';
 
-class BuildPublicGroupsCourses extends StatelessWidget {
-  const BuildPublicGroupsCourses({super.key});
+import '../../../../core/export/export.dart';
+import '../manager/public_course_cubit.dart';
+
+class BuildPublicCourses extends StatelessWidget {
+  const BuildPublicCourses({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: BlocBuilder<PublicCouresGroupCubit, CubitStates>(
+      child: BlocBuilder<PublicCourseCubit, CubitStates>(
         builder: (context, state) {
           if (state is FailedState) {
             return CustomErrorWidget(
               onTap: () => context
-                  .read<PublicCouresGroupCubit>()
-                  .getPublicGroupsCourses(),
+                  .read<PublicCourseCubit>()
+                  .getPublicCourses(),
               message: state.message,
             );
           }
@@ -51,10 +55,17 @@ class BuildPublicGroupsCourses extends StatelessWidget {
 
   Widget buildTeachersItem(CoursesModel data) => CustomItem(
       onNavigateTap: () {
-        // context.read<CoursesDetailsCubit>().getCoursesDetails(TeacherModel(
-        //     subjectId: state.data[index].subjectId!,
-        //     teacherId: state.data[index].teacherId!));
-        Routes.coursesGroupsRoute.moveTo;
+        // AppService().getBlocData<CoursesCubit>().getCourser(
+        //     model: TeacherModel(
+        //         subjectId: data.subjectId!, teacherId: data.teacherId!));
+        AppService()
+            .getBlocData<CoursesDetailsCubit>()
+            .getCoursesDetails(TeacherModel(teacherId: data.teacherId!));
+        Routes.coursesDetailsRoute.moveToWithArgs({
+          // CoursesDetailsScreen.whichScreenKey: '',
+          // CoursesDetailsScreen.subjectNameKey: data.subjectId!,
+          CoursesDetailsScreen.teacherIdKey: data.teacherId!
+        });
       },
       isSubScribe: true,
       coursesModel: data);

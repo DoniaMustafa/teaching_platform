@@ -15,6 +15,13 @@ import 'package:teaching/features/subscription/presentation/pages/subscription_s
 import 'package:teaching/features/wallet/presentation/pages/wallet_screen.dart';
 
 class AppListsConstant {
+  static List<String> tabsBar = [
+   AppStrings().contents.trans,
+    AppStrings().comments.trans,
+    AppStrings().attachments.trans,
+    AppStrings().exams.trans,
+  ];
+
   static List<GenericModel> roles = [
     GenericModel(
       id: 1,
@@ -61,6 +68,11 @@ class AppListsConstant {
     AppStrings().courses.trans,
     AppStrings().groups.trans,
   ];
+  static List<String> exams = [
+    AppStrings().passed.trans,
+    AppStrings().notPassed.trans,
+  ];
+
   static List<String> chatting = [
     AppStrings().chat.trans,
     AppStrings().groups.trans,
@@ -180,42 +192,50 @@ class AppListsConstant {
 
   static List<GenericModel> studentDrawerItems = [
     GenericModel(
+      onTap: () {},
       // image: AppAssets().student,
       // role: 'student',
       title: AppStrings().childrenSubscription.trans,
     ),
     GenericModel(
+      onTap: () => Routes.teachersRoute.moveTo,
       // image: AppAssets().teacher,
       // role: 'lecture',
       title: AppStrings().tasks.trans,
     ),
     GenericModel(
+      onTap: () => Routes.coursesGroupsRoute.moveTo,
       // image: AppAssets().teacher,
       // role: 'lecture',
       title: AppStrings().courses.trans,
     ),
     GenericModel(
+      onTap: () {},
       // image: AppAssets().teacher,
       // role: 'lecture',
       title: AppStrings().parent.trans,
     ),
     GenericModel(
+      onTap: () {},
       // image: AppAssets().student,
       // role: 'student',
       title: AppStrings().challenges.trans,
     ),
     GenericModel(
+      onTap: () {},
       // image: AppAssets().teacher,
       // role: 'lecture',
       title: AppStrings().myGrades.trans,
     ),
     GenericModel(
+      onTap: () {},
       // image: AppAssets().teacher,
       // role: 'lecture',
       title: AppStrings().firstStudents.trans,
     ),
     //
     GenericModel(
+      onTap: () {},
       // image: AppAssets().teacher,
       // role: 'lecture',
       title: AppStrings().childrenGrades.trans,
@@ -227,11 +247,15 @@ class AppListsConstant {
     //   title: AppStrings().homeWork.trans,
     // ),
     GenericModel(
+      onTap: () =>
+          // print('route');
+          Routes.settingsRoute.moveTo,
       // image: AppAssets().teacher,
       // role: 'lecture',
       title: AppStrings().settings.trans,
     ),
     GenericModel(
+      onTap: () {},
       // onTap: AppService().getBlocData<UserCubit>().logout(),
       // image: AppAssets().teacher,
       // role: 'lecture',
@@ -317,7 +341,16 @@ class AppListsConstant {
   ];
 
   static List<String> lessonsTabBar = [
+    AppStrings().groupInfo.trans,
     AppStrings().sessions.trans,
-    AppStrings().groupInfo.trans
+  ];
+
+  static List<String> settings = [
+    AppStrings().language.trans,
+    AppStrings().changePassword.trans,
+    AppStrings().aboutUs.trans,
+    AppStrings().privacyPolice.trans,
+    AppStrings().termsAndConditions.trans,
+    AppStrings().logout.trans,
   ];
 }

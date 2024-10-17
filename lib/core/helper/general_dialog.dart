@@ -41,7 +41,8 @@ void showCreateAccountDialog(context) {
             ],
           ),
           24.vs,
-          CustomElevatedButton(width: 228.w, onPressed: () {}, text: AppStrings().confirm.trans),
+          CustomElevatedButton(
+              width: 228.w, onPressed: () {}, text: AppStrings().confirm.trans),
         ],
       ));
 }
@@ -55,65 +56,66 @@ Future showCustomDialog({
   Widget? widget,
   bool dismissible = false,
   double? radius,
+  double? height,
+  TextStyle? style,
   double? space,
 }) =>
     showDialog(
-      barrierColor: AppColors.black.withOpacity(0.2),
+      barrierColor: AppColors.black.withOpacity(0.3),
       context: context,
       barrierDismissible: dismissible,
       builder: (context) {
-        return Scaffold(
-          backgroundColor: AppColors.transparent,
-          body: Center(
-            child: Container(
-              height: 351.h,
-              margin: getMargin(horizontal: 20.w, vertical: 15.h),
-              padding: getPadding(horizontal: 30.w, vertical: 20.h),
-              decoration: BoxDecoration(
-                  color: AppColors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(radius ?? 0))),
-              alignment: Alignment.center,
-              child: Column(
-                children: [
-                  // 20.vs,
-                  GestureDetector(
-                    onTap: () => pop(),
-                    child: const Align(
-                        alignment: AlignmentDirectional.centerEnd,
-                        child: CustomIcon(
-                          icon: Icons.close,
-                        )),
-                  ),
-                  25.vs,
-                  Align(
-                      alignment: Alignment.center,
-                      child: CustomTextWidget(
-                        text: title!,
-                        style: getBoldTextStyle(
-                          decoration: TextDecoration.underline,
-                          decorationColor: AppColors.mainAppColor,
-                          fontSize: 24,
-                          fontFamily: FontFamilies.dubaiFamily,
-                          color: AppColors.mainAppColor,
-                        ),
+        return Center(
+          child: Container(
+            height: height ?? 351.h,
+            margin: getMargin(horizontal: 40.w, vertical: 15.h),
+            padding: getPadding(horizontal: 30.w, vertical: 20.h),
+            decoration: BoxDecoration(
+                color: AppColors.white,
+                borderRadius: BorderRadius.all(Radius.circular(radius ?? 0))),
+            alignment: Alignment.center,
+            child: Column(
+              children: [
+                // 20.vs,
+                GestureDetector(
+                  onTap: () => pop(),
+                  child: const Align(
+                      alignment: AlignmentDirectional.centerEnd,
+                      child: CustomIcon(
+                        icon: Icons.close,
                       )),
-                  20.vs,
-                  // Column(
-                  //   mainAxisSize: MainAxisSize.min,
-                  //   children: [
-                  //     space.isNotNull ? space!.vs : 4.vs,
-                  //     CustomTextWidget(
-                  //       text: content!,
-                  //       style: getMediumTextStyle(
-                  //         fontSize: 16,
-                  //         // color: AppColors.titleGray,
-                  //       ),
-                  //     ),
-                  widget!
-                  // ],
-                  // )
-                ],
-              ),
+                ),
+                25.vs,
+                Align(
+                    alignment: Alignment.center,
+                    child: CustomTextWidget(
+                      text: title!,
+                      align: TextAlign.center,
+                      style: style ??
+                          getBoldTextStyle(
+                            // decoration: TextDecoration.underline,
+                            // decorationColor: AppColors.mainAppColor,
+                            fontSize: 24,
+                            fontFamily: FontFamilies.dubaiFamily,
+                            color: AppColors.mainAppColor,
+                          ),
+                    )),
+                20.vs,
+                // Column(
+                //   mainAxisSize: MainAxisSize.min,
+                //   children: [
+                //     space.isNotNull ? space!.vs : 4.vs,
+                //     CustomTextWidget(
+                //       text: content!,
+                //       style: getMediumTextStyle(
+                //         fontSize: 16,
+                //         // color: AppColors.titleGray,
+                //       ),
+                //     ),
+                widget!
+                // ],
+                // )
+              ],
             ),
           ),
         );

@@ -31,7 +31,6 @@ class CourseDetailsResponseModel extends ResponseModel {
 
 class TeacherModel {
   final int? teacherId;
-
   final String? teacherName;
   final String? teacherPicture;
   final String? gradeName;
@@ -60,15 +59,26 @@ class TeacherModel {
             : List<TeacherCourse>.from(
                 json["TeacherCourses"]!.map((x) => TeacherCourse.fromJson(x))),
       );
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (teacherId.isNotNull) {
+      data['teacherId'] = teacherId;
+    }
+    if (teacherName.isNotNull) {
+      data['teacherName'] = teacherName;
+    }
+    if (subjectId.isNotNull) {
+      data['subjectId'] = subjectId;
+    }
 
-  Map<String, dynamic> toJson() => {
-        "teacherId": teacherId,
-        "subjectId": subjectId,
-      };
+    return data;
+  }
 }
 
 class TeacherCourse {
   final int? courseId;
+  final int? courseLessonId;
+
   final String? title;
   final String? titleEn;
   final int? duration;
@@ -85,6 +95,7 @@ class TeacherCourse {
     this.titleEn,
     this.duration,
     this.price,
+    this.courseLessonId,
     this.currency,
     this.totalLessonsPrice,
     this.lessonsCount,
@@ -108,18 +119,17 @@ class TeacherCourse {
                 json["CourseLessons"]!.map((x) => CourseLesson.fromJson(x))),
       );
 
-  // Map<String, dynamic> toJson() => {
-  //   "CourseId": courseId,
-  //   "Title": titleValues.reverse[title],
-  //   "TitleEN": titleEnValues.reverse[titleEn],
-  //   "Duration": duration,
-  //   "Price": price,
-  //   "Currency": currency],
-  //   "TotalLessonsPrice": totalLessonsPrice,
-  //   "LessonsCount": lessonsCount,
-  //   "IsSubscribed": isSubscribed,
-  //   "CourseLessons": courseLessons == null ? [] : List<dynamic>.from(courseLessons!.map((x) => x.toJson())),
-  // };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (courseId.isNotNull) {
+      data['courseId'] = courseId;
+    }
+    if (courseLessonId.isNotNull) {
+      data['courseLessonId'] = courseLessonId;
+    }
+
+    return data;
+  }
 }
 
 class CourseLesson {

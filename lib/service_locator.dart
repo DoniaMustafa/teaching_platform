@@ -19,10 +19,27 @@ import 'package:teaching/features/auth/presentation/manager/education/program/pr
 import 'package:teaching/features/auth/presentation/manager/education/stage/stage_cubit.dart';
 import 'package:teaching/features/auth/presentation/manager/education/subject/subject_cubit.dart';
 import 'package:teaching/features/chat/presentation/manager/chat_operation_cubit.dart';
+import 'package:teaching/features/course/courses_details/data/data_sources/subscribe_course_data_source.dart';
 import 'package:teaching/features/course/courses_details/data/repositories/courses_details_implement.dart';
+import 'package:teaching/features/course/courses_details/data/repositories/subscribe_courses_implement.dart';
 import 'package:teaching/features/course/courses_details/domain/repositories/courses_details_repo.dart';
+import 'package:teaching/features/course/courses_details/domain/repositories/subscribe_courses_repo.dart';
 import 'package:teaching/features/course/courses_details/domain/use_cases/courses_details_use_case.dart';
+import 'package:teaching/features/course/courses_details/domain/use_cases/subscribe_courses_use_case.dart';
 import 'package:teaching/features/course/courses_details/presentation/manager/courses_details/courses_details_cubit.dart';
+import 'package:teaching/features/course/courses_details/presentation/manager/subscribe_course_cubit.dart';
+import 'package:teaching/features/course/courses_lessons_details/data/data_sources/favorite_video_data_source.dart';
+import 'package:teaching/features/course/courses_lessons_details/data/data_sources/rate_data_source.dart';
+import 'package:teaching/features/course/courses_lessons_details/data/repositories/favorite_video_implement.dart';
+import 'package:teaching/features/course/courses_lessons_details/data/repositories/rate_implement.dart';
+import 'package:teaching/features/course/courses_lessons_details/domain/repositories/favorite_unfavorite_video_repo.dart';
+import 'package:teaching/features/course/courses_lessons_details/domain/repositories/rate_repo.dart';
+import 'package:teaching/features/course/courses_lessons_details/domain/use_cases/favorite_unfavorite_video_use_case.dart';
+import 'package:teaching/features/course/courses_lessons_details/domain/use_cases/rate_uescase.dart';
+import 'package:teaching/features/course/courses_lessons_details/presentation/manager/attachments_operation_cubit.dart';
+import 'package:teaching/features/course/courses_lessons_details/presentation/manager/exam_operation_cubit.dart';
+import 'package:teaching/features/course/courses_lessons_details/presentation/manager/lessons_details/follow_unfollow_video_cubit.dart';
+import 'package:teaching/features/course/courses_lessons_details/presentation/manager/rate_cubit.dart';
 import 'package:teaching/features/courses_groups/data/data_sources/public_groups_courses_Data_source.dart';
 import 'package:teaching/features/courses_groups/data/data_sources/subject_Data_source.dart';
 import 'package:teaching/features/courses_groups/data/repositories/public_groups_courses_implement.dart';
@@ -30,8 +47,18 @@ import 'package:teaching/features/courses_groups/data/repositories/subject_imple
 import 'package:teaching/features/courses_groups/domain/repositories/subject_repo.dart';
 import 'package:teaching/features/courses_groups/domain/use_cases/subject_use_case.dart';
 import 'package:teaching/features/courses_groups/presentation/manager/coures_group_operation_cubit.dart';
-import 'package:teaching/features/courses_groups/presentation/manager/public_coures_group_cubit.dart';
+import 'package:teaching/features/courses_groups/presentation/manager/public_course_cubit.dart';
 import 'package:teaching/features/courses_groups/presentation/manager/subjects_cubit.dart';
+import 'package:teaching/features/exam/data/data_sources/exam_data_source.dart';
+import 'package:teaching/features/exam/data/repositories/exam_implement.dart';
+import 'package:teaching/features/exam/domain/repositories/exam_repo.dart';
+import 'package:teaching/features/exam/domain/use_cases/exam_use_case.dart';
+import 'package:teaching/features/exam/presentation/manager/exam_cubit.dart';
+import 'package:teaching/features/favorite/data/data_sources/favorite_video_courses_data_source.dart';
+import 'package:teaching/features/favorite/data/repositories/favorite_video_courses_implement.dart';
+import 'package:teaching/features/favorite/domain/repositories/favorite_video_courses_repo.dart';
+import 'package:teaching/features/favorite/domain/use_cases/favorite_video_courses_use_case.dart';
+import 'package:teaching/features/favorite/presentation/manager/favorite_video_courses_cubit.dart';
 import 'package:teaching/features/group/group_lessons_details/data/data_sources/group_lessons_details_data_sources.dart';
 import 'package:teaching/features/group/group_lessons_details/data/repositories/group_lessons_details_implement.dart';
 import 'package:teaching/features/group/group_lessons_details/domain/repositories/group_lessons_details_repo.dart';
@@ -65,12 +92,20 @@ import 'package:teaching/features/course/courses_lessons_details/data/data_sourc
 import 'package:teaching/features/course/courses_lessons_details/data/repositories/lessons_details_implement.dart';
 import 'package:teaching/features/course/courses_lessons_details/domain/use_cases/lessons_details_use_case.dart';
 import 'package:teaching/features/course/courses_lessons_details/presentation/manager/lessons_details/lessons_details_cubit.dart';
+import 'package:teaching/features/language/presentation/managers/language_oepration_cubit/language_oepration_cubit.dart';
 import 'package:teaching/features/on_boarding/data/data_sources/onboarding_local_data_source.dart';
 import 'package:teaching/features/on_boarding/data/repositories/onboarding_repo_impl.dart';
 import 'package:teaching/features/on_boarding/domain/repositories/onboarding_repo.dart';
 import 'package:teaching/features/on_boarding/domain/usecase/onborading_usecases.dart';
 import 'package:teaching/features/on_boarding/presentation/manager/onboarding_manager_cubit.dart';
 import 'package:teaching/features/subscription/presentation/manager/subscriptipn_operation_cubit.dart';
+import 'package:teaching/features/teacher/teacher_details/data/data_sources/teacher_details_data_source.dart';
+import 'package:teaching/features/teacher/teacher_details/data/repositories/teacher_details_implement.dart';
+import 'package:teaching/features/teacher/teacher_details/domain/repositories/teacher_details_repo.dart';
+import 'package:teaching/features/teacher/teacher_details/domain/use_cases/teacher_details_use_case.dart';
+import 'package:teaching/features/teacher/teacher_details/presentation/manager/follow_teacher_cubit.dart';
+import 'package:teaching/features/teacher/teacher_details/presentation/manager/review_teacher_cubit.dart';
+import 'package:teaching/features/teacher/teacher_details/presentation/manager/teacher_details_cubit.dart';
 
 import 'core/export/export.dart';
 import 'core/network/impl/dio_impl/dio-consumer.dart';
@@ -78,9 +113,10 @@ import 'core/network/impl/dio_impl/dio_interceptors.dart';
 import 'core/permission_handler.dart';
 import 'features/auth/presentation/manager/user_cubit/user_cubit.dart';
 import 'features/bottom_nav_bar/presentaion/manager/onboading_operation_cubit.dart';
-import 'features/course/courses_details/data/data_sources/courses_details_d/courses_details_data_source.dart';
+import 'features/course/courses_details/data/data_sources/courses_details_data_source.dart';
 import 'features/courses_groups/domain/repositories/public_groups_courses_repo.dart';
 import 'features/courses_groups/domain/use_cases/public_groups_courses_use_case.dart';
+import 'features/courses_groups/presentation/manager/public_group_cubit.dart';
 import 'features/home/data/data_sources/student/groups_data_source.dart';
 import 'features/home/data/data_sources/student/teachers_of_student_data_source.dart';
 import 'features/home/data/repositories/student/courses_groups_implement.dart';
@@ -132,13 +168,13 @@ class ServiceLocator {
     registerGroupLessonsDetails;
     registerSubjects;
     registerPublicCoursesGroups;
-    // registerSubServices;
-    // registerSubServicesDetails;
-    // registerCart;
-    // registerBookingServices;
-    // registerOffers;
+    registerTeacherDetails;
+    registerSubscribeCourse;
+    registerVideoRate;
+    registerExam;
+    registerFavoriteVideos;
     // registerTermsAndCondition;
-    // registerOrders;
+    registerFavoriteUnFavoriteCourseVideo;
     // registerHelpCenter;
     // registerAccount;
     // registerProductDetails;
@@ -167,6 +203,10 @@ class ServiceLocator {
         languageRepo: LanguageRepoImpl(languageLocalDataSource: getIt())));
     getIt.registerFactory<LanguageCubit>(() => LanguageCubit(
         languageUseCases: LanguageUseCases(languageRepo: getIt())));
+    getIt.registerFactory<LanguageOperationCubit>(() => LanguageOperationCubit());
+
+
+
   }
 
   get registerOnboarding {
@@ -186,9 +226,13 @@ class ServiceLocator {
         () => CoursesGroupOperationCubit());
     getIt.registerLazySingleton<ChatOperationCubit>(() => ChatOperationCubit());
 
-    getIt.registerLazySingleton<FileManagerCubit>(() => FileManagerCubit());
+    getIt.registerLazySingleton<AttachmentsOperationCubit>(
+        () => AttachmentsOperationCubit());
     getIt.registerLazySingleton<BottomNavBarOperationCubit>(
         () => BottomNavBarOperationCubit());
+
+    getIt.registerLazySingleton<FileManagerCubit>(() => FileManagerCubit());
+    getIt.registerLazySingleton<ExamOperationCubit>(() => ExamOperationCubit());
   }
 
   get registerNetwork {
@@ -333,81 +377,95 @@ class ServiceLocator {
     getIt.registerLazySingleton<GroupDetailsCubit>(
         () => GroupDetailsCubit(getIt()));
   }
+
   get registerGroupLessonsDetails {
     getIt.registerLazySingleton<GroupLessonsDetailsDataSources>(
-            () => GroupLessonsWithServer(getIt()));
+        () => GroupLessonsWithServer(getIt()));
     // getIt.registerLazySingleton<AdsLocalDataSource>(() => AdsLocalDataSourceImplWithPrefs(preferences: getIt()));
     getIt.registerLazySingleton<GroupLessonsDetailsRepo>(
-            () => GroupLessonsDetailsImplement(getIt()));
+        () => GroupLessonsDetailsImplement(getIt()));
 
     getIt.registerLazySingleton<GroupLessonsDetailsUseCase>(
-            () => GroupLessonsDetailsUseCase(getIt()));
+        () => GroupLessonsDetailsUseCase(getIt()));
     getIt.registerLazySingleton<GroupLessonsDetailsCubit>(
-            () => GroupLessonsDetailsCubit(getIt()));
+        () => GroupLessonsDetailsCubit(getIt()));
   }
 
   get registerPermission =>
       getIt.registerLazySingleton(() => PermissionManager());
 //
-//   get registerCategories {
-//     getIt.registerLazySingleton<CategoriesRemoteDatasource>(
-//         () => CategoriesRemoteDataSourceImpl(dioConsumer: getIt()));
-//     getIt.registerLazySingleton<CategoriesRepo>(
-//         () => CategoriesRepoImpl(categoriesRemoteDatasource: getIt()));
-//     getIt.registerLazySingleton<CategoriesUseCases>(
-//         () => CategoriesUseCases(categoriesRepo: getIt()));
-//     getIt.registerLazySingleton<CategoriesCubit>(
-//         () => CategoriesCubit(categoriesUseCases: getIt()));
-//   }
+  get registerExam {
+    getIt.registerLazySingleton<ExamDataSource>(
+        () => ExamWithServer( getIt()));
+    getIt.registerLazySingleton<ExamRepo>(
+        () => ExamImplement(getIt()));
+    getIt.registerLazySingleton<ExamUseCase>(
+        () => ExamUseCase( getIt()));
+    getIt.registerLazySingleton<ExamCubit>(
+        () => ExamCubit( getIt()));
+  }
 //
   get registerSubjects {
     getIt.registerLazySingleton<SubjectDataSource>(
-        () =>SubjectWithServer( getIt()));
-    getIt.registerLazySingleton<SubjectRepo>(
-        () => SubjectImplement( getIt()));
-    getIt.registerLazySingleton<SubjectUseCase>(
-        () => SubjectUseCase( getIt()));
-    getIt.registerLazySingleton<SubjectsCubit>(
-            () => SubjectsCubit( getIt()));
+        () => SubjectWithServer(getIt()));
+    getIt.registerLazySingleton<SubjectRepo>(() => SubjectImplement(getIt()));
+    getIt.registerLazySingleton<SubjectUseCase>(() => SubjectUseCase(getIt()));
+    getIt.registerLazySingleton<SubjectsCubit>(() => SubjectsCubit(getIt()));
   }
+
 //
   get registerPublicCoursesGroups {
     getIt.registerLazySingleton<PublicGroupsCoursesDataSource>(
-        () => PublicGroupsCoursesWithServer( getIt()));
+        () => PublicGroupsCoursesWithServer(getIt()));
     getIt.registerLazySingleton<PublicGroupsCoursesRepo>(
         () => PublicGroupsCoursesImplement(getIt()));
     getIt.registerLazySingleton<PublicGroupsCoursesUseCase>(
-        () => PublicGroupsCoursesUseCase( getIt()));
-    getIt.registerLazySingleton<PublicCouresGroupCubit>(
-            () => PublicCouresGroupCubit( getIt()));
+        () => PublicGroupsCoursesUseCase(getIt()));
+    getIt.registerLazySingleton<PublicCourseCubit>(
+        () => PublicCourseCubit(getIt()));
+    getIt.registerLazySingleton<PublicGroupCubit>(
+            () => PublicGroupCubit(getIt()));
+
+
   }
+
 //
-//   get registerSubServicesDetails {
-//     getIt.registerLazySingleton<SubServicesDetailsDataSources>(
-//         () => SubServicesDetailsDataSourceImpl(dioConsumer: getIt()));
-//     getIt.registerLazySingleton<SubServicesDetailsRepo>(
-//         () => SubServicesDetailsRepoImpl(servicesDetailsDataSources: getIt()));
-//     getIt.registerLazySingleton<SubServicesDetailsUseCase>(
-//         () => SubServicesDetailsUseCase(subServicesDetailsRepo: getIt()));
-//   }
+  get registerTeacherDetails {
+    getIt.registerLazySingleton<TeacherDetailsDataSource>(
+        () => TeacherDetailsWithServer(getIt()));
+    getIt.registerLazySingleton<TeacherDetailsRepo>(
+        () => TeacherDetailsImplement(getIt()));
+    getIt.registerLazySingleton<TeacherDetailsUseCase>(
+        () => TeacherDetailsUseCase(getIt()));
+    getIt.registerLazySingleton<TeacherDetailsCubit>(
+        () => TeacherDetailsCubit(getIt()));
+    getIt.registerLazySingleton<ReviewTeacherCubit>(
+        () => ReviewTeacherCubit(getIt()));
+    getIt.registerLazySingleton<FollowTeacherCubit>(
+            () => FollowTeacherCubit(getIt()));
+
+  }
+
 //
-//   get registerBookingServices {
-//     getIt.registerLazySingleton<BookingServiceRemoteDataSource>(
-//         () => BookingServiceRemoteDataSourceImpl(dioConsumer: getIt()));
-//     getIt.registerLazySingleton<BookingServiceRepo>(
-//         () => BookingServiceRepoImpl(bookingServiceRemoteDataSource: getIt()));
-//     getIt.registerLazySingleton<BookingServiceUseCase>(
-//         () => BookingServiceUseCase(bookingServiceRepo: getIt()));
-//   }
+  get registerSubscribeCourse {
+    getIt.registerLazySingleton<SubscribeCourseDataSource>(
+        () => SubscribeCourseWithServer(getIt()));
+    getIt.registerLazySingleton<SubscribeCoursesRepo>(
+        () => SubscribeCoursesImplement(getIt()));
+    getIt.registerLazySingleton<SubscribeCoursesUseCase>(
+        () => SubscribeCoursesUseCase(getIt()));
+    getIt.registerLazySingleton<SubscribeCourseCubit>(
+        () => SubscribeCourseCubit(getIt()));
+  }
+
 //
-//   get registerInfo {
-//     getIt.registerLazySingleton<InfoRemoteDataSource>(
-//         () => InfoRemoteDataSourceImpl(dioConsumer: getIt<DioConsumer>()));
-//     getIt.registerLazySingleton<InfoRepo>(() =>
-//         InfoRepoImpl(infoRemoteDataSource: getIt<InfoRemoteDataSource>()));
-//     getIt.registerLazySingleton<InfoUseCases>(
-//         () => InfoUseCases(infoRepo: getIt<InfoRepo>()));
-//   }
+  get registerVideoRate {
+    getIt.registerLazySingleton<RateDataSource>(() => RateWithServer(getIt()));
+    getIt.registerLazySingleton<RateRepo>(() => RateImplement(getIt()));
+    getIt.registerLazySingleton<RateUseCase>(() => RateUseCase(getIt()));
+    getIt.registerLazySingleton<RateCubit>(() => RateCubit(getIt()));
+  }
+
 //
   get registerCountries {
     getIt.registerLazySingleton<CountryRemoteDatasource>(
@@ -418,35 +476,35 @@ class ServiceLocator {
     getIt.registerLazySingleton<CountriesCubit>(() => CountriesCubit(getIt()));
   }
 
-//   get registerCart {
-//     getIt.registerLazySingleton<CartDataSource>(
-//         () => CartWithServer(dioConsumer: getIt()));
-//     getIt.registerLazySingleton<PutDiscountDataSource>(
-//         () => CartWithServer(dioConsumer: getIt()));
-//     getIt.registerLazySingleton<CartRepository>(
-//         () => CartImplementation(cart: getIt(), discount: getIt()));
-//     getIt.registerLazySingleton<PutDiscountRepository>(
-//         () => CartImplementation(cart: getIt(), discount: getIt()));
-//     getIt.registerLazySingleton<CartUseCase>(
-//         () => CartUseCase(repo: getIt(), discount: getIt()));
-//     getIt.registerLazySingleton<CartCubit>(() => CartCubit(useCase: getIt()));
-//     getIt.registerLazySingleton<PutDiscountCubit>(
-//         () => PutDiscountCubit(useCase: getIt()));
+  get registerFavoriteVideos {
+    getIt.registerLazySingleton<FavoriteVideoCoursesDataSource>(
+        () => FavoriteVideoCoursesWithServer( getIt()));
+    // getIt.registerLazySingleton<FavoriteVideoCoursesRepo>(
+    //     () => CartWithServer(dioConsumer: getIt()));
+    getIt.registerLazySingleton<FavoriteVideoCoursesRepo>(
+        () => FavoriteVideoCoursesImplement(getIt()));
+    // getIt.registerLazySingleton<FavoriteVideoCoursesRepository>(
+    //     () => CartImplementation(cart: getIt(), discount: getIt()));
+    getIt.registerLazySingleton<FavoriteVideoCoursesUseCase>(
+        () => FavoriteVideoCoursesUseCase(getIt()));
+    getIt.registerLazySingleton<FavoriteVideoCoursesCubit>(() => FavoriteVideoCoursesCubit( getIt()));
+    // getIt.registerLazySingleton<PutDiscountCubit>(
+    //     () => PutDiscountCubit(useCase: getIt()));
+    //
+    // getIt.registerLazySingleton<CartOperationCubit>(
+    //     () => CartOperationCubit(getIt()));
+  }
 //
-//     getIt.registerLazySingleton<CartOperationCubit>(
-//         () => CartOperationCubit(getIt()));
-//   }
-//
-//   get registerOrders {
-//     getIt.registerLazySingleton<MyOrdersDataSource>(
-//         () => MyOrdersWithServer(dioConsumer: getIt()));
-//     getIt.registerLazySingleton<MyOrdersRepository>(
-//         () => MyOrdersImplementation(order: getIt()));
-//     getIt.registerLazySingleton<MyOrdersUseCase>(
-//         () => MyOrdersUseCase(repo: getIt()));
-//     getIt.registerLazySingleton<MyOrdersCubit>(
-//         () => MyOrdersCubit(useCase: getIt()));
-//   }
+  get registerFavoriteUnFavoriteCourseVideo {
+    getIt.registerLazySingleton<FavoriteVideoDataSource>(
+        () => FavoriteVideoWithServer( getIt()));
+    getIt.registerLazySingleton<FavoriteUnFavoriteVideoRepo>(
+        () => FavoriteVideoImplement( getIt()));
+    getIt.registerLazySingleton<FavoriteUnfavoriteVideoUseCase>(
+        () => FavoriteUnfavoriteVideoUseCase( getIt()));
+    getIt.registerLazySingleton<FavoriteUnFavoriteVideoCubit>(
+        () => FavoriteUnFavoriteVideoCubit( getIt()));
+  }
 //
 //   get registerOffers {
 //     getIt.registerLazySingleton<OffersRemoteDatasource>(

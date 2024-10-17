@@ -5,8 +5,9 @@ import 'package:teaching/features/courses_groups/domain/repositories/public_grou
 class PublicGroupsCoursesUseCase {
   PublicGroupsCoursesRepo repo;
 
-  Future<Either<Failure, ResponseModel>> getPublicGroupsCourses({int?subjectId}) async =>
-      await repo.getPublicGroupsCourses(subjectId:subjectId );
-
+  Future<Either<Failure, ResponseModel>> getPublicCourses({TeacherModel? model}) async =>
+      await repo.getPublicGroupsCourses(model:model );
+  Future<Either<Failure,ResponseModel>> getPublicGroups({TeacherModel? model}) async =>
+      await repo.getPublicGroups(model:model );
   PublicGroupsCoursesUseCase(this.repo);
 }

@@ -61,6 +61,7 @@ class VerificationScreen extends StatelessWidget {
   get _buildSendData => BuildNextButton(
         text: 'ارسال',
         onTap: () {
+
           formKey.currentState!.validate();
           if (AppService().getBlocData<ErrorCubit>().errors.isEmpty) {
             if (whichScreen.contains(AppStrings().forgetPassword)) {

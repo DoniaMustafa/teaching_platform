@@ -1,4 +1,8 @@
 import 'package:teaching/core/export/export.dart';
+import 'package:teaching/features/course/courses_details/presentation/manager/courses_details/courses_details_cubit.dart';
+import 'package:teaching/features/course/courses_details/presentation/pages/courses_details_screen.dart';
+import 'package:teaching/features/courses_groups/presentation/manager/public_group_cubit.dart';
+import 'package:teaching/features/group/groups_details/presentation/manager/group_details/group_details_cubit.dart';
 import 'package:teaching/features/home/presentation/manager/groups_cubit.dart';
 
 class BuildPublicGroupTabBarView extends StatelessWidget {
@@ -7,29 +11,20 @@ class BuildPublicGroupTabBarView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: BlocBuilder<GroupsCubit, CubitStates>(
+      child: BlocBuilder<PublicGroupCubit, CubitStates>(
         builder: (context, state) {
           if (state is FailedState) {
             return CustomErrorWidget(
-              onTap: () => context.read<GroupsCubit>().getGroups(),
+              onTap: () => context.read<PublicGroupCubit>().getPublicGroups(),
               message: state.message,
             );
           }
           if (state is LoadedState && state.data.isEmpty) {
             return const CustomEmptyWidget();
           }
-          return buildTabBarView(state);
-        },
-      ),
-    );
-  }
-
-  Widget buildTabBarView(CubitStates state) =>
-      BlocBuilder<GroupsCubit, CubitStates>(
-        builder: (context, state) {
           return GridView.count(
             crossAxisCount: 2,
-            padding: getPadding(horizontal: 10.w, vertical: 20.h),
+            padding: getPadding(horizontal: 10.w, top: 40.h, bottom: 20.h),
             mainAxisSpacing: 15.h,
             crossAxisSpacing: 20.w,
             shrinkWrap: true,
@@ -40,26 +35,7 @@ class BuildPublicGroupTabBarView extends StatelessWidget {
                   : AppConstants.nShimmerItems,
               (index) {
                 if (state is LoadedState) {
-                  // return CustomItem(
-                  //       onTap: () {
-                  //         context
-                  //             .read<CoursesDetailsCubit>()
-                  //             .getCoursesDetails(TeacherModel(
-                  //                 subjectId:
-                  //                     state.data.courses[index].subjectId!,
-                  //                 teacherId: state
-                  //                     .data.courses[index].teacherId!));
-                  //       },
-                  //       // isSubScribe: true,
-                  //       coursesModel: state.data.courses[index]);
-                  // } else {
-                  return CustomItem(
-                      onTap: () {
-                        Routes.coursesDetailsRoute.moveTo;
-                      },
-                      // isSubScribe: true,
-                      groupsModel: state.data[index]);
-                  // }
+                  return buildTeachersItem(state.data[index]);
                 } else {
                   return CustomShimmer.fromRectangle(
                     borderRadius: BorderRadiusDirectional.circular(10.r),
@@ -71,5 +47,21 @@ class BuildPublicGroupTabBarView extends StatelessWidget {
             ),
           );
         },
-      );
+      ),
+    );
+  }
+
+  Widget buildTeachersItem(GroupsModel data) => CustomItem(
+      onNavigateTap: () {
+        AppService()
+            .getBlocData<GroupDetailsCubit>()
+            .getGroupDetails(teacherId: data.teacherId!);
+        Routes.groupsDetailsRoute.moveToWithArgs({
+          CoursesDetailsScreen.whichScreenKey: "default",
+          // CoursesDetailsScreen.subjectNameKey: data.subjectId!,
+          // CoursesDetailsScreen.teacherIdKey: data.teacherId!
+        });
+      },
+      isSubScribe: true,
+      groupsModel: data);
 }

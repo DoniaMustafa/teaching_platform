@@ -1,4 +1,5 @@
 import 'package:teaching/features/group/groups_details/presentation/manager/group_details/group_details_cubit.dart';
+import 'package:teaching/features/group/groups_details/presentation/pages/groups_details_screen.dart';
 
 import '../../../../core/export/export.dart';
 import '../manager/groups_cubit.dart';
@@ -32,7 +33,9 @@ class BuildGroups extends StatelessWidget {
                   context
                       .read<GroupDetailsCubit>()
                       .getGroupDetails(teacherId: state.data[index].teacherId);
-                  Routes.groupsDetailsRoute.moveTo;
+                  Routes.groupsDetailsRoute
+                      .moveToWithArgs({GroupsDetailsScreen.whichScreenKey: "default",
+                    GroupsDetailsScreen.teacherIdKey: state.data[index].teacherId});
                 },
                 groupsModel: state.data[index],
               )

@@ -1,5 +1,4 @@
 import 'package:teaching/core/export/export.dart';
-import 'package:teaching/features/course/courses_details/data/models/course_details_response_model.dart';
 import 'package:teaching/features/course/courses_details/presentation/manager/courses_details/courses_details_cubit.dart';
 import 'package:teaching/features/course/courses_details/presentation/widgets/build_courses_component.dart';
 import 'package:teaching/features/course/courses_details/presentation/widgets/build_list_of_lessons.dart';
@@ -7,9 +6,20 @@ import 'package:teaching/features/course/courses_details/presentation/widgets/co
 
 class CoursesDetailsScreen extends StatelessWidget {
   CoursesDetailsScreen({super.key});
-
+  static const String teacherIdKey = 'teacherNameKey';
+  // static const String subjectNameKey = 'subjectNameKey';
+  static const String whichScreenKey = 'whichScreenKey';
+  static int teacherId = 0;
+  // String subjectName = '';
+  String whichScreen = '';
   @override
   Widget build(BuildContext context) {
+    Map<String, dynamic> data = getArguments(context)!;
+    if (data.isNotNull) {
+      teacherId = data[teacherIdKey];
+      // subjectName = data[subjectNameKey];
+      whichScreen = data[whichScreenKey] ?? 'default';
+    }
     return CustomBackground(
       statusBarColor: AppColors.mainAppColor,
       child: CustomSharedFullScreen(
@@ -22,12 +32,17 @@ class CoursesDetailsScreen extends StatelessWidget {
                     message: state.message,
                     onTap: () => context
                         .read<CoursesDetailsCubit>()
-                        .getCoursesDetails(2));
+                        .getCoursesDetails(TeacherModel(
+                          teacherId: teacherId,
+                        )));
+              }
+              if (state is LoadedState && state.data.isEmpty) {
+                return const CustomEmptyWidget();
               }
               if (state is LoadedState) {
                 return buildCoursesDetails(state.data[0]);
               }
-              return CoursesDetailsShimmer();
+              return const CoursesDetailsShimmer();
             },
           )),
     );
@@ -39,6 +54,10 @@ class CoursesDetailsScreen extends StatelessWidget {
           BuildCoursesHeaderComponent(
             model: model,
           ),
+          if (whichScreen == AppStrings().teacherDetails)
+            CustomSubjectList(
+              teacherId: model.teacherId,
+            ),
           BuildListOfLessons(
             model: model,
           ),

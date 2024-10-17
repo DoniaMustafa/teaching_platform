@@ -3,6 +3,7 @@ import 'package:teaching/features/subscription/presentation/manager/subscriptipn
 import 'package:teaching/features/subscription/presentation/widgets/build_subscription_tab_bar.dart';
 import 'package:teaching/features/subscription/presentation/widgets/build_subscription_tab_bar_view.dart';
 import 'package:teaching/features/subscription_details/presentation/widgets/build_my_favorite.dart';
+import 'package:teaching/features/subscription_details/presentation/widgets/build_subscribe_component.dart';
 import 'package:teaching/features/subscription_details/presentation/widgets/build_subscribe_course_details_component.dart';
 import 'package:teaching/features/subscription_details/presentation/widgets/build_subscribe_list.dart';
 
@@ -31,12 +32,12 @@ class _SubscriptionScreenState
     return CustomBackground(
       statusBarColor: AppColors.mainAppColor,
       child: CustomSharedFullScreen(
-        title: AppStrings().coursesDetails.trans,
+        title: AppStrings().subscribeDetails.trans,
         widget: Padding(
           padding: getPadding(horizontal: 10.w),
           child: Column(
             children: [
-              // BuildSubscribeCourseDetailsComponent()
+              BuildSubscribeComponent(),
               10.vs,
               const BuildMyFavorite(),
               2.vs,

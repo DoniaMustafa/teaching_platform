@@ -9,7 +9,7 @@ part 'courses_details_state.dart';
 class CoursesDetailsCubit extends Cubit<CubitStates> {
   CoursesDetailsCubit(this.useCase) : super(InitialState());
   CoursesDetailsUseCase useCase;
-  getCoursesDetails(model) {
+  getCoursesDetails(TeacherModel model) {
     managerExecute<List<TeacherModel>>(useCase.getCourseDetails(model: model),
         onStart: () => emit(LoadingState()),
         onFail: (message) => emit(FailedState(message: message)),

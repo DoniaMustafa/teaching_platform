@@ -1,4 +1,5 @@
 import 'package:teaching/core/enums.dart';
+import 'package:teaching/custom_easy_localization.dart';
 
 import '../../../../core/export/export.dart';
 
@@ -33,16 +34,13 @@ class BuildCategories extends StatelessWidget {
                     width: 41.w,
                     asset: AppAssets().listOfStudentCategories[index])),
             5.vs,
-            BlocBuilder<LanguageCubit, LanguageState>(
-              builder: (context, state) {
-                return CustomTextWidget(
-                  text: EnumService.userCategoryType(
-                          AppPrefs.user!.userRole!)[index]
-                      .title!,
-                  style: getRegularTextStyle(
-                      fontSize: 14, fontFamily: FontFamilies.dubaiFamily),
-                );
-              },
+            CustomTextWidget(
+              text:
+                  EnumService.userCategoryType(AppPrefs.user!.userRole!)[index]
+                      .title!
+                      .trans,
+              style: getRegularTextStyle(
+                  fontSize: 14, fontFamily: FontFamilies.dubaiFamily),
             )
           ],
         ),

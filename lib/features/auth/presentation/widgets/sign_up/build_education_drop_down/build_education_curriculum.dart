@@ -13,34 +13,34 @@ class BuildEducationCurriculum extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ProgramCubit, ProgramState>(
       builder: (context, state) {
-        return Column(
-          children: [
-            ExpansionTileDropDown(
-              items: getItems(state),
-              onSelected: (int id) {
-                context.read<ProgramCubit>().curriculumId = id;
-                context.read<StageCubit>().getGrade(
-                      educationProgramsId:
-                          context.read<ProgramCubit>().curriculumId!,
-                      educationTypeId: context.read<EducationCubit>().typeId!,
-                    );
-              },
-              title: AppStrings().curriculum.trans,
-              status: getListStatus(state)!,
-            ),
-            BlocBuilder<ErrorCubit, ErrorState>(
-              builder: (context, state) {
-                return ErrorText(
-                  showError: context
-                      .read<ErrorCubit>()
-                      .errors
-                      .contains(Errors.CONFIRM_PASSWORD_ERROR),
-                  text: getError[Errors.CONFIRM_PASSWORD_ERROR]!,
-                );
-              },
-            )
-          ],
-        );
+          return Column(
+            children: [
+              ExpansionTileDropDown(
+                items: getItems(state),
+                onSelected: (int id) {
+                  context.read<ProgramCubit>().curriculumId = id;
+                  context.read<StageCubit>().getGrade(
+                    educationProgramsId:
+                    context.read<ProgramCubit>().curriculumId!,
+                    educationTypeId: context.read<EducationCubit>().typeId!,
+                  );
+                },
+                title: AppStrings().curriculum.trans,
+                status: getListStatus(state)!,
+              ),
+              BlocBuilder<ErrorCubit, ErrorState>(
+                builder: (context, state) {
+                  return ErrorText(
+                    showError: context
+                        .read<ErrorCubit>()
+                        .errors
+                        .contains(Errors.CONFIRM_PASSWORD_ERROR),
+                    text: getError[Errors.CONFIRM_PASSWORD_ERROR]!,
+                  );
+                },
+              )
+            ],
+          );
       },
     );
   }
@@ -48,8 +48,7 @@ class BuildEducationCurriculum extends StatelessWidget {
   List<PublicDataModel> getItems(ProgramState state) {
     if (state is EducationProgramsLoadedState) return state.data;
 
-      return [];
-
+    return [];
   }
 
   ListStatus? getListStatus(ProgramState state) {

@@ -2,6 +2,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:teaching/core/enums.dart';
 import 'package:teaching/core/widget/build_rating_bar.dart';
 import 'package:teaching/features/home/data/models/teacher_respons_model.dart';
+import 'package:teaching/features/teacher/teacher_details/presentation/manager/teacher_details_cubit.dart';
 
 import '../../export/export.dart';
 
@@ -15,7 +16,12 @@ class CustomTeacherItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Routes.teacherDetailsRoute.moveTo,
+      onTap: () {
+        AppService()
+            .getBlocData<TeacherDetailsCubit>()
+            .getTeacherDetails(model: TeacherModel(teacherId: teacher.id));
+        Routes.teacherDetailsRoute.moveTo;
+      },
       child: CustomCard(
           boxShadow: [
             BoxShadow(
@@ -59,8 +65,9 @@ class CustomTeacherItem extends StatelessWidget {
                     5.vs,
                     BuildRatingBar(
                       itemSize: 20,
+                      isIgnoreRate: true,
                       itemCount: 5,
-                      rate: 5,
+                      rate: teacher.rate,
                     )
                   ],
                 ),

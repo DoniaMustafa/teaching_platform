@@ -40,8 +40,9 @@ class BuildGroupSessions extends StatelessWidget {
                       5.vs,
                       CustomTextWidget(
                         text: model.groupSessions![index].titleEn!,
-                        style: getSemiboldTextStyle(
-                            fontSize: 16,
+
+                        style: getMediumTextStyle(
+                            fontSize: 14,
                             color: AppColors.black.withOpacity(0.68),
                             fontFamily: FontFamilies.outfitFamily),
                       ),
@@ -62,7 +63,9 @@ class BuildGroupSessions extends StatelessWidget {
                     5.vs,
                     CustomTextWidget(
                       text:
-                      '${model.groupSessions![index].fromTime} ${model.groupSessions![index].toTime}',
+                      '${model.groupSessions![index].fromTime!.replaceRange(5, 8, '')}  '
+                          '${model.groupSessions![index].toTime!.replaceRange(5, 8, '')}'
+                      ,
                       style: getMediumTextStyle(
                           fontSize: 14,
                           color: AppColors.mainAppColor,

@@ -1,7 +1,11 @@
 import 'package:teaching/core/export/export.dart';
 import 'package:teaching/features/auth/data/models/post_params_resume_model.dart';
 import 'package:teaching/features/auth/data/models/step_no_respons_model.dart';
+import 'package:teaching/features/auth/presentation/manager/education/program/prgram_cubit.dart';
+import 'package:teaching/features/auth/presentation/manager/education/stage/stage_cubit.dart';
+import 'package:teaching/features/auth/presentation/manager/education/subject/subject_cubit.dart';
 import 'package:teaching/features/auth/presentation/pages/verification_screen.dart';
+import 'package:teaching/features/auth/presentation/widgets/vrification/build_pin_code.dart';
 import '../../../../../local_notification.dart';
 import '../../../domain/use_cases/user_usecases.dart';
 
@@ -76,15 +80,28 @@ class UserCubit extends Cubit<UserState> {
       },
       onSuccess: (VerificationDataModel? code) async {
         if (code.isNotNull) {
-          await NotificationsService().showSimpleNotification(
-            title: AppStrings().otpCode.trans,
-            description: code!.verificationCode!,
-          );
+          if (NotificationsService().isInitialized.isTrue) {
+            await NotificationsService().showSimpleNotification(
+              title: AppStrings().otpCode.trans,
+              description: code!.verificationCode!,
+            );
+            Routes.verificationRoute.moveToWithArgs({
+              VerificationScreen.phoneKey: user.phoneNumber,
+              VerificationScreen.whichScreenKey: AppStrings().registerByPhone
+            });
+          } else {
+            Routes.verificationRoute.moveToWithArgs({
+              VerificationScreen.phoneKey: user.phoneNumber,
+              VerificationScreen.whichScreenKey: AppStrings().registerByPhone
+            });
+          }
+
           Routes.verificationRoute.pushReplacementWithData({
             VerificationScreen.phoneKey: user.phoneNumber,
-            VerificationScreen.whichScreenKey:AppStrings().registerByPhone
+            VerificationScreen.whichScreenKey: AppStrings().registerByPhone
           });
-          emit(SignUpByPhoneSuccessState(otp: code.verificationCode!));
+          print(NotificationsService().isInitialized);
+          emit(SignUpByPhoneSuccessState(otp: code!.verificationCode!));
         }
       },
     );
@@ -107,6 +124,7 @@ class UserCubit extends Cubit<UserState> {
         emit(VerifyOtpSuccessState(step: data!.stepNo!));
         Routes.signUpRoute.pushReplacementWithData(
             {SignUpScreen.phoneKey: VerificationScreen.phone});
+        BuildPinCode.pinController.clear();
       },
     );
   }
@@ -141,6 +159,12 @@ class UserCubit extends Cubit<UserState> {
           } else {
             Routes.educationTypeRoute.pushAndRemoveAllUntil;
           }
+          AppService()
+              .getBlocData<ProgramCubit>()
+              .educationProgramsData
+              .clear();
+          AppService().getBlocData<StageCubit>().stageData.clear();
+          AppService().getBlocData<SubjectCubit>().subjectData.clear();
         } else if (stepsNo == 3) {
           if (SignUpByPhoneScreen.userType == AppStrings().student) {
             return Routes.loginRoute.pushAndRemoveAllUntil;
@@ -160,7 +184,7 @@ class UserCubit extends Cubit<UserState> {
       either: userUsecases.logout(),
       startingMessage: AppStrings().logout,
       onSuccess: (data) {
-        Routes.loginRoute.pushAndRemoveAllUntil();
+        Routes.loginRoute.pushAndRemoveAllUntil;
         user = null;
       },
     );
@@ -292,6 +316,7 @@ class UserCubit extends Cubit<UserState> {
         Routes.resetPasswordRoute.pushReplacementWithData({
           "phone": phone,
         });
+        BuildPinCode.pinController.clear();
       },
     );
   }
@@ -315,7 +340,7 @@ class UserCubit extends Cubit<UserState> {
             description: data!.verificationCode.toString());
         Routes.verificationRoute.pushReplacementWithData({
           VerificationScreen.phoneKey: phone,
-          VerificationScreen.whichScreenKey:AppStrings().forgetPassword
+          VerificationScreen.whichScreenKey: AppStrings().forgetPassword
         });
 
         emit(ForgetPasswordSuccessState());

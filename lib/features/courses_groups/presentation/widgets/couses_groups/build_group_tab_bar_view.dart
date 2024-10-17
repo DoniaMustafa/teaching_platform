@@ -1,18 +1,19 @@
 import 'package:teaching/core/export/export.dart';
-import 'package:teaching/features/course/courses_details/data/models/course_details_response_model.dart';
-import 'package:teaching/features/course/courses_details/presentation/manager/courses_details/courses_details_cubit.dart';
+import 'package:teaching/features/home/presentation/manager/groups_cubit.dart';
 
-class BuildCoursesTabBarView extends StatelessWidget {
-  const BuildCoursesTabBarView({super.key});
+import '../../../../course/courses_details/presentation/pages/courses_details_screen.dart';
+
+class BuildGroupTabBarView extends StatelessWidget {
+  const BuildGroupTabBarView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: BlocBuilder<CoursesCubit, CubitStates>(
+      child: BlocBuilder<GroupsCubit, CubitStates>(
         builder: (context, state) {
           if (state is FailedState) {
             return CustomErrorWidget(
-              onTap: () => context.read<CoursesCubit>().getCourser(),
+              onTap: () => context.read<GroupsCubit>().getGroups(),
               message: state.message,
             );
           }
@@ -26,7 +27,7 @@ class BuildCoursesTabBarView extends StatelessWidget {
   }
 
   Widget buildTabBarView(CubitStates state) =>
-      BlocBuilder<CoursesCubit, CubitStates>(
+      BlocBuilder<GroupsCubit, CubitStates>(
         builder: (context, state) {
           return GridView.count(
             crossAxisCount: 2,
@@ -41,16 +42,29 @@ class BuildCoursesTabBarView extends StatelessWidget {
                   : AppConstants.nShimmerItems,
               (index) {
                 if (state is LoadedState) {
+                  // return CustomItem(
+                  //       onTap: () {
+                  //         context
+                  //             .read<CoursesDetailsCubit>()
+                  //             .getCoursesDetails(TeacherModel(
+                  //                 subjectId:
+                  //                     state.data.courses[index].subjectId!,
+                  //                 teacherId: state
+                  //                     .data.courses[index].teacherId!));
+                  //       },
+                  //       // isSubScribe: true,
+                  //       coursesModel: state.data.courses[index]);
+                  // } else {
                   return CustomItem(
                       onTap: () {
-                        context.read<CoursesDetailsCubit>().getCoursesDetails(
-                            TeacherModel(
-                                subjectId: state.data[index].subjectId!,
-                                teacherId: state.data[index].teacherId!));
-                        Routes.coursesDetailsRoute.moveTo;
+                        Routes.coursesDetailsRoute.moveToWithArgs({
+                          // CoursesDetailsScreen.whichScreenKey:'TeacherDetails',
+                          // CoursesDetailsScreen.subjectNameKey:  state.data[index].subjectId!,
+                          CoursesDetailsScreen.teacherIdKey:state.data[index].teacherId!});
                       },
                       // isSubScribe: true,
-                      coursesModel: state.data[index]);
+                      groupsModel: state.data[index]);
+                  // }
                 } else {
                   return CustomShimmer.fromRectangle(
                     borderRadius: BorderRadiusDirectional.circular(10.r),

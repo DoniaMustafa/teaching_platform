@@ -43,8 +43,8 @@ class CustomShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: baseColor ?? AppColors.mainAppColor,
-      highlightColor: highlightColor ?? AppColors.mainAppColor.withOpacity(0.3),
+      baseColor: baseColor ?? AppColors.mainAppColorOpacity,
+      highlightColor: highlightColor ?? AppColors.mainAppColorOpacity.withOpacity(0.3),
       // direction: context.read<LanguageCubit>().isEn
       //     ? ShimmerDirection.ltr
       //     : ShimmerDirection.rtl,
@@ -58,12 +58,12 @@ class CustomShimmer extends StatelessWidget {
                   .antiAliasWithSaveLayer, // is used to clip the internal child widget of container when u define border radius,
               decoration: BoxDecoration(
                 borderRadius: borderRadius,
-                color: AppColors.mainAppColor.withOpacity(0.8),
+                color: AppColors.mainAppColorOpacity.withOpacity(0.8),
                 boxShadow: boxShadow,
               ),
             )
           : CircleAvatar(
-              backgroundColor: AppColors.mainAppColor.withOpacity(0.8),
+              backgroundColor: AppColors.mainAppColorOpacity.withOpacity(0.8),
               radius: radius,
             ),
     );

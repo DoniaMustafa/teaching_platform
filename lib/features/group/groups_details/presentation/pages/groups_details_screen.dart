@@ -1,18 +1,30 @@
 import 'package:teaching/core/export/export.dart';
+import 'package:teaching/features/auth/presentation/widgets/sign_up/build_education_drop_down/build_education_subject.dart';
 import 'package:teaching/features/group/group_lessons_details/presentation/manager/group_lessons_details/group_lessons_details_cubit.dart';
 import 'package:teaching/features/group/groups_details/presentation/manager/group_details/group_details_cubit.dart';
 import 'package:teaching/features/group/groups_details/presentation/widgets/build_group_details_component.dart';
+import 'package:teaching/features/group/groups_details/presentation/widgets/group_details_shimmer.dart';
+import 'package:teaching/features/subscription_details/presentation/widgets/build_subscribe_list.dart';
 
 class GroupsDetailsScreen extends StatelessWidget {
   GroupsDetailsScreen({super.key});
+  static const String whichScreenKey = 'whichScreenKey';
+  String whichScreen = '';
+  static const String teacherIdKey = 'teacherIdKey';
+  static String teacherId = '';
 
   @override
   Widget build(BuildContext context) {
+    Map<String, dynamic>? data = getArguments(context);
+
+    if (data.isNotNull) {
+      whichScreen = data![whichScreenKey] ?? 'default';
+    }
     return CustomBackground(
         statusBarColor: AppColors.mainAppColor,
         child: CustomSharedFullScreen(
           isBackIcon: true,
-          title: AppStrings().coursesAndGroups.trans,
+          title: AppStrings().groupDetails.trans,
           widget: BlocBuilder<GroupDetailsCubit, CubitStates>(
             builder: (context, state) {
               if (state is FailedState) {
@@ -21,12 +33,12 @@ class GroupsDetailsScreen extends StatelessWidget {
                     onTap: () => context
                         .read<GroupDetailsCubit>()
                         .getGroupDetails(teacherId: 94));
+              } else if (state is LoadedState && state.data.isEmpty) {
+                return CustomEmptyWidget();
               } else if (state is LoadedState) {
                 return buildDetails(state.data[0]);
               }
-              return CircularProgressIndicator(
-                color: AppColors.mainAppColor,
-              );
+              return const GroupDetailsShimmer();
             },
           ),
         ));
@@ -38,6 +50,12 @@ class GroupsDetailsScreen extends StatelessWidget {
           BuildGroupDetailsHeaderComponent(
             model: model,
           ),
+// 10.vs,
+          if (whichScreen == AppStrings().teacherDetails)
+            CustomSubjectList(
+              // teacherId: model,
+              isCourse: false,
+            ),
           Expanded(
             child: CustomListView(
               axisDirection: Axis.vertical,

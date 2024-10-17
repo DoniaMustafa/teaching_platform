@@ -2,7 +2,6 @@ import 'package:teaching/features/group/groups_details/data/models/group_details
 
 import '../../../../../core/export/export.dart';
 
-
 abstract class GroupDetailsDataSources {
   Future<ResponseModel> getGroupDetails(
       {required int teacherId, int? subjectId});
@@ -19,6 +18,6 @@ class GroupDetailsWithServer extends GroupDetailsDataSources {
       remoteExecute(
           request: dioConsumer.getRequest(
               path: EndPoints.getTeacherDetailsGroups,
-              queryParams: {"teacherId": teacherId, "subjectId": ""}),
+              queryParams: {"teacherId": teacherId, "subjectId": subjectId}),
           fromJsonFunction: GroupDetailsResponseModel.fromJson);
 }

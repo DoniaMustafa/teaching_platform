@@ -21,12 +21,21 @@ class PostParamsEducationModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['PhoneNumber'] = this.phoneNumber;
-    data['EducationTypeIds'] = this.educationTypeIds;
-    data['ProgramTypeIds'] = this.programTypeIds;
-    data['GradeIds'] = this.gradeIds;
+    data['PhoneNumber'] = phoneNumber;
+    if (educationTypeIds.isNotNull) {
+      data['EducationTypeIds'] = educationTypeIds;
+    }
+
+    if (programTypeIds.isNotNull) {
+      data['ProgramTypeIds'] = programTypeIds;
+    }
+
+    if (gradeIds.isNotNull) {
+      data['GradeIds'] = gradeIds;
+    }
+
     if (subjectIds.isNotNull) {
-      data['SubjectIds'] = this.subjectIds;
+      data['SubjectIds'] = subjectIds;
     }
     return data;
   }

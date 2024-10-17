@@ -20,7 +20,7 @@ class FileManagerCubit extends Cubit<CubitStates> {
   }
 
   File? image;
-  Future getImage({bool isCamera=false}) async {
+  Future getImage({bool isCamera = false}) async {
     image = await getCameraImage(isCamera: isCamera);
     print('image>>>>>>>>>>>>>>${image!.path}');
     emit(LoadedState<dynamic>(data: image));

@@ -2,99 +2,68 @@ import 'package:chewie/chewie.dart';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:teaching/core/export/export.dart';
 import 'package:teaching/features/course/courses_lessons_details/data/models/course_Lesson_details_response_model.dart';
+import 'package:teaching/features/course/courses_lessons_details/presentation/manager/rate_cubit.dart';
 import 'package:teaching/features/course/courses_lessons_details/presentation/widgets/build_attachments_widget.dart';
 import 'package:teaching/features/course/courses_lessons_details/presentation/widgets/build_comments_widget.dart';
-import 'package:teaching/features/course/courses_lessons_details/presentation/widgets/build_exam_widget.dart';
+import 'package:teaching/features/course/courses_lessons_details/presentation/widgets/build_course_video.dart';
+import 'package:teaching/features/exam/presentation/widgets/build_exam_widget.dart';
 import 'package:teaching/features/course/courses_lessons_details/presentation/widgets/courses_lesson_details_shimmer.dart';
 import 'package:video_player/video_player.dart';
 
+import '../manager/lessons_details/follow_unfollow_video_cubit.dart';
 import '../manager/lessons_details/lessons_details_cubit.dart';
 import '../widgets/build_contents_widget.dart';
 
 class LessonDetailsScreen extends StatefulWidget {
   const LessonDetailsScreen({super.key});
-
+  static const String lessonTitleKey = 'lessonTitleKey';
   @override
   State<LessonDetailsScreen> createState() => _LessonDetailsScreenState();
 }
 
 class _LessonDetailsScreenState extends State<LessonDetailsScreen> {
   int selectedIndex = 0;
-  List<String> tabsBar = [
-    'المحتويات',
-    'التعليقات',
-    'المرفقات',
-    'الامتحانات',
-  ];
+  double rate = 0;
+
   List<GenericModel> component = [
     GenericModel(
       title: '(10)',
-      image: AppAssets().star,
+      icon: Icons.star,
     ),
     GenericModel(
       title: 'اسأل',
-      image: AppAssets().ask,
+      icon: Icons.announcement_sharp,
     ),
     GenericModel(
       title: 'حفظ',
-      image: AppAssets().favorite,
-    )
+      icon: Icons.bookmark,
+    ),
   ];
   List<Widget> tabsWidgets = [];
-  late ChewieController chewieController;
-  late VideoPlayerController videoPlayerController;
-  late FlickManager flickManager;
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((data) {
-      //  videoPlayerController = VideoPlayerController.networkUrl(Uri.parse(
-      //     '${EndPoints.url}'
-      //           '${context.read<LessonsDetailsCubit>().lessonData!.firstLessonVideoUrl!}'));
-      //
-      //  videoPlayerController.initialize();
-      //
-      // chewieController  = ChewieController(
-      //   videoPlayerController: videoPlayerController,
-      //   autoPlay: true,
-      //   looping: true,
-      // );
-
-      // final playerWidget = ;
-
-      flickManager = FlickManager(
-        // autoInitialize: false,
-        videoPlayerController: VideoPlayerController.networkUrl(Uri.parse(
-            '${EndPoints.url}'
-            '${context.read<LessonsDetailsCubit>().lessonData!.firstLessonVideoUrl!}')),
-      );
-    });
-  }
-
-  @override
-  void dispose() {
-    flickManager.dispose();
-    // chewieController.dispose();
-    super.dispose();
-  }
+  String lessonTitle = 'lessonTitleKey';
 
   @override
   Widget build(BuildContext context) {
+    Map<String, dynamic>? data = getArguments(context);
+    if (data.isNotNull) {
+      lessonTitle = data![LessonDetailsScreen.lessonTitleKey];
+    }
     return CustomBackground(
       statusBarColor: AppColors.mainAppColor,
       child: CustomSharedFullScreen(
         isBackIcon: true,
-        title: 'الدرس الاول',
+        title: lessonTitle,
         widget: BlocBuilder<LessonsDetailsCubit, CubitStates>(
           builder: (context, state) {
             if (state is FailedState) {
-              return CustomErrorWidget(
-                  message: state.message,
-                  onTap: () => context
-                      .read<LessonsDetailsCubit>()
-                      .getLessons(lessonId: 215));
-              } else if (state is LoadedState) {
-                return buildDetails(state.data);
+              return CustomErrorWidget(message: state.message, onTap: () {});
+            }
+            // else if (state is LoadedState && state.data.isNull) {
+            //   return CustomTextWidget(text: 'no data');
+            // }
+
+            else if (state is LoadedState) {
+              return buildDetails(state.data);
             }
             return const CoursesLessonDetailsShimmer();
           },
@@ -105,10 +74,9 @@ class _LessonDetailsScreenState extends State<LessonDetailsScreen> {
 
   buildDetails(CourseLessonDataMode model) => Column(
         children: [
-          // Chewie(
-          //   controller: chewieController,
-          // ),
-          FlickVideoPlayer(flickManager: flickManager),
+          BuildCourseVideo(
+            model: model,
+          ),
           10.vs,
           Padding(
             padding: getPadding(horizontal: 10.w),
@@ -119,7 +87,9 @@ class _LessonDetailsScreenState extends State<LessonDetailsScreen> {
                     child: Padding(
                   padding: getPadding(start: 10.w, top: 10.h),
                   child: CustomTextWidget(
-                    text: model.subjectName ?? '',
+                    text: context.read<LanguageCubit>().isEn.isTrue
+                        ? model.lessonTitle!
+                        : model.lessonTitleEn ?? '',
                     style: getBoldTextStyle(fontSize: 15),
                   ),
                 )),
@@ -127,15 +97,60 @@ class _LessonDetailsScreenState extends State<LessonDetailsScreen> {
                   width: 150,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: List.generate(
-                        component.length,
-                        (index) => Column(
-                              children: [
-                                CustomSvg(asset: component[index].image!),
-                                5.vs,
-                                CustomTextWidget(text: component[index].title!)
-                              ],
-                            )),
+                    children: List.generate(component.length, (index) {
+                      component[0].title = model.rate.toString();
+                      return GestureDetector(
+                        onTap: () {
+                          switch (index) {
+                            case 0:
+                              _showRateDialog(context, model.courseVideos![0]);
+                              // isRate = !isRate;
+
+                              setState(() {});
+                            case 2:
+                              context
+                                  .read<FavoriteUnFavoriteVideoCubit>()
+                                  .addFavoriteUnFavoriteVideo(
+                                      videoId:
+                                          model.courseVideos![0].courseVideoId);
+                          }
+                        },
+                        child: Column(
+                          children: [
+                            BlocBuilder<FavoriteUnFavoriteVideoCubit,
+                                CubitStates>(
+                              builder: (context, state) {
+                                return BlocBuilder<RateCubit, CubitStates>(
+                                  builder: (context, state) {
+                                    return CustomIcon(
+                                      icon: component[index].icon!,
+                                      color: index == 0
+                                          ? context
+                                                  .read<RateCubit>()
+                                                  .isRate
+                                                  .isTrue
+                                              ? AppColors.yellow
+                                              : AppColors.textGrayColor1
+                                          : index == 2
+                                              ? context
+                                                      .read<
+                                                          FavoriteUnFavoriteVideoCubit>()
+                                                      .isFavorite
+                                                      .isTrue
+                                                  ? AppColors.mainAppColor
+                                                  : AppColors.grayTextColor
+                                              : AppColors.mainAppColor,
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                            5.vs,
+                            CustomTextWidget(text: component[index].title!)
+                          ],
+                        ),
+                      );
+                    }),
                   ),
                 )
               ],
@@ -145,14 +160,14 @@ class _LessonDetailsScreenState extends State<LessonDetailsScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: List.generate(
-                tabsBar.length,
+                AppListsConstant.tabsBar.length,
                 (index) => GestureDetector(
                       onTap: () {
                         selectedIndex = index;
                         setState(() {});
                       },
                       child: CustomTextWidget(
-                        text: tabsBar[index],
+                        text: AppListsConstant.tabsBar[index],
                         style: getBoldTextStyle(
                             fontSize: 16,
                             color: selectedIndex == index
@@ -161,15 +176,62 @@ class _LessonDetailsScreenState extends State<LessonDetailsScreen> {
                       ),
                     )),
           ),
+          20.vs,
           Expanded(
             child: selectedIndex == 0
-                ? BuildContentsWidget(videoModel: model.courseVideos!)
+                ? BuildContentsWidget(
+                    lessonModel: model, videoModel: model.courseVideos!)
                 : selectedIndex == 1
-                    ? BuildCommentsWidget()
+                    ? BuildCommentsWidget(
+                        model: model,
+                      )
                     : selectedIndex == 2
-                        ? BuildAttachmentsWidget()
-                        : BuildExamWidget(),
+                        ? BuildAttachmentsWidget(
+                            model: model,
+                          )
+                        : const BuildExamWidget(),
           ),
         ],
       );
+
+  void _showRateDialog(context, CourseVideoModel model) {
+    showCustomDialog(
+        height: 340.h,
+        context: context,
+        style: getSemiboldTextStyle(
+          fontSize: 18,
+          color: AppColors.darkMainAppColor,
+        ),
+        title: AppStrings().rateNow.trans,
+        widget: Expanded(
+          child: Column(
+            children: [
+              // CustomTextWidget(
+              //   text:
+              //   '${AppStrings().ratesCount.trans} : ${model.reviewersCount}',
+              //   style: getMediumTextStyle(
+              //     fontSize: 16,
+              //   ),
+              // ),
+              20.vs,
+              BuildRatingBar(
+                itemCount: 5,
+                itemSize: 35,
+                rate: rate,
+                onRate: (rating) {
+                  rate = rating;
+                },
+              ),
+              20.vs,
+              CustomElevatedButton(
+                  margin: getMargin(horizontal: 20.w),
+                  onPressed: () => AppService()
+                      .getBlocData<RateCubit>()
+                      .addVideoRate(
+                          rate: rate.toInt(), videoId: model.courseVideoId),
+                  text: AppStrings().done.trans)
+            ],
+          ),
+        ));
+  }
 }

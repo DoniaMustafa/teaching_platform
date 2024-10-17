@@ -6,9 +6,10 @@ class BuildRatingBar extends StatefulWidget {
       this.isIgnoreRate = false,
       this.itemSize,
       this.itemCount,
+      this.onRate,
       this.rate});
   final double? itemSize;
-
+  Function(double)? onRate;
   final int? itemCount;
   final bool isIgnoreRate;
   double? rate;
@@ -32,10 +33,14 @@ class _BuildRatingBarState extends State<BuildRatingBar> {
         color: AppColors.accentYellow,
       ),
       onRatingUpdate: (rating) {
-        setState(() {
+        if (widget.isIgnoreRate.isTrue) {
           widget.rate = rating;
           debugPrint('rate >> ${widget.rate}');
-        });
+        } else {
+          widget.onRate!(rating);
+          debugPrint('rating >> $rating');
+        }
+        setState(() {});
       },
     );
   }

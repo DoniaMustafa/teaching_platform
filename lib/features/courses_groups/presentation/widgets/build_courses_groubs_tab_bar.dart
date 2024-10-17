@@ -11,18 +11,14 @@ class BuildCoursesGroupsTabBar extends StatelessWidget {
     return BlocBuilder<CoursesGroupOperationCubit, CubitStates>(
       builder: (context, state) {
         return CustomTabBar(
-          onTap: (index) => isPublic.isTrue
-              ? context
-                  .read<CoursesGroupOperationCubit>()
-                  .onChangePublicTabIndex(index)
-              : context
-                  .read<CoursesGroupOperationCubit>()
-                  .onChangeTabIndex(index),
-          text: AppListsConstant.subscribeTab,
-          selectedIndex: isPublic.isTrue
-              ? context.read<CoursesGroupOperationCubit>().publicTapIndex
-              : context.read<CoursesGroupOperationCubit>().tapIndex,
-        );
+            onTap: (index) => context
+                .read<CoursesGroupOperationCubit>()
+                .onChangePublicTabIndex(index),
+            text: AppListsConstant.subscribeTab,
+            selectedIndex:
+                context.read<CoursesGroupOperationCubit>().publicTapIndex
+            // : context.read<CoursesGroupOperationCubit>().tapIndex,
+            );
       },
     );
   }

@@ -4,8 +4,8 @@ class GenericModel {
   int? id;
   String? title;
   String? subTitle;
-  String? image;
+  String? image; IconData? icon;
   String? role;
-VoidCallback? onTap;
-  GenericModel({this.onTap,this.id,this.role, this.title, this.subTitle, this.image});
+   VoidCallback? onTap;
+  GenericModel({this.onTap,this.id,this.icon,this.role, this.title, this.subTitle, this.image});
 }

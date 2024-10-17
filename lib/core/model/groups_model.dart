@@ -9,11 +9,14 @@ class GroupsModel {
   final String? subjectName;
   final double? price;
   final String? currencyName;
-
+  final double? rate;
+  final int? followersCount;
   GroupsModel({
     this.groupId,
     this.groupName,
     this.groupNameEn,
+    this.rate,
+    this.followersCount,
     this.teacherId,
     this.teacherName,
     this.teacherPicture,
@@ -28,6 +31,7 @@ class GroupsModel {
         groupName: json["GroupName"] == null ? '' : json["GroupName"]!,
         groupNameEn: json["GroupNameEN"] == null ? '' : json["GroupNameEN"]!,
         teacherId: json["TeacherId"],
+        rate: json["Rate"] ?? null,
         teacherName: json["TeacherName"],
         teacherPicture: json["TeacherPicture"]!,
         subjectId: json["SubjectId"],

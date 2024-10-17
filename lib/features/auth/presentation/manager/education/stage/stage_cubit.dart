@@ -12,7 +12,7 @@ class StageCubit extends Cubit<StageState> {
   StageCubit(this.useCase) : super(StageInitial());
   EducationTypeUseCase useCase;
   bool isProgramDone = false;
-
+  List<PublicDataModel> stageData=[];
   int? gradeId;
   getGrade({
     required int educationProgramsId,
@@ -25,8 +25,8 @@ class StageCubit extends Cubit<StageState> {
         onStart: () => emit(GradeLoadingState()),
         onSuccess: (List<PublicDataModel>? data) {
           isProgramDone = true;
-
-          emit(GradeLoadedState(data: data!));
+          stageData=data!;
+          emit(GradeLoadedState(data: data));
         },
         onFail: (message) => emit(GradeFailureState(message: message)));
   }

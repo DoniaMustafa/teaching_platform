@@ -26,10 +26,10 @@ class NotificationsService {
   static final NotificationsService _instance = NotificationsService._internal();
   factory NotificationsService() => _instance;
   static FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-
+  bool isInitialized = false;
   Future<bool> initialize() async {
     bool isPermissionGrated = await _requestPermissions();
-    bool isInitialized = false;
+    // bool isInitialized = false;
     if (isPermissionGrated.isTrue) {
       InitializationSettings initSettings;
       if (Platform.isAndroid) {
@@ -37,7 +37,8 @@ class NotificationsService {
         initSettings = InitializationSettings(
           android: androidSettings,
         );
-      } else {
+      }
+      else {
         //platform is ios
         DarwinInitializationSettings iOSSettings = DarwinInitializationSettings(
           requestSoundPermission: true,

@@ -1,9 +1,6 @@
 abstract class EndPoints {
-
-  static const String baseUrl =
-      'https://mesmet-001-site5.dtempurl.com/';
-  static const String url =
-      'https://mesmet-001-site5.dtempurl.com'; //base url
+  static const String baseUrl = 'https://mesmet-001-site5.dtempurl.com/';
+  static const String url = 'https://mesmet-001-site5.dtempurl.com'; //base url
   static const String api = '/api/';
   // static const String profile = '${api}profile/';
   // static const String editProfile = '${api}profile/updateProfile';
@@ -13,7 +10,8 @@ abstract class EndPoints {
 
   static const String account = '${api}Account/';
   static const String registerByPhone = '${account}SendVerifyCode';
-  static const String verifyPhoneRegistration = '${account}VerifyPhoneNumber_Code';
+  static const String verifyPhoneRegistration =
+      '${account}VerifyPhoneNumber_Code';
 
   static const String registerStudent = '${account}RegisterStudent';
   static const String login = 'token';
@@ -22,10 +20,13 @@ abstract class EndPoints {
   static const String registerParent = '${account}RegisterParent';
   static const String registerTeacher = '${account}RegisterTeacher';
   static const String registerAssistant = '${account}RegisterAssistant';
-  static const String verifyForgetPassword = '${api}Account/Resetpassword_VerifyPhoneCode';
-  static const String forgetPassword = '${api}Account/Resetpassword_SendVerifyCode';
-  static const String resetPassword = '${api}Account/Resetpassword_SetPasswword';
-  // static const String userLogout = '${api}logout';
+  static const String verifyForgetPassword =
+      '${api}Account/Resetpassword_VerifyPhoneCode';
+  static const String forgetPassword =
+      '${api}Account/Resetpassword_SendVerifyCode';
+  static const String resetPassword =
+      '${api}Account/Resetpassword_SetPasswword';
+  static const String refreshToken = '${api}logout';
   /// ************************   Education apis *********************************
 
   static const String getGrades = '${api}Grade/GetGradesByEducationProgramType';
@@ -58,28 +59,42 @@ abstract class EndPoints {
 ////////////////////// teacher home /////////////////////////////////
   static const String getHomeTeacherCourses =
       '${api}Home/GetHomeTeacherCoursese';
+  static const String getTeacherDetailsInStudent =
+      '${api}Teacher/GetTeacherDetails';
+
   static const String getHomeTeacherGroups = '${api}Home/GetHomeTeacherGroups';
   static const String getTeacherDetailsGroups = '${api}Group/GetTeacherGroups';
+  static const String addTeacherReview = '${api}Student/AddTeacherReview';
+  static const String studentFollowTeacher = '${api}Teacher/FollowUnFollowTeacher';
+
+
 
 //   /////////////////////////// Courses Groups  //////////////////////////////////////////////
-  static const String getCoursesDetails =
-      '${api}Course/GetTeacherCourses';
+  static const String getCoursesDetails = '${api}Course/GetTeacherCourses';
 
-static const String getCourseLessonDetails = '${api}Course/GetCourseLessonDetails';
-  static const String addCourseVideoComment = '${api}CourseVideo/AddCourseVideoComment';
+  static const String getCourseLessonDetails =
+      '${api}Course/GetCourseLessonDetails';
+  static const String addCourseVideoComment =
+      '${api}CourseVideo/AddCourseVideoComment';
 
   static const String getGroupLessonsDetails = '${api}Group/GetGroupDetails';
-  static const String getPublicTeachersGroupedCourses = '${api}Course/GetGroupedCourses';
+  static const String getPublicTeachersGroupedCourses =
+      '${api}Course/GetGroupedCourses';
+  static const String getPublicTeachersGroupedGroup =
+      '${api}Group/GetGroupedGroups';
+  static const String addRate = '${api}CourseVideo/AddCourseVideoRate';
+  static const String subscribeCourseOrLesson = '${api}Course/SubscribeCourse';
+  static const String addFavouriteUnFavouriteCourseVideo = '${api}CourseVideo/FavouriteUnFavouriteCourseVideo';
+
 
 //   /////////////////////////// subject //////////////////////////////////////////////
   static const String getStudentSubjects = '${api}Subject/GetStudentSubjects';
 
-
-//   /////////////////////////// Settings //////////////////////////////////////////////
-//
-// //////////////////////// cart /////////////////////////////////
-//   static const String cart = '${api}cart/get';
-//   static const String addDiscount = '${api}Cart/offer/';
+//   ///////////////////////////  exam//////////////////////////////////////////////
+ static const String getStudentExams = '${api}Exam/GetStudentExams';
+//////////////////////// subscribe /////////////////////////////////
+  static const String getStudentSubscriptionsGroupsDetails = '${api}Student/GetStudentSubscriptionsTeacherGroups';
+  static const String getFavouriteCourseVideos = '${api}CourseVideo/GetFavouriteCourseVideos';
 //
 //   static const String deleteFromCart = '${api}Cart/delete';
 //

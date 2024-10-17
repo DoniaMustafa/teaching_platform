@@ -84,11 +84,11 @@ class _LessonDetailsScreenState extends State<GroupsLessonDetailsScreen> {
                   text: model.teacherName!,
                   style: getBoldTextStyle(fontSize: 20),
                 ),
-                20.vs,
+                10.vs,
                 BuildGroupComponent(
                   model: model,
                 ),
-                20.vs,
+                10.vs,
                 Align(
                   alignment: AlignmentDirectional.centerStart,
                   child: CustomTextWidget(
@@ -110,9 +110,7 @@ class _LessonDetailsScreenState extends State<GroupsLessonDetailsScreen> {
                     }),
                 selectedIndex == 0 ? 20.vs : 0.vs,
                 selectedIndex == 0
-                    ? BuildGroupInfo(
-                        model: model,
-                      )
+                    ? BuildGroupInfo(model: model,)
                     : BuildGroupSessions(model: model)
               ],
             ),

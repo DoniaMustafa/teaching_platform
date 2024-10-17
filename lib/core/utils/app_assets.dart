@@ -16,7 +16,9 @@ mixin class SvgImages {
   String favorite = "$svgPath/favorite.svg";
   String send = "$svgPath/send.svg";
 
+  String pdf = "$svgPath/pdf.svg";
 
+  String professionalCoursesSVG = "$svgPath/professional_courses.svg";
 ///////////////////////////////  svg  ////////////////////////////////////
   List<String> navBar = [
     "$svgPath/notification.svg",

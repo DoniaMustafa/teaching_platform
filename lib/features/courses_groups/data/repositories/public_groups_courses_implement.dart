@@ -6,8 +6,13 @@ import 'package:teaching/features/courses_groups/domain/repositories/public_grou
 class PublicGroupsCoursesImplement extends PublicGroupsCoursesRepo {
   PublicGroupsCoursesDataSource dataSource;
   @override
-  Future<Either<Failure, ResponseModel>> getPublicGroupsCourses({int?subjectId}) async =>
-      execute(() => dataSource.getPublicGroupsCourses(subjectId:subjectId ));
+  Future<Either<Failure, ResponseModel>> getPublicGroupsCourses({TeacherModel? model}) async =>
+      execute(() => dataSource.getPublicCourses(model:model ));
 
   PublicGroupsCoursesImplement(this.dataSource);
+
+  @override
+  Future<Either<Failure, ResponseModel>> getPublicGroups({TeacherModel? model})  async =>
+      execute(() => dataSource.getPublicGroups(model:model ));
+
 }

@@ -1,6 +1,8 @@
 import 'package:teaching/core/export/export.dart';
 import 'package:teaching/features/course/courses_details/data/models/course_details_response_model.dart';
 import 'package:teaching/features/course/courses_details/presentation/manager/courses_details/courses_details_cubit.dart';
+import 'package:teaching/features/course/courses_details/presentation/pages/courses_details_screen.dart';
+import 'package:teaching/features/courses_groups/presentation/manager/public_course_cubit.dart';
 
 class BuildPublicCoursesTabBarView extends StatelessWidget {
   const BuildPublicCoursesTabBarView({super.key});
@@ -8,29 +10,22 @@ class BuildPublicCoursesTabBarView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: BlocBuilder<CoursesCubit, CubitStates>(
+      child: BlocBuilder<PublicCourseCubit, CubitStates>(
         builder: (context, state) {
           if (state is FailedState) {
             return CustomErrorWidget(
-              onTap: () => context.read<CoursesCubit>().getCourser(),
+              onTap: () => context
+                  .read<PublicCourseCubit>()
+                  .getPublicCourses(),
               message: state.message,
             );
           }
           if (state is LoadedState && state.data.isEmpty) {
             return const CustomEmptyWidget();
           }
-          return buildTabBarView(state);
-        },
-      ),
-    );
-  }
-
-  Widget buildTabBarView(CubitStates state) =>
-      BlocBuilder<CoursesCubit, CubitStates>(
-        builder: (context, state) {
           return GridView.count(
             crossAxisCount: 2,
-            padding: getPadding(horizontal: 10.w, vertical: 20.h),
+            padding: getPadding(horizontal: 10.w, top: 40.h, bottom: 20.h),
             mainAxisSpacing: 15.h,
             crossAxisSpacing: 20.w,
             shrinkWrap: true,
@@ -39,18 +34,9 @@ class BuildPublicCoursesTabBarView extends StatelessWidget {
               state is LoadedState
                   ? state.data.length
                   : AppConstants.nShimmerItems,
-              (index) {
+                  (index) {
                 if (state is LoadedState) {
-                  return CustomItem(
-                      onTap: () {
-                        context.read<CoursesDetailsCubit>().getCoursesDetails(
-                            TeacherModel(
-                                subjectId: state.data[index].subjectId!,
-                                teacherId: state.data[index].teacherId!));
-                        Routes.coursesDetailsRoute.moveTo;
-                      },
-                      // isSubScribe: true,
-                      coursesModel: state.data[index]);
+                  return buildTeachersItem(state.data[index]);
                 } else {
                   return CustomShimmer.fromRectangle(
                     borderRadius: BorderRadiusDirectional.circular(10.r),
@@ -62,5 +48,25 @@ class BuildPublicCoursesTabBarView extends StatelessWidget {
             ),
           );
         },
-      );
+      ),
+    );
+  }
+
+  Widget buildTeachersItem(CoursesModel data) => CustomItem(
+      onNavigateTap: () {
+        // AppService().getBlocData<CoursesCubit>().getCourser(
+        //     model: TeacherModel(
+        //         subjectId: data.subjectId!, teacherId: data.teacherId!));
+        AppService()
+            .getBlocData<CoursesDetailsCubit>()
+            .getCoursesDetails(TeacherModel(teacherId: data.teacherId!));
+        Routes.coursesDetailsRoute.moveToWithArgs({
+          // CoursesDetailsScreen.whichScreenKey: '',
+          // CoursesDetailsScreen.subjectNameKey: data.subjectId!,
+          CoursesDetailsScreen.teacherIdKey: data.teacherId!
+        });
+      },
+      isSubScribe: true,
+      coursesModel: data);
+
 }

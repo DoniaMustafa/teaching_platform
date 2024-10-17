@@ -1,8 +1,6 @@
-
 import 'package:teaching/core/export/export.dart';
 
-class GroupDetailsResponseModel extends ResponseModel{
-
+class GroupDetailsResponseModel extends ResponseModel {
   GroupDetailsResponseModel({
     // S.id,
     super.success,
@@ -11,12 +9,16 @@ class GroupDetailsResponseModel extends ResponseModel{
     super.data,
   });
 
-  factory GroupDetailsResponseModel.fromJson(Map<String, dynamic> json) => GroupDetailsResponseModel(
-    success: json["Success"],
-    message: json["Message"],
-    code: json["Code"],
-    data: json["Data"] == null ? [] : List<GroupDetailsDataModel>.from(json["Data"]!.map((x) => GroupDetailsDataModel.fromJson(x))),
-  );
+  factory GroupDetailsResponseModel.fromJson(Map<String, dynamic> json) =>
+      GroupDetailsResponseModel(
+        success: json["Success"],
+        message: json["Message"],
+        code: json["Code"],
+        data: json["Data"] == null
+            ? []
+            : List<GroupDetailsDataModel>.from(
+                json["Data"]!.map((x) => GroupDetailsDataModel.fromJson(x))),
+      );
 
   // Map<String, dynamic> toJson() => {
   //   "Id": id,
@@ -44,14 +46,18 @@ class GroupDetailsDataModel {
     this.teacherGroups,
   });
 
-  factory GroupDetailsDataModel.fromJson(Map<String, dynamic> json) => GroupDetailsDataModel(
-    teacherName: json["TeacherName"]!,
-    teacherPicture: json["TeacherPicture"]!,
-    gradeName: json["GradeName"]!,
-    subjectId: json["SubjectId"],
-    subjectName: json["SubjectName"]!,
-    teacherGroups: json["TeacherGroups"] == null ? [] : List<TeacherGroup>.from(json["TeacherGroups"]!.map((x) => TeacherGroup.fromJson(x))),
-  );
+  factory GroupDetailsDataModel.fromJson(Map<String, dynamic> json) =>
+      GroupDetailsDataModel(
+        teacherName: json["TeacherName"]!,
+        teacherPicture: json["TeacherPicture"]!,
+        gradeName: json["GradeName"]!,
+        subjectId: json["SubjectId"],
+        subjectName: json["SubjectName"]!,
+        teacherGroups: json["TeacherGroups"] == null
+            ? []
+            : List<TeacherGroup>.from(
+                json["TeacherGroups"]!.map((x) => TeacherGroup.fromJson(x))),
+      );
 
   // Map<String, dynamic> toJson() => {
   //   "TeacherName": teacherName,
@@ -87,16 +93,16 @@ class TeacherGroup {
   });
 
   factory TeacherGroup.fromJson(Map<String, dynamic> json) => TeacherGroup(
-    groupId: json["GroupId"],
-    title: json["Title"]!,
-    titleEn:json["TitleEN"]!,
-    availablePlaces: json["AvailablePlaces"],
-    limit: json["Limit"],
-    sessionsCount: json["SessionsCount"],
-    price: json["Price"],
-    currencyName:json["CurrencyName"]!,
-    isSubscribed: json["IsSubscribed"],
-  );
+        groupId: json["GroupId"],
+        title: json["Title"]!,
+        titleEn: json["TitleEN"]!,
+        availablePlaces: json["AvailablePlaces"],
+        limit: json["Limit"],
+        sessionsCount: json["SessionsCount"],
+        price: json["Price"],
+        currencyName: json["CurrencyName"]!,
+        isSubscribed: json["IsSubscribed"],
+      );
 
   // Map<String, dynamic> toJson() => {
   //   "GroupId": groupId,
@@ -110,4 +116,3 @@ class TeacherGroup {
   //   "IsSubscribed": isSubscribed,
   // };
 }
-

@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:teaching/features/auth/presentation/pages/choose_role_screen.dart';
 import 'package:teaching/features/auth/presentation/pages/login_screen.dart';
+import 'package:teaching/features/settings/presentation/pages/settings_screen.dart';
 
 import '../core/export/export.dart';
 

@@ -23,7 +23,7 @@ Future getCameraImage({bool isCamera = true}) async {
       imageQuality: 60,
       source: isCamera ? ImageSource.camera : ImageSource.gallery);
 
-  return File(pickedImage!.path);
+  return pickedImage!.path;
 }
 
 Future getGalleryVideo() async {

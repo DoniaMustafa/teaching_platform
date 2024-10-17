@@ -1,6 +1,10 @@
 import 'package:teaching/core/export/export.dart';
-import 'package:teaching/features/course/courses_details/data/models/course_details_response_model.dart';
+import 'package:teaching/core/widget/custom_dialog.dart';
+import 'package:teaching/features/course/courses_details/presentation/manager/subscribe_course_cubit.dart';
+import 'package:teaching/features/course/courses_details/presentation/pages/courses_details_screen.dart';
 import 'package:teaching/features/course/courses_lessons_details/presentation/manager/lessons_details/lessons_details_cubit.dart';
+import 'package:teaching/features/course/courses_lessons_details/presentation/pages/courses_lesson_details_screen.dart';
+import 'package:teaching/features/exam/presentation/manager/exam_cubit.dart';
 
 class BuildListOfLessons extends StatelessWidget {
   const BuildListOfLessons({super.key, required this.model});
@@ -15,15 +19,30 @@ class BuildListOfLessons extends StatelessWidget {
         itemCount: model.teacherCourses!.length,
         // scroll: NeverScrollableScrollPhysics(),
         separatorWidget: (context, index) => 20.vs,
-        widget: (context, index) => ExpansionTileDropDown(
-            subTitle: '${model.teacherCourses![index].lessonsCount!.toString()}'
+        widget: (context, index) => CustomExpansionDropDown(
+            onSubscribeCourse: () {
+              _buildDialog(
+                  context: context,
+                  index: index,
+                  courseId: model.teacherCourses![index].courseId!);
+
+              // AppService().getBlocData<SubscribeCourseCubit>().
+            },
+            onSubscribeLesson: (int id) {
+              _buildDialog(
+                context: context,
+                index: index,
+                courseId: model.teacherCourses![index].courseId!,
+                courseLessonId: id,
+                isCourse: false,
+              );
+              // AppService().getBlocData<SubscribeCourseCubit>().
+            },
+            subTitle:
+                '${model.teacherCourses![index].lessonsCount!.toString()} '
                 '${model.teacherCourses![index].lessonsCount! > 1 ? AppStrings().lessons.trans : AppStrings().lesson.trans}',
-            leadingWidget:const CustomIcon(
-              icon: Icons.lock,
-            ),
-            titleStyle: getBoldTextStyle(
-              fontSize: 16,
-            ),
+            asset: AppAssets().professionalCoursesSVG,
+            titleStyle: getBoldTextStyle(fontSize: 16,),
             borderColor: AppColors.transparent,
             color: AppColors.white,
             boxShadow: [
@@ -35,14 +54,29 @@ class BuildListOfLessons extends StatelessWidget {
             price: model.teacherCourses![index].price.toString(),
             isSubscribed: model.teacherCourses![index].isSubscribed,
             items: model.teacherCourses![index].courseLessons!,
-            isText: false,
-            onSelected: (int id) {
+            // isFree: false,
+            onSelected: (int id, i) {
               context.read<LessonsDetailsCubit>().getLessons(lessonId: id);
-              Routes.lessonDetailsRoute.moveTo;
+              context.read<ExamCubit>().getExams(
+                  model: ExamParamsModel(
+                      courseId: model.teacherCourses![index].courseId,
+                      courseLessonId: id));
+
+              model.teacherCourses![index].courseLessons![i].isSubscribed.isTrue
+                  ? Routes.lessonDetailsRoute.moveToWithArgs({
+                      LessonDetailsScreen.lessonTitleKey:
+                          context.read<LanguageCubit>().isEn.isTrue
+                              ? model.teacherCourses![index].courseLessons![i]
+                                  .lessonTitleEn
+                              : model.teacherCourses![index].courseLessons![i]
+                                  .lessonTitle
+                    })
+                  : null;
 
               // selectedCountryId = id;
               // context.read<EducationCubit>().getEducationPrograms(id: id);
             },
+            lesson: model.teacherCourses![index].courseLessons!,
             unselectedColor: AppColors.white,
             title: context.read<LanguageCubit>().isEn.isTrue
                 ? model.teacherCourses![index].titleEn!
@@ -50,5 +84,64 @@ class BuildListOfLessons extends StatelessWidget {
             status: ListStatus.listLoaded),
       ),
     );
+  }
+
+  void _buildDialog(
+      {required context,
+      required int index,
+      required int courseId,
+      int? courseLessonId,
+      bool isCourse = true}) {
+    showCustomDialog(
+        height: 230.h,
+        context: context,
+        style: getRegularTextStyle(
+          fontSize: 16,
+          color: AppColors.black.withOpacity(0.67),
+        ),
+        title:
+            ' سيتم خصم${model.teacherCourses![index].price} من محفظتك للاشتراك في كورس  سيتم خصم${AppService().getBlocData<LanguageCubit>().isEn.isTrue ? model.teacherCourses![index].titleEn : model.teacherCourses![index].title} ',
+        widget: Expanded(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: List.generate(
+                2,
+                (index) => Expanded(
+                        child: BlocBuilder<SubscribeCourseCubit, CubitStates>(
+                      builder: (context, state) {
+                        return CustomElevatedButton(
+                            margin: getMargin(horizontal: 10.w),
+                            onPressed: () {
+                              print(
+                                  'courseId>>>>>>>>>>>>>>>>>>>> ${model.teacherCourses![index].courseId}');
+                              switch (index) {
+                                case 0:
+                                  if (isCourse) {
+                                    context
+                                        .read<SubscribeCourseCubit>()
+                                        .addSubscribeCourseOrLesson(
+                                            teacherId: CoursesDetailsScreen.teacherId,
+                                            teacherCourse: TeacherCourse(
+                                                courseId: courseId));
+                                  } else {
+                                    context
+                                        .read<SubscribeCourseCubit>()
+                                        .addSubscribeCourseOrLesson(
+                                            teacherId: 94,
+                                            teacherCourse: TeacherCourse(
+                                                courseLessonId: courseLessonId,
+                                                courseId: courseId));
+                                  }
+                                case 1:
+                                  pop();
+                              }
+                            },
+                            text: index == 0
+                                ? AppStrings().done.trans
+                                : AppStrings().cancel.trans);
+                      },
+                    ))),
+          ),
+        ));
   }
 }

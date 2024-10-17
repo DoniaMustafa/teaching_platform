@@ -1,3 +1,4 @@
+
 import '../export/export.dart';
 
 class CustomListTile extends StatelessWidget {
@@ -16,30 +17,43 @@ class CustomListTile extends StatelessWidget {
     this.padding,
     this.isCircle = true,
     this.spacer = 20,
-    this.subTitleStyle, this.radiusDirectional,
+    this.subTitleStyle,
+    this.radiusDirectional,
     this.iconColor,
-    this.subtitle, this.height,
+    this.subtitle,
+    this.height,
+    this.widget,
     this.boxShadow,
+    this.rate,
+    this.margin,
+    this.followers,
+    this.borderColor,
+    this.isDivider = true,
   });
 
   final String title;
   final String? endTitle;
+  final EdgeInsetsDirectional? margin;
   final BorderRadiusDirectional? radiusDirectional;
-
+  final double? rate;
+  final String? followers;
   final String? subtitle;
   final bool? isIcon;
   final EdgeInsetsDirectional? padding;
   final double? spacer;
-  final double? r;final double? height;
+  final double? r;
+  final double? height;
   final bool? isBorder;
   final bool? isCircle;
-
+  final bool? isDivider;
+  final Widget? widget;
   final String? image;
   final TextStyle? style;
   final TextStyle? subTitleStyle;
   final String? endSubtitle;
   final Color? color;
   final Color? iconColor;
+  final Color? borderColor;
   final VoidCallback? onTap;
   final List<BoxShadow>? boxShadow;
   @override
@@ -48,14 +62,21 @@ class CustomListTile extends StatelessWidget {
       onTap: onTap,
       child: Row(
         children: [
-          CustomDivider(
-            width: 5,
-            height:height ,
-            color: AppColors.mainAppColor,
-          ),
+          if (isDivider.isTrue)
+            CustomDivider(
+              width: 5,
+              height: height,
+              color: AppColors.mainAppColor,
+            ),
           Expanded(
-            child: CustomCard(radiusDirectional: radiusDirectional,
+            child: CustomCard(
+              margin: margin,
+              radiusDirectional: radiusDirectional,
               padding: padding,
+              borderWidth: isBorder.isTrue ? 1 : 0,
+              borderColor: isBorder.isTrue
+                  ? borderColor ?? AppColors.borderColor2
+                  : null,
               boxShadow: boxShadow,
               radius: r ?? 10.r,
               backgroundColor: color,
@@ -93,9 +114,29 @@ class CustomListTile extends StatelessWidget {
                         Text(subtitle!,
                             style: subTitleStyle ??
                                 getRegularTextStyle(
-                                    fontSize: 16,
-                                    color: AppColors.grayColor1,
-                                    height: 2)),
+                                  fontSize: 16,
+                                  color: AppColors.grayColor1,
+                                )),
+                      if (followers.isNotNull)
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(followers!,
+                                  style: subTitleStyle ??
+                                      getRegularTextStyle(
+                                          fontSize: 12,
+                                          color: AppColors.grayColor1,
+                                          height: 1.3)),
+                            ),
+                            if (rate.isNotNull)
+                              BuildRatingBar(
+                                itemCount: 4,
+                                isIgnoreRate: true,
+                                itemSize: 20,
+                                rate: rate!,
+                              ),
+                          ],
+                        ),
                     ],
                   )),
                   if (isIcon!)
@@ -122,6 +163,7 @@ class CustomListTile extends StatelessWidget {
                                       fontSize: 15,
                                       color: AppColors.mainAppColor,
                                       height: 1)),
+                        if (widget.isNotNull) widget!
                       ],
                     )
                 ],
@@ -132,4 +174,6 @@ class CustomListTile extends StatelessWidget {
       ),
     );
   }
+
+
 }

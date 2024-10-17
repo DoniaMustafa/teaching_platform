@@ -104,6 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   if (AppPrefs.user!.userRole == '1') 20.vs,
                   if (AppPrefs.user!.userRole == '1')
                     _buildTitle(
+                        onTap: () => Routes.teachersRoute.moveTo,
                         all: AppStrings().all.trans,
                         text: AppStrings().teachers.trans,
                         asset: AppAssets().teacherIcon),
@@ -168,7 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontFamily: FontFamilies.elMessiriFamily),
                       ),
                       2.hs,
-                      CustomIcon(
+                      const CustomIcon(
                         icon: Icons.arrow_forward_ios,
                         size: 12,
                       )
@@ -197,7 +198,7 @@ class _HomeScreenState extends State<HomeScreen> {
             //   color: AppColors.mainAppColor,
             // ),
             const Spacer(),
-            const BuildLanguage(),
+            // const BuildLanguage(),
             const CustomIcon(
               icon: Icons.search,
               color: AppColors.mainAppColor,

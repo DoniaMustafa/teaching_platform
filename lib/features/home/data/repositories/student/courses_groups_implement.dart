@@ -8,7 +8,7 @@ class CoursesImplement extends CoursesRepo {
   CoursesImplement(this.courses);
 
   @override
-  Future<Either<Failure, ResponseModel>> getCourser({int? subjectId}) => execute(
-        () => courses.getCourser(subjectId:subjectId ),
+  Future<Either<Failure, ResponseModel>> getCourser({TeacherModel? model}) => execute(
+        () => courses.getCourser(model:model ),
       );
 }

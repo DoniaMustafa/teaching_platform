@@ -42,7 +42,7 @@ class EnumService {
     }
   }
 
-  static List userCategoryType(String type) {
+  static List <GenericModel>userCategoryType(String type) {
     print(type);
     switch (type) {
       case '1':

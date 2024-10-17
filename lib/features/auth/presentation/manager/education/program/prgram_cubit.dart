@@ -16,23 +16,21 @@ class ProgramCubit extends Cubit<ProgramState> {
   bool isEducationTypeDone = false;
 
   int? curriculumId;
-
-
+  List<PublicDataModel> educationProgramsData = [];
 
   getEducationPrograms({required int id}) {
     managerExecute<List<PublicDataModel>>(useCase.getEducationPrograms(id: id),
         onStart: () {
-          AppService().getBlocData<StageCubit>().isProgramDone=false;
-          AppService().getBlocData<SubjectCubit>().isSubjectsDone=false;
+          AppService().getBlocData<StageCubit>().isProgramDone = false;
+          AppService().getBlocData<SubjectCubit>().isSubjectsDone = false;
           emit(EducationProgramsLoadingState());
         },
         onSuccess: (List<PublicDataModel>? data) {
-        isEducationTypeDone = true;
-
-          emit(EducationProgramsLoadedState(data: data!));
+          isEducationTypeDone = true;
+          educationProgramsData = data!;
+          emit(EducationProgramsLoadedState(data: data));
         },
         onFail: (message) =>
             emit(EducationProgramsFailureState(message: message)));
   }
-
 }

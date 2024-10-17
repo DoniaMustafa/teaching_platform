@@ -7,32 +7,32 @@ class ExpansionTileDropDown<T> extends StatefulWidget {
   final List<T> items;
   final ListStatus status;
   final String title;
-  final String? subTitle;
-  final bool? isSubscribed;
-  final String? price;
-  final String? asset;
-  final bool isText;
+  // final String? subTitle;
+  // final bool? isSubscribed;
+  // final String? price;
+  // final String? asset;
+  // final bool isText;
   final Color? borderColor;
   final Color? color;
   final Color? unselectedColor;
 
   final TextStyle? titleStyle;
   final List<BoxShadow>? boxShadow;
-  final Widget? leadingWidget;
+  // final Widget? leadingWidget;
   const ExpansionTileDropDown({
     required this.onSelected,
     required this.items,
     required this.title,
     required this.status,
-    this.asset,
+    // this.asset,
     this.borderColor,
-    this.subTitle,
-    this.isText = true,
-    this.price,
+    // this.subTitle,
+    // this.isText = true,
+    // this.price,
     // this.free,
-    this.isSubscribed = false,
+    // this.isSubscribed = false,
     this.unselectedColor,
-    this.leadingWidget,
+    // this.leadingWidget,
     this.boxShadow,
     this.titleStyle,
     this.color,
@@ -63,7 +63,7 @@ class _ExpansionTileDropDownState extends State<ExpansionTileDropDown> {
       child: ExpansionTile(
           maintainState: true,
           key: GlobalKey(),
-          leading: widget.leadingWidget.isNotNull ? widget.leadingWidget : null,
+          // leading: widget.leadingWidget.isNotNull ? widget.leadingWidget : null,
           /* expansion */
           visualDensity: VisualDensity.compact,
           dense: true,
@@ -99,44 +99,15 @@ class _ExpansionTileDropDownState extends State<ExpansionTileDropDown> {
               borderRadius: BorderRadius.circular(
                   19.h)), //the whole widget shape while expanding
 
-          title: Row(
-            children: [
-              if (widget.asset.isNotNull)
-                CustomImageWidget(
-                    height: 45.h, width: 50.w, asset: widget.asset!),
-              10.hs,
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CustomTextWidget(
-                      text: activeText.isNotEmpty ? activeText : widget.title,
-                      style: widget.titleStyle ??
-                          getRegularTextStyle(
-                            color: AppColors.darkMainAppColor,
-                            fontSize: 16,
-                          ),
-                    ),
-                    if (widget.subTitle.isNotNull)
-                      CustomTextWidget(
-                        text: widget.subTitle!,
-                        style: getRegularTextStyle(
-                            fontSize: 14, color: AppColors.subTitleColor),
-                      )
-                  ],
+          title: CustomTextWidget(
+            text: activeText.isNotEmpty ? activeText : widget.title,
+            style: widget.titleStyle ??
+                getRegularTextStyle(
+                  color: AppColors.darkMainAppColor,
+                  fontSize: 16,
                 ),
-              ),
-              // if (widget.isText.isFalse && widget.free.isTrue)
-              //   CustomTextWidget(text: 'free'),
-              // if (widget.isText.isFalse && widget.isSubscribed.isFalse)
-              //   Row(
-              //     children: [
-              //
-              //       // 10.hs,
-              //       // CustomIcon(icon: Icons.lock,color: AppColors.mainAppColor,)
-              //     ],
-              //   ),
-            ],
+            lines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
           children: List.generate(
             widget.items.length,
@@ -149,13 +120,9 @@ class _ExpansionTileDropDownState extends State<ExpansionTileDropDown> {
       behavior: HitTestBehavior.translucent,
       onTap: () {
         debugPrint("selected");
-        if (widget.isText.isTrue) {
           activeText = widget.items[index].name;
-        }
 
-        widget.onSelected(widget.isText.isFalse
-            ? widget.items[index].lessonId
-            : widget.items[index].id);
+        widget.onSelected(widget.items[index].id);
         isExpanded = false;
         // debugPrint(widget.items[index].id.toString());
         setState(() {});
@@ -164,20 +131,16 @@ class _ExpansionTileDropDownState extends State<ExpansionTileDropDown> {
         padding: getPadding(vertical: 10, horizontal: 10),
         margin: getMargin(horizontal: 20, bottom: 15),
         decoration: BoxDecoration(
-          color: widget.isText.isFalse
-              ? null
-              : activeText == widget.items[index].name
+          color:  activeText == widget.items[index].name
                   ? AppColors.mainAppColor
                   : widget.unselectedColor ?? AppColors.grey.withOpacity(0.1),
           borderRadius: const BorderRadius.all(Radius.circular(10)),
         ),
         child: Row(
-          mainAxisAlignment: widget.isText.isTrue
-              ? MainAxisAlignment.center
-              : MainAxisAlignment.start,
+          mainAxisAlignment:  MainAxisAlignment.center,
+
           children: [
-            widget.isText.isTrue
-                ? Expanded(
+            Expanded(
                     child: CustomTextWidget(
                       text: widget.items[index].name,
                       style: getRegularTextStyle(
@@ -189,100 +152,46 @@ class _ExpansionTileDropDownState extends State<ExpansionTileDropDown> {
                       align: TextAlign.center,
                     ),
                   )
-                : CustomCircleWidget(
-                    width: 30,
-                    height: 30,
-                    alignment: AlignmentDirectional.center,
-                    radius: 50,
-                    padding: getPadding(all: 0),
-                    child: CustomTextWidget(
-                      text: '${index + 1}',
-                      style: getSemiboldTextStyle(
-                          fontSize: 16, color: AppColors.white),
-                    ),
-                  ),
-            if (widget.isText.isFalse) 10.hs,
-            if (widget.isText.isFalse)
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CustomTextWidget(
-                      text: widget.items[index].lessonTitle,
-                      style: getMediumTextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                    10.vs,
-                    CustomTextWidget(
-                        text: widget.items[index].videosCount.toString(),
-                        style: getMediumTextStyle(
-                          fontSize: 14,
-                        )),
-                  ],
-                ),
-              ),
           ],
         ),
       ));
   get getTrailingWidget {
     if (widget.status == ListStatus.listError) {
       return const Icon(Icons.wifi_off_outlined);
-    } else if (widget.status == ListStatus.listLoaded) {
+    }
+    else if (widget.status == ListStatus.listLoaded) {
       if (widget.items.isNotEmpty) {
-        if (widget.isText.isTrue) {
-          if (isExpanded.isTrue) {
-            return const CustomIcon(
-              icon: Icons.keyboard_arrow_down_outlined,
-              color: AppColors.black,
-              size: 17,
-            );
-          } else {
-            return const CustomIcon(
-              icon: Icons.keyboard_arrow_up_outlined,
-              color: AppColors.black,
-              size: 17,
-            );
-          }
-        } else if (widget.isSubscribed.isTrue) {
-          if (isExpanded.isTrue) {
-            return const CustomIcon(
-              icon: Icons.keyboard_arrow_down_outlined,
-              color: AppColors.black,
-              size: 17,
-            );
-          } else {
-            return const CustomIcon(
-              icon: Icons.keyboard_arrow_up_outlined,
-              color: AppColors.black,
-              size: 17,
-            );
-          }
-        }
-      } else {
-        if (widget.isText.isFalse && widget.isSubscribed == false) {
-          return SizedBox(
-            width: 60.w,
-            child: Row(
-              children: [
-                if (widget.price.isNotNull)
-                  CustomTextWidget(
-                    text: widget.price.toString(),
-                    style: getBoldTextStyle(color: AppColors.mainAppColor),
-                  ),
-                if (widget.price.isNotNull) 5.hs,
-                const CustomIcon(
-                  icon: Icons.lock,
-                  color: AppColors.mainAppColor,
-                  size: 20,
-                ),
-              ],
-            ),
+        if (isExpanded.isTrue) {
+          return const CustomIcon(
+            icon: Icons.keyboard_arrow_down_outlined,
+            color: AppColors.black,
+            size: 17,
           );
         }
-        return const SizedBox.shrink();
+        else {
+          return const CustomIcon(
+            icon: Icons.keyboard_arrow_up_outlined,
+            color: AppColors.black,
+            size: 17,
+          );
+        }
       }
-    } else if (widget.status == ListStatus.listLoading) {
+      if (isExpanded.isTrue) {
+        return const CustomIcon(
+          icon: Icons.keyboard_arrow_down_outlined,
+          color: AppColors.black,
+          size: 17,
+        );
+      }
+      else {
+        return const CustomIcon(
+          icon: Icons.keyboard_arrow_up_outlined,
+          color: AppColors.black,
+          size: 17,
+        );
+      }
+    }
+    else if (widget.status == ListStatus.listLoading) {
       return _buildLoadingTrailingWidget;
     }
     return ListStatus.listLoaded;

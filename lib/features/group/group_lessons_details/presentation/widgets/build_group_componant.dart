@@ -15,7 +15,7 @@ class BuildGroupComponent extends StatelessWidget {
           (index) => CustomCard(
                 borderWidth: 1,
                 borderColor: AppColors.secondBorderColor,
-                backgroundColor: AppColors.transparent,
+                backgroundColor: AppColors.white,
                 padding: getPadding(horizontal: 10.w, vertical: 5.h),
                 child: Row(
                   children: [
@@ -23,7 +23,7 @@ class BuildGroupComponent extends StatelessWidget {
                       icon: Icons.file_copy_outlined,
                       size: 10,
                     ),
-                    20.hs,
+                    10.hs,
                     CustomTextWidget(
                       text: index == 0
                           ? model.subjectName!

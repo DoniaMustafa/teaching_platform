@@ -9,7 +9,7 @@ class SubjectCubit extends Cubit<SubjectState> {
   SubjectCubit(this.useCase) : super(SubjectInitial());
   EducationTypeUseCase useCase;
   bool isSubjectsDone = false;
-
+  List<PublicDataModel> subjectData=[];
   int? subjectsId;
 
   getSubjects({
@@ -25,9 +25,9 @@ class SubjectCubit extends Cubit<SubjectState> {
         onStart: () => emit(SubjectLoadingState()),
         onSuccess: (List<PublicDataModel>? data) {
           isSubjectsDone = true;
+          subjectData=data!;
 
-
-          emit(SubjectLoadedState(data: data!));
+          emit(SubjectLoadedState(data: data));
         },
         onFail: (message) => emit(SubjectFailureState(message: message)));
   }

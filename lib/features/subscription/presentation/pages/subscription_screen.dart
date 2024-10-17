@@ -19,7 +19,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
     // TODO: implement initState
     super.initState();
     context.read<SubscriptionCubit>().getSubscription();
-    context.read<SubjectsCubit>().getSubjects();
+    // context.read<SubjectsCubit>().getSubjects();
   }
 
   @override

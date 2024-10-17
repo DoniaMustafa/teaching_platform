@@ -139,6 +139,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             focusedBorder: widget.enabledBorder,
             contentPadding: widget.contentPadding,
             labelText: widget.label,
+            labelStyle:getRegularTextStyle(fontSize: 16,color: AppColors.black.withOpacity(0.67)) ,
             prefix: widget.prefix,
             hintText: widget.hintText,
             hintFadeDuration: 20.milliseconds,

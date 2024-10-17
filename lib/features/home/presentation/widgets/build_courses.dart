@@ -1,6 +1,7 @@
 import 'package:teaching/core/widget/shimmer_widget.dart';
 import 'package:teaching/features/course/courses_details/data/models/course_details_response_model.dart';
 import 'package:teaching/features/course/courses_details/presentation/manager/courses_details/courses_details_cubit.dart';
+import 'package:teaching/features/course/courses_details/presentation/pages/courses_details_screen.dart';
 
 import '../../../../core/export/export.dart';
 
@@ -40,7 +41,14 @@ class BuildCourses extends StatelessWidget {
                       TeacherModel(
                           subjectId: state.data[index].subjectId!,
                           teacherId: state.data[index].teacherId!));
-                  Routes.coursesDetailsRoute.moveTo;
+                  Routes.coursesDetailsRoute.moveToWithArgs({
+                    // CoursesDetailsScreen.whichScreenKey: 'TeacherDetails',
+                    // CoursesDetailsScreen.subjectNameKey:
+                    //     state.data[index].subjectId!,
+                    CoursesDetailsScreen.teacherIdKey:
+                        state.data[index].teacherId!
+                  });
+
                 },
                 coursesModel: state.data[index],
               )

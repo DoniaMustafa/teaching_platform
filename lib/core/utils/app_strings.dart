@@ -8,6 +8,11 @@ class AppStrings {
   final String drivingLicenceExpiryError = "drivingLicenceExpiryError";
   final String signUp = 'signUp';
   final String registerByPhone = 'registerByPhone';
+  final String free = 'free';
+
+  final String cancel = 'cancel';
+
+  final String follower = 'follower';
 
   final String otpCode = 'otpCode';
 
@@ -87,10 +92,19 @@ class AppStrings {
   final String notificationTitle = 'notificationTitle';
   final String coursesAndGroups = 'coursesAndGroups';
   final String coursesDetails = 'courseDetails';
-  // final String subscribeDetails = 'subscribeDetails';
+  final String subscribeDetails = 'subscribeDetails';
+  final String groupDetails = 'groupDetails';
 
   final String schedule = 'schedule';
+  final String language = 'language';
+  final String changeLanguage = 'changeLanguage';
+
   final String chat = 'chat';
+  final String termsAndConditions = 'termsAndConditions';
+  final String privacyPolice = 'privacyPolice';
+
+  final String changePassword = 'changePassword';
+  final String aboutUs = 'aboutUs';
 
   // /// ***************** validators ***********************
 
@@ -101,7 +115,7 @@ class AppStrings {
   final String fields = "fields";
 
   final String testYourself = "testYourself";
-  final String myGrades = "myGrades";
+  final String myGrades = "MyGrades";
   final String grades = "grades";
 
   final String private = "private";
@@ -111,17 +125,34 @@ class AppStrings {
   final String questions = "questions";
   final String tasks = "tasks";
   final String tests = "tests";
+  final String student = "Student";
+  final String contents = "contents";
+  final String comments = "comments";
+  final String attachments = "attachments";
 
   final String success = "success";
   final String ar = "AR";
   final String en = "EN";
   final String arabic = "arabic";
   final String english = "english";
-  final String student = "Student";
+  final String exams = "exams";
   final String serverError = 'serverError';
-  // final String otpCode = 'otpCode';
-  // final String massageError = 'massageError';
+  final String coursesCount = 'coursesCount';
+  final String groupsCount = 'groupsCount';
+  final String subscriberCount = 'subscriberCount';
+  final String workingHours = 'workingHours';
+  final String hour = 'hour';
+  final String subscriber = 'subscriber';
+  final String group = 'group';
+  final String follow = 'follow';
+
+  final String unfollow = 'unfollow';
+  final String ratesCount = 'ratesCount';
+
+  final String rateNow = 'rateNow';
   final String teacher = 'Teacher';
+  final String teacherDetails = 'teacherDetails';
+
   final String school = "school";
   final String lecture = "lecture";
   final String assistant = "Assistant";
@@ -129,7 +160,7 @@ class AppStrings {
 
   final String professionalLecturer = 'ProfessionalLecturer';
 
-  final String professionalCourses= 'ProfessionalCourses';
+  final String professionalCourses = 'ProfessionalCourses';
   final String course = 'course';
   final String myCourses = 'myCourses';
   final String myGroups = 'myGroups';
@@ -145,8 +176,8 @@ class AppStrings {
   final String confirmCode = "confirmCode";
 
   final String choseForYou = "choseForYou";
-final String removeImage = 'removeImage';
-final String selectProfilePicture = "selectProfilePicture";
+  final String removeImage = 'removeImage';
+  final String selectProfilePicture = "selectProfilePicture";
 // final String changeImage = "changeImage";
   final String lecturers = "lecturers";
   final String latestNews = "latestNews";
@@ -159,6 +190,9 @@ final String selectProfilePicture = "selectProfilePicture";
   final String courses = "courses";
   final String groups = "groups";
   final String store = "store";
+
+  final String passed = "passed";
+  final String notPassed = "notPassed";
 
   final String teachers = "teachers";
   final String mySubscriptions = "mySubscriptions";
@@ -233,7 +267,7 @@ final String selectProfilePicture = "selectProfilePicture";
   // final String driver = 'driver';
   // final String client = 'client';
 
-  // final String enterOldPassword = 'enterOldPassword';
+  final String enterOldPassword = 'enterOldPassword';
   //
   final String allow = "allow";
   // final String precise = "precise";
@@ -369,13 +403,12 @@ final String selectProfilePicture = "selectProfilePicture";
   // final String edit = 'edit';
   final String profile = 'profile';
 
-
   // final String editProfile = 'editProfile';
   //
   // final String egp = 'egp';
   //
   //
-  // final String enterBirthDay = 'enterBirthDay';
+  // final String follow = 'follow';
   // final String enterBirthMonth = 'enterBirthMonth';
   // final String enterBirthYear = 'enterBirthYear';
   // final String enterNationality = 'enterNationality';
@@ -391,7 +424,7 @@ final String selectProfilePicture = "selectProfilePicture";
   // final String firstOnboardingSubTitle = 'firstOnboardingSubTitle';
   // final String firstOnboardingTitle = 'firstOnboardingTitle';
   //
-  // final String following = 'following';
+  final String following = 'following';
 
   // final String faqs = 'faqs';
   // final String fqsQ = '';
@@ -665,8 +698,7 @@ final String selectProfilePicture = "selectProfilePicture";
   //
   // final String tapHere = 'tapHere';
   //
-  // final String termsAndConditions = 'termsAndConditions';
-  //
+
   // final String thirdOnboardingSubTitle = 'thirdOnboardingSubTitle';
   //
   // final String thirdOnboardingTitle = 'thirdOnboardingTitle';

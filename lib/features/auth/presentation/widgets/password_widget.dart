@@ -1,9 +1,10 @@
 import '../../../../core/export/export.dart';
 
 class PasswordWidget extends StatelessWidget {
-  PasswordWidget({super.key, required this.controller});
+  PasswordWidget({super.key, required this.controller,this.hintText});
   FocusNode passwordFocusNode = FocusNode();
   String password = '';
+  String ? hintText;
   final TextEditingController controller;
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class PasswordWidget extends StatelessWidget {
           focusNode: passwordFocusNode,
           textInputAction: TextInputAction.next,
           controller: controller,
-          hintText: AppStrings().password.trans,
+          hintText:hintText?? AppStrings().password.trans,
           validator: (String? phone) {
             if (phone!.validatePassword.isFalse) {
               context

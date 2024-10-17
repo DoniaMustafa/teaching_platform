@@ -7,16 +7,28 @@ import 'package:teaching/features/auth/presentation/manager/education/subject/su
 import 'package:teaching/features/auth/presentation/manager/user_cubit/user_cubit.dart';
 import 'package:teaching/features/chat/presentation/manager/chat_operation_cubit.dart';
 import 'package:teaching/features/course/courses_details/presentation/manager/courses_details/courses_details_cubit.dart';
+import 'package:teaching/features/course/courses_details/presentation/manager/subscribe_course_cubit.dart';
+import 'package:teaching/features/course/courses_lessons_details/presentation/manager/attachments_operation_cubit.dart';
+import 'package:teaching/features/course/courses_lessons_details/presentation/manager/exam_operation_cubit.dart';
+import 'package:teaching/features/course/courses_lessons_details/presentation/manager/lessons_details/follow_unfollow_video_cubit.dart';
+import 'package:teaching/features/course/courses_lessons_details/presentation/manager/rate_cubit.dart';
 import 'package:teaching/features/courses_groups/presentation/manager/coures_group_operation_cubit.dart';
+import 'package:teaching/features/courses_groups/presentation/manager/public_group_cubit.dart';
+import 'package:teaching/features/exam/presentation/manager/exam_cubit.dart';
+import 'package:teaching/features/favorite/presentation/manager/favorite_video_courses_cubit.dart';
 import 'package:teaching/features/group/group_lessons_details/presentation/manager/group_lessons_details/group_lessons_details_cubit.dart';
 import 'package:teaching/features/group/groups_details/presentation/manager/group_details/group_details_cubit.dart';
 import 'package:teaching/features/home/presentation/manager/school_cubit.dart';
 import 'package:teaching/features/home/presentation/manager/subscription_cubit.dart';
 import 'package:teaching/features/home/presentation/manager/teachers_of_student_cubit.dart';
 import 'package:teaching/features/course/courses_lessons_details/presentation/manager/lessons_details/lessons_details_cubit.dart';
+import 'package:teaching/features/language/presentation/managers/language_oepration_cubit/language_oepration_cubit.dart';
 import 'package:teaching/features/on_boarding/presentation/manager/onboarding_manager_cubit.dart';
+import 'package:teaching/features/teacher/teacher_details/presentation/manager/follow_teacher_cubit.dart';
+import 'package:teaching/features/teacher/teacher_details/presentation/manager/review_teacher_cubit.dart';
+import 'package:teaching/features/teacher/teacher_details/presentation/manager/teacher_details_cubit.dart';
 import 'core/managers/file_magager_cubit.dart';
-import 'features/courses_groups/presentation/manager/public_coures_group_cubit.dart';
+import 'features/courses_groups/presentation/manager/public_course_cubit.dart';
 import 'features/home/presentation/manager/ads_cubit.dart';
 import 'features/home/presentation/manager/groups_cubit.dart';
 import 'features/subscription/presentation/manager/subscriptipn_operation_cubit.dart';
@@ -25,6 +37,9 @@ class BlocProviders {
   static final List<BlocProvider> providers = [
     BlocProvider<LanguageCubit>(
         create: (context) => ServiceLocator().getIt<LanguageCubit>()),
+    BlocProvider<LanguageOperationCubit>(
+        create: (context) => ServiceLocator().getIt<LanguageOperationCubit>()),
+
     BlocProvider<ErrorCubit>(
         create: (context) => ServiceLocator().getIt<ErrorCubit>()),
     BlocProvider<OnboardingManagerCubit>(
@@ -90,11 +105,37 @@ class BlocProviders {
             ServiceLocator().getIt<GroupLessonsDetailsCubit>()),
     BlocProvider<SubjectsCubit>(
         create: (context) =>
-            ServiceLocator().getIt<SubjectsCubit>()),
-    BlocProvider<PublicCouresGroupCubit>(
+            ServiceLocator().getIt<SubjectsCubit>()..getSubjects()),
+    BlocProvider<PublicCourseCubit>(
+        create: (context) => ServiceLocator().getIt<PublicCourseCubit>()),
+    BlocProvider<PublicGroupCubit>(
+        create: (context) => ServiceLocator().getIt<PublicGroupCubit>()),
+
+    BlocProvider<AttachmentsOperationCubit>(
         create: (context) =>
-            ServiceLocator().getIt<PublicCouresGroupCubit>()),
+            ServiceLocator().getIt<AttachmentsOperationCubit>()),
+    BlocProvider<TeacherDetailsCubit>(
+        create: (context) => ServiceLocator().getIt<TeacherDetailsCubit>()),
+    BlocProvider<SubscribeCourseCubit>(
+        create: (context) => ServiceLocator().getIt<SubscribeCourseCubit>()),
 
+    BlocProvider<ReviewTeacherCubit>(
+        create: (context) => ServiceLocator().getIt<ReviewTeacherCubit>()),
+    BlocProvider<FollowTeacherCubit>(
+        create: (context) => ServiceLocator().getIt<FollowTeacherCubit>()),
+    BlocProvider<FavoriteUnFavoriteVideoCubit>(
+        create: (context) =>
+            ServiceLocator().getIt<FavoriteUnFavoriteVideoCubit>()),
 
-    ];
+    BlocProvider<ExamOperationCubit>(
+        create: (context) => ServiceLocator().getIt<ExamOperationCubit>()),
+    BlocProvider<RateCubit>(
+        create: (context) => ServiceLocator().getIt<RateCubit>()),
+    BlocProvider<FavoriteVideoCoursesCubit>(
+        create: (context) =>
+            ServiceLocator().getIt<FavoriteVideoCoursesCubit>()),
+
+    BlocProvider<ExamCubit>(
+        create: (context) => ServiceLocator().getIt<ExamCubit>()),
+  ];
 }

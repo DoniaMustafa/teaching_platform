@@ -6,7 +6,7 @@ class CustomTabBar extends StatelessWidget {
       {super.key,
       this.isDivider = true,
       this.fontSize,
-        this.text,
+        this.text, this.style,
 
         this.onTap,
       this.selectedIndex});
@@ -14,6 +14,7 @@ class CustomTabBar extends StatelessWidget {
   final void Function(int)? onTap;
   final int? selectedIndex;
   final double? fontSize;
+  final TextStyle? style;
   final bool? isDivider;
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,7 @@ class CustomTabBar extends StatelessWidget {
                       children: [
                         CustomTextWidget(
                           text: text![index],
-                          style: getBoldTextStyle(
+                          style: style??getBoldTextStyle(
                               fontSize: fontSize??18,
                               color: selectedIndex == index
                                   ? AppColors.mainAppColor

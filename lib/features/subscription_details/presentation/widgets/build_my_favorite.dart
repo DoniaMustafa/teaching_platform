@@ -6,7 +6,7 @@ class BuildMyFavorite extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Routes.favoriteRoutes.moveTo,
+      onTap: () => Routes.favoriteCourseVideoRoute.moveTo,
       child: CustomCard(
         boxShadow: [
           BoxShadow(

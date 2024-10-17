@@ -10,6 +10,7 @@ import 'package:teaching/config/routes/app_routes_helper.dart';
 import 'package:teaching/core/export/export.dart';
 
 extension StringExtension on String {
+  String get trans => this.tr();
   String get removeSpaces => replaceAll(' ', '');
   int get codeFromString {
     String formattedStringColor = removeSpaces;
@@ -48,7 +49,7 @@ extension StringExtension on String {
   String addAtStart(String start) => "$start$this";
   bool isLengthEqual(int length) => this.length == length;
   int get toInt => int.parse(this);
-  String get trans => this.tr();
+
 //
 //   /// Returns true if given String is null or isEmpty
   bool get isEmptyOrNull => (isEmpty) || (this == 'null');

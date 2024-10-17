@@ -9,7 +9,8 @@ class CustomItem extends StatelessWidget {
       {super.key,
       this.isSubScribe = false,
       this.groupsModel,
-      this.onTap, this.onNavigateTap,
+      this.onTap,
+      this.onNavigateTap,
       this.scalar,
       this.coursesModel});
   bool? isSubScribe;
@@ -72,28 +73,24 @@ class CustomItem extends StatelessWidget {
                       align: TextAlign.center,
                       // text: "dfdafdfd",
                       text: coursesModel.isNotNull
-                          ? '${context.read<LanguageCubit>().isEn ? coursesModel!.courseTitleEn : coursesModel!.subjectName}'
-                          : '${context.read<LanguageCubit>().isEn ? groupsModel!.groupNameEn : groupsModel!.subjectName}',
-                      style: getBoldTextStyle(
+                          ? coursesModel!.subjectName!
+                          : groupsModel!.subjectName!,
+                      style: getSemiboldTextStyle(
                         height: 1,
                         fontSize: 16,
                       ),
                     ),
 
-                    isSubScribe.isTrue ? 5.vs : 12.vs,
+                    isSubScribe.isTrue ? 10.vs : 12.vs,
                     isSubScribe!
                         ? BuildRatingBar(
                             itemSize: 20,
                             itemCount: 5,
-                            rate: coursesModel!.rate,
+                            rate: coursesModel.isNotNull
+                                ? coursesModel!.rate
+                                : groupsModel!.rate??0.0,
+                            isIgnoreRate: true,
                           )
-                        // CustomElevatedButton(
-                        //         padding: getPadding(bottom: 5),
-                        //         height: 35.h,
-                        //         width: 80.w,
-                        //         // margin: getMargin(horizontal: 10.w),
-                        //         onPressed: () => onTap!(),
-                        //         text: AppStrings().start.trans)
                         : GestureDetector(
                             onTap: onTap,
                             child: CustomTextWidget(

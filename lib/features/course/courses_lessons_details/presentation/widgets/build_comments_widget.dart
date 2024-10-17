@@ -1,21 +1,23 @@
 import 'package:teaching/core/export/export.dart';
 
+import '../../data/models/course_Lesson_details_response_model.dart';
 
 class BuildCommentsWidget extends StatelessWidget {
-  const BuildCommentsWidget({super.key});
-
+  const BuildCommentsWidget({super.key, required this.model});
+  final CourseLessonDataMode model;
   @override
   Widget build(BuildContext context) {
     return Stack(
       alignment: AlignmentDirectional.bottomCenter,
       children: [
-        CustomListView(
+        model.firstLessonVideoComments!.isEmpty?const CustomEmptyWidget(): CustomListView(
             shrinkWrap: true,
             axisDirection: Axis.vertical,
             padding: getPadding(vertical: 20.h),
-            itemCount: 5,
+            itemCount:model.firstLessonVideoComments!.length,
             separatorWidget: (context, index) => 10.vs,
-            widget: (context, index) => _buildItem),
+            widget: (context, index) =>
+                _buildItem(model.firstLessonVideoComments![index])),
         CustomTextFormField(
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.r)),
           enabledBorder:
@@ -30,12 +32,12 @@ class BuildCommentsWidget extends StatelessWidget {
     );
   }
 
-  get _buildItem => Padding(
+  Widget _buildItem(FirstLessonVideoCommentModel comment) => Padding(
         padding: getPadding(horizontal: 20.w, vertical: 10.h),
         child: Row(
           children: [
             CustomNetworkImage.circular(
-              imageUrl: 'imageUrl',
+              imageUrl: '${EndPoints.url}${comment.userImage}',
               radius: 50.r,
               defaultAsset: '',
             ),
@@ -45,13 +47,13 @@ class BuildCommentsWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CustomTextWidget(
-                    text: 'سارة وجدي',
+                    text: comment.userName!,
                     style: getBoldTextStyle(
                         fontSize: 15, color: AppColors.mainAppColor),
                   ),
                   5.vs,
                   CustomTextWidget(
-                    text: 'شرح رائع',
+                    text: comment.comment??'',
                     style: getRegularTextStyle(
                         fontSize: 15,
                         color: AppColors.darkGrey,
