@@ -8,7 +8,7 @@ class BuildGroupSessions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 270.h,
+      height: 290.h,
       child: CustomListView(
           padding: getPadding(top: 10),
           itemCount: model.groupSessions!.length,

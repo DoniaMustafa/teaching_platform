@@ -2,11 +2,7 @@ import 'package:teaching/features/courses_groups/presentation/manager/public_cou
 import 'package:teaching/features/courses_groups/presentation/manager/public_group_cubit.dart';
 import 'package:teaching/features/courses_groups/presentation/widgets/build_courses_groubs_tab_bar.dart';
 import 'package:teaching/features/courses_groups/presentation/manager/coures_group_operation_cubit.dart';
-import 'package:teaching/features/courses_groups/presentation/widgets/couses_groups/build_courses_tab_bar_view.dart';
-import 'package:teaching/features/courses_groups/presentation/widgets/couses_groups/build_group_tab_bar_view.dart';
 import 'package:teaching/features/courses_groups/presentation/widgets/build_public_courses_tab_bar_view.dart';
-import 'package:teaching/features/courses_groups/presentation/widgets/build_public_groups_courses.dart';
-import 'package:teaching/features/home/presentation/manager/groups_cubit.dart';
 import '../../../../core/export/export.dart';
 import '../widgets/build_public_group_tab_bar_view.dart';
 import '../widgets/build_search_widget.dart';
@@ -32,7 +28,7 @@ class _CoursesGroupsScreenState extends State<PublicCoursesGroupsScreen> {
       statusBarColor: AppColors.mainAppColor,
       child: CustomSharedFullScreen(
         title: AppStrings().coursesAndGroups.trans,
-        anotherWidget: BuildSearchWidget(),
+        anotherWidget: BuildCoursesAndGroupsSearchWidget(),
         widget: Column(
           children: [
             20.vs,

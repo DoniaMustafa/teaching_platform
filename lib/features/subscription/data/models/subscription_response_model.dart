@@ -7,16 +7,16 @@ import 'dart:convert';
 import 'package:teaching/core/export/export.dart';
 
 
-class CountryResponseModel extends ResponseModel{
+class SubscriptionResponseModel extends ResponseModel{
 
-  CountryResponseModel({
+  SubscriptionResponseModel({
    super.success,
    super.message,
    super.code,
    super.data,
   });
 
-  factory CountryResponseModel.fromJson(Map<String, dynamic> json) => CountryResponseModel(
+  factory SubscriptionResponseModel.fromJson(Map<String, dynamic> json) => SubscriptionResponseModel(
     success: json["Success"],
     message: json["Message"],
     code: json["Code"],

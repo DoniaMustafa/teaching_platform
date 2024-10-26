@@ -13,7 +13,7 @@ class  SubscriptionsWithServer extends SubscriptionsDataSource{
       request: dioConsumer.getRequest(
         path: EndPoints.getStudentSubscriptions,
       ),
-      fromJsonFunction: CountryResponseModel.fromJson);
+      fromJsonFunction: SubscriptionResponseModel.fromJson);
 
   SubscriptionsWithServer(this.dioConsumer);
 }

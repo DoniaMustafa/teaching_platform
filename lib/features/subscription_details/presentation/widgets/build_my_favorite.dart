@@ -1,12 +1,25 @@
+import 'package:teaching/features/favorite/presentation/manager/favorite_video_courses_cubit.dart';
+import 'package:teaching/features/favorite/presentation/manager/favorite_video_groups_cubit.dart';
+
 import '../../../../core/export/export.dart';
+import '../../../favorite/presentation/pages/favorite_screen.dart';
 
 class BuildMyFavorite extends StatelessWidget {
-  const BuildMyFavorite({super.key});
-
+  const BuildMyFavorite({super.key, required this.whichScreen});
+  final String whichScreen;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Routes.favoriteCourseVideoRoute.moveTo,
+      onTap: () {
+        print(whichScreen);
+        whichScreen == AppStrings().subscribeCourseDetails
+            ? context
+                .read<FavoriteVideoCoursesCubit>()
+                .getFavoriteVideoCourses()
+            : context.read<FavoriteVideoGroupsCubit>().getFavoriteVideoGroups();
+        Routes.favoriteCourseVideoRoute
+            .moveToWithArgs({FavoriteScreen.whichScreenKey: whichScreen});
+      },
       child: CustomCard(
         boxShadow: [
           BoxShadow(

@@ -4,16 +4,17 @@ import 'package:teaching/features/course/courses_details/presentation/manager/co
 import 'package:teaching/features/course/courses_details/presentation/pages/courses_details_screen.dart';
 
 import '../../../../core/export/export.dart';
+import '../../../courses_groups/presentation/manager/public_course_cubit.dart';
 
 class BuildCourses extends StatelessWidget {
   const BuildCourses({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CoursesCubit, CubitStates>(builder: (context, state) {
+    return BlocBuilder<PublicCourseCubit, CubitStates>(builder: (context, state) {
       if (state is FailedState) {
         return CustomErrorWidget(
-          onTap: () => context.read<CoursesCubit>().getCourser(),
+          onTap: () => context.read<PublicCourseCubit>().getPublicCourses(),
           message: state.message,
         );
       }
@@ -26,7 +27,7 @@ class BuildCourses extends StatelessWidget {
   }
 
   Widget buildCoursesList(CubitStates state) {
-    return CustomListView(
+    return CustomListView( axisDirection: Axis.horizontal,
         separatorWidget: (context, index) => SizedBox(
               width: 20.w,
             ),

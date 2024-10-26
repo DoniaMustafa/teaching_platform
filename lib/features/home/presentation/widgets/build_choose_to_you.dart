@@ -8,7 +8,7 @@ class BuildChooseToYou extends StatelessWidget {
     return AspectRatio(
       aspectRatio: 1.3 / 0.8,
       // height: 200.h,
-      child: CustomListView(
+      child: CustomListView( axisDirection: Axis.horizontal,
           padding: getPadding(horizontal: 20.w, bottom: 5.h),
           separatorWidget: (context, index) => SizedBox(
                 width: 20.w,

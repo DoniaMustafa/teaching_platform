@@ -1,47 +1,46 @@
 import 'package:teaching/features/auth/presentation/manager/user_cubit/user_cubit.dart';
 
 import '../../../../core/export/export.dart';
+import '../../../../custom_easy_localization.dart';
 
-class BuildDrawer extends StatelessWidget implements Drawer, EnumService {
+class BuildDrawer extends StatelessWidget implements Drawer {
   const BuildDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LanguageCubit, LanguageState>(
-      builder: (context, state) {
-        return Drawer(
-          backgroundColor: AppColors.white,
-          child: SafeArea(
-            child: Column(
-              children: [
-                40.vs,
-                CustomNetworkImage.circular(
-                  imageUrl:
-                      '${EndPoints.baseUrl}${AppService().getBlocData<UserCubit>().user!.profilePicture!}',
-                  radius: 100.r,
-                  defaultAsset: '',
-                ),
-                10.vs,
-                CustomTextWidget(
-                  text: AppPrefs.user!.name!,
+    return Drawer(
+      backgroundColor: AppColors.white,
+      child: CustomEasyLocalization(
+        child: SafeArea(
+          child: Column(
+            children: [
+              40.vs,
+              CustomNetworkImage.circular(
+                imageUrl:
+                    '${EndPoints.baseUrl}${AppService().getBlocData<UserCubit>().user!.profilePicture!}',
+                radius: 100.r,
+                defaultAsset: '',
+              ),
+              10.vs,
+              CustomTextWidget(
+                text: AppPrefs.user!.name!,
+                style: getSemiboldTextStyle(
+                    fontSize: 18, fontFamily: FontFamilies.interFamily),
+              ),
+              12.vs,
+              CustomCard(
+                child: CustomTextWidget(
+                  text: 'تبديل الحساب',
                   style: getSemiboldTextStyle(
-                      fontSize: 18, fontFamily: FontFamilies.interFamily),
+                      fontSize: 14, color: AppColors.selectedColor),
                 ),
-                12.vs,
-                CustomCard(
-                  child: CustomTextWidget(
-                    text: 'تبديل الحساب',
-                    style: getSemiboldTextStyle(
-                        fontSize: 14, color: AppColors.selectedColor),
-                  ),
-                ),
-                30.vs,
-                _buildItems
-              ],
-            ),
+              ),
+              30.vs,
+              _buildItems(context)
+            ],
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 
@@ -83,13 +82,14 @@ class BuildDrawer extends StatelessWidget implements Drawer, EnumService {
 }
 
 // Drawer buildDrawer() => ;
-get _buildItems => Column(
+Widget _buildItems(context) => Column(
       children: List.generate(
-          EnumService.userDrawerType(AppPrefs.user!.userRole!).length, (index) {
+          EnumService.userDrawerType(AppPrefs.user!.userRole!, context).length,
+          (index) {
         return GestureDetector(
-          onTap: () =>
-              EnumService.userDrawerType(AppPrefs.user!.userRole!)[index]
-                  .onTap!(),
+          onTap: () => EnumService.userDrawerType(
+                  AppPrefs.user!.userRole!, context)[index]
+              .onTap!(),
           child: CustomCard(
               padding: getPadding(horizontal: 15.w, vertical: 12.h),
               child: Row(
@@ -105,8 +105,9 @@ get _buildItems => Column(
                     builder: (context, state) {
                       return CustomTextWidget(
                         text: EnumService.userDrawerType(
-                                AppPrefs.user!.userRole!)[index]
-                            .title!.trans,
+                                AppPrefs.user!.userRole!, context)[index]
+                            .title!
+                            .trans,
                         style: getMediumTextStyle(fontSize: 14),
                       );
                     },

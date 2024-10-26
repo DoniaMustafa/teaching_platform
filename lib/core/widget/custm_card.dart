@@ -8,7 +8,7 @@ class CustomCard extends StatelessWidget {
       this.radius,
       this.boxShadow,
       this.padding,
-      this.margin,
+      this.margin,  this.alignment,
       this.borderWidth,
       this.borderColor,
       this.gradient,
@@ -25,6 +25,7 @@ class CustomCard extends StatelessWidget {
   final Widget? child;
   final Gradient? gradient;
   final EdgeInsetsDirectional? padding;
+  final  AlignmentDirectional? alignment;
   final EdgeInsetsDirectional? margin;
   final BorderRadiusDirectional? radiusDirectional;
   @override
@@ -33,7 +34,7 @@ class CustomCard extends StatelessWidget {
       height: height,
       width: width,
       padding: padding,
-      margin: margin,
+      margin: margin,alignment: alignment,
       decoration: BoxDecoration(
           color: backgroundColor ?? AppColors.white,
           border: borderColor.isNotNull

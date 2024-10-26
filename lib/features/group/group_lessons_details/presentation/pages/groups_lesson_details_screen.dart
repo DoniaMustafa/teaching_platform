@@ -1,53 +1,43 @@
-import 'package:flick_video_player/flick_video_player.dart';
+// import 'package:pod_player/pod_player.dart';
 import 'package:teaching/core/export/export.dart';
 import 'package:teaching/core/widget/common_widgets/custom_tab_bar.dart';
 import 'package:teaching/features/group/group_lessons_details/data/models/group_Lesson_details_response_model.dart';
 import 'package:teaching/features/group/group_lessons_details/presentation/manager/group_lessons_details/group_lessons_details_cubit.dart';
+import 'package:teaching/features/group/group_lessons_details/presentation/manager/subscription_group_cubit.dart';
 import 'package:teaching/features/group/group_lessons_details/presentation/widgets/build_group_componant.dart';
 import 'package:teaching/features/group/group_lessons_details/presentation/widgets/build_group_info.dart';
 import 'package:teaching/features/group/group_lessons_details/presentation/widgets/build_group_sessions.dart';
-import 'package:video_player/video_player.dart';
-
+import 'package:teaching/features/group/group_lessons_details/presentation/widgets/build_group_video.dart';
 
 class GroupsLessonDetailsScreen extends StatefulWidget {
   const GroupsLessonDetailsScreen({super.key});
-
+  static const String isSubscribeKey = "isSubscribeKey";
+  static const String titleKey = "titleKey";
+  static bool isSubscribe = false;
   @override
   State<GroupsLessonDetailsScreen> createState() => _LessonDetailsScreenState();
 }
 
 class _LessonDetailsScreenState extends State<GroupsLessonDetailsScreen> {
   int selectedIndex = 0;
+  // late VideoPlayerController _videoPlayerController;
+  // late FlickManager flickManager;
 
-  late FlickManager flickManager;
-  @override
-  void initState() {
-    super.initState();
-    // WidgetsBinding.instance.addPostFrameCallback((data) {
-    flickManager = FlickManager(
-      // autoInitialize: false,
-      videoPlayerController: VideoPlayerController.networkUrl(
-        Uri.parse(
-          'https://www.youtube.com/watch?v=5-PdM1D4Pqo',
-        ),
-      ),
-    );
-    // });
-  }
-
-  @override
-  void dispose() {
-    flickManager.dispose();
-    super.dispose();
-  }
+  String title = '';
 
   @override
   Widget build(BuildContext context) {
+    Map<String, dynamic> data = getArguments(context)!;
+    if (data.isNotNull) {
+      title = data[GroupsLessonDetailsScreen.titleKey];
+      GroupsLessonDetailsScreen.isSubscribe =
+          data[GroupsLessonDetailsScreen.isSubscribeKey];
+    }
     return CustomBackground(
       statusBarColor: AppColors.mainAppColor,
       child: CustomSharedFullScreen(
         isBackIcon: true,
-        title: 'الدرس الاول',
+        title: title,
         widget: BlocBuilder<GroupLessonsDetailsCubit, CubitStates>(
           builder: (context, state) {
             if (state is FailedState) {
@@ -70,57 +60,80 @@ class _LessonDetailsScreenState extends State<GroupsLessonDetailsScreen> {
     );
   }
 
-  buildDetails(GroupLessonDetailsDataModel model) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          FlickVideoPlayer(flickManager: flickManager),
-          20.vs,
-          Padding(
-            padding: getPadding(horizontal: 20.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                CustomTextWidget(
-                  text: model.teacherName!,
-                  style: getBoldTextStyle(fontSize: 20),
-                ),
-                10.vs,
-                BuildGroupComponent(
-                  model: model,
-                ),
-                10.vs,
-                Align(
-                  alignment: AlignmentDirectional.centerStart,
-                  child: CustomTextWidget(
-                    text: model.description!,
-                    style: getSemiboldTextStyle(
-                        fontSize: 11, color: AppColors.black.withOpacity(0.68)),
-                  ),
-                ),
-                20.vs,
-                CustomTabBar(
-                    fontSize: 14,
-                    // indexItem: index,
-                    text: AppListsConstant.lessonsTabBar,
-                    selectedIndex: selectedIndex,
-                    onTap: (index) {
-                      selectedIndex = index;
-
-                      setState(() {});
-                    }),
-                selectedIndex == 0 ? 20.vs : 0.vs,
-                selectedIndex == 0
-                    ? BuildGroupInfo(model: model,)
-                    : BuildGroupSessions(model: model)
-              ],
+  buildDetails(GroupLessonDetailsDataModel model) => SingleChildScrollView(
+        physics: const NeverScrollableScrollPhysics(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            BuildGroupVideo(
+              model: model,
             ),
-          ),
-          const Spacer(),
-          CustomElevatedButton(
-            onPressed: () {},
-            text: AppStrings().subscribeNow.trans,
-            margin: getMargin(horizontal: 100.w, bottom: 10.h),
-          )
-        ],
+            20.vs,
+            Padding(
+              padding: getPadding(horizontal: 20.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CustomTextWidget(
+                    text: model.teacherName!,
+                    style: getBoldTextStyle(fontSize: 20),
+                  ),
+                  10.vs,
+                  BuildGroupComponent(
+                    model: model,
+                  ),
+                  10.vs,
+                  Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: CustomTextWidget(
+                      text: model.description!,
+                      style: getSemiboldTextStyle(
+                          fontSize: 14,
+                          color: AppColors.black.withOpacity(0.68)),
+                    ),
+                  ),
+                  20.vs,
+                  CustomTabBar(
+                      fontSize: 14,
+                      // indexItem: index,
+                      text: AppListsConstant.lessonsTabBar,
+                      selectedIndex: selectedIndex,
+                      onTap: (index) {
+                        selectedIndex = index;
+
+                        setState(() {});
+                      }),
+                  selectedIndex == 0 ? 20.vs : 0.vs,
+                  selectedIndex == 0
+                      ? BuildGroupInfo(
+                          model: model,
+                        )
+                      : BuildGroupSessions(model: model)
+                ],
+              ),
+            ),
+            selectedIndex == 0 ? 110.vs : 10.vs,
+            GroupsLessonDetailsScreen.isSubscribe.isTrue
+                ? BlocBuilder<SubscriptionGroupCubit, CubitStates>(
+                    builder: (context, state) {
+                      if (context
+                          .read<SubscriptionGroupCubit>()
+                          .isSubscribed
+                          .isFalse) {
+                        return CustomElevatedButton(
+                          onPressed: () => context
+                              .read<SubscriptionGroupCubit>()
+                              .subscriptionGroup(model.groupId!),
+                          text: AppStrings().subscribeNow.trans,
+                          margin: getMargin(horizontal: 100.w, bottom: 10.h),
+                        );
+                      } else {
+                        return const SizedBox.shrink();
+                      }
+                    },
+                  )
+                : const SizedBox.shrink()
+          ],
+        ),
       );
 }

@@ -15,6 +15,7 @@ enum AlertTypes {
   success,
   warning,
 }
+enum ToastColors { SUCCESS, ERROR, WARNING }
 
 enum DialogTimingTypes { long, short }
 

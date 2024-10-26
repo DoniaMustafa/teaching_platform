@@ -32,14 +32,16 @@ class _SubscriptionScreenState
     return CustomBackground(
       statusBarColor: AppColors.mainAppColor,
       child: CustomSharedFullScreen(
-        title: AppStrings().subscribeDetails.trans,
+        title: AppStrings().subscribeCourseDetails.trans,
         widget: Padding(
           padding: getPadding(horizontal: 10.w),
           child: Column(
             children: [
-              BuildSubscribeComponent(),
+              // BuildSubscribeCourseDetailsComponent(model: null,),
               10.vs,
-              const BuildMyFavorite(),
+              BuildMyFavorite(
+                whichScreen: AppStrings().subscribeCourseDetails,
+              ),
               2.vs,
               const BuildSubscribeList()
             ],

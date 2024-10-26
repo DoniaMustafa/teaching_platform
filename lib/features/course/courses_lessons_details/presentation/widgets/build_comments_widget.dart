@@ -1,34 +1,54 @@
 import 'package:teaching/core/export/export.dart';
+import 'package:teaching/features/course/courses_lessons_details/presentation/manager/comment_on_lesson_cubit.dart';
+import 'package:teaching/features/course/courses_lessons_details/presentation/manager/lessons_details/lessons_details_cubit.dart';
+import 'package:teaching/features/course/courses_lessons_details/presentation/manager/lessons_details/video_operation_cubit.dart';
 
 import '../../data/models/course_Lesson_details_response_model.dart';
 
 class BuildCommentsWidget extends StatelessWidget {
-  const BuildCommentsWidget({super.key, required this.model});
-  final CourseLessonDataMode model;
+  BuildCommentsWidget({super.key, required this.videoModel});
+  final List<CourseVideoModel> videoModel;
+
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: AlignmentDirectional.bottomCenter,
-      children: [
-        model.firstLessonVideoComments!.isEmpty?const CustomEmptyWidget(): CustomListView(
-            shrinkWrap: true,
-            axisDirection: Axis.vertical,
-            padding: getPadding(vertical: 20.h),
-            itemCount:model.firstLessonVideoComments!.length,
-            separatorWidget: (context, index) => 10.vs,
-            widget: (context, index) =>
-                _buildItem(model.firstLessonVideoComments![index])),
-        CustomTextFormField(
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.r)),
-          enabledBorder:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(20.r)),
-          isFill: true,
-          suffixIcon: AppAssets().send,
-          suffixConstraints: BoxConstraints(maxHeight: 40.h, maxWidth: 40.h),
-          hintText: AppStrings().addComment.trans,
-          padding: getPadding(bottom: 10.h, horizontal: 20.w),
-        )
-      ],
+    return BlocBuilder<CommentOnLessonCubit, CubitStates>(
+      builder: (context, state) {
+        if (state is FailedState) {}
+        return Stack(
+          alignment: AlignmentDirectional.bottomCenter,
+          children: [
+            context.read<LessonsDetailsCubit>().comments.isEmpty
+                ? const CustomEmptyWidget()
+                : CustomListView(
+                    shrinkWrap: true,
+                    axisDirection: Axis.vertical,
+                    padding: getPadding(top: 20, bottom: 70.h),
+                    itemCount:
+                        context.read<LessonsDetailsCubit>().comments.length,
+                    separatorWidget: (context, index) => 10.vs,
+                    widget: (context, index) => _buildItem(
+                        context.read<LessonsDetailsCubit>().comments[index])),
+            CustomTextFormField(
+              controller: context.read<CommentOnLessonCubit>().comment,
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(20.r)),
+              enabledBorder:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(20.r)),
+              isFill: true,
+              suffixIcon: AppAssets().send,
+              suffixOnTap: () {
+                context.read<CommentOnLessonCubit>().addCommentOnVideo(
+                      videoId: context.read<VideoOperationCubit>().videoId!,
+                    );
+              },
+              suffixConstraints:
+                  BoxConstraints(maxHeight: 40.h, maxWidth: 40.h),
+              hintText: AppStrings().addComment.trans,
+              padding: getPadding(bottom: 10.h, horizontal: 20.w),
+            )
+          ],
+        );
+      },
     );
   }
 
@@ -53,7 +73,7 @@ class BuildCommentsWidget extends StatelessWidget {
                   ),
                   5.vs,
                   CustomTextWidget(
-                    text: comment.comment??'',
+                    text: comment.comment ?? '',
                     style: getRegularTextStyle(
                         fontSize: 15,
                         color: AppColors.darkGrey,

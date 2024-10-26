@@ -22,14 +22,18 @@ class BuildListOfLessons extends StatelessWidget {
         widget: (context, index) => CustomExpansionDropDown(
             onSubscribeCourse: () {
               _buildDialog(
+                  price:
+                      '${model.teacherCourses![index].totalLessonsPrice != 0.0 ? model.teacherCourses![index].totalLessonsPrice!.toDouble() : model.teacherCourses![index].price!.toDouble()} ${model.teacherCourses![index].currency!.contains("جنيه مصرى").isTrue ? AppStrings().egp.trans : ''}',
                   context: context,
                   index: index,
                   courseId: model.teacherCourses![index].courseId!);
 
               // AppService().getBlocData<SubscribeCourseCubit>().
             },
-            onSubscribeLesson: (int id) {
+            onSubscribeLesson: (int id, int lessonsIndex) {
               _buildDialog(
+                price:
+                    '${model.teacherCourses![index].courseLessons![lessonsIndex].price!} ${model.teacherCourses![index].courseLessons![lessonsIndex].currency!.contains("جنيه مصرى").isTrue ? AppStrings().egp.trans : ''}',
                 context: context,
                 index: index,
                 courseId: model.teacherCourses![index].courseId!,
@@ -38,11 +42,19 @@ class BuildListOfLessons extends StatelessWidget {
               );
               // AppService().getBlocData<SubscribeCourseCubit>().
             },
+            currency: model.teacherCourses![index].currency!
+                    .contains("جنيه مصرى")
+                    .isTrue
+                ? AppStrings().egp.trans
+                : '',
+            discount: model.teacherCourses![index].totalLessonsPrice.toString(),
             subTitle:
                 '${model.teacherCourses![index].lessonsCount!.toString()} '
                 '${model.teacherCourses![index].lessonsCount! > 1 ? AppStrings().lessons.trans : AppStrings().lesson.trans}',
             asset: AppAssets().professionalCoursesSVG,
-            titleStyle: getBoldTextStyle(fontSize: 16,),
+            titleStyle: getBoldTextStyle(
+              fontSize: 16,
+            ),
             borderColor: AppColors.transparent,
             color: AppColors.white,
             boxShadow: [
@@ -64,6 +76,8 @@ class BuildListOfLessons extends StatelessWidget {
 
               model.teacherCourses![index].courseLessons![i].isSubscribed.isTrue
                   ? Routes.lessonDetailsRoute.moveToWithArgs({
+                      LessonDetailsScreen.courseIdKey:
+                          model.teacherCourses![index].courseId,
                       LessonDetailsScreen.lessonTitleKey:
                           context.read<LanguageCubit>().isEn.isTrue
                               ? model.teacherCourses![index].courseLessons![i]
@@ -71,7 +85,21 @@ class BuildListOfLessons extends StatelessWidget {
                               : model.teacherCourses![index].courseLessons![i]
                                   .lessonTitle
                     })
-                  : null;
+                  : model.teacherCourses![index].courseLessons![i].isSubscribed
+                              .isFalse &&
+                          model.teacherCourses![index].courseLessons![i].free
+                              .isTrue
+                      ? Routes.lessonDetailsRoute.moveToWithArgs({
+                          LessonDetailsScreen.courseIdKey:
+                              model.teacherCourses![index].courseId,
+                          LessonDetailsScreen.lessonTitleKey:
+                              context.read<LanguageCubit>().isEn.isTrue
+                                  ? model.teacherCourses![index]
+                                      .courseLessons![i].lessonTitleEn
+                                  : model.teacherCourses![index]
+                                      .courseLessons![i].lessonTitle
+                        })
+                      : null;
 
               // selectedCountryId = id;
               // context.read<EducationCubit>().getEducationPrograms(id: id);
@@ -88,6 +116,7 @@ class BuildListOfLessons extends StatelessWidget {
 
   void _buildDialog(
       {required context,
+      required String price,
       required int index,
       required int courseId,
       int? courseLessonId,
@@ -100,7 +129,7 @@ class BuildListOfLessons extends StatelessWidget {
           color: AppColors.black.withOpacity(0.67),
         ),
         title:
-            ' سيتم خصم${model.teacherCourses![index].price} من محفظتك للاشتراك في كورس  سيتم خصم${AppService().getBlocData<LanguageCubit>().isEn.isTrue ? model.teacherCourses![index].titleEn : model.teacherCourses![index].title} ',
+            "${AppStrings().discount.trans} $price ${AppStrings().fromWallet.trans} ${AppService().getBlocData<LanguageCubit>().isEn.isTrue ? model.teacherCourses![index].titleEn : model.teacherCourses![index].title} ",
         widget: Expanded(
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -120,14 +149,16 @@ class BuildListOfLessons extends StatelessWidget {
                                     context
                                         .read<SubscribeCourseCubit>()
                                         .addSubscribeCourseOrLesson(
-                                            teacherId: CoursesDetailsScreen.teacherId,
-                                            teacherCourse: TeacherCourse(
-                                                courseId: courseId));
+                                            // teacherId:
+                                            //     CoursesDetailsScreen.teacherId,
+                                            // teacherCourse: TeacherCourse(
+                                            //     courseId: courseId)
+                                            );
                                   } else {
                                     context
                                         .read<SubscribeCourseCubit>()
                                         .addSubscribeCourseOrLesson(
-                                            teacherId: 94,
+                                            // teacherId: 94,
                                             teacherCourse: TeacherCourse(
                                                 courseLessonId: courseLessonId,
                                                 courseId: courseId));

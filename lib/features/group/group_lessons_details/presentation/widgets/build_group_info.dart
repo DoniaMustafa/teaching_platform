@@ -1,7 +1,6 @@
 import 'package:teaching/core/export/export.dart';
 import 'package:teaching/features/group/group_lessons_details/data/models/group_Lesson_details_response_model.dart';
 
-
 class BuildGroupInfo extends StatelessWidget {
   const BuildGroupInfo({super.key, required this.model});
   final GroupLessonDetailsDataModel model;
@@ -9,7 +8,8 @@ class BuildGroupInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _customGroupInfo(AppStrings().price.trans, model.price!.toString()),
+        _customGroupInfo(AppStrings().price.trans,
+            '${model.price!.toString()} ${model.currencyName!.contains('جنية مصري').isTrue ? AppStrings().egp.trans : ''}'),
         10.vs,
         _customGroupInfo(AppStrings().date.trans, model.days!),
         10.vs,
@@ -17,7 +17,8 @@ class BuildGroupInfo extends StatelessWidget {
         10.vs,
         _customGroupInfo(AppStrings().subscribeNow.trans, model.groupPeriod!),
         10.vs,
-        _customGroupInfo(AppStrings().sessionsNumber.trans, '${model.sessionsCount!} ${AppStrings().session.trans}'),
+        _customGroupInfo(AppStrings().sessionsNumber.trans,
+            '${model.sessionsCount!} ${AppStrings().session.trans}'),
       ],
     );
   }

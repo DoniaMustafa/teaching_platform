@@ -38,7 +38,7 @@ dependencies:
   singleton: null
   flutter_svg: any
   dio:
-  hive:
+#  hive:
   path_provider:
   cached_network_image:
   connectivity_plus:
@@ -59,18 +59,23 @@ dependencies:
   permission_handler:
   file_picker:
   image_picker:
-  video_player: ^2.9.0
-  flick_video_player: ^0.9.0
-#  open_file: ^3.5.9
-  chewie: ^1.8.5
+
+  #  open_file: ^3.5.9
+  #  video_thumbnail:
+
   url_launcher:
-#  fijkplayer: ^0.10.0
-#  video_thumbnail:
+  pod_player: ^0.2.2
+  webview_flutter:
+
+  fluttertoast: ^8.2.8
+  youtube_player_flutter: ^9.1.1
+
+
 
 
 
 dev_dependencies:
-  hive_generator:
+#  hive_generator:
   build_runner:
   flutter_test:
     sdk: flutter

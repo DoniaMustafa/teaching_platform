@@ -10,7 +10,7 @@ class CustomListView extends StatelessWidget {
       this.shrinkWrap = false,
       this.padding,
         this.scroll=const BouncingScrollPhysics(),
-      this.axisDirection = Axis.horizontal,
+      this.axisDirection = Axis.vertical,
       this.separatorWidget});
   final int itemCount;
   final Axis? axisDirection;

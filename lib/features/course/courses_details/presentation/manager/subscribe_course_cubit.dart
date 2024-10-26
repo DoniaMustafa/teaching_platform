@@ -10,25 +10,30 @@ import 'courses_details/courses_details_cubit.dart';
 class SubscribeCourseCubit extends Cubit<CubitStates> {
   SubscribeCourseCubit(this.useCase) : super(InitialState());
   SubscribeCoursesUseCase useCase;
+  bool? isSubscribe = false;
 
-  addSubscribeCourseOrLesson(
-      {TeacherCourse? teacherCourse, required int? teacherId}) {
+  addSubscribeCourseOrLesson({
+    TeacherCourse? teacherCourse,
+  }) {
     executeWithDialog(
         either: useCase.addSubscribeCourse(teacherCourse: teacherCourse),
         startingMessage: AppStrings().loading.trans,
         onSuccess: (data) {
-          AppService()
-              .getBlocData<CoursesDetailsCubit>()
-              .getCoursesDetails(TeacherModel(
-                teacherId: teacherId,
-              ));
-
+          // AppService()
+          //     .getBlocData<CoursesDetailsCubit>()
+          //     .getCoursesDetails(TeacherModel(
+          //       teacherId: teacherId,
+          //     ));
+          isSubscribe = true;
           emit(LoadedState(data: data));
           pop();
         },
         onStart: () {
           emit(LoadingState());
         },
-        onError: (message) => emit(FailedState(message: message)));
+        onError: (message) {
+          isSubscribe = false;
+          emit(FailedState(message: message));
+        });
   }
 }

@@ -4,18 +4,41 @@ import 'package:teaching/features/home/domain/use_cases/student/teacher_of_stude
 
 import '../../data/models/teacher_respons_model.dart';
 
-
-
 class TeachersOfStudentCubit extends Cubit<CubitStates> {
   TeachersOfStudentCubit(this.useCase) : super(InitialState());
   TeacherOfStudentUseCase useCase;
 
-
-  getTeacherOfStudent() {
+  List<TeacherDataModel> model = [];
+  List<TeacherDataModel> searchResult = [];
+  String teacherName = '';
+  getTeacherOfStudent({TeacherModel? teacher}) {
     managerExecute<List<TeacherDataModel>>(
-      useCase.getTeacherOfStudent(),
-      onSuccess: (data) =>
-          emit(LoadedState<List<TeacherDataModel>>(data: data!)),
+      onStart: () {
+        model = [];
+        emit(LoadingState());
+      },
+      useCase.getTeacherOfStudent(model: teacher),
+      onSuccess: (List<TeacherDataModel>? data) {
+        model = data!;
+        searchResult = model;
+        emit(LoadedState<List<TeacherDataModel>>(data: data));
+      },
       onFail: (message) => emit(FailedState(message: message)),
-    );}
+    );
+  }
+
+  searchInList(String query) {
+    final searchQuery = query.toLowerCase();
+    teacherName = query;
+    if (searchQuery.isEmpty) {
+      searchResult = model; // Display all items when search text is cleared
+      print(searchResult);
+    } else {
+      searchResult = model
+          .where((item) => item.name!.toLowerCase().contains(searchQuery))
+          .toList();
+      print(searchResult);
+    }
+    emit(LoadedState<List<TeacherDataModel>>(data: searchResult));
+  }
 }

@@ -140,9 +140,10 @@ class FirstLessonVideoCommentModel {
   final DateTime? createdAt;
   final String? userName;
   final String? userImage;
-
+  final int? courseVideoId;
   FirstLessonVideoCommentModel({
     this.id,
+    this.courseVideoId,
     this.comment,
     this.createdAt,
     this.userName,
@@ -162,6 +163,7 @@ class FirstLessonVideoCommentModel {
 
   Map<String, dynamic> toJson() => {
         "Id": id,
+        "CourseVideoId": courseVideoId,
         "Comment": comment,
         "CreatedAt": createdAt?.toIso8601String(),
         "UserName": userName,

@@ -4,6 +4,8 @@ import 'package:teaching/core/export/export.dart';
 import 'package:teaching/features/teacher/teacher_details/data/models/teacher_details_model.dart';
 import 'package:teaching/features/teacher/teacher_details/domain/use_cases/teacher_details_use_case.dart';
 
+import 'follow_teacher_cubit.dart';
+
 class TeacherDetailsCubit extends Cubit<CubitStates> {
   TeacherDetailsCubit(this.useCase) : super(InitialState());
   TeacherDetailsUseCase useCase;
@@ -11,7 +13,11 @@ class TeacherDetailsCubit extends Cubit<CubitStates> {
     managerExecute<TeacherDetailsData>(useCase.getTeachersDetails(model: model),
         onStart: () => emit(LoadingState()),
         onFail: (message) => emit(FailedState(message: message)),
-        onSuccess: (data) =>
-            emit(LoadedState<TeacherDetailsData>(data: data!)));
+        onSuccess: (data) {
+      AppService().getBlocData<FollowTeacherCubit>().isFollow=data!.isFollowed!;
+      // <FollowTeacherCubit>().isFollow =
+      //
+          emit(LoadedState<TeacherDetailsData>(data: data));
+        });
   }
 }

@@ -1,4 +1,7 @@
 import 'package:teaching/core/enums.dart';
+import 'package:teaching/features/courses_groups/presentation/manager/coures_group_operation_cubit.dart';
+import 'package:teaching/features/courses_groups/presentation/manager/public_course_cubit.dart';
+import 'package:teaching/features/courses_groups/presentation/manager/public_group_cubit.dart';
 import 'package:teaching/features/home/presentation/manager/ads_cubit.dart';
 import 'package:teaching/features/home/presentation/manager/courses_cubit.dart';
 import 'package:teaching/features/home/presentation/manager/school_cubit.dart';
@@ -16,7 +19,9 @@ import 'package:teaching/features/home/presentation/widgets/build_near_school.da
 import 'package:teaching/features/home/presentation/widgets/build_news.dart';
 import 'package:teaching/features/home/presentation/widgets/build_subscription.dart';
 import 'package:teaching/features/home/presentation/widgets/build_teachers.dart';
+import 'package:teaching/features/home/presentation/widgets/build_title_Item.dart';
 import 'package:teaching/features/home/presentation/widgets/build_welcome_user.dart';
+import 'package:teaching/features/notification/presentation/manager/notification_cubit.dart';
 
 import '../../../../core/export/export.dart';
 import '../../../main_register/presentation/widgets/build_language.dart';
@@ -34,12 +39,13 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((data) {
-      context.read<CoursesCubit>().getCourser();
       context.read<AdsCubit>().getAds();
-      context.read<GroupsCubit>().getGroups();
+      context.read<PublicCourseCubit>().getPublicCourses();
+      context.read<PublicGroupCubit>().getPublicGroups();
       context.read<NearSchoolCubit>().getNearSchool();
-      context.read<SubscriptionCubit>().getSubscription();
+      context.read<SubscriptionCubit>().getSubscription(isModel: true);
       context.read<TeachersOfStudentCubit>().getTeacherOfStudent();
+      context.read<NotificationCubit>().getNotification();
     });
   }
 
@@ -54,10 +60,10 @@ class _HomeScreenState extends State<HomeScreen> {
               child: ListView(
                 children: [
                   20.vs,
-                  const BuildWelcomeUser(),
+                  BuildWelcomeUser(),
                   20.vs,
 
-                  const BuildCategories(),
+                  BuildCategories(),
                   const BuildAdsList(),
 
                   // // 5.vs,
@@ -72,30 +78,48 @@ class _HomeScreenState extends State<HomeScreen> {
                   // _buildTitle(text: AppStrings().lecturers.trans),
                   // 8.vs,
                   // const BuildLecturer(),
+                  /////////////////////////////// NearSchool //////////////////////////////////
+
                   if (AppPrefs.user!.userRole == '1' ||
                       AppPrefs.user!.userRole == '2')
-                    _buildTitle(
+                    BuildTitleItem(
                         text: AppStrings().closeSchools.trans,
                         asset: AppAssets().schoolIcon),
                   if (AppPrefs.user!.userRole == '1') 5.vs,
                   if (AppPrefs.user!.userRole == '1') const BuildNearSchool(),
                   if (AppPrefs.user!.userRole == '1') 20.vs,
+                  /////////////////////////////// News //////////////////////////////////
+
                   if (AppPrefs.user!.userRole == '1')
-                    _buildTitle(
+                    BuildTitleItem(
                         text: AppStrings().latestNews.trans,
                         asset: AppAssets().newsIcon),
                   if (AppPrefs.user!.userRole == '1') const BuildNews(),
                   20.vs,
-                  _buildTitle(
-                      onTap: () => Routes.publicCoursesGroupsRoute.moveTo,
+                  /////////////////////////////// courses //////////////////////////////////
+
+                  BuildTitleItem(
+                      onTap: () {
+                        Routes.publicCoursesGroupsRoute.moveTo;
+                        context
+                            .read<CoursesGroupOperationCubit>()
+                            .onChangePublicTabIndex(0);
+                      },
                       all: AppStrings().all.trans,
                       text: AppStrings().courses.trans,
                       asset: AppAssets().coursesIcon),
                   5.vs,
                   const BuildCourses(),
                   20.vs,
-                  _buildTitle(
-                      onTap: () => Routes.publicCoursesGroupsRoute.moveTo,
+                  /////////////////////////////// groups //////////////////////////////////
+
+                  BuildTitleItem(
+                      onTap: () {
+                        Routes.publicCoursesGroupsRoute.moveTo;
+                        context
+                            .read<CoursesGroupOperationCubit>()
+                            .onChangePublicTabIndex(1);
+                      },
                       all: AppStrings().all.trans,
                       text: AppStrings().groups.trans,
                       asset: AppAssets().groupsIcon),
@@ -103,21 +127,33 @@ class _HomeScreenState extends State<HomeScreen> {
                   const BuildGroups(),
                   if (AppPrefs.user!.userRole == '1') 20.vs,
                   if (AppPrefs.user!.userRole == '1')
-                    _buildTitle(
+                    /////////////////////////////// Teachers //////////////////////////////////
+                    BuildTitleItem(
                         onTap: () => Routes.teachersRoute.moveTo,
                         all: AppStrings().all.trans,
                         text: AppStrings().teachers.trans,
                         asset: AppAssets().teacherIcon),
                   if (AppPrefs.user!.userRole == '1') 5.vs,
                   if (AppPrefs.user!.userRole == '1') const BuildTeachers(),
+                  /////////////////////////////// Subscription //////////////////////////////////
                   if (AppPrefs.user!.userRole == '1') 20.vs,
                   if (AppPrefs.user!.userRole == '1')
-                    _buildTitle(text: AppStrings().mySubscriptions.trans),
+                    BuildTitleItem(
+                      all: AppStrings().all.trans,
+                      text: AppStrings().mySubscriptions.trans,
+                      onTap: () {
+                        context
+                            .read<BottomNavBarOperationCubit>()
+                            .onSelectedItem(2);
+                      },
+                    ),
                   if (AppPrefs.user!.userRole == '1') 5.vs,
                   if (AppPrefs.user!.userRole == '1') const BuildSubscription(),
                   20.vs,
+                  /////////////////////////////// features //////////////////////////////////
+
                   if (AppPrefs.user!.userRole == '2')
-                    _buildTitle(
+                    BuildTitleItem(
                         text: AppStrings().features.trans,
                         asset: AppAssets().featuresIcon),
                   10.vs,
@@ -133,54 +169,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildTitle(
-          {required String text,
-          Function? onTap,
-          String? asset,
-          String? all}) =>
-      Padding(
-        padding: getPadding(start: 20.w),
-        child: Row(
-          children: [
-            CustomTextWidget(
-              text: text,
-              style: getSemiboldTextStyle(
-                  fontSize: 18, fontFamily: FontFamilies.elMessiriFamily),
-            ),
-            if (asset.isNotNull) 5.hs,
-            if (asset.isNotNull)
-              CustomImageWidget(
-                asset: asset!,
-                width: 20.w,
-                height: 20.h,
-              ),
-            if (all.isNotNull) const Spacer(),
-            if (all.isNotNull)
-              GestureDetector(
-                onTap: () => onTap!(),
-                child: Padding(
-                  padding: getPadding(end: 20.w),
-                  child: Row(
-                    children: [
-                      CustomTextWidget(
-                        text: all!,
-                        style: getSemiboldTextStyle(
-                            fontSize: 14,
-                            fontFamily: FontFamilies.elMessiriFamily),
-                      ),
-                      2.hs,
-                      const CustomIcon(
-                        icon: Icons.arrow_forward_ios,
-                        size: 12,
-                      )
-                    ],
-                  ),
-                ),
-              ),
-          ],
-        ),
-      );
-
   Widget _buildAppBar(context) => Padding(
         padding: getPadding(horizontal: 20.w, top: 15.h, bottom: 10.h),
         child: Row(
@@ -192,13 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: AppColors.mainAppColor,
               ),
             ),
-            // 10.hs,
-            // const CustomIcon(
-            //   icon: Icons.light_mode_rounded,
-            //   color: AppColors.mainAppColor,
-            // ),
             const Spacer(),
-            // const BuildLanguage(),
             const CustomIcon(
               icon: Icons.search,
               color: AppColors.mainAppColor,

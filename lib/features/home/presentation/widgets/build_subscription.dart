@@ -5,6 +5,7 @@ import 'package:teaching/features/home/presentation/manager/subscription_cubit.d
 
 import '../../../../core/export/export.dart';
 import '../../../../core/widget/common_item_widgets/custom_teatcher_item.dart';
+import '../../../subscription_details/presentation/manager/subscriptipn_group_details_cubit.dart';
 
 class BuildSubscription extends StatelessWidget {
   const BuildSubscription({super.key});
@@ -36,7 +37,7 @@ class BuildSubscription extends StatelessWidget {
         ? ListView(
             scrollDirection: Axis.horizontal,
             children: [
-              CustomListView(
+              CustomListView( axisDirection: Axis.horizontal,
                   shrinkWrap: true,
                   separatorWidget: (context, index) => SizedBox(
                         width: 20.w,
@@ -45,10 +46,12 @@ class BuildSubscription extends StatelessWidget {
                       ? state.data.courses.length
                       : AppConstants.nShimmerItems,
                   widget: (context, index) => CustomItem(
+                        onNavigateTap: () =>
+                            Routes.subscriptionOfCourseDetailsRoute.moveTo,
                         isSubScribe: true,
                         coursesModel: state.data.courses[index],
                       )),
-              CustomListView(
+              CustomListView( axisDirection: Axis.horizontal,
                   shrinkWrap: true,
                   separatorWidget: (context, index) => SizedBox(
                         width: 20.w,
@@ -57,6 +60,17 @@ class BuildSubscription extends StatelessWidget {
                       ? state.data.groups.length
                       : AppConstants.nShimmerItems,
                   widget: (context, index) => CustomItem(
+                        onNavigateTap: () {
+                          context
+                              .read<SubscriptionGroupDetailsCubit>()
+                              .getSubscriptionGroupDetails(
+                                  model: TeacherModel(
+                                      teacherId:
+                                          state.data.groups[index].teacherId,
+                                      subjectId:
+                                          state.data.groups[index].subjectId));
+                          Routes.subscriptionGroupDetailsRoute.moveTo;
+                        },
                         isSubScribe: true,
                         groupsModel: state.data.groups[index],
                       )),

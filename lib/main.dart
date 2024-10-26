@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:teaching/custom_easy_localization.dart';
 import 'package:teaching/global_bloc_observer.dart';
 import 'package:teaching/local_notification.dart';
-import 'package:teaching/service_locator.dart';
 import 'package:teaching/teaching_app.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 

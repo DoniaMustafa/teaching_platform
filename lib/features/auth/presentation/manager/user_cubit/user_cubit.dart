@@ -182,11 +182,15 @@ class UserCubit extends Cubit<UserState> {
   logout() async {
     executeWithDialog<ResponseModel>(
       either: userUsecases.logout(),
-      startingMessage: AppStrings().logout,
+      startingMessage: AppStrings().logout.trans,
       onSuccess: (data) {
         Routes.loginRoute.pushAndRemoveAllUntil;
         user = null;
       },
+      onError: (message){
+        print(message);
+        emit(LogoutErrorState(message: message));
+      }
     );
   }
 

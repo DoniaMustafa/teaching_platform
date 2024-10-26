@@ -1,3 +1,4 @@
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:teaching/core/enums.dart';
 import 'package:teaching/core/export/export.dart';
 
@@ -22,11 +23,84 @@ class EnumService {
     }
   }
 
-  static List<GenericModel> userDrawerType(String type) {
+  static List<GenericModel> userDrawerType(String type, context) {
     print(type);
     switch (type) {
       case '1':
-        return AppListsConstant.studentDrawerItems;
+        return AppListsConstant.studentDrawerItems = [
+          GenericModel(
+            onTap: () {},
+            // image: AppAssets().student,
+            // role: 'student',
+            title: AppStrings().childrenSubscription.trans,
+          ),
+          GenericModel(
+            onTap: () => Routes.teachersRoute.moveTo,
+            // image: AppAssets().teacher,
+            // role: 'lecture',
+            title: AppStrings().tasks.trans,
+          ),
+          GenericModel(
+            onTap: () => Routes.coursesGroupsRoute.moveTo,
+            // image: AppAssets().teacher,
+            // role: 'lecture',
+            title: AppStrings().courses.trans,
+          ),
+          GenericModel(
+            onTap: () {},
+            // image: AppAssets().teacher,
+            // role: 'lecture',
+            title: AppStrings().parent.trans,
+          ),
+          GenericModel(
+            onTap: () {},
+            // image: AppAssets().student,
+            // role: 'student',
+            title: AppStrings().challenges.trans,
+          ),
+          GenericModel(
+            onTap: () {},
+            // image: AppAssets().teacher,
+            // role: 'lecture',
+            title: AppStrings().myGrades.trans,
+          ),
+          GenericModel(
+            onTap: () {},
+            // image: AppAssets().teacher,
+            // role: 'lecture',
+            title: AppStrings().firstStudents.trans,
+          ),
+          //
+          GenericModel(
+            onTap: () {},
+            // image: AppAssets().teacher,
+            // role: 'lecture',
+            title: AppStrings().childrenGrades.trans,
+          ),
+          //
+          // GenericModel(
+          //   image: AppAssets().teacher,
+          //   // role: 'lecture',
+          //   title: AppStrings().homeWork.trans,
+          // ),
+          GenericModel(
+            onTap: () {
+              Routes.settingsRoute.moveTo;
+              Scaffold.of(context).openDrawer();
+              print(Scaffold.of(context).isDrawerOpen);
+            },
+            // image: AppAssets().teacher,
+            // role: 'lecture',
+            title: AppStrings().settings.trans,
+          ),
+          GenericModel(
+            onTap: () {},
+            // onTap: AppService().getBlocData<UserCubit>().logout(),
+            // image: AppAssets().teacher,
+            // role: 'lecture',
+            title: AppStrings().logout.trans,
+          ),
+        ];
       case '2':
         print('dvav');
         return AppListsConstant.drawerItems;
@@ -42,13 +116,85 @@ class EnumService {
     }
   }
 
-  static List <GenericModel>userCategoryType(String type) {
+  static List<GenericModel> userCategoryType(String type) {
     print(type);
     switch (type) {
       case '1':
-        return AppListsConstant.listOfStudentCategories;
+        return AppListsConstant.listOfStudentCategories = [
+          GenericModel(
+            image: AppAssets().student,
+            // role: 'student',
+            title: AppStrings().testYourself.trans,
+          ),
+          GenericModel(
+            // image: AppAssets().teacher,
+            // role: 'lecture',
+            title: AppStrings().myGrades.trans,
+          ),
+          GenericModel(
+            // image: AppAssets().teacher,
+            // role: 'lecture',
+            title: AppStrings().memoirs.trans,
+          ),
+          GenericModel(
+            // image: AppAssets().teacher,
+            // role: 'lecture',
+            title: AppStrings().private.trans,
+          ),
+          GenericModel(
+            // image: AppAssets().teacher,
+            // role: 'lecture',
+            title: AppStrings().live.trans,
+          ),
+          GenericModel(
+            // image: AppAssets().teacher,
+            // role: 'lecture',
+            title: AppStrings().homeWork.trans,
+          ),
+          GenericModel(
+            // image: AppAssets().teacher,
+            // role: 'lecture',
+            title: AppStrings().tasks.trans,
+          ),
+        ];
       case '2':
-        return AppListsConstant.listOfTeacherCategories;
+        return AppListsConstant.listOfTeacherCategories = [
+          GenericModel(
+            // image: AppAssets().student,
+            // role: 'student',
+            title: AppStrings().tests.trans,
+          ),
+          GenericModel(
+            // image: AppAssets().teacher,
+            // role: 'lecture',
+            title: AppStrings().memoirs.trans,
+          ),
+          GenericModel(
+            // image: AppAssets().teacher,
+            // role: 'lecture',
+            title: AppStrings().myGrades.trans,
+          ),
+          GenericModel(
+            // image: AppAssets().teacher,
+            // role: 'lecture',
+            title: AppStrings().homeWork.trans,
+          ),
+          GenericModel(
+            // image: AppAssets().teacher,
+            // role: 'lecture',
+            title: AppStrings().questions.trans,
+          ),
+          GenericModel(
+            // image: AppAssets().teacher,
+            // role: 'lecture',
+            title: AppStrings().live.trans,
+          ),
+          GenericModel(
+            // image: AppAssets().teacher,
+            // role: 'lecture',
+            title: AppStrings().tasks.trans,
+          ),
+        ];
       case '3':
         return AppListsConstant.listOfStudentCategories;
       case '6':
@@ -120,5 +266,42 @@ class EnumService {
       default:
         return EndPoints.registerStudent;
     }
+  }
+  //
+  // static ToastGravity groupsEndPointType(AlertTypes type) {
+  //   print(type);
+  //   switch (type) {
+  //     case AlertTypes.success:
+  //       return ;
+  //     case '2':
+  //       return EndPoints.getHomeTeacherGroups;
+  //     case '1':
+  //       return EndPoints.homeStudentGroups;
+  //     case '3':
+  //       return EndPoints.registerParent;
+  //     case '6':
+  //       return EndPoints.registerAssistant;
+  //     case '5':
+  //       return EndPoints.registerStudent;
+  //     default:
+  //       return EndPoints.registerStudent;
+  //   }
+  // }
+
+  static setToastColor(ToastColors color) {
+    Color basicColor;
+    switch (color) {
+      case ToastColors.SUCCESS:
+        basicColor = Colors.green;
+        break;
+      case ToastColors.ERROR:
+        basicColor = Colors.red;
+        break;
+      case ToastColors.WARNING:
+        basicColor = Colors.yellow;
+
+        break;
+    }
+    return basicColor;
   }
 }

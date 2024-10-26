@@ -26,7 +26,7 @@ class AppColors {
   // static Color? greyShade = Colors.grey[700];
   // static const Color textHint = Color(0xFFC8C7CC);
   // static const Color textFieldShadow1 = Color(0xFFBBC3CE);
-  // static const Color textFieldShadow2 = Color(0xFFFDFFFF);
+  static const Color unreadeGreyColor = Color(0xFFE8E8E8);
   static const grayColor1 = Color(0xFF888B8E);
 
   static const Color textGrayColor1 = Color(0xFFB9B4BB);

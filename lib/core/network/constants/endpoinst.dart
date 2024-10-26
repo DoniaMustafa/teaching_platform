@@ -53,7 +53,7 @@ abstract class EndPoints {
   static const String getStudentSubscriptions =
       '${api}Student/GetStudentSubscriptions';
   static const String school = '${api}School/GetSchools';
-
+     static const String getSchedule = '${api}Student/GetSchedule';
   // static const String products = '${api}Product/list';
 
 ////////////////////// teacher home /////////////////////////////////
@@ -85,6 +85,11 @@ abstract class EndPoints {
   static const String addRate = '${api}CourseVideo/AddCourseVideoRate';
   static const String subscribeCourseOrLesson = '${api}Course/SubscribeCourse';
   static const String addFavouriteUnFavouriteCourseVideo = '${api}CourseVideo/FavouriteUnFavouriteCourseVideo';
+//   /////////////////////////// Notification //////////////////////////////////////////////
+  static const String getNotification = '${api}Notification/GetUserNotifications';
+
+  static const String markNotificationAsRead = '${api}Notification/MarkNotifucationAsRead';
+
 
 
 //   /////////////////////////// subject //////////////////////////////////////////////
@@ -96,16 +101,16 @@ abstract class EndPoints {
   static const String getStudentSubscriptionsGroupsDetails = '${api}Student/GetStudentSubscriptionsTeacherGroups';
   static const String getFavouriteCourseVideos = '${api}CourseVideo/GetFavouriteCourseVideos';
 //
-//   static const String deleteFromCart = '${api}Cart/delete';
+  static const String getFavouriteGroupVideos = '${api}GroupVideo/GetFavouriteGroupVideos';
+  static const String getGroupSessions = '${api}GroupVideo/GetStudentGroupSessions';
+  static const String subscriptionGroup = '${api}Group/SubscribeGroup';
 //
-//   static const String completeOrderOfCart = '${api}Cart/compled';
+//   /////////////////////////// Transaction //////////////////////////////////////////////
+  static const String getTransaction = '${api}Transaction/GetUserTransaction';
+  static const String getBalance = '${api}Transaction/GetUserBalance';
+
 //
-//   /////////////////////////// profile //////////////////////////////////////////////
-//   static const String deleteAccount = '${api}profile/delete';
-//   static const String addAccount = '${api}profile/addNew';
-//   static const String phoneSupport = '${api}phone_support';
-//
-//   static const String changeSetting = '${api}Profile/changeSetting';
+
 //
 //   static const String bookingService = '${api}Booking/add_Booking';
 //   static const String bookingTimeAndDate = '${api}Booking/add_time';

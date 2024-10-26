@@ -44,7 +44,8 @@ class CustomShimmer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
       baseColor: baseColor ?? AppColors.mainAppColorOpacity,
-      highlightColor: highlightColor ?? AppColors.mainAppColorOpacity.withOpacity(0.3),
+      highlightColor:
+          highlightColor ?? AppColors.mainAppColorOpacity.withOpacity(0.3),
       // direction: context.read<LanguageCubit>().isEn
       //     ? ShimmerDirection.ltr
       //     : ShimmerDirection.rtl,

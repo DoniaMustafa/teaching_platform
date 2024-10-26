@@ -15,9 +15,9 @@ class CommentOnLessonsWithServer extends CommentOnLessonsDataSources {
   @override
   Future<ResponseModel> addCommentOnVideo({required int videoId,required String comment}) async =>
       remoteExecute(
-          request: dioConsumer.getRequest(
+          request: dioConsumer.postRequest(
               path: EndPoints.addCourseVideoComment,
-              queryParams: {
+              body: {
                 "CourseVideoId": videoId,
                 "Comment": comment
               }),

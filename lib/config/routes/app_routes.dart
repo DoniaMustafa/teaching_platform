@@ -5,7 +5,7 @@ import 'package:teaching/core/utils/app_colors.dart';
 import 'package:teaching/core/utils/extensions.dart';
 import 'package:teaching/features/about_us/presentation/pages/about_us_screen.dart';
 import 'package:teaching/features/auth/presentation/pages/reset_password_screen.dart';
-import 'package:teaching/features/courses_groups/presentation/pages/courses_groups_screen.dart';
+import 'package:teaching/features/booking_date/presentation/pages/booking_date_screen.dart';
 import 'package:teaching/features/course/courses_lessons_details/presentation/pages/courses_lesson_details_screen.dart';
 import 'package:teaching/features/favorite/presentation/pages/favorite_screen.dart';
 import 'package:teaching/features/group/group_lessons_details/presentation/pages/groups_lesson_details_screen.dart';
@@ -21,9 +21,11 @@ import 'package:teaching/features/auth/presentation/pages/sign_up_screen.dart';
 import 'package:teaching/features/auth/presentation/pages/verification_screen.dart';
 import 'package:teaching/features/privacy_policy/presentation/pages/privacy_policy_screen.dart';
 import 'package:teaching/features/profile/presentation/pages/profile_screen.dart';
+import 'package:teaching/features/sessions/student_group_sessions/presentation/pages/student_group_sessions_screen.dart';
 import 'package:teaching/features/settings/presentation/pages/settings_screen.dart';
 import 'package:teaching/features/splash_screen.dart';
-import 'package:teaching/features/subscription_details/presentation/pages/subscription_details_screen.dart';
+import 'package:teaching/features/subscription_details/presentation/pages/subscription_course_details_screen.dart';
+import 'package:teaching/features/subscription_details/presentation/pages/subscription_group_details_screen.dart';
 import 'package:teaching/features/teacher/teacher_details/presentation/pages/teacher_details_screen.dart';
 import 'package:teaching/features/teacher/teachers/presentation/pages/teachers_screen.dart';
 import 'package:teaching/features/terms_condition/presentation/pages/terms_condition_screen.dart';
@@ -78,13 +80,13 @@ class Routes {
   static const String aboutUsRoute = "/ aboutUs";
   static const String favoriteCourseVideoRoute = "/ favorite Course Video";
   // static const String faqRoute = "FAQs";
-  // static const String faqsDetailsRoute = "faqsDetails";
+  static const String subscriptionGroupDetailsRoute = "Subscription Group Details";
   static const String settingsRoute = "settings Route";
   //
-  static const String captainInfoRoute = "captain Info";
+  static const String bookingDateRoute = "Booking Date";
 
   //
-  static const String myReviews = "my Reviews";
+  static const String studentGroupSessionsRoute = "student Group Sessions";
   //
   static const String termsAndConditionRoute = "Terms And Condition";
 
@@ -132,9 +134,9 @@ class RouteGenerator {
       case Routes.groupsDetailsRoute:
         return buildPageRoute(
             child: GroupsDetailsScreen(), routeSettings: routeSettings);
-      case Routes.coursesGroupsRoute:
-        return buildPageRoute(
-            child: const CoursesGroupsScreen(), routeSettings: routeSettings);
+      // case Routes.coursesGroupsRoute:
+      //   return buildPageRoute(
+      //       child: const CoursesGroupsScreen(), routeSettings: routeSettings);
       case Routes.uploadResumeRoute:
         return buildPageRoute(
             child: UploadResumeScreen(), routeSettings: routeSettings);
@@ -203,17 +205,17 @@ class RouteGenerator {
       case Routes.aboutUsRoute:
         return buildPageRoute(
             child: AboutUsScreen(), routeSettings: routeSettings);
-      // // case Routes.resetPass:
-      // //   return buildPageRoute(
-      // //       child: ResetPasswordScreen(), routeSettings: routeSettings);
+      case Routes.subscriptionGroupDetailsRoute:
+        return buildPageRoute(
+            child: SubscriptionGroupDetailsScreen(), routeSettings: routeSettings);
       case Routes.privacyRoute:
         return buildPageRoute(
             child: const PrivacyPolicyScreen(), routeSettings: routeSettings);
-      // case Routes.favoriteCourseVideoRoute:
-      //   return buildPageRoute(child: FavoriteScreen(), routeSettings: routeSettings);
-      // case Routes.methodView:
-      //   return buildPageRoute(
-      //       child: MethodView(), routeSettings: routeSettings);
+      case Routes.studentGroupSessionsRoute:
+        return buildPageRoute(child: StudentGroupSessionsScreen(), routeSettings: routeSettings);
+      case Routes.bookingDateRoute:
+        return buildPageRoute(
+            child: BookingDateScreen(), routeSettings: routeSettings);
       //
       // case Routes.myTripsRoute:
       //   return buildPageRoute(

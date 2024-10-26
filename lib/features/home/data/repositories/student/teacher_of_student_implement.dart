@@ -12,7 +12,7 @@ class TeacherOfStudentImplement extends TeacherOfStudentRepo {
   TeacherOfStudentImplement(this.adsDataSource);
 
   @override
-  Future<Either<Failure, ResponseModel>> getTeacherOfStudent()=> execute(
-        () => adsDataSource.getTeachersOfStudent(),
+  Future<Either<Failure, ResponseModel>> getTeacherOfStudent({TeacherModel? model})=> execute(
+        () => adsDataSource.getTeachersOfStudent(model: model),
   );
 }

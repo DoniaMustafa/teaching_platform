@@ -29,7 +29,7 @@ class BuildPublicCoursesTabBarView extends StatelessWidget {
             mainAxisSpacing: 15.h,
             crossAxisSpacing: 20.w,
             shrinkWrap: true,
-            childAspectRatio: 0.5 / 0.6,
+            childAspectRatio: 0.5 / 0.7,
             children: List.generate(
               state is LoadedState
                   ? state.data.length

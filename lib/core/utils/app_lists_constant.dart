@@ -21,7 +21,12 @@ class AppListsConstant {
     AppStrings().attachments.trans,
     AppStrings().exams.trans,
   ];
-
+  // static  List<String> pathUrl = [
+  //   'https://www.youtube.com/watch?v=c84s0JWdEKg',
+  //   'https://www.youtube.com/watch?v=UJgDKAQmRCI',
+  //   "https://www.youtube.com/watch?v=CBlFFEWnnEc",
+  //   "https://www.youtube.com/watch?v=YUR38NnvJV4"
+  // ];
   static List<GenericModel> roles = [
     GenericModel(
       id: 1,
@@ -67,6 +72,11 @@ class AppListsConstant {
   static List<String> subscribeTab = [
     AppStrings().courses.trans,
     AppStrings().groups.trans,
+  ];
+
+  static List<String> sessionsTab = [
+    AppStrings().previousClasses.trans,
+    AppStrings().nextClasses.trans,
   ];
   static List<String> exams = [
     AppStrings().passed.trans,
@@ -115,153 +125,10 @@ class AppListsConstant {
     const WalletScreen()
   ];
 
-  static List<GenericModel> listOfStudentCategories = [
-    GenericModel(
-      image: AppAssets().student,
-      // role: 'student',
-      title: AppStrings().testYourself.trans,
-    ),
-    GenericModel(
-      // image: AppAssets().teacher,
-      // role: 'lecture',
-      title: AppStrings().myGrades.trans,
-    ),
-    GenericModel(
-      // image: AppAssets().teacher,
-      // role: 'lecture',
-      title: AppStrings().memoirs.trans,
-    ),
-    GenericModel(
-      // image: AppAssets().teacher,
-      // role: 'lecture',
-      title: AppStrings().private.trans,
-    ),
-    GenericModel(
-      // image: AppAssets().teacher,
-      // role: 'lecture',
-      title: AppStrings().live.trans,
-    ),
-    GenericModel(
-      // image: AppAssets().teacher,
-      // role: 'lecture',
-      title: AppStrings().homeWork.trans,
-    ),
-    GenericModel(
-      // image: AppAssets().teacher,
-      // role: 'lecture',
-      title: AppStrings().tasks.trans,
-    ),
-  ];
-  static List<GenericModel> listOfTeacherCategories = [
-    GenericModel(
-      // image: AppAssets().student,
-      // role: 'student',
-      title: AppStrings().tests.trans,
-    ),
-    GenericModel(
-      // image: AppAssets().teacher,
-      // role: 'lecture',
-      title: AppStrings().memoirs.trans,
-    ),
-    GenericModel(
-      // image: AppAssets().teacher,
-      // role: 'lecture',
-      title: AppStrings().myGrades.trans,
-    ),
-    GenericModel(
-      // image: AppAssets().teacher,
-      // role: 'lecture',
-      title: AppStrings().homeWork.trans,
-    ),
-    GenericModel(
-      // image: AppAssets().teacher,
-      // role: 'lecture',
-      title: AppStrings().questions.trans,
-    ),
-    GenericModel(
-      // image: AppAssets().teacher,
-      // role: 'lecture',
-      title: AppStrings().live.trans,
-    ),
-    GenericModel(
-      // image: AppAssets().teacher,
-      // role: 'lecture',
-      title: AppStrings().tasks.trans,
-    ),
-  ];
+  static List<GenericModel> listOfStudentCategories = [];
+  static List<GenericModel> listOfTeacherCategories =[];
 
-  static List<GenericModel> studentDrawerItems = [
-    GenericModel(
-      onTap: () {},
-      // image: AppAssets().student,
-      // role: 'student',
-      title: AppStrings().childrenSubscription.trans,
-    ),
-    GenericModel(
-      onTap: () => Routes.teachersRoute.moveTo,
-      // image: AppAssets().teacher,
-      // role: 'lecture',
-      title: AppStrings().tasks.trans,
-    ),
-    GenericModel(
-      onTap: () => Routes.coursesGroupsRoute.moveTo,
-      // image: AppAssets().teacher,
-      // role: 'lecture',
-      title: AppStrings().courses.trans,
-    ),
-    GenericModel(
-      onTap: () {},
-      // image: AppAssets().teacher,
-      // role: 'lecture',
-      title: AppStrings().parent.trans,
-    ),
-    GenericModel(
-      onTap: () {},
-      // image: AppAssets().student,
-      // role: 'student',
-      title: AppStrings().challenges.trans,
-    ),
-    GenericModel(
-      onTap: () {},
-      // image: AppAssets().teacher,
-      // role: 'lecture',
-      title: AppStrings().myGrades.trans,
-    ),
-    GenericModel(
-      onTap: () {},
-      // image: AppAssets().teacher,
-      // role: 'lecture',
-      title: AppStrings().firstStudents.trans,
-    ),
-    //
-    GenericModel(
-      onTap: () {},
-      // image: AppAssets().teacher,
-      // role: 'lecture',
-      title: AppStrings().childrenGrades.trans,
-    ),
-    //
-    // GenericModel(
-    //   image: AppAssets().teacher,
-    //   // role: 'lecture',
-    //   title: AppStrings().homeWork.trans,
-    // ),
-    GenericModel(
-      onTap: () =>
-          // print('route');
-          Routes.settingsRoute.moveTo,
-      // image: AppAssets().teacher,
-      // role: 'lecture',
-      title: AppStrings().settings.trans,
-    ),
-    GenericModel(
-      onTap: () {},
-      // onTap: AppService().getBlocData<UserCubit>().logout(),
-      // image: AppAssets().teacher,
-      // role: 'lecture',
-      title: AppStrings().logout.trans,
-    ),
-  ];
+  static List<GenericModel> studentDrawerItems = [];
 
   static List<GenericModel> drawerItems = [
     GenericModel(

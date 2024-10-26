@@ -5,6 +5,7 @@ import '../../../../../core/export/export.dart';
 
 abstract class GroupLessonsDetailsDataSources {
   Future<ResponseModel> getGroupLessonsDetails({required int lessonId});
+
 }
 
 class GroupLessonsWithServer extends GroupLessonsDetailsDataSources {

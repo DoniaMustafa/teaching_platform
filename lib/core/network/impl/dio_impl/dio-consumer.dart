@@ -109,7 +109,7 @@ class DioConsumer extends ApiConsumer {
   }
 
   @override
-  Future putRequest({
+  Future<Response> putRequest({
     String baseUrl = EndPoints.baseUrl,
     required String path,
     Map<String, dynamic>? body,

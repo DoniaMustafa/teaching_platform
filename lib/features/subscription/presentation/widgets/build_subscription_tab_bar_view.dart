@@ -2,6 +2,7 @@ import 'package:teaching/core/export/export.dart';
 import 'package:teaching/core/widget/shimmer_widget.dart';
 import 'package:teaching/features/home/presentation/manager/subscription_cubit.dart';
 import 'package:teaching/features/subscription/presentation/manager/subscriptipn_operation_cubit.dart';
+import 'package:teaching/features/subscription_details/presentation/manager/subscriptipn_group_details_cubit.dart';
 
 class BuildSubscriptionTabBarView extends StatelessWidget {
   const BuildSubscriptionTabBarView({super.key});
@@ -56,7 +57,17 @@ class BuildSubscriptionTabBarView extends StatelessWidget {
                             coursesModel: state.data.courses[index]);
                       } else {
                         return CustomItem(
-                            onTap: () {},
+                            onNavigateTap: () {
+                              context
+                                  .read<SubscriptionGroupDetailsCubit>()
+                                  .getSubscriptionGroupDetails(
+                                      model: TeacherModel(
+                                          teacherId: state
+                                              .data.groups[index].teacherId,
+                                          subjectId: state
+                                              .data.groups[index].subjectId));
+                              Routes.subscriptionGroupDetailsRoute.moveTo;
+                            },
                             isSubScribe: true,
                             groupsModel: state.data.groups[index]);
                       }

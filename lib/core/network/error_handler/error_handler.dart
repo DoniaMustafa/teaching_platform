@@ -43,8 +43,15 @@ class ErrorHandler implements Exception {
             return DataSource.FORBIDDEN.getFailure();
           case ResponseCode.UNAUTHORISED:
             return DataSource.UNAUTHORISED.getFailure();
+
           case ResponseCode.NOT_FOUND:
-            return DataSource.NOT_FOUND.getFailure();
+            if (jsonDecode(error.response!.data)["Message"] != null) {
+              return Failure(ResponseCode.BAD_REQUEST,
+                  jsonDecode(error.response!.data)["Message"]);
+            } else {
+              return DataSource.NOT_FOUND.getFailure();
+            }
+
           default:
             return DataSource.DEFAULT.getFailure();
         }

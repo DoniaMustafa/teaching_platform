@@ -1,5 +1,6 @@
 import 'package:teaching/core/export/export.dart';
 import 'package:teaching/features/home/presentation/manager/groups_cubit.dart';
+import 'package:teaching/features/teacher/teachers/presentation/widgets/build_teacher_search.dart';
 import 'package:teaching/features/teacher/teachers/presentation/widgets/build_trachers.dart';
 
 class TeachersScreen extends StatefulWidget {
@@ -13,8 +14,6 @@ class _CoursesGroupsScreenState extends State<TeachersScreen> {
   @override
   void initState() {
     super.initState();
-    // context.read<GroupsCubit>().getGroups();
-    // context.read<SubjectsCubit>().getSubjects();
   }
 
   @override
@@ -22,29 +21,20 @@ class _CoursesGroupsScreenState extends State<TeachersScreen> {
     return CustomBackground(
       statusBarColor: AppColors.mainAppColor,
       child: CustomSharedFullScreen(
-        title: AppStrings().coursesAndGroups.trans,
+        isBackIcon: true,
+        anotherWidget: BuildTeacherSearch(),
+        title: AppStrings().teachers.trans,
         widget: Column(
           children: [
-            CustomSubjectList(),
+            20.vs,
+            CustomSubjectList(
+              isTeacher: true,
+              isCourse: false,
+            ),
             20.vs,
             BuildTeachers()
-            // const BuildTeachersTabBar(),
-            // BlocBuilder<CoursesGroupOperationCubit, CubitStates>(
-            //   builder: (context, state) {
-            //     if (context.read<CoursesGroupOperationCubit>().tapIndex == 0) {
-            //       return BuildCoursesTabBarView();
-            //     }
-            //     return BuildGroupTabBarView();
-            //   },
-            // ),
-            // 10.vs,
           ],
         ),
-        // CustomListView(
-        //     axisDirection: Axis.vertical,
-        //     shrinkWrap: true,
-        //     itemCount: 20,
-        //     widget: (context, index) => BuildScheduleItem()),
       ),
     );
   }

@@ -3,7 +3,7 @@
 import 'package:teaching/core/export/export.dart';
 
 class BuildGroupDetailsHeaderComponent extends StatelessWidget {
-  BuildGroupDetailsHeaderComponent({super.key, required this.model});
+  const BuildGroupDetailsHeaderComponent({super.key, required this.model});
   final GroupDetailsDataModel model;
 
   @override
@@ -11,7 +11,7 @@ class BuildGroupDetailsHeaderComponent extends StatelessWidget {
     return CustomHeader(image: '${EndPoints.url}${model.teacherPicture}',name: model.teacherName!,
       subjectLabel: model.subjectName!,
       gradeLabel: model.gradeName!,
-      labelType: AppStrings().courses.trans,
+      labelType: AppStrings().groups.trans,
     );
 
   }

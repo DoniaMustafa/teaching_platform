@@ -15,7 +15,7 @@ abstract class FavoriteVideoCoursesDataSource {
       request: dioConsumer.getRequest(
           path: EndPoints.getFavouriteCourseVideos,
       ),
-      fromJsonFunction: FavoriteVideoCoursesResponseModel.fromJson);
+      fromJsonFunction: FavoriteVideoCoursesGroupsResponseModel.fromJson);
 
 
 }

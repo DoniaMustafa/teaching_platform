@@ -9,6 +9,6 @@ class TeacherOfStudentUseCase {
   TeacherOfStudentRepo repo;
   TeacherOfStudentUseCase(this.repo);
   Future<Either<Failure, ResponseModel>> getTeacherOfStudent
-      () =>
-      repo.getTeacherOfStudent();
+      ({TeacherModel? model}) =>
+      repo.getTeacherOfStudent(model:model );
 }

@@ -3,6 +3,16 @@ class AppStrings {
   static final AppStrings _instance = AppStrings._internal();
   factory AppStrings() => _instance;
 
+
+  final String chargeNow = "chargeNow";
+  final String walletAddress2 = "walletAddress2";
+
+  final String walletAddress = "walletAddress";
+
+  final String ask = "ask";
+  final String bookDate = "bookDate";
+
+  final String save = "save";
   final String birthDateError = "birthDateError";
 
   final String drivingLicenceExpiryError = "drivingLicenceExpiryError";
@@ -11,8 +21,12 @@ class AppStrings {
   final String free = 'free';
 
   final String cancel = 'cancel';
-
+  final String discount = 'discount';
+final String fromWallet="fromWallet";
   final String follower = 'follower';
+  final String wallet="wallet";
+
+  final String currentBalance="currentBalance";
 
   final String otpCode = 'otpCode';
 
@@ -94,6 +108,8 @@ class AppStrings {
   final String coursesDetails = 'courseDetails';
   final String subscribeDetails = 'subscribeDetails';
   final String groupDetails = 'groupDetails';
+  final String subscribeCourseDetails = 'subscribeCourseDetails';
+  final String subscribeGroupDetails = 'subscribeGroupDetails';
 
   final String schedule = 'schedule';
   final String language = 'language';
@@ -190,6 +206,8 @@ class AppStrings {
   final String courses = "courses";
   final String groups = "groups";
   final String store = "store";
+  final String previousClasses = "previousClasses";
+  final String nextClasses = "nextClasses";
 
   final String passed = "passed";
   final String notPassed = "notPassed";
@@ -405,7 +423,7 @@ class AppStrings {
 
   // final String editProfile = 'editProfile';
   //
-  // final String egp = 'egp';
+  final String egp = 'egp';
   //
   //
   // final String follow = 'follow';
@@ -688,7 +706,7 @@ class AppStrings {
   //
   final String subscribeNow = 'subscribeNow';
   //
-  // final String subscribed = 'subscribed';
+  final String subscribe = 'subscribe';
   //
   // final String subscription = 'subscription';
   //

@@ -10,6 +10,7 @@ class BuildTeachers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return SizedBox(
       height: 220.h,
       child:  BlocBuilder<TeachersOfStudentCubit, CubitStates>(
@@ -29,7 +30,7 @@ class BuildTeachers extends StatelessWidget {
   }
 
   Widget buildTeachersOfStudentList(CubitStates state) {
-    return CustomListView(
+    return CustomListView( axisDirection: Axis.horizontal,
         separatorWidget: (context, index) => SizedBox(
           width: 20.w,
         ),

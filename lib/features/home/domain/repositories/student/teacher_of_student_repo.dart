@@ -3,6 +3,6 @@ import 'package:teaching/core/export/export.dart';
 
 abstract class TeacherOfStudentRepo {
 
-  Future<Either<Failure,ResponseModel>> getTeacherOfStudent();
+  Future<Either<Failure,ResponseModel>> getTeacherOfStudent({TeacherModel? model});
 
 }

@@ -4,6 +4,9 @@ export 'package:teaching/core/model/response_model.dart';
 export '../utils/app_fonts.dart';
 export '../utils/app_style.dart';
 export 'package:flutter_svg/svg.dart';
+export 'package:teaching/core/utils/app_mixim.dart';
+export 'package:teaching/core/widget/common_widgets/custom_tab_bar.dart';
+
 export 'package:teaching/core/utils/app_assets.dart';
 export '../../config/constants.dart';
 export 'package:teaching/service/app.service.dart';

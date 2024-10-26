@@ -7,6 +7,18 @@ pluginManagement {
         return flutterSdkPath
     }()
 
+    def modulePrefix = ':'
+    if (gradle.ext.has('androidxMediaModulePrefix')) {
+        modulePrefix += gradle.ext.androidxMediaModulePrefix
+    }
+    gradle.ext.androidxMediaModulePrefix = ''
+
+    rootProject.name = 'androidx.media3'
+    gradle.ext.rootProjectIsAndroidXMedia3 = true
+
+    gradle.ext.androidxMediaEnableMidiModule = true
+
+
     includeBuild("$flutterSdkPath/packages/flutter_tools/gradle")
 
     repositories {

@@ -65,8 +65,6 @@ class TeacherDetailsScreen extends StatelessWidget {
                 const Spacer(),
                 BlocBuilder<FollowTeacherCubit, CubitStates>(
                   builder: (context, state) {
-                    context.read<FollowTeacherCubit>().isFollow =
-                        data.isFollowed!;
                     return GestureDetector(
                       onTap: () => context
                           .read<FollowTeacherCubit>()

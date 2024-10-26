@@ -1,63 +1,61 @@
+import 'package:teaching/features/notification/data/models/notification_response_model.dart';
+import 'package:teaching/features/notification/presentation/manager/notification_operation_cubit.dart';
+
 import '../../../../core/export/export.dart';
+import '../manager/notification_cubit.dart';
 
 class BuildNotificationItem extends StatelessWidget {
-  const BuildNotificationItem({super.key});
+  BuildNotificationItem({super.key, required this.model, required this.index});
 
+  final NotificationDataModel model;final int index;
   @override
   Widget build(BuildContext context) {
     return Align(
       alignment: AlignmentDirectional.topCenter,
-      child: CustomCard(
-        // height: 100,
-        margin: getMargin(horizontal: 10.w, vertical: 8.h),
-        radius: 10.r,
-        borderColor: AppColors.borderColor2,
-        borderWidth: 0.5,
-        padding: getPadding(horizontal: 10.w, vertical: 15.h),
-        child: Row(
-          children: [
-            CustomNetworkImage.circular(
-              imageUrl: AppAssets().student,
-              radius: 50.r,
-            ),
-            10.hs,
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      CustomTextWidget(
-                        text: '10/05/1236 12:00 am',
-                        style: getRegularTextStyle(
-                          height: 1,
-                          fontSize: 12,
-                          color: AppColors.mainAppColor,
-                        ),
+      child: BlocBuilder<NotificationOperationCubit, CubitStates>(
+        builder: (context, state) {
+          // context.read<NotificationCubit>().isRead ;
+          // print(context.read<NotificationCubit>().isRead);
+          return GestureDetector(
+            onTap: () => context
+                .read<NotificationOperationCubit>()
+                .getMarkNotificationAsRead(id: model.id!,index:index),
+            child: CustomCard(
+                backgroundColor:
+                    context.read<NotificationOperationCubit>().isRead[index].isTrue
+                        ? AppColors.white
+                        : AppColors.unreadeGreyColor,
+                margin: getMargin(
+                  horizontal: 10.w,
+                ),
+                radius: 10.r,
+                borderColor: AppColors.borderColor2,
+                borderWidth: 0.5,
+                padding: getPadding(horizontal: 15.w, vertical: 15.h),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    CustomTextWidget(
+                      text: model.createdAt!,
+                      style: getRegularTextStyle(
+                        height: 1,
+                        fontSize: 12,
+                        color: AppColors.mainAppColor,
                       ),
-                      const Spacer(),
-                      const CustomIcon(
-                        icon: Icons.close,
-                        size: 18,
-                        color: AppColors.black,
-                      )
-                    ],
-                  ),
-                  5.vs,
-                  CustomTextWidget(
-                    text:
-                        'AppStrings().notificatinotificationTitlenotificationTitlenotificationTitlenotificationTitleonTitle.trans',
-                    style: getRegularTextStyle(
-                      fontSize: 14,
-                      height: 1.4,
-                      color: AppColors.black,
                     ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+                    8.vs,
+                    CustomTextWidget(
+                      text: model.text!,
+                      style: getRegularTextStyle(
+                        fontSize: 14,
+                        height: 1.4,
+                        color: AppColors.black,
+                      ),
+                    ),
+                  ],
+                )),
+          );
+        },
       ),
     );
   }

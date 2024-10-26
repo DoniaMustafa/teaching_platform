@@ -549,17 +549,22 @@ Future<Either<Failure, ResponseModel>> executeCache(
 Future<T?> managerExecute<T>(Future<Either<Failure, ResponseModel>> either,
     {Function(T? data)? onSuccess,
     Function()? onStart,
-    Function(String message)? onFail}) async {
+    Function(String message)? onFail,
+      Future<void> Function(dynamic data)? beforeSuccess}) async {
   T? data;
   onStart?.call();
   (await either).fold((Failure failure) {
     print(failure.message);
     onFail?.call(failure.message);
-  }, (ResponseModel value) {
+  }, (ResponseModel value)async {
+    data = value.data;
+    if (beforeSuccess.isNotNull) {
+      await beforeSuccess!.call(data);
+    }
     print(value.message);
     print(value.data);
 
-    data = value.data;
+
     onSuccess?.call(data);
   });
   return data;

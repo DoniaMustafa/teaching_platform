@@ -10,11 +10,14 @@ class CustomExpansionDropDown<T> extends StatefulWidget {
   final String? subTitle;
   final bool? isSubscribed;
   final String? price;
+  final String? discount;
+  final String? currency;
+  final String? currencyItem;
   final String? asset;
   final bool isFree;
   final Color? borderColor;
   final VoidCallback? onSubscribeCourse;
-  final Function(int)? onSubscribeLesson;
+  final Function(int id, int index)? onSubscribeLesson;
   final Color? color;
   final Color? unselectedColor;
   final List<CourseLesson>? lesson;
@@ -27,10 +30,13 @@ class CustomExpansionDropDown<T> extends StatefulWidget {
     required this.title,
     required this.status,
     this.asset,
+    this.currency,
+    this.currencyItem,
     this.onSubscribeCourse,
     this.borderColor,
     this.onSubscribeLesson,
     this.subTitle,
+    this.discount,
     this.isFree = true,
     this.price,
     this.lesson,
@@ -131,33 +137,37 @@ class _ExpansionTileDropDownState extends State<CustomExpansionDropDown> {
                         text: widget.subTitle!,
                         style: getRegularTextStyle(
                             fontSize: 14, color: AppColors.subTitleColor),
-                      )
+                      ),
+                    if (widget.isSubscribed.isFalse) 5.vs,
+                    if (widget.isSubscribed.isFalse)
+                      Row(
+                        children: [
+                          CustomTextWidget(
+                            text: widget.discount != '0.0'
+                                ? '${widget.discount.toString()} ${widget.currency}'
+                                : '${widget.price.toString()} ${widget.currency}',
+                            style:
+                                getBoldTextStyle(color: AppColors.mainAppColor),
+                          ),
+                          5.hs,
+                          if (widget.discount != '0.0')
+                            CustomTextWidget(
+                              text:
+                                  '${widget.price.toString()} ${widget.currency}',
+                              style: getMediumTextStyle(
+                                  fontSize: 14,
+                                  decoration: TextDecoration.lineThrough,
+                                  decorationColor: AppColors.red,
+                                  color: AppColors.profileDivider),
+                            ),
+                        ],
+                      ),
                   ],
                 ),
               ),
-              // if (widget.isText.isFalse && widget.free.isTrue)
-              //   CustomTextWidget(text: 'free'),
-              // if (widget.isText.isFalse && widget.isSubscribed.isFalse)
-              //   Row(
-              //     children: [
-              //
-              //       // 10.hs,
-              //       // CustomIcon(icon: Icons.lock,color: AppColors.mainAppColor,)
-              //     ],
-              //   ),
             ],
           ),
-          children:
-              // widget.isSubscribed.isFalse
-              //     ? [
-              //         CustomElevatedButton(
-              //           onPressed: widget.onSubscribeCourse,
-              //           text: AppStrings().subscribeNow.trans,
-              //           margin: getMargin(horizontal: 120.w),
-              //         )
-              //       ]
-              //     :
-              List.generate(
+          children: List.generate(
             widget.items.length,
             (index) => buildExpandedItem(index),
           )),
@@ -168,11 +178,9 @@ class _ExpansionTileDropDownState extends State<CustomExpansionDropDown> {
       behavior: HitTestBehavior.translucent,
       onTap: () {
         debugPrint("selected");
-        // activeText = widget.items[index].name;
 
         widget.onSelected(widget.items[index].lessonId, index);
         isExpanded = false;
-        // debugPrint(widget.items[index].id.toString());
         setState(() {});
       },
       child: Container(
@@ -204,17 +212,33 @@ class _ExpansionTileDropDownState extends State<CustomExpansionDropDown> {
                 children: [
                   CustomTextWidget(
                     text: widget.items[index].lessonTitle,
+                    lines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: getMediumTextStyle(
                       fontSize: 16,
                     ),
                   ),
-                  10.vs,
-                  CustomTextWidget(
-                      text:
-                          '${widget.items[index].videosCount.toString()} ${AppStrings().video.trans}',
-                      style: getMediumTextStyle(
-                        fontSize: 14,
-                      )),
+                  3.vs,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      CustomTextWidget(
+                          text:
+                              '${widget.items[index].videosCount.toString()} ${AppStrings().video.trans}',
+                          style: getMediumTextStyle(
+                            fontSize: 14,
+                          )),
+                      5.hs,
+                      if (widget.lesson![index].isSubscribed.isFalse &&
+                          widget.lesson![index].free.isFalse)
+                        CustomTextWidget(
+                          text:
+                              '${widget.lesson![index].price.toString()} ${widget.lesson![index].currency!.contains("جنيه مصرى").isTrue ? AppStrings().egp.trans : ''}',
+                          style: getRegularTextStyle(
+                              fontSize: 14, color: AppColors.mainAppColor),
+                        ),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -225,25 +249,21 @@ class _ExpansionTileDropDownState extends State<CustomExpansionDropDown> {
                 style: getRegularTextStyle(
                     fontSize: 16, color: AppColors.mainAppColor),
               ),
-            if (widget.lesson![index].isSubscribed.isFalse)
+            if (widget.lesson![index].isSubscribed.isFalse &&
+                widget.lesson![index].free.isFalse)
               GestureDetector(
-                onTap: () =>
-                    widget.onSubscribeLesson!(widget.lesson![index].lessonId!),
-                child: Row(
-                  children: [
-                    CustomTextWidget(
-                      text: widget.lesson![index].price.toString(),
-                      style: getRegularTextStyle(
-                          fontSize: 16, color: AppColors.mainAppColor),
-                    ),
-                    5.hs,
-                    const CustomIcon(
-                      icon: Icons.lock,
-                      color: AppColors.mainAppColor,
-                      size: 17,
-                    )
-                  ],
-                ),
+                  onTap: () {
+                    widget.onSubscribeLesson!(
+                        widget.lesson![index].lessonId!, index);
+                    print(widget.lesson![index].lessonId!);
+                    print(index);
+                  },
+                  child: CustomTextWidget(text: AppStrings().subscribe.trans)),
+            if (widget.lesson![index].isSubscribed.isTrue ||
+                widget.lesson![index].free.isTrue)
+              const CustomIcon(
+                icon: Icons.play_circle_fill,
+                color: AppColors.mainAppColor,
               )
           ],
         ),
@@ -258,157 +278,36 @@ class _ExpansionTileDropDownState extends State<CustomExpansionDropDown> {
             return const CustomIcon(
               icon: Icons.keyboard_arrow_down_outlined,
               color: AppColors.black,
-              size: 17,
+              size: 20,
             );
           } else {
             return const CustomIcon(
               icon: Icons.keyboard_arrow_up_outlined,
               color: AppColors.black,
-              size: 17,
+              size: 20,
             );
           }
         } else if (widget.isSubscribed.isFalse) {
           if (isExpanded.isTrue) {
-            return SizedBox(
-              width: 100.w,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: widget.onSubscribeCourse,
-                      child: Row(
-                        children: [
-                          if (widget.price.isNotNull)
-                            CustomTextWidget(
-                              text: widget.price.toString(),
-                              style: getBoldTextStyle(
-                                  color: AppColors.mainAppColor),
-                            ),
-                          if (widget.price.isNotNull) 5.hs,
-                          const CustomIcon(
-                            icon: Icons.lock,
-                            color: AppColors.mainAppColor,
-                            size: 20,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  if (widget.price.isNotNull) 5.hs,
-                  const CustomIcon(
-                    icon: Icons.keyboard_arrow_down_outlined,
-                    color: AppColors.black,
-                    size: 17,
-                  ),
-                ],
-              ),
-            );
+            return _buildSubscriptionTrailingWidgets(
+                icon: Icons.keyboard_arrow_down_outlined);
           } else {
-            return SizedBox(
-              width: 100.w,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: widget.onSubscribeCourse,
-                      child: Row(
-                        children: [
-                          if (widget.price.isNotNull)
-                            CustomTextWidget(
-                              text: widget.price.toString(),
-                              style: getBoldTextStyle(
-                                  color: AppColors.mainAppColor),
-                            ),
-                          if (widget.price.isNotNull) 5.hs,
-                          const CustomIcon(
-                            icon: Icons.lock,
-                            color: AppColors.mainAppColor,
-                            size: 20,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  if (widget.price.isNotNull) 5.hs,
-                  const CustomIcon(
-                    icon: Icons.keyboard_arrow_up_outlined,
-                    color: AppColors.black,
-                    size: 17,
-                  ),
-                ],
-              ),
-            );
+            return _buildSubscriptionTrailingWidgets(
+                icon: Icons.keyboard_arrow_up_outlined);
           }
         }
-      } else if (widget.isSubscribed.isFalse) {
-        if (isExpanded.isTrue) {
-          return SizedBox(
-            width: 100.w,
-            child: Row(
-              children: [
-                Expanded(
-                  child: GestureDetector(
-                    onTap: widget.onSubscribeCourse,
-                    child: Row(
-                      children: [
-                        if (widget.price.isNotNull)
-                          CustomTextWidget(
-                            text: widget.price.toString(),
-                            style:
-                                getBoldTextStyle(color: AppColors.mainAppColor),
-                          ),
-                        if (widget.price.isNotNull) 5.hs,
-                        const CustomIcon(
-                          icon: Icons.lock,
-                          color: AppColors.mainAppColor,
-                          size: 20,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          );
-        } else {
-          return SizedBox(
-            width: 100.w,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Expanded(
-                  child: GestureDetector(
-                    onTap: widget.onSubscribeCourse,
-                    child: Row(
-                      children: [
-                        if (widget.price.isNotNull)
-                          CustomTextWidget(
-                            text: widget.price.toString(),
-                            style:
-                                getBoldTextStyle(color: AppColors.mainAppColor),
-                          ),
-                        if (widget.price.isNotNull) 5.hs,
-                        const CustomIcon(
-                          icon: Icons.lock,
-                          color: AppColors.mainAppColor,
-                          size: 20,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                if (widget.price.isNotNull) 5.hs,
-                const CustomIcon(
-                  icon: Icons.keyboard_arrow_up_outlined,
-                  color: AppColors.black,
-                  size: 17,
-                ),
-              ],
-            ),
-          );
+      } else if (widget.items.isEmpty) {
+        if (widget.isSubscribed.isFalse) {
+          if (isExpanded.isTrue) {
+            return _buildSubscriptionTrailingWidgets(
+                icon: Icons.keyboard_arrow_down_outlined);
+          } else {
+            return _buildSubscriptionTrailingWidgets(
+                icon: Icons.keyboard_arrow_up_outlined);
+          }
         }
       }
+
       return const SizedBox.shrink();
     } else if (widget.status == ListStatus.listLoading) {
       return _buildLoadingTrailingWidget;
@@ -421,6 +320,33 @@ class _ExpansionTileDropDownState extends State<CustomExpansionDropDown> {
         width: 8,
         child: CircularProgressIndicator(
           color: AppColors.darkMainAppColor,
+        ),
+      );
+
+  Widget _buildSubscriptionTrailingWidgets({required IconData icon}) =>
+      SizedBox(
+        width: context.read<LanguageCubit>().isEn ? 95.w : 80.w,
+        child: Row(
+          children: [
+            Expanded(
+              child: GestureDetector(
+                onTap: widget.onSubscribeCourse,
+                child: CustomTextWidget(
+                  text: AppStrings().subscribe.trans,
+                  style: getMediumTextStyle(
+                      fontSize: context.read<LanguageCubit>().isEn ? 14 : 18),
+                  lines: 1,
+                  textScalar: const TextScaler.linear(1),
+                ),
+              ),
+            ),
+            5.hs,
+            CustomIcon(
+              icon: icon,
+              color: AppColors.black,
+              size: 20,
+            ),
+          ],
         ),
       );
 }

@@ -24,7 +24,7 @@ class BuildNearSchool extends StatelessWidget {
           if (state is LoadedState && state.data.isEmpty) {
             return const SizedBox.shrink();
           }
-          return CustomListView(
+          return CustomListView(      axisDirection: Axis.horizontal,
             separatorWidget: (context, index) => SizedBox(
               width: 20.w,
             ),

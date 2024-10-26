@@ -5,6 +5,7 @@ import 'package:teaching/features/courses_groups/presentation/manager/public_gro
 import 'package:teaching/features/courses_groups/presentation/widgets/build_search_widget.dart';
 import 'package:teaching/features/group/groups_details/presentation/manager/group_details/group_details_cubit.dart';
 import 'package:teaching/features/home/presentation/manager/groups_cubit.dart';
+import 'package:teaching/features/home/presentation/manager/teachers_of_student_cubit.dart';
 import 'package:teaching/features/teacher/teacher_details/presentation/manager/teacher_details_cubit.dart';
 
 import '../manager/public_course_cubit.dart';
@@ -14,9 +15,11 @@ class CustomSubjectList extends StatelessWidget with SearchVariables {
       {super.key,
       this.isPublicTeacher = false,
       this.isCourse = true,
+      this.isTeacher = true,
       this.teacherId = 94});
   final bool? isPublicTeacher;
   final int? teacherId;
+  final bool? isTeacher;
   final bool isCourse;
   @override
   Widget build(BuildContext context) {
@@ -32,6 +35,7 @@ class CustomSubjectList extends StatelessWidget with SearchVariables {
               return const SizedBox.shrink();
             }
             return CustomListView(
+              axisDirection: Axis.horizontal,
                 padding: getPadding(top: 20.h, start: 10.w),
                 itemCount: state is LoadedState
                     ? state.data.length
@@ -65,16 +69,16 @@ class CustomSubjectList extends StatelessWidget with SearchVariables {
                   .onSelectedSubjectIndex(index);
               if (isCourse) {
                 if (isPublicTeacher.isTrue) {
-                  print('courseController>?>>>>>>>>>>>${AppService()
-                      .getBlocData<PublicCourseCubit>().teacherName}');
+                  print(
+                      'courseController>?>>>>>>>>>>>${AppService().getBlocData<PublicCourseCubit>().teacherName}');
                   AppService()
                       .getBlocData<PublicCourseCubit>()
                       .getPublicCourses(
                         dataModel: TeacherModel(
                             subjectId: model.id,
-                            teacherName:
-                            AppService()
-                                .getBlocData<PublicCourseCubit>().teacherName),
+                            teacherName: courseController.isNotNull
+                                ? courseController.text
+                                : null),
                       );
                 } else {
                   AppService()
@@ -91,6 +95,17 @@ class CustomSubjectList extends StatelessWidget with SearchVariables {
                                 ? groupController.text
                                 : null),
                       );
+                }
+                if (isTeacher.isTrue) {
+                  AppService()
+                      .getBlocData<TeachersOfStudentCubit>()
+                      .getTeacherOfStudent(
+                          teacher: TeacherModel(
+                        subjectId: model.id,
+                        // teacherName: courseController.isNotNull
+                        //     ? courseController.text
+                        //     : null
+                      ));
                 } else {
                   AppService()
                       .getBlocData<GroupDetailsCubit>()

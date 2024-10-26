@@ -4,6 +4,7 @@ import '../../../../../core/export/export.dart';
 abstract class LessonsDetailsDataSources {
 
   Future<ResponseModel> getLessonsDetails({required int lessonId});
+
 }
 
 class LessonsDetailsWithServer extends LessonsDetailsDataSources{

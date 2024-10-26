@@ -7,7 +7,7 @@ class BuildNews extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 100.h,
-      child: CustomListView(
+      child: CustomListView( axisDirection: Axis.horizontal,
         separatorWidget: (context, index) => SizedBox(
           width: 20.w,
         ),

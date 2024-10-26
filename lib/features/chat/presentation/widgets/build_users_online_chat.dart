@@ -17,7 +17,7 @@ class BuildUsersOnlineChat extends StatelessWidget {
   Widget build(BuildContext context) {
     return AspectRatio(
       aspectRatio: 3.2 / 0.9,
-      child: CustomListView(
+      child: CustomListView(axisDirection: Axis.horizontal,
           itemCount: 10,
           widget: (context, index) => GestureDetector(
                 // onTap: onTap,

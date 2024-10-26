@@ -3,23 +3,18 @@ import 'package:teaching/features/courses_groups/presentation/manager/coures_gro
 import 'package:teaching/features/courses_groups/presentation/manager/public_course_cubit.dart';
 import 'package:teaching/features/courses_groups/presentation/manager/public_group_cubit.dart';
 
-mixin SearchVariables {
-  TextEditingController courseController = TextEditingController();
 
-  TextEditingController groupController = TextEditingController();
 
-}
-
-class BuildSearchWidget extends StatefulWidget {
-  BuildSearchWidget({
+class BuildCoursesAndGroupsSearchWidget extends StatefulWidget {
+  BuildCoursesAndGroupsSearchWidget({
     super.key,
   });
 
   @override
-  State<BuildSearchWidget> createState() => _BuildSearchWidgetState();
+  State<BuildCoursesAndGroupsSearchWidget> createState() => _BuildCoursesAndGroupsSearchWidgetState();
 }
 
-class _BuildSearchWidgetState extends State<BuildSearchWidget>
+class _BuildCoursesAndGroupsSearchWidgetState extends State<BuildCoursesAndGroupsSearchWidget>
     with SearchVariables {
   @override
   Widget build(BuildContext context) {

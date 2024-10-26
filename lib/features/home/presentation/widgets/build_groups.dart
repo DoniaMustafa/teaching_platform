@@ -2,6 +2,7 @@ import 'package:teaching/features/group/groups_details/presentation/manager/grou
 import 'package:teaching/features/group/groups_details/presentation/pages/groups_details_screen.dart';
 
 import '../../../../core/export/export.dart';
+import '../../../courses_groups/presentation/manager/public_group_cubit.dart';
 import '../manager/groups_cubit.dart';
 
 class BuildGroups extends StatelessWidget {
@@ -9,7 +10,7 @@ class BuildGroups extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<GroupsCubit, CubitStates>(builder: (context, state) {
+    return BlocBuilder<PublicGroupCubit, CubitStates>(builder: (context, state) {
       if (state is FailedState) {
         return SizedBox.shrink();
       }
@@ -22,7 +23,7 @@ class BuildGroups extends StatelessWidget {
   }
 
   Widget buildCoursesList(CubitStates state) {
-    return CustomListView(
+    return CustomListView( axisDirection: Axis.horizontal,
         separatorWidget: (context, index) => 20.hs,
         itemCount: state is LoadedState
             ? state.data.length
