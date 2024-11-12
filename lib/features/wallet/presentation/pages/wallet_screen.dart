@@ -53,7 +53,7 @@ class _WalletScreenState extends State<WalletScreen> {
                       }
                       return CustomTextWidget(
                         text: state is LoadedState
-                            ? state.data.totalBalance.toString()
+                            ? '${state.data.totalBalance!} ${AppStrings().egp.trans}'
                             : "0.0",
                         style: getRegularTextStyle(
                             fontSize: 16, color: AppColors.white),
@@ -132,7 +132,10 @@ class _WalletScreenState extends State<WalletScreen> {
               child: Row(
                 children: [
                   10.hs,
-                  CustomSvg(asset: AppAssets().transaction),
+                  SizedBox(
+                      width: 30.w,
+                      height: 30.h,
+                      child: CustomSvg(asset: AppAssets().wallet)),
                   10.hs,
                   CustomTextWidget(
                     text: 'سجل المعاملات',

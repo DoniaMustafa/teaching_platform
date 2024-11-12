@@ -1,6 +1,7 @@
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:teaching/core/enums.dart';
+import 'package:teaching/agora/live_screen.dart';
 import 'package:teaching/core/export/export.dart';
+import 'package:teaching/features/home_work/presentation/manager/homework_operation_cubit.dart';
+import 'package:teaching/features/private/presentation/manager/private_groups_operation_cubit.dart';
 
 class EnumService {
   static String registerType(type) {
@@ -29,28 +30,37 @@ class EnumService {
       case '1':
         return AppListsConstant.studentDrawerItems = [
           GenericModel(
-            onTap: () {},
-            // image: AppAssets().student,
-            // role: 'student',
-            title: AppStrings().childrenSubscription.trans,
-          ),
-          GenericModel(
-            onTap: () => Routes.teachersRoute.moveTo,
-            // image: AppAssets().teacher,
-            // role: 'lecture',
-            title: AppStrings().tasks.trans,
-          ),
-          GenericModel(
-            onTap: () => Routes.coursesGroupsRoute.moveTo,
+            onTap: () => Routes.publicCoursesGroupsRoute.moveTo,
             // image: AppAssets().teacher,
             // role: 'lecture',
             title: AppStrings().courses.trans,
           ),
           GenericModel(
-            onTap: () {},
+            onTap: () {
+              AppService()
+                  .getBlocData<BottomNavBarOperationCubit>()
+                  .onSelectedItem(2);
+              // Routes.bottomNavigationRoute.moveTo;
+              Scaffold.of(context).closeDrawer();
+            },
+            title: AppStrings().mySubscriptions.trans,
+          ),
+          GenericModel(
+            onTap: () {
+              Routes.teachersRoute.moveTo;
+            },
+            // image: AppAssets().student,
+            // role: 'student',
+            title: AppStrings().teachers.trans,
+          ),
+
+          GenericModel(
+            onTap: () {
+              Routes.myGradesRoute.moveTo;
+            },
             // image: AppAssets().teacher,
             // role: 'lecture',
-            title: AppStrings().parent.trans,
+            title: AppStrings().myGrades.trans,
           ),
           GenericModel(
             onTap: () {},
@@ -58,8 +68,73 @@ class EnumService {
             // role: 'student',
             title: AppStrings().challenges.trans,
           ),
+
           GenericModel(
             onTap: () {},
+            // image: AppAssets().teacher,
+            // role: 'lecture',
+            title: AppStrings().firstStudents.trans,
+          ),
+          //
+          GenericModel(
+            onTap: () {
+              Routes.parentsRoute.moveTo;
+            },
+            // image: AppAssets().teacher,
+            // role: 'lecture',
+            title: AppStrings().parent.trans,
+          ),
+
+          GenericModel(
+            onTap: () => Routes.teachersRoute.moveTo,
+            // image: AppAssets().teacher,
+            // role: 'lecture',
+            title: AppStrings().tasks.trans,
+          ),
+          GenericModel(
+            onTap: () {
+              Routes.settingsRoute.moveTo;
+              // Scaffold.of(context).closeDrawer();
+              print(Scaffold.of(context).isDrawerOpen);
+            },
+            // image: AppAssets().teacher,
+            // role: 'lecture',
+            title: AppStrings().settings.trans,
+          ),
+        ];
+      case '2':
+        print('dvav');
+        return AppListsConstant.drawerItems;
+      case '3':
+        return AppListsConstant.parentDrawerItems = [
+          GenericModel(
+            onTap: () => Routes.publicCoursesGroupsRoute.moveTo,
+            // image: AppAssets().teacher,
+            // role: 'lecture',
+            title: AppStrings().courses.trans,
+          ),
+          GenericModel(
+            onTap: () {
+              AppService()
+                  .getBlocData<BottomNavBarOperationCubit>()
+                  .onSelectedItem(2);
+              // Routes.bottomNavigationRoute.moveTo;
+              Scaffold.of(context).closeDrawer();
+            },
+            title: AppStrings().mySubscriptions.trans,
+          ),
+          GenericModel(
+            onTap: () {
+              Routes.teachersRoute.moveTo;
+            },
+            // image: AppAssets().student,
+            // role: 'student',
+            title: AppStrings().teacher.trans,
+          ),
+          GenericModel(
+            onTap: () {
+              Routes.myGradesRoute.moveTo;
+            },
             // image: AppAssets().teacher,
             // role: 'lecture',
             title: AppStrings().myGrades.trans,
@@ -70,42 +145,17 @@ class EnumService {
             // role: 'lecture',
             title: AppStrings().firstStudents.trans,
           ),
-          //
-          GenericModel(
-            onTap: () {},
-            // image: AppAssets().teacher,
-            // role: 'lecture',
-            title: AppStrings().childrenGrades.trans,
-          ),
-          //
-          // GenericModel(
-          //   image: AppAssets().teacher,
-          //   // role: 'lecture',
-          //   title: AppStrings().homeWork.trans,
-          // ),
           GenericModel(
             onTap: () {
               Routes.settingsRoute.moveTo;
-              Scaffold.of(context).openDrawer();
+              // Scaffold.of(context).closeDrawer();
               print(Scaffold.of(context).isDrawerOpen);
             },
             // image: AppAssets().teacher,
             // role: 'lecture',
             title: AppStrings().settings.trans,
           ),
-          GenericModel(
-            onTap: () {},
-            // onTap: AppService().getBlocData<UserCubit>().logout(),
-            // image: AppAssets().teacher,
-            // role: 'lecture',
-            title: AppStrings().logout.trans,
-          ),
         ];
-      case '2':
-        print('dvav');
-        return AppListsConstant.drawerItems;
-      case '3':
-        return AppListsConstant.studentDrawerItems;
       case '6':
         return AppListsConstant.studentDrawerItems;
       case '7':
@@ -119,41 +169,53 @@ class EnumService {
   static List<GenericModel> userCategoryType(String type) {
     print(type);
     switch (type) {
-      case '1':
+      case "1":
         return AppListsConstant.listOfStudentCategories = [
           GenericModel(
+            onTap: () {
+              Routes.examsRoute.moveTo;
+            },
             image: AppAssets().student,
             // role: 'student',
             title: AppStrings().testYourself.trans,
           ),
           GenericModel(
-            // image: AppAssets().teacher,
-            // role: 'lecture',
+            onTap: () {
+              Routes.myGradesRoute.moveTo;
+            },
             title: AppStrings().myGrades.trans,
           ),
           GenericModel(
-            // image: AppAssets().teacher,
-            // role: 'lecture',
-            title: AppStrings().memoirs.trans,
+            onTap: () => Routes.notesRoute.moveTo,
+            title: AppStrings().notes.trans,
           ),
           GenericModel(
-            // image: AppAssets().teacher,
-            // role: 'lecture',
+            onTap: () {AppService().getBlocData<PrivateGroupsOperationCubit>().privateIndex=0;
+              Routes.privateGroupsRoute.moveTo;
+            },
             title: AppStrings().private.trans,
           ),
           GenericModel(
-            // image: AppAssets().teacher,
-            // role: 'lecture',
+            onTap: () {
+              Routes.liveRoute.moveToWithArgs({LiveScreen.hostKey: true});
+            },
             title: AppStrings().live.trans,
           ),
           GenericModel(
-            // image: AppAssets().teacher,
-            // role: 'lecture',
+            onTap: () {
+              AppService()
+                  .getBlocData<CoursesGroupOperationCubit>()
+                  .selectedIndex = null;
+              AppService().getBlocData<HomeworkOperationCubit>().tapIndex = 0;
+              Routes.homeWorkRoute.moveTo;
+            },
             title: AppStrings().homeWork.trans,
           ),
           GenericModel(
-            // image: AppAssets().teacher,
-            // role: 'lecture',
+            onTap: () {
+              Routes.liveRoute.moveToWithArgs({LiveScreen.hostKey: false});
+              // Routes.studentTasksRoute.moveTo;
+            },
             title: AppStrings().tasks.trans,
           ),
         ];
@@ -167,7 +229,7 @@ class EnumService {
           GenericModel(
             // image: AppAssets().teacher,
             // role: 'lecture',
-            title: AppStrings().memoirs.trans,
+            title: AppStrings().notes.trans,
           ),
           GenericModel(
             // image: AppAssets().teacher,
@@ -196,15 +258,36 @@ class EnumService {
           ),
         ];
       case '3':
-        return AppListsConstant.listOfStudentCategories;
+        return AppListsConstant.listOfSParentCategories = [
+          GenericModel(
+            onTap: () => Routes.notesRoute.moveTo,
+            title: AppStrings().notes.trans,
+          ),
+          GenericModel(
+            onTap: () => Routes.myGradesRoute.moveTo,
+            title: AppStrings().childrenGrades.trans,
+          ),
+          GenericModel(
+            onTap: () => Routes.homeWorkRoute.moveTo,
+            title: AppStrings().childrenHomeWork.trans,
+          ),
+          GenericModel(
+            onTap: () => Routes.statisticsRoute.moveTo,
+            title: AppStrings().statistics.trans,
+          ),
+          GenericModel(
+            onTap: () => Routes.notesRoute.moveTo,
+            title: AppStrings().absenceAndPresence.trans,
+          ),
+        ];
       case '6':
-        return AppListsConstant.listOfStudentCategories;
+        return AppListsConstant.listOfSParentCategories;
       case '7':
         return AppListsConstant
-            .listOfStudentCategories; // case RoleType.School:
+            .listOfSParentCategories; // case RoleType.School:
       //   return '${AppStrings().create.trans} ${AppStrings().school.trans} ${AppStrings().account.trans}';
       default:
-        return AppListsConstant.listOfStudentCategories;
+        return AppListsConstant.listOfSParentCategories;
     }
   }
 

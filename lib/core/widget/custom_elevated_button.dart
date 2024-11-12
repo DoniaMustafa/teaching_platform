@@ -16,7 +16,8 @@ class CustomElevatedButton extends StatelessWidget {
       this.elevation,
       this.width,
       this.textColor = AppColors.white,
-      this.style, this.borderColor,
+      this.style,
+      this.borderColor,
       this.isEnd = false,
       this.isBorder = false,
       this.margin})
@@ -62,12 +63,13 @@ class CustomElevatedButton extends StatelessWidget {
           elevation: elevation,
           shadowColor: AppColors.transparent,
           side: isBorder
-              ? BorderSide(color:borderColor?? AppColors.primaryColor, width: 1)
+              ? BorderSide(
+                  color: borderColor ?? AppColors.primaryColor, width: 1)
               : null,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(radius!),
           ),
-          padding: padding ?? getPadding(vertical: 5),
+          padding: padding ?? getPadding(vertical: 5, horizontal: 5),
           // shadowColor: AppColors.borderColor.withOpacity(0.5),
           // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(radius!), side: side),
           // padding: padding ?? getPadding(vertical: 10),
@@ -85,7 +87,7 @@ class CustomElevatedButton extends StatelessWidget {
           Expanded(
             child: Text(
               text,
-              textScaler: TextScaler.linear(1),
+              textScaler: TextScaler.linear(0.9),
               textAlign: TextAlign.center,
               style: style ??
                   getMediumTextStyle(fontSize: 18, color: textColor, height: 1),

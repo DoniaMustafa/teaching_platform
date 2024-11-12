@@ -4,10 +4,28 @@ import 'package:teaching/features/language/presentation/managers/language_oeprat
 
 import '../../../../config/localization_constants.dart';
 
-class ChangeLanguageScreen extends StatelessWidget {
+class ChangeLanguageScreen extends StatefulWidget {
   ChangeLanguageScreen({
     super.key,
   });
+
+  @override
+  State<ChangeLanguageScreen> createState() => _ChangeLanguageScreenState();
+}
+
+class _ChangeLanguageScreenState extends State<ChangeLanguageScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    context.read<LanguageOperationCubit>().selected =
+        context.read<LanguageCubit>().isEn.isTrue ? 1 : 0;
+    context
+        .read<LanguageOperationCubit>()
+        .changeSelected(context.read<LanguageCubit>().isEn.isTrue ? 1 : 0);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(

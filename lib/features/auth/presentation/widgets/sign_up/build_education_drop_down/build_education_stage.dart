@@ -11,7 +11,7 @@ class BuildEducationStage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<StageCubit,StageState>(
+    return BlocBuilder<StageCubit, StageState>(
       builder: (context, state) {
         return Column(
           children: [
@@ -20,11 +20,10 @@ class BuildEducationStage extends StatelessWidget {
               onSelected: (int id) {
                 context.read<StageCubit>().gradeId = id;
                 context.read<SubjectCubit>().getSubjects(
-                  educationProgramsId:
-                  context.read<ProgramCubit>().curriculumId!,
-                  educationTypeId: context.read<EducationCubit>().typeId!,
-                  gradeId: context.read<StageCubit>().gradeId!
-                );
+                    educationProgramsId:
+                        context.read<ProgramCubit>().curriculumId!,
+                    educationTypeId: context.read<EducationCubit>().typeId!,
+                    gradeId: context.read<StageCubit>().gradeId!);
               },
               title: AppStrings().stage.trans,
               status: getListStatus(state),
@@ -49,9 +48,7 @@ class BuildEducationStage extends StatelessWidget {
   List<PublicDataModel>? getItems(StageState state) {
     if (state is GradeLoadedState) return state.data;
 
-      return [];
-
-
+    return [];
   }
 
   ListStatus getListStatus(StageState state) {

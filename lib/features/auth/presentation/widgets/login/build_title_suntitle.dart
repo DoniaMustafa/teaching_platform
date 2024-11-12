@@ -22,7 +22,7 @@ class BuildTitleSubtitleImage extends StatelessWidget {
                 color: AppColors.mainAppColor),
           ),
           CustomTextWidget(
-            text: AppStrings().welcome.trans,
+            text: AppStrings().welcomeTo.trans,
             style: getSemiboldTextStyle(
                 fontFamily: FontFamilies.elMessiriFamily,
                 fontSize: 20,letterSpacing: 1.15,

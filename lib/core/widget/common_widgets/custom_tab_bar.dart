@@ -1,5 +1,4 @@
 import 'package:teaching/core/export/export.dart';
-import 'package:teaching/features/subscription/presentation/manager/subscriptipn_operation_cubit.dart';
 
 class CustomTabBar extends StatelessWidget {
   const CustomTabBar(

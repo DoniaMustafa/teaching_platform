@@ -1,11 +1,5 @@
-import 'package:teaching/core/widget/common_item_widgets/custom_item.dart';
-import 'package:teaching/core/widget/common_item_widgets/custom_shimmer.dart';
-import 'package:teaching/core/widget/shimmer_widget.dart';
-import 'package:teaching/features/home/presentation/manager/subscription_cubit.dart';
 
 import '../../../../core/export/export.dart';
-import '../../../../core/widget/common_item_widgets/custom_teatcher_item.dart';
-import '../../../subscription_details/presentation/manager/subscriptipn_group_details_cubit.dart';
 
 class BuildSubscription extends StatelessWidget {
   const BuildSubscription({super.key});

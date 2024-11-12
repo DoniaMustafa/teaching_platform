@@ -2,6 +2,8 @@ import 'package:teaching/features/auth/presentation/manager/countries/countries_
 import 'package:teaching/features/auth/presentation/manager/education/education_cubit.dart';
 import 'package:teaching/features/auth/presentation/manager/user_cubit/user_cubit.dart';
 import 'package:teaching/features/auth/presentation/pages/verification_screen.dart';
+import 'package:teaching/features/auth/presentation/widgets/sign_up/build_country/build_sign_country.dart';
+import 'package:teaching/features/auth/presentation/widgets/sign_up/build_gender.dart';
 import '../../../../core/export/export.dart';
 import '../../data/models/contry_response_model.dart';
 
@@ -12,8 +14,6 @@ mixin SignUpScreenVariables {
   TextEditingController confirmPassword = TextEditingController();
   TextEditingController identity = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  int? selectedCountryId;
-  List<String> countries = ['مصر', 'امارات', 'قصر', 'امارات'];
 }
 
 class SignUpScreen extends StatefulWidget {
@@ -64,11 +64,6 @@ class _SignUpScreenState extends State<SignUpScreen>
               // if (SignUpByPhoneScreen.userType != 'Parent')
               BuildNextButton(
                 onTap: () {
-                  print(name.text);
-                  print(VerificationScreen.phone);
-                  print(email.text);
-                  print(password.text);
-                  print(selectedCountryId.toString());
                   _formKey.currentState!.validate();
                   if (AppService().getBlocData<ErrorCubit>().errors.isEmpty) {
                     AppService().getBlocData<UserCubit>().register(
@@ -78,7 +73,8 @@ class _SignUpScreenState extends State<SignUpScreen>
                             name: name.text,
                             email: email.text,
                             password: password.text,
-                            countryId: selectedCountryId.toString()));
+                            countryId: BuildSignCountry.selectedCountryId,
+                            gender: BuildGender.genderId));
 
                     // if (SignUpByPhoneScreen.userType != AppStrings().parent &&
                     //     SignUpByPhoneScreen.userType !=
@@ -117,35 +113,12 @@ class _SignUpScreenState extends State<SignUpScreen>
             EmailWidget(
               controller: email,
             ),
-            26.vs,
-            BlocBuilder<CountriesCubit, CountriesState>(
-              builder: (context, state) {
-                return Column(
-                  children: [
-                    ExpansionTileDropDown(
-                        items: getItems(state),
-                        onSelected: (int id) {
-                          selectedCountryId = id;
-                          // context.read<EducationCubit>().getEducationPrograms(id: id);
-                        },
-                        title: AppStrings().country.trans,
-                        status: getListStatus(state)),
-                    BlocBuilder<ErrorCubit, ErrorState>(
-                      builder: (context, state) {
-                        return ErrorText(
-                          showError: context
-                              .read<ErrorCubit>()
-                              .errors
-                              .contains(Errors.CONFIRM_PASSWORD_ERROR),
-                          text: getError[Errors.CONFIRM_PASSWORD_ERROR]!,
-                        );
-                      },
-                    )
-                  ],
-                );
-              },
-            ),
 
+            26.vs,
+
+            BuildSignCountry(),
+            26.vs,
+            BuildGender(),
             // 26.vs,
             // ConfirmPasswordWidget(
             //   password: password,
@@ -154,15 +127,4 @@ class _SignUpScreenState extends State<SignUpScreen>
           ],
         ),
       );
-
-  List<PublicDataModel> getItems(CountriesState state) {
-    if (state is CountriesLoadedState) return state.date;
-    return [];
-  }
-
-  ListStatus getListStatus(CountriesState state) {
-    if (state is CountriesErrorState) return ListStatus.listError;
-    if (state is CountriesLoadedState) return ListStatus.listLoaded;
-    return ListStatus.listLoading;
-  }
 }

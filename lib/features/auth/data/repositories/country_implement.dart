@@ -14,4 +14,16 @@ import '../../../../core/export/export.dart';
       );
 
    CountryImplement(this.datasource);
+
+  @override
+  Future<Either<Failure, ResponseModel>> getCities({required int countryId}) async =>
+      execute(
+            () => datasource.getCities(countryId: countryId),
+      );
+
+  @override
+  Future<Either<Failure, ResponseModel>> getRegion({required int cityId}) async =>
+      execute(
+            () => datasource.getRegion(cityId:cityId),
+      );
 }

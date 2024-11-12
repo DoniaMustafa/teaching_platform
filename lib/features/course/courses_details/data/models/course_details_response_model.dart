@@ -31,18 +31,24 @@ class CourseDetailsResponseModel extends ResponseModel {
 
 class TeacherModel {
   final int? teacherId;
+  final int? groupId;
+  final int? studentId;
   final String? teacherName;
   final String? teacherPicture;
   final String? gradeName;
   final int? subjectId;
   final String? subjectName;
   final List<TeacherCourse>? teacherCourses;
+  final int? infoType;
 
   TeacherModel({
+    this.infoType,
     this.teacherName,
     this.teacherPicture,
     this.gradeName,
+    this.groupId,
     this.teacherId,
+    this.studentId,
     this.subjectId,
     this.subjectName,
     this.teacherCourses,
@@ -69,6 +75,15 @@ class TeacherModel {
     }
     if (subjectId.isNotNull) {
       data['subjectId'] = subjectId;
+    }
+    if (studentId.isNotNull) {
+      data['studentId'] = studentId;
+    }
+    if (infoType.isNotNull) {
+      data['infoType'] = infoType;
+    }
+    if (groupId.isNotNull) {
+      data['groupId'] = groupId;
     }
 
     return data;
@@ -139,8 +154,8 @@ class CourseLesson {
   final int? videosCount;
   final double? price;
   final String? currency;
-  final bool? free;
-  final bool? isSubscribed;
+  bool? free;
+  bool? isSubscribed;
 
   CourseLesson({
     this.lessonId,

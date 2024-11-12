@@ -6,18 +6,16 @@ import '../../../../../core/list_states.dart';
 import '../../../data/models/contry_response_model.dart';
 import '../../../domain/use_cases/countries_use_case.dart';
 
-part 'countries_state.dart';
-
-class CountriesCubit extends Cubit<CountriesState> {
-  CountriesCubit(this.useCase) : super(CountriesInitial());
+class CountriesCubit extends Cubit<CubitStates> {
+  CountriesCubit(this.useCase) : super(InitialState());
   CountriesUseCase useCase;
   getCountries() {
     managerExecute<List<PublicDataModel>>(useCase.getCountries(),
-        onStart: () => emit(CountriesLoadingState()),
+        onStart: () => emit(LoadingState()),
         onSuccess: (List<PublicDataModel>? data) {
           data = data;
-          emit(CountriesLoadedState(date: data!));
+          emit(LoadedState<List<PublicDataModel>>(data: data!));
         },
-        onFail: (message) => emit(CountriesErrorState(message: message)));
+        onFail: (message) => emit(FailedState(message: message)));
   }
 }

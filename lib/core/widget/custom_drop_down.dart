@@ -5,34 +5,28 @@ import '../export/export.dart';
 class ExpansionTileDropDown<T> extends StatefulWidget {
   final void Function(int id) onSelected;
   final List<T> items;
+  final bool isChildren;
   final ListStatus status;
   final String title;
-  // final String? subTitle;
-  // final bool? isSubscribed;
-  // final String? price;
-  // final String? asset;
-  // final bool isText;
+  final List<int>? ids;
   final Color? borderColor;
   final Color? color;
+  final bool isActiveText;
+  final bool isEnable;
   final Color? unselectedColor;
-
   final TextStyle? titleStyle;
   final List<BoxShadow>? boxShadow;
-  // final Widget? leadingWidget;
   const ExpansionTileDropDown({
     required this.onSelected,
     required this.items,
     required this.title,
     required this.status,
-    // this.asset,
     this.borderColor,
-    // this.subTitle,
-    // this.isText = true,
-    // this.price,
-    // this.free,
-    // this.isSubscribed = false,
+    this.ids,
+    this.isEnable = true,
+    this.isChildren = false,
+    this.isActiveText = true,
     this.unselectedColor,
-    // this.leadingWidget,
     this.boxShadow,
     this.titleStyle,
     this.color,
@@ -68,7 +62,7 @@ class _ExpansionTileDropDownState extends State<ExpansionTileDropDown> {
           visualDensity: VisualDensity.compact,
           dense: true,
           initiallyExpanded: isExpanded,
-          /*padding*/
+          /*padding*/ enabled: widget.isEnable,
           tilePadding: getPadding(horizontal: 15.w, vertical: 7),
           childrenPadding: getPadding(vertical: 10.h),
           /*colors*/
@@ -100,7 +94,11 @@ class _ExpansionTileDropDownState extends State<ExpansionTileDropDown> {
                   19.h)), //the whole widget shape while expanding
 
           title: CustomTextWidget(
-            text: activeText.isNotEmpty ? activeText : widget.title,
+            text: widget.isActiveText.isTrue
+                ? activeText.isNotEmpty
+                    ? activeText
+                    : widget.title
+                : widget.title,
             style: widget.titleStyle ??
                 getRegularTextStyle(
                   color: AppColors.darkMainAppColor,
@@ -120,46 +118,69 @@ class _ExpansionTileDropDownState extends State<ExpansionTileDropDown> {
       behavior: HitTestBehavior.translucent,
       onTap: () {
         debugPrint("selected");
-          activeText = widget.items[index].name;
 
-        widget.onSelected(widget.items[index].id);
-        isExpanded = false;
-        // debugPrint(widget.items[index].id.toString());
+        activeText = widget.isChildren.isTrue
+            ? widget.items[index].studentName
+            : widget.items[index].name;
+
+        widget.onSelected(widget.isChildren.isTrue
+            ? widget.items[index].studentId
+            : widget.items[index].id);
+        // if (widget.isActiveText.isFalse) {
+        //   if (widget.ids!.contains(widget.items[index].id)) {
+        //     widget.ids!.remove(widget.items[index].id);
+        //   } else {
+        //     widget.ids!.add(widget.items[index].id);
+        //   }
+        // }
+        widget.isActiveText.isTrue ? isExpanded = false : isExpanded = true;
         setState(() {});
       },
       child: Container(
         padding: getPadding(vertical: 10, horizontal: 10),
         margin: getMargin(horizontal: 20, bottom: 15),
         decoration: BoxDecoration(
-          color:  activeText == widget.items[index].name
+          color: widget.isActiveText.isFalse &&
+                  widget.ids!.contains(widget.items[index].id).isTrue
+              ? AppColors.mainAppColor
+              : activeText ==
+                      (widget.isChildren.isTrue
+                          ? widget.items[index].studentName
+                          : widget.items[index].name)
                   ? AppColors.mainAppColor
                   : widget.unselectedColor ?? AppColors.grey.withOpacity(0.1),
           borderRadius: const BorderRadius.all(Radius.circular(10)),
         ),
         child: Row(
-          mainAxisAlignment:  MainAxisAlignment.center,
-
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
-                    child: CustomTextWidget(
-                      text: widget.items[index].name,
-                      style: getRegularTextStyle(
-                        fontSize: 15,
-                        color: activeText == widget.items[index].name
-                            ? AppColors.white
-                            : null,
-                      ),
-                      align: TextAlign.center,
-                    ),
-                  )
+              child: CustomTextWidget(
+                text: widget.isChildren.isTrue
+                    ? widget.items[index].studentName
+                    : widget.items[index].name,
+                style: getRegularTextStyle(
+                  fontSize: 15,
+                  color: widget.isActiveText.isFalse &&
+                          widget.ids!.contains(widget.items[index].id).isTrue
+                      ? AppColors.white
+                      : activeText ==
+                              (widget.isChildren.isTrue
+                                  ? widget.items[index].studentName
+                                  : widget.items[index].name)
+                          ? AppColors.white
+                          : null,
+                ),
+                align: TextAlign.center,
+              ),
+            )
           ],
         ),
       ));
   get getTrailingWidget {
     if (widget.status == ListStatus.listError) {
       return const Icon(Icons.wifi_off_outlined);
-    }
-    else if (widget.status == ListStatus.listLoaded) {
+    } else if (widget.status == ListStatus.listLoaded) {
       if (widget.items.isNotEmpty) {
         if (isExpanded.isTrue) {
           return const CustomIcon(
@@ -167,8 +188,7 @@ class _ExpansionTileDropDownState extends State<ExpansionTileDropDown> {
             color: AppColors.black,
             size: 17,
           );
-        }
-        else {
+        } else {
           return const CustomIcon(
             icon: Icons.keyboard_arrow_up_outlined,
             color: AppColors.black,
@@ -182,16 +202,14 @@ class _ExpansionTileDropDownState extends State<ExpansionTileDropDown> {
           color: AppColors.black,
           size: 17,
         );
-      }
-      else {
+      } else {
         return const CustomIcon(
           icon: Icons.keyboard_arrow_up_outlined,
           color: AppColors.black,
           size: 17,
         );
       }
-    }
-    else if (widget.status == ListStatus.listLoading) {
+    } else if (widget.status == ListStatus.listLoading) {
       return _buildLoadingTrailingWidget;
     }
     return ListStatus.listLoaded;

@@ -15,12 +15,15 @@ class BuildDrawer extends StatelessWidget implements Drawer {
           child: Column(
             children: [
               40.vs,
-              CustomNetworkImage.circular(
-                imageUrl:
-                    '${EndPoints.baseUrl}${AppService().getBlocData<UserCubit>().user!.profilePicture!}',
-                radius: 100.r,
-                defaultAsset: '',
-              ),
+
+                GestureDetector(
+                  onTap: () => Routes.profileRoute.moveTo,
+                  child: CustomNetworkImage.circular(
+                    imageUrl: '${EndPoints.baseUrl}${AppPrefs.user!.image}',
+                    radius: 100.r,
+                    defaultAsset: '',
+                  ),
+                ),
               10.vs,
               CustomTextWidget(
                 text: AppPrefs.user!.name!,
@@ -84,12 +87,12 @@ class BuildDrawer extends StatelessWidget implements Drawer {
 // Drawer buildDrawer() => ;
 Widget _buildItems(context) => Column(
       children: List.generate(
-          EnumService.userDrawerType(AppPrefs.user!.userRole!, context).length,
+          EnumService.userDrawerType(AppPrefs.userRole!, context).length,
           (index) {
         return GestureDetector(
-          onTap: () => EnumService.userDrawerType(
-                  AppPrefs.user!.userRole!, context)[index]
-              .onTap!(),
+          onTap: () =>
+              EnumService.userDrawerType(AppPrefs.userRole!, context)[index]
+                  .onTap!(),
           child: CustomCard(
               padding: getPadding(horizontal: 15.w, vertical: 12.h),
               child: Row(
@@ -105,7 +108,7 @@ Widget _buildItems(context) => Column(
                     builder: (context, state) {
                       return CustomTextWidget(
                         text: EnumService.userDrawerType(
-                                AppPrefs.user!.userRole!, context)[index]
+                                AppPrefs.userRole!, context)[index]
                             .title!
                             .trans,
                         style: getMediumTextStyle(fontSize: 14),

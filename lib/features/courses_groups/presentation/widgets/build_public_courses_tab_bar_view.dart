@@ -64,7 +64,8 @@ class BuildPublicCoursesTabBarView extends StatelessWidget {
           // CoursesDetailsScreen.whichScreenKey: '',
           // CoursesDetailsScreen.subjectNameKey: data.subjectId!,
           CoursesDetailsScreen.teacherIdKey: data.teacherId!
-        });
+        });   AppService()
+            .getBlocData<CoursesGroupOperationCubit>().selectedIndex = null;
       },
       isSubScribe: true,
       coursesModel: data);

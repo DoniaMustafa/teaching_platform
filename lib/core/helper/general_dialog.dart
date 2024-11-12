@@ -61,7 +61,7 @@ Future showCustomDialog({
   double? space,
 }) =>
     showDialog(
-      barrierColor: AppColors.black.withOpacity(0.3),
+      barrierColor: AppColors.black.withOpacity(0.4),
       context: context,
       barrierDismissible: dismissible,
       builder: (context) {
@@ -72,7 +72,7 @@ Future showCustomDialog({
             padding: getPadding(horizontal: 30.w, vertical: 20.h),
             decoration: BoxDecoration(
                 color: AppColors.white,
-                borderRadius: BorderRadius.all(Radius.circular(radius ?? 0))),
+                borderRadius: BorderRadius.all(Radius.circular(radius ?? 10))),
             alignment: Alignment.center,
             child: Column(
               children: [
@@ -101,17 +101,8 @@ Future showCustomDialog({
                           ),
                     )),
                 20.vs,
-                // Column(
-                //   mainAxisSize: MainAxisSize.min,
-                //   children: [
-                //     space.isNotNull ? space!.vs : 4.vs,
-                //     CustomTextWidget(
-                //       text: content!,
-                //       style: getMediumTextStyle(
-                //         fontSize: 16,
-                //         // color: AppColors.titleGray,
-                //       ),
-                //     ),
+
+                if(widget.isNotNull)
                 widget!
                 // ],
                 // )

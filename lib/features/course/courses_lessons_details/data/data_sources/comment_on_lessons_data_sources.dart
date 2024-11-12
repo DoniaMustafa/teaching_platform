@@ -2,9 +2,9 @@ import 'package:teaching/features/course/courses_lessons_details/data/models/cou
 
 import '../../../../../core/export/export.dart';
 
-
 abstract class CommentOnLessonsDataSources {
-  Future<ResponseModel> addCommentOnVideo({required int videoId,required String comment});
+  Future<ResponseModel> addCommentOnVideo(
+      {required int videoId, required String comment, bool isCourse = true});
 }
 
 class CommentOnLessonsWithServer extends CommentOnLessonsDataSources {
@@ -13,12 +13,18 @@ class CommentOnLessonsWithServer extends CommentOnLessonsDataSources {
   DioConsumer dioConsumer;
 
   @override
-  Future<ResponseModel> addCommentOnVideo({required int videoId,required String comment}) async =>
+  Future<ResponseModel> addCommentOnVideo(
+          {required int videoId,
+          required String comment,
+          bool isCourse = true}) async =>
       remoteExecute(
           request: dioConsumer.postRequest(
-              path: EndPoints.addCourseVideoComment,
+              path: isCourse.isTrue
+                  ? EndPoints.addCourseVideoComment
+                  : EndPoints.addGroupVideoComment,
               body: {
-                "CourseVideoId": videoId,
+                if (isCourse.isTrue) "CourseVideoId": videoId,
+                if (isCourse.isFalse) "GroupVideoId": videoId,
                 "Comment": comment
               }),
           fromJsonFunction: CourseLessonDetailsResponseModel.fromJson);

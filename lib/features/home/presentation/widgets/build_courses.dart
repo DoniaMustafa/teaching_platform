@@ -36,7 +36,8 @@ class BuildCourses extends StatelessWidget {
             : AppConstants.nShimmerItems,
         widget: (context, index) => state is LoadedState
             ? CustomItem(
-                onTap: () {
+                onTap: () {  AppService()
+                    .getBlocData<CoursesGroupOperationCubit>().selectedIndex = null;
                   print(state.data[index].subjectId);
                   context.read<CoursesDetailsCubit>().getCoursesDetails(
                       TeacherModel(

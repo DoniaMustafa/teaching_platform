@@ -20,94 +20,30 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    // hideKeyboard;
-    // initSlidingAnimation(); // Initialize the sliding animation
     nextScreen(); // Determine the next screen to navigate to
   }
 
-  // Timer? timer;
-  // int counter = 0;
-  // String? route;
-  // Map<String, dynamic>? data;
   void nextScreen() {
-    //   timer = Timer.periodic(Duration(milliseconds: 500), (timer) {
-    //     counter++;
-    //     if (route.isNotNull && counter >= 5) {
-    //       if (data != null) {
-    //         route!.moveReplacementWithData(data);
-    //       } else {
-    //         route!.moveToAndRemoveCurrent; // Navigate and remove splash screen
-    //       }
-    //       timer.cancel();
-    //     }
-    //   });
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      // bool isLanguageSaved =
-      //     await AppService().getBlocData<LanguageCubit>().getSavedLanguage();
       bool isNew = await AppService()
           .getBlocData<OnboardingManagerCubit>()
           .isNewInstalled();
+      if (AppPrefs.userRole == "1") {
+        await AppService().getBlocData<UserCubit>().getUsersData();
+      }
+
       UserModel? user = await AppService().getBlocData<UserCubit>().getUser();
       String token = await AppService().getBlocData<UserCubit>().getToken();
-      //  bool isLocationEnabled = await checkLocationPermission(context);
-      // bool isGranted = await checkNotificationPermission(context);
-      // if (isGranted.isTrue) {
-      //
-      // }
-//      bool isNotificationInit = (await NotificationsService().initialize()).orFalse;
-      //     print("is notification granted$isNotificationInit");
-      //   print("new install ${isNew}");
-      print("token is ${AppPrefs.token}");
-      // print("driver is ${driver!.isAvailable}");
-      // print("driver is ${driver.image}");
-      // print("driver is ${driver.name}");
-      print("New is ${isNew}");
+      await AppService().getBlocData<UserCubit>().getUserRole();
 
-      // print("device token is ${deviceToken}");
-      print("token from prefs is ${AppPrefs.token}");
-      // print('user Role  from prefs>>>>>>>>>>>>>>> ${AppPrefs.user!.userRole}');
-
-      // print("device token from prefs is ${AppPrefs.deviceToken}");
-      // if (driver.isNotNull) {
-      //   print("driver step is ${driver.step}");
-      // }
-      // if (isLanguageSaved.isFalse) {
-      //   route = Routes.selectLanguageRoute;
-      // } else if (isNew.isTrue) {
-      //   route = Routes.onBoardingRoute;
-      // } else {
-      //   if (user.isNotNull) {
-      //     print('driver isNotEmpty ?????????????????96 $user');
-      //     (user);
-      //     if (token.isNotEmpty ) {
-      //       print('token isNotEmpty ????????????????? $token');
-      //       print('deviceToken isNotEmpty ????????????????? $deviceToken');
-      //       // print('driver!.step ????????????????? ${user.step}');
-      //       // if (user.stepsNo == "registered") {
-      //       //   print('driver!.step ????????????????? $user!.step');
-      //       //   route = Routes.bottomNavigationRoute;
-      //       //   //   route = Routes.tripRoute.moveTo;
-      //       // } else {
-      //         print('stepperRoute ????????????????? $token');
-      //         print('stepperRoute ????????????????? $user');
-      //
-      //   //       route = Routes.bottomNavigationRoute;
-      //   //       data = {'step': user.step!.toInt - 1};
-      //   //     } //    AppService().showToast(message: "tokens error", alertType: AlertTypes.error);
-      //   //   } else {
-      //   //     route = Routes.loginRoute;
-      //   //   }
-      //   // } else {
-      //   //   route = Routes.loginRoute;
-      //   // }
-      // });
       Timer(Duration(seconds: 5), () {
         if (isNew.isTrue) {
           Routes.onBoardRoute.moveToAndRemoveCurrent;
         } else {
-          if (AppPrefs.user.isNotNull && AppPrefs.token.isNotNullOrEmpty) {
+          if (AppPrefs.user.isNotNull &&
+              AppPrefs.token.isNotNullOrEmpty &&
+              AppPrefs.userRole.isNotNullOrEmpty) {
             Routes.bottomNavigationRoute.pushAndRemoveAllUntil;
           } else {
             Routes.mainRoute.pushAndRemoveAllUntil;

@@ -23,9 +23,10 @@ class CoursesGroupOperationCubit extends Cubit<CubitStates> {
     emit(LoadedState<int>(data: tapIndex));
   }
 
-  int? selectedIndex;
-  onSelectedSubjectIndex(int index) {
+  int? selectedIndex;String? subjectName;
+  onSelectedSubjectIndex(int index,String subject) {
     selectedIndex = index;
+    subjectName= subject;
     if (kDebugMode) {
       print(selectedIndex);
     }

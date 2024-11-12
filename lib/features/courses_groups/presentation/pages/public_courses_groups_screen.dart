@@ -3,6 +3,7 @@ import 'package:teaching/features/courses_groups/presentation/manager/public_gro
 import 'package:teaching/features/courses_groups/presentation/widgets/build_courses_groubs_tab_bar.dart';
 import 'package:teaching/features/courses_groups/presentation/manager/coures_group_operation_cubit.dart';
 import 'package:teaching/features/courses_groups/presentation/widgets/build_public_courses_tab_bar_view.dart';
+import 'package:teaching/features/parent_children/presentation/widgets/build_children_drop_down_list.dart';
 import '../../../../core/export/export.dart';
 import '../widgets/build_public_group_tab_bar_view.dart';
 import '../widgets/build_search_widget.dart';
@@ -18,8 +19,10 @@ class _CoursesGroupsScreenState extends State<PublicCoursesGroupsScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<PublicCourseCubit>().getPublicCourses();
-    context.read<PublicGroupCubit>().getPublicGroups();
+    if (AppPrefs.userRole == "1") {
+      context.read<PublicCourseCubit>().getPublicCourses();
+      context.read<PublicGroupCubit>().getPublicGroups();
+    }
   }
 
   @override
@@ -31,11 +34,17 @@ class _CoursesGroupsScreenState extends State<PublicCoursesGroupsScreen> {
         anotherWidget: BuildCoursesAndGroupsSearchWidget(),
         widget: Column(
           children: [
-            20.vs,
-             CustomSubjectList(
-              isPublicTeacher: true,
-            ),
-            // 10.vs,
+            AppPrefs.userRole == "3" ? 40.vs : 20.vs,
+            if (AppPrefs.userRole == "1")
+              CustomSubjectList(
+                isCourse: true,
+                isPublicTeacher: true,
+              ),
+            if (AppPrefs.userRole == "3")
+              BuildChildrenDropDownList(
+                isPublicCourseGroup: true,
+              ),
+            10.vs,
             // const BuildPublicGroupsCourses(),
             const BuildCoursesGroupsTabBar(),
             BlocBuilder<CoursesGroupOperationCubit, CubitStates>(

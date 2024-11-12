@@ -38,7 +38,7 @@ class AppColors {
   static const Color appBarColor = Color(0xFF5B1EE8);
   static const Color appBarTitleColor = Color(0xFF370E8E);
 
-  // static Color blackWithOpacity = Color.fromRGBO(0, 0, 0, 0.72);
+  static Color chatItem = Color(0xFFC5C5C6);
   // static Color blackWithOpacity2 = Color.fromRGBO(0, 0, 0, 1);
 
   // static Color profileTextColer = '#9D9D9D'.colorFromString;

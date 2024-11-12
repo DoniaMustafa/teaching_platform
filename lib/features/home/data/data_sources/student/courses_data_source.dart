@@ -12,7 +12,7 @@ class CoursesWithServer extends CoursesDataSource {
   @override
   Future<ResponseModel> getCourser({TeacherModel? model}) async => remoteExecute(
       request: dioConsumer.getRequest(
-          path: EnumService.coursesEndPointType(AppPrefs.user!.userRole),
+          path: EnumService.coursesEndPointType(AppPrefs.userRole!),
           queryParams:model.isNull?null: model!.toJson()),
       fromJsonFunction: CoursesResponseModel.fromJson);
 

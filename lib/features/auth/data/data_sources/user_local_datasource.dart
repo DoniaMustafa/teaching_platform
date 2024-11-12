@@ -4,11 +4,16 @@ import '../models/user_response_model.dart';
 abstract class UserLocalDataSource {
   Future<ResponseModel> getCachedUser();
   Future<ResponseModel> cacheImage({required String image});
+
   Future<ResponseModel> cacheUser({required UserModel user});
   Future<bool> clearCachedUser();
   Future<ResponseModel> cacheToken({required String token});
   Future<bool> clearCachedToken();
   Future<ResponseModel> getCachedToken();
+  Future<ResponseModel> getUserRole();
+  Future<bool> clearUserRole();
+  Future<ResponseModel> cacheUserRole({required String userRole});
+
   // Future<ResponseModel> cacheFcmToken({required String fcmToken});
   Future<bool> clearCachedDeviceToken();
   // Future<ResponseModel> getCachedFcmToken();
@@ -60,10 +65,9 @@ class UserImplWithPrefs implements UserLocalDataSource {
         sharedPreferences,
         AppPrefs.prefsUserKey,
         user.userToJson(),
-        // afterCaching: (data) {
-        //   AppPrefs.user = user;
-        //   print('AppPrefs.user cacheUser>>>>>>>>>>>>>>> ${AppPrefs.user!.userRole}');
-        // },
+        afterCaching: (data) {
+          AppPrefs.user = user;
+        },
       );
   @override
   Future<ResponseModel> cacheToken({required String token}) => cacheWrite(
@@ -72,6 +76,15 @@ class UserImplWithPrefs implements UserLocalDataSource {
         token,
         afterCaching: (data) {
           AppPrefs.token = token;
+        },
+      );
+  @override
+  Future<ResponseModel> cacheUserRole({required String userRole}) => cacheWrite(
+        sharedPreferences,
+        AppPrefs.prefsUserRoleKey,
+        userRole,
+        afterCaching: (data) {
+          AppPrefs.userRole = userRole;
         },
       );
   // @override
@@ -90,17 +103,9 @@ class UserImplWithPrefs implements UserLocalDataSource {
         fromJson: UserModel.fromJson,
         afterCaching: (data) {
           AppPrefs.user = data;
-          // print('AppPrefs.user >>>>>>>>>>>>>>> ${AppPrefs.user!.userRole}');
+          print('AppPrefs.user >>>>>>>>>>>>>>> ${AppPrefs.user!}');
         },
       );
-  // @override
-  // Future<ResponseModel> getCachedFcmToken() => cacheRead<String?>(
-  //       sharedPreferences,
-  //       AppPrefs.prefsDeviceTokenKey,
-  //       afterCaching: (data) {
-  //         AppPrefs.userToken = data;
-  //       },
-  //     );
 
   @override
   Future<ResponseModel> getCachedToken() => cacheRead<String?>(
@@ -118,6 +123,28 @@ class UserImplWithPrefs implements UserLocalDataSource {
         image,
         afterCaching: (data) {
           // AppPrefs.profileImage = image;
+        },
+      );
+
+  @override
+  Future<bool> clearUserRole() async {
+    bool isCleared = true;
+    if (sharedPreferences.containsKey(AppPrefs.prefsUserRoleKey)) {
+      isCleared = await sharedPreferences.remove(AppPrefs.prefsUserRoleKey);
+      if (isCleared.isTrue) {
+        AppPrefs.userRole = null;
+      }
+    }
+    return isCleared;
+  }
+
+  @override
+  Future<ResponseModel> getUserRole() => cacheRead<String?>(
+        sharedPreferences,
+        AppPrefs.prefsUserRoleKey,
+        afterCaching: (data) {
+          AppPrefs.userRole = data;
+          print('AppPrefs.userRole >>>>>>>>>>>>>>> ${AppPrefs.userRole!}');
         },
       );
 }

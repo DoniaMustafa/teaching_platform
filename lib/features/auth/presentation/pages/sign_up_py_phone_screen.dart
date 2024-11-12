@@ -86,7 +86,7 @@ class SignUpByPhoneScreen extends StatelessWidget with SignUpByPhoneVariables {
                   if (AppService().getBlocData<ErrorCubit>().errors.isEmpty) {
                     AppService().getBlocData<UserCubit>().registerByPhone(
                         user: UserModel(
-                            phoneNumber: phone.text, userRole: '$userId'));
+                            phoneNumber: phone.text, userRoles: '$userId'));
                   }
                 },
                 text: AppStrings().continuation.trans),

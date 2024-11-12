@@ -6,6 +6,9 @@ class CountriesUseCase {
   CountriesRepo repo;
   Future<Either<Failure, ResponseModel>> getCountries() async =>
       await repo.getCountries();
-
-  CountriesUseCase(this.repo);
+  Future<Either<Failure,ResponseModel>> getCities({required int countryId}) async =>
+      await repo.getCities(countryId:countryId);
+Future<Either<Failure,ResponseModel>> getRegion({required int cityId}) async =>
+    await repo.getRegion(cityId:cityId);
+CountriesUseCase(this.repo);
 }

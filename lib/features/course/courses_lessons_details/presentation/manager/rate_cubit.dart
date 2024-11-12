@@ -5,24 +5,27 @@ import 'package:teaching/features/course/courses_lessons_details/domain/use_case
 class RateCubit extends Cubit<CubitStates> {
   RateCubit(this.uesCase) : super(InitialState());
   RateUseCase uesCase;
- bool isRate=false;
-  addVideoRate({int? videoId, int? rate}) {
+  bool isRate = false;
+  addVideoRate({int? videoId, int? rate, bool isCourse = true}) {
     executeWithDialog(
-        either: uesCase.addRate(rate: rate, videoId: videoId),
+        either:
+            uesCase.addRate(rate: rate, videoId: videoId, isCourse: isCourse),
         startingMessage: AppStrings().loading.trans,
         onSuccess: (data) {
-          if(rate! < 1){
-            isRate=false;
-          }else{
-            isRate=true;
+          if (rate! < 1) {
+            isRate = false;
+          } else {
+            isRate = true;
           }
           // isRate = !isRate;
           emit(LoadedState(data: data));
         },
-        onStart: () { isRate=true;
+        onStart: () {
+          isRate = true;
           emit(LoadingState());
         },
-        onError: (message) {  isRate=false;
+        onError: (message) {
+          isRate = false;
           emit(FailedState(message: message));
         });
   }

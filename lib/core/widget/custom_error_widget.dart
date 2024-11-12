@@ -15,12 +15,14 @@ class CustomErrorWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Expanded(child: Lottie.asset(AppAssets().error,width: 300.w,height: 100.h)),
+          Lottie.asset(AppAssets().error, width: 300.w, height: 100.h),
           21.vs,
-          CustomTextWidget(
-            text: message,
-            align: TextAlign.center,
-            style: getBoldTextStyle(fontSize: 16),
+          Expanded(
+            child: CustomTextWidget(
+              text: message,
+              align: TextAlign.center,
+              style: getBoldTextStyle(fontSize: 16),
+            ),
           ),
         ],
       ),

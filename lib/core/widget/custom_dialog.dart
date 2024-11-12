@@ -5,9 +5,11 @@ class CustomDialog extends StatelessWidget {
   final bool? showCircularLoading;
   final AlertTypes dialogType;
   final String? asset;
+  final Widget? widget;
   CustomDialog(
       {this.message,
       this.asset,
+      this.widget,
       this.showCircularLoading = true,
       Key? key,
       required this.dialogType})
@@ -50,28 +52,45 @@ class CustomDialog extends StatelessWidget {
                               SizedBox(
                                   height: 60.h,
                                   width: 60.w,
-                                  child: CircularProgressIndicator(
+                                  child: const CircularProgressIndicator(
                                     color: AppColors.mainAppColor,
                                   ))
                             else if (dialogType == AlertTypes.success)
                               SizedBox(
-                                height: 80.h,
-                                width: 80.w,
-                                child: CustomSvg(
-                                  asset: AppAssets().success,
-                                  color: AppColors.mainAppColor,
-                                  // matchTextDirection: false,
-                                ),
-                              )
+                                  height: 80.h,
+                                  width: 80.w,
+                                  child: CustomCircleWidget(
+                                    height: 30.h,
+                                    width: 42.w,
+                                    radius: 50.r,
+                                    child: const CustomIcon(
+                                      icon: Icons.check,
+                                      color: AppColors.white,
+                                      size: 40,
+                                    ),
+                                  ))
                             else
                               SizedBox(
-                                height: 80.h,
-                                width: 80.w,
-                                child: CustomSvg(
-                                  asset: AppAssets().failure,
-                                  color: AppColors.mainAppColor,
-                                ),
-                              ),
+                                  height: 80.h,
+                                  width: 80.w,
+                                  child: CustomCircleWidget(
+                                    height: 30.h,
+                                    width: 42.w,
+                                    radius: 50.r,
+                                    child: const CustomIcon(
+                                      icon: Icons.close,
+                                      color: AppColors.white,
+                                      size: 40,
+                                    ),
+                                  )),
+                            // SizedBox(
+                            //   height: 80.h,
+                            //   width: 80.w,
+                            //   child: CustomSvg(
+                            //     asset: AppAssets().failure,
+                            //     color: AppColors.mainAppColor,
+                            //   ),
+                            // ),
                             20.vs,
                           ],
                         )
@@ -79,10 +98,10 @@ class CustomDialog extends StatelessWidget {
                 ),
                 if (message != null)
                   Flexible(
-                    child: Text(
-                      message!,
+                    child: CustomTextWidget(
+                      text: message!,
                       softWrap: true,
-                      textAlign: TextAlign.center,
+                      align: TextAlign.center,
                       style: getRegularTextStyle(
                         // fontWeight: FontWeight.,
                         fontSize: 14,
@@ -91,7 +110,9 @@ class CustomDialog extends StatelessWidget {
                     ),
                   ),
                 10.vs,
-                if (message != null) 10.vs,
+                if (message.isNotNull) 10.vs,
+                if (widget.isNotNull) widget!,
+                if (widget.isNotNull) 10.vs,
               ],
             ),
           ),

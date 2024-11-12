@@ -9,6 +9,6 @@ class RateImplement extends RateRepo {
   RateImplement(this.dataSource);
 
   @override
-  Future<Either<Failure, ResponseModel>> addRate({int? videoId, int? rate}) =>
-      execute(() => dataSource.addRate(rate: rate, videoId: videoId));
+  Future<Either<Failure, ResponseModel>> addRate({int? videoId, int? rate,bool isCourse = true}) =>
+      execute(() => dataSource.addRate(rate: rate, videoId: videoId,isCourse: isCourse));
 }

@@ -1,31 +1,16 @@
-import 'package:teaching/core/enums.dart';
-import 'package:teaching/features/courses_groups/presentation/manager/coures_group_operation_cubit.dart';
-import 'package:teaching/features/courses_groups/presentation/manager/public_course_cubit.dart';
-import 'package:teaching/features/courses_groups/presentation/manager/public_group_cubit.dart';
-import 'package:teaching/features/home/presentation/manager/ads_cubit.dart';
-import 'package:teaching/features/home/presentation/manager/courses_cubit.dart';
-import 'package:teaching/features/home/presentation/manager/school_cubit.dart';
-import 'package:teaching/features/home/presentation/manager/subscription_cubit.dart';
-import 'package:teaching/features/home/presentation/manager/teachers_of_student_cubit.dart';
+import 'package:teaching/features/chat/presentation/manager/chat_cubit.dart';
+import 'package:teaching/features/chat/presentation/manager/teacher_to_chat_cubit.dart';
 import 'package:teaching/features/home/presentation/widgets/build_ads_list.dart';
-import 'package:teaching/features/home/presentation/widgets/build_choose_to_you.dart';
 import 'package:teaching/features/home/presentation/widgets/build_courses.dart';
 import 'package:teaching/features/home/presentation/widgets/build_categories.dart';
 import 'package:teaching/features/home/presentation/widgets/build_features.dart';
-import 'package:teaching/features/home/presentation/widgets/build_fields.dart';
 import 'package:teaching/features/home/presentation/widgets/build_groups.dart';
-import 'package:teaching/features/home/presentation/widgets/build_lecturer.dart';
 import 'package:teaching/features/home/presentation/widgets/build_near_school.dart';
 import 'package:teaching/features/home/presentation/widgets/build_news.dart';
-import 'package:teaching/features/home/presentation/widgets/build_subscription.dart';
 import 'package:teaching/features/home/presentation/widgets/build_teachers.dart';
 import 'package:teaching/features/home/presentation/widgets/build_title_Item.dart';
 import 'package:teaching/features/home/presentation/widgets/build_welcome_user.dart';
-import 'package:teaching/features/notification/presentation/manager/notification_cubit.dart';
-
 import '../../../../core/export/export.dart';
-import '../../../main_register/presentation/widgets/build_language.dart';
-import '../manager/groups_cubit.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -38,19 +23,33 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+
     WidgetsBinding.instance.addPostFrameCallback((data) {
       context.read<AdsCubit>().getAds();
-      context.read<PublicCourseCubit>().getPublicCourses();
-      context.read<PublicGroupCubit>().getPublicGroups();
+      if (AppPrefs.userRole == '1') {
+        context.read<PublicCourseCubit>().getPublicCourses();
+      }
+
+      if (AppPrefs.userRole == '1') {
+        context.read<PublicGroupCubit>().getPublicGroups();
+      }
+
       context.read<NearSchoolCubit>().getNearSchool();
-      context.read<SubscriptionCubit>().getSubscription(isModel: true);
-      context.read<TeachersOfStudentCubit>().getTeacherOfStudent();
+      context.read<TeacherToChatCubit>().getTeacherToChat();
+
+      context.read<ChatCubit>().getSingleChats();
+
+      // context.read<SubscriptionCubit>().ChatCubit(isModel: true);
+      if (AppPrefs.userRole == '1') {
+        context.read<TeachersOfStudentCubit>().getTeacherOfStudent();
+      }
       context.read<NotificationCubit>().getNotification();
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    print('AppPrefs.userRole>>>>>>>>>>>>>>>> ${AppPrefs.userRole}');
     return BlocBuilder<LanguageCubit, LanguageState>(
       builder: (context, state) {
         return Column(
@@ -62,8 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   20.vs,
                   BuildWelcomeUser(),
                   20.vs,
-
-                  BuildCategories(),
+                  const BuildCategories(),
                   const BuildAdsList(),
 
                   // // 5.vs,
@@ -80,25 +78,27 @@ class _HomeScreenState extends State<HomeScreen> {
                   // const BuildLecturer(),
                   /////////////////////////////// NearSchool //////////////////////////////////
 
-                  if (AppPrefs.user!.userRole == '1' ||
-                      AppPrefs.user!.userRole == '2')
-                    BuildTitleItem(
-                        text: AppStrings().closeSchools.trans,
-                        asset: AppAssets().schoolIcon),
-                  if (AppPrefs.user!.userRole == '1') 5.vs,
-                  if (AppPrefs.user!.userRole == '1') const BuildNearSchool(),
-                  if (AppPrefs.user!.userRole == '1') 20.vs,
+                  // if (AppPrefs.userRole == '1' || AppPrefs.userRole == '2')
+                  BuildTitleItem(
+                    text: AppStrings().closeSchools.trans,
+                  ),
+                  // if (AppPrefs.userRole == '1')
+                  5.vs,
+                  // if (AppPrefs.userRole == '1')
+                  const BuildNearSchool(),
+                  if (AppPrefs.userRole == '1') 20.vs,
                   /////////////////////////////// News //////////////////////////////////
 
-                  if (AppPrefs.user!.userRole == '1')
+                  if (AppPrefs.userRole == '1')
                     BuildTitleItem(
-                        text: AppStrings().latestNews.trans,
-                        asset: AppAssets().newsIcon),
-                  if (AppPrefs.user!.userRole == '1') const BuildNews(),
-                  20.vs,
+                      text: AppStrings().latestNews.trans,
+                    ),
+                  if (AppPrefs.userRole == '1') const BuildNews(),
+                  if (AppPrefs.userRole == '1') 20.vs,
                   /////////////////////////////// courses //////////////////////////////////
 
-                  BuildTitleItem(
+                  if (AppPrefs.userRole == '1')
+                    BuildTitleItem(
                       onTap: () {
                         Routes.publicCoursesGroupsRoute.moveTo;
                         context
@@ -107,13 +107,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       all: AppStrings().all.trans,
                       text: AppStrings().courses.trans,
-                      asset: AppAssets().coursesIcon),
-                  5.vs,
-                  const BuildCourses(),
-                  20.vs,
+                    ),
+                  if (AppPrefs.userRole == '1') 5.vs,
+                  if (AppPrefs.userRole == '1') const BuildCourses(),
+                  if (AppPrefs.userRole == '1') 20.vs,
                   /////////////////////////////// groups //////////////////////////////////
 
-                  BuildTitleItem(
+                  if (AppPrefs.userRole == '1')
+                    BuildTitleItem(
                       onTap: () {
                         Routes.publicCoursesGroupsRoute.moveTo;
                         context
@@ -122,42 +123,42 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       all: AppStrings().all.trans,
                       text: AppStrings().groups.trans,
-                      asset: AppAssets().groupsIcon),
-                  5.vs,
-                  const BuildGroups(),
-                  if (AppPrefs.user!.userRole == '1') 20.vs,
-                  if (AppPrefs.user!.userRole == '1')
+                    ),
+                  if (AppPrefs.userRole == '1') 5.vs,
+                  if (AppPrefs.userRole == '1') const BuildGroups(),
+                  if (AppPrefs.userRole == '1') 20.vs,
+                  if (AppPrefs.userRole == '1')
                     /////////////////////////////// Teachers //////////////////////////////////
                     BuildTitleItem(
-                        onTap: () => Routes.teachersRoute.moveTo,
-                        all: AppStrings().all.trans,
-                        text: AppStrings().teachers.trans,
-                        asset: AppAssets().teacherIcon),
-                  if (AppPrefs.user!.userRole == '1') 5.vs,
-                  if (AppPrefs.user!.userRole == '1') const BuildTeachers(),
-                  /////////////////////////////// Subscription //////////////////////////////////
-                  if (AppPrefs.user!.userRole == '1') 20.vs,
-                  if (AppPrefs.user!.userRole == '1')
-                    BuildTitleItem(
+                      onTap: () => Routes.teachersRoute.moveTo,
                       all: AppStrings().all.trans,
-                      text: AppStrings().mySubscriptions.trans,
-                      onTap: () {
-                        context
-                            .read<BottomNavBarOperationCubit>()
-                            .onSelectedItem(2);
-                      },
+                      text: AppStrings().teachers.trans,
                     ),
-                  if (AppPrefs.user!.userRole == '1') 5.vs,
-                  if (AppPrefs.user!.userRole == '1') const BuildSubscription(),
-                  20.vs,
-                  /////////////////////////////// features //////////////////////////////////
+                  if (AppPrefs.userRole == '1') 5.vs,
+                  if (AppPrefs.userRole == '1') const BuildTeachers(),
+                  /////////////////////////////// Subscription //////////////////////////////////
+                  // if (AppPrefs.userRole == '1') 20.vs,
+                  // if (AppPrefs.userRole == '1')
+                  //   BuildTitleItem(
+                  //     all: AppStrings().all.trans,
+                  //     text: AppStrings().mySubscriptions.trans,
+                  //     onTap: () {
+                  //       context
+                  //           .read<BottomNavBarOperationCubit>()
+                  //           .onSelectedItem(2);
+                  //     },
+                  //   ),
+                  // if (AppPrefs.userRole == '1') 5.vs,
+                  // if (AppPrefs.userRole == '1') const BuildSubscription(),
 
-                  if (AppPrefs.user!.userRole == '2')
+                  /////////////////////////////// features //////////////////////////////////
+                  20.vs,
+                  if (AppPrefs.userRole == '2')
                     BuildTitleItem(
-                        text: AppStrings().features.trans,
-                        asset: AppAssets().featuresIcon),
+                      text: AppStrings().features.trans,
+                    ),
                   10.vs,
-                  if (AppPrefs.user!.userRole == '2')
+                  if (AppPrefs.userRole == '3')
                     const SizedBox(child: BuildFeatures()),
                   20.vs
                 ],

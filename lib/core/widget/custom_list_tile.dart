@@ -1,4 +1,3 @@
-
 import '../export/export.dart';
 
 class CustomListTile extends StatelessWidget {
@@ -17,11 +16,12 @@ class CustomListTile extends StatelessWidget {
     this.padding,
     this.isCircle = true,
     this.spacer = 20,
+    this.radius,
     this.subTitleStyle,
     this.radiusDirectional,
     this.iconColor,
     this.subtitle,
-    this.height,
+    this.dividerHeight,
     this.widget,
     this.boxShadow,
     this.rate,
@@ -41,8 +41,9 @@ class CustomListTile extends StatelessWidget {
   final bool? isIcon;
   final EdgeInsetsDirectional? padding;
   final double? spacer;
+  final double? radius;
   final double? r;
-  final double? height;
+  final double? dividerHeight;
   final bool? isBorder;
   final bool? isCircle;
   final bool? isDivider;
@@ -65,7 +66,7 @@ class CustomListTile extends StatelessWidget {
           if (isDivider.isTrue)
             CustomDivider(
               width: 5,
-              height: height,
+              height: dividerHeight,
               color: AppColors.mainAppColor,
             ),
           Expanded(
@@ -87,13 +88,13 @@ class CustomListTile extends StatelessWidget {
                     isCircle.isTrue
                         ? CustomNetworkImage.circular(
                             imageUrl: image,
-                            radius: 50.r,
-                            defaultAsset: '',
+                            radius: radius ?? 65.r,
+                            defaultAsset: AppAssets().teacher,
                           )
                         : CustomNetworkImage.rectangle(
                             imageUrl: image,
-                            width: 80.w, defaultAsset: '',
-                            height: 70.h,
+                            width: 60.w, defaultAsset: AppAssets().teacher,
+                            height: 65.h,
                             // radius: 50.r,
                           ),
                   if (image.isNotNull) spacer!.hs,
@@ -111,32 +112,37 @@ class CustomListTile extends StatelessWidget {
                             : style,
                       ),
                       if (subtitle.isNotNull)
-                        Text(subtitle!,
-                            style: subTitleStyle ??
-                                getRegularTextStyle(
-                                  fontSize: 16,
-                                  color: AppColors.grayColor1,
-                                )),
-                      if (followers.isNotNull)
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(followers!,
-                                  style: subTitleStyle ??
-                                      getRegularTextStyle(
-                                          fontSize: 12,
-                                          color: AppColors.grayColor1,
-                                          height: 1.3)),
-                            ),
-                            if (rate.isNotNull)
-                              BuildRatingBar(
-                                itemCount: 4,
-                                isIgnoreRate: true,
-                                itemSize: 20,
-                                rate: rate!,
+                        CustomTextWidget(
+                          text: subtitle!,
+                          style: subTitleStyle ??
+                              getRegularTextStyle(
+                                fontSize: 16,
+                                color: AppColors.grayColor1,
                               ),
-                          ],
+                          lines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          textScalar: TextScaler.linear(0.9),
                         ),
+                      // if (followers.isNotNull)
+                      //   Row(
+                      //     children: [
+                      //       Expanded(
+                      //         child: CustomTextWidget(text:followers!,
+                      //             style: subTitleStyle ??
+                      //                 getRegularTextStyle(
+                      //                     fontSize: 12,
+                      //                     color: AppColors.grayColor1,
+                      //                     height: 1.3)),
+                      //       ),
+                      //       if (rate.isNotNull)
+                      //         BuildRatingBar(
+                      //           itemCount: 5,
+                      //           isIgnoreRate: true,
+                      //           itemSize: 15,
+                      //           rate: rate!,
+                      //         ),
+                      //     ],
+                      //   ),
                     ],
                   )),
                   if (isIcon!)
@@ -147,22 +153,45 @@ class CustomListTile extends StatelessWidget {
                     ),
                   if (isIcon.isFalse)
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         if (endTitle.isNotNull)
-                          Text(endTitle!,
-                              style: subTitleStyle ??
-                                  getSemiboldTextStyle(
-                                    fontSize: 15,
-                                    color: AppColors.mainAppColor,
-                                  )),
+                          Row(
+                            children: [
+                              if (followers.isNotNull)
+                                CustomTextWidget(
+                                    text: followers!,
+                                    style: subTitleStyle ??
+                                        getSemiboldTextStyle(
+                                          fontSize: 15,
+                                          color: AppColors.mainAppColor,
+                                        )),
+                              if (followers.isNotNull) 5.hs,
+                              CustomTextWidget(
+                                  text: endTitle!,
+                                  style: subTitleStyle ??
+                                      getSemiboldTextStyle(
+                                        fontSize: 12,
+                                        color: AppColors.black,
+                                      )),
+                            ],
+                          ),
                         if (endTitle.isNotNull) 5.vs,
                         if (endSubtitle.isNotNull)
-                          Text(endSubtitle!,
+                          CustomTextWidget(
+                              text:endSubtitle!,
                               style: subTitleStyle ??
                                   getSemiboldTextStyle(
                                       fontSize: 15,
                                       color: AppColors.mainAppColor,
                                       height: 1)),
+                        if (rate.isNotNull)
+                          BuildRatingBar(
+                            itemCount: 5,
+                            isIgnoreRate: true,
+                            itemSize: 15,
+                            rate: rate!,
+                          ),
                         if (widget.isNotNull) widget!
                       ],
                     )
@@ -174,6 +203,4 @@ class CustomListTile extends StatelessWidget {
       ),
     );
   }
-
-
 }

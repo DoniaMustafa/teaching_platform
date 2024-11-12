@@ -3,6 +3,7 @@ import 'package:teaching/features/auth/data/models/post_params_education_model.d
 import '../../../../core/export/export.dart';
 import '../models/post_params_resume_model.dart';
 import '../models/step_no_respons_model.dart';
+import '../models/update_profile_params_model.dart';
 
 abstract class UserRemoteDataSource {
   Future<ResponseModel> registerByPhoneNumber({required UserModel user});
@@ -26,30 +27,41 @@ abstract class UserRemoteDataSource {
       {required String phone, required String verificationCode});
   Future<ResponseModel> resetPassword({required UserModel user});
   Future<ResponseModel> logout();
-// Future<ResponseModel> editUserData({required UserModel user});
+  Future<ResponseModel> editUserData({required UpdateProfileParamsModel user});
 
-// Future<ResponseModel> verifyOTP({required String phone, required String verificationCode});
+  Future<ResponseModel> getUsersData();
 
 // Future<ResponseModel> deleteAccount();
   // Future<ResponseModel> addAccount({required UserModel user});
   //
-  // // Future<ResponseModel> updatePassword({required String oldPassword, required String newPassword});
+  Future<ResponseModel> updatePassword(
+      {required String oldPassword,
+      required String newPassword,
+      required String confirmPassword});
   // // Future<OtpResponseModel> resendOTP({required String phone});
 
-  // // Future<UserResponseModel> changeUserInfo({required UserModel user});
+  Future<ResponseModel> changeUserImage({required String image});
 }
 
 class UserRemoteDataSourceImpl extends UserRemoteDataSource {
   DioConsumer dioConsumer;
   UserRemoteDataSourceImpl({required this.dioConsumer});
-
+  // @override
+  // Future<ResponseModel> updateDriverImage({required String image}) async =>
+  //     remoteExecute(
+  //         request: dioConsumer.postRequest(
+  //           path: EndPoints.updateProfileImage,
+  //           body: {"file": image},
+  //           isFormData: true,
+  //         ),
+  //         fromJsonFunction: ResponseModel.fromJson);
   @override
   Future<ResponseModel> registerByPhoneNumber(
           {required UserModel user}) async =>
       await remoteExecute(
           request: dioConsumer.postRequest(
             path: EndPoints.registerByPhone,
-            body: {"PhoneNumber": user.phoneNumber, "UserType": user.userRole},
+            body: {"PhoneNumber": user.phoneNumber, "UserType": user.userRoles},
           ),
           fromJsonFunction: (data) => VerificationResponseModel.fromJson(data));
   @override
@@ -87,15 +99,16 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource {
   Future<ResponseModel> login(
           {required String phone, required String password}) async =>
       await remoteExecute(
-          request: dioConsumer.postRequest(
-            path: EndPoints.login,
-            body: {
-              "UserName": phone,
-              "Password": password,
-              "grant_type": "password",
-            },
-          ),
-          fromJsonFunction: (data) => LoginUserResponseModel.fromJson(data));
+        request: dioConsumer.postRequest(
+          path: EndPoints.login,
+          body: {
+            "UserName": phone,
+            "Password": password,
+            "grant_type": "password",
+          },
+        ),
+        fromJsonFunction: (data) => LoginUserResponseModel.fromJson(data),
+      );
   //
   @override
   Future<ResponseModel> forgetPassword({
@@ -144,17 +157,51 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource {
 
   //
 
-  // @override
-  // Future<ResponseModel> editUserData({required UserModel user}) async {
-  //   return remoteExecute(
-  //     request: dioConsumer.postRequest(
-  //       path: EndPoints.editProfile,
-  //       isFormData: true,
-  //       body:user.toJson() ,
-  //
-  //     ),
-  //     fromJsonFunction:UserResponseModel.fromJson, );
-  // }
+  @override
+  Future<ResponseModel> editUserData(
+      {required UpdateProfileParamsModel user}) async {
+    return remoteExecute(
+      request: dioConsumer.postRequest(
+        path: AppPrefs.userRole == "1"
+            ? EndPoints.editProfile
+            : EndPoints.editParentProfile,
+        body: user.toJson(),
+      ),
+      fromJsonFunction: ResponseModel.fromJson,
+    );
+  }
+
+  @override
+  Future<ResponseModel> getUsersData() async => remoteExecute(
+      request: dioConsumer.getRequest(
+          path: AppPrefs.userRole == "1"
+              ? EndPoints.getStudentData
+              : EndPoints.getParentData),
+      fromJsonFunction: UserResponseModel.fromJson);
+
+  @override
+  Future<ResponseModel> changeUserImage({required String image}) async =>
+      remoteExecute(
+          request: dioConsumer.postRequest(
+              path: EndPoints.updateProfileImage,
+              isFormData: true,
+              body: {"file": image}),
+          fromJsonFunction: ResponseModel.fromJson);
+
+  @override
+  Future<ResponseModel> updatePassword(
+          {required String oldPassword,
+          required String newPassword,
+          required String confirmPassword}) async =>
+      remoteExecute(
+          request:
+              dioConsumer.postRequest(path: EndPoints.changePassword, body: {
+            "OldPassword": oldPassword,
+            "NewPassword": newPassword,
+            "ConfirmPassword": confirmPassword
+          }),
+          fromJsonFunction: ResponseModel.fromJson);
+
   //
   // @override
   // Future<ResponseModel> deleteAccount() async => remoteExecute(

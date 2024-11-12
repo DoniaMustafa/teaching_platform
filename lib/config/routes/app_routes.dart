@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:teaching/agora/cubit/teacher_live_screen.dart';
+import 'package:teaching/agora/live_screen.dart';
 import 'package:teaching/core/utils/app_colors.dart';
 import 'package:teaching/core/utils/extensions.dart';
+import 'package:teaching/features/Task/Tasks/presentation/pages/student_tasks_screen.dart';
 import 'package:teaching/features/about_us/presentation/pages/about_us_screen.dart';
+import 'package:teaching/features/ads_details/presentation/pages/ads_details_screen.dart';
 import 'package:teaching/features/auth/presentation/pages/reset_password_screen.dart';
-import 'package:teaching/features/booking_date/presentation/pages/booking_date_screen.dart';
+import 'package:teaching/features/chat/presentation/pages/chat_group_massages_screen.dart';
 import 'package:teaching/features/course/courses_lessons_details/presentation/pages/courses_lesson_details_screen.dart';
+import 'package:teaching/features/exam/exams/presentation/pages/passed_answer_exam_screen.dart';
+import 'package:teaching/features/exam/exams/presentation/pages/exams_screen.dart';
+import 'package:teaching/features/exam/exams/presentation/pages/result_exam_screen.dart';
+import 'package:teaching/features/exam/exams/presentation/pages/test_yourself_exam_screen.dart';
 import 'package:teaching/features/favorite/presentation/pages/favorite_screen.dart';
 import 'package:teaching/features/group/group_lessons_details/presentation/pages/groups_lesson_details_screen.dart';
 import 'package:teaching/features/group/groups_details/presentation/pages/groups_details_screen.dart';
-import 'package:teaching/features/main_register/presentation/pages/main_register_screen.dart';
+import 'package:teaching/features/auth/presentation/pages/main_register_screen.dart';
 import 'package:teaching/features/auth/presentation/pages/choose_role_screen.dart';
 import 'package:teaching/features/auth/presentation/pages/chosse_professional_courses_screen.dart';
 import 'package:teaching/features/auth/presentation/pages/education_type_screen.dart';
@@ -19,19 +27,36 @@ import 'package:teaching/features/auth/presentation/pages/login_screen.dart';
 import 'package:teaching/features/auth/presentation/pages/sign_up_py_phone_screen.dart';
 import 'package:teaching/features/auth/presentation/pages/sign_up_screen.dart';
 import 'package:teaching/features/auth/presentation/pages/verification_screen.dart';
+import 'package:teaching/features/home_work/presentation/pages/home_work_screen.dart';
+import 'package:teaching/features/near_school_details/presentation/pages/near_school_details_screen.dart';
+import 'package:teaching/features/notes/presentation/pages/notes_booked_unbooked_screen.dart';
+import 'package:teaching/features/notes/presentation/pages/notes_details_screen.dart';
+import 'package:teaching/features/notes/presentation/pages/notes_screen.dart';
+import 'package:teaching/features/notes/presentation/pages/reserve_note_screen.dart';
+import 'package:teaching/features/parent/presentation/pages/add_parent_screen.dart';
+import 'package:teaching/features/parent/presentation/pages/manage_parent_screen.dart';
+import 'package:teaching/features/parent/presentation/pages/parent_details_screen.dart';
+import 'package:teaching/features/parent_children/presentation/pages/parent_children_screen.dart';
 import 'package:teaching/features/privacy_policy/presentation/pages/privacy_policy_screen.dart';
-import 'package:teaching/features/profile/presentation/pages/profile_screen.dart';
+import 'package:teaching/features/private/presentation/pages/book_private_appoinment_screen.dart';
+import 'package:teaching/features/private/presentation/pages/private_groups_screen.dart';
+import 'package:teaching/features/statistics/presentation/pages/statistics_screen.dart';
+import 'package:teaching/features/student_profile/profile/presentation/pages/profile_screen.dart';
+import 'package:teaching/features/sessions/session_video_details/presentation/pages/video_of_session_screen.dart';
 import 'package:teaching/features/sessions/student_group_sessions/presentation/pages/student_group_sessions_screen.dart';
 import 'package:teaching/features/settings/presentation/pages/settings_screen.dart';
 import 'package:teaching/features/splash_screen.dart';
-import 'package:teaching/features/subscription_details/presentation/pages/subscription_course_details_screen.dart';
-import 'package:teaching/features/subscription_details/presentation/pages/subscription_group_details_screen.dart';
+import 'package:teaching/features/student_profile/profile/presentation/pages/updata_user_profile_screen.dart';
+import 'package:teaching/features/subscriptions/subscription_details/presentation/pages/subscription_course_details_screen.dart';
+import 'package:teaching/features/subscriptions/subscription_details/presentation/pages/subscription_group_details_screen.dart';
 import 'package:teaching/features/teacher/teacher_details/presentation/pages/teacher_details_screen.dart';
 import 'package:teaching/features/teacher/teachers/presentation/pages/teachers_screen.dart';
 import 'package:teaching/features/terms_condition/presentation/pages/terms_condition_screen.dart';
+import '../../features/booking_appointment_group/presentation/pages/booking_group_screen.dart';
 import '../../features/bottom_nav_bar/presentaion/page/bottom_nav_bar_screen.dart';
 import '../../features/course/courses_details/presentation/pages/courses_details_screen.dart';
 import '../../features/courses_groups/presentation/pages/public_courses_groups_screen.dart';
+import '../../features/grades/my_grades/presentation/pages/my_grades_screen.dart';
 import '../../features/language/presentation/managers/language_cubit/language_cubit.dart';
 import '../../features/auth/presentation/pages/upload_resume_screen.dart';
 import '../../features/on_boarding/presentation/pages/on_boarding_screen.dart';
@@ -42,6 +67,8 @@ class Routes {
   Routes._internal();
   static const String splashRoute = "/";
   static const String coursesGroupsRoute = "Courses  Screen";
+
+  static const String statisticsRoute = "/Statistics Route";
 
   static const String mainRoute = "/main Route";
   static const String loginRoute = "/login Route";
@@ -80,7 +107,8 @@ class Routes {
   static const String aboutUsRoute = "/ aboutUs";
   static const String favoriteCourseVideoRoute = "/ favorite Course Video";
   // static const String faqRoute = "FAQs";
-  static const String subscriptionGroupDetailsRoute = "Subscription Group Details";
+  static const String subscriptionGroupDetailsRoute =
+      "Subscription Group Details";
   static const String settingsRoute = "settings Route";
   //
   static const String bookingDateRoute = "Booking Date";
@@ -90,21 +118,48 @@ class Routes {
   //
   static const String termsAndConditionRoute = "Terms And Condition";
 
-  static const String trackingRoute = "Tracking route";
-  static const String allSavingTrip = "allSavingTrip";
-  static const String savingTripDetailsRoute = "SavingTripDetailsScreen";
+  static const String resultExamRoute = "result Exam route";
 
+  static const String nearSchoolDetailsRoute = "near School Details route";
+  static const String adsDetailsRoute = "ads Details Route";
+  static const String studentTasksRoute = "student Tasks Route";
   static const String personalInformation = "personalInfo";
   static const String editPersonalInformation = "editPersonalInformation";
   static const String fqs = "fqs";
   static const String privacyRoute = "privacy";
-  static const String mypackage = "mypackage";
-  static const String payments = "payment";
-  static const String methodView = "methodView";
-  static const String clientInfoRoute = 'clientInfoRoute';
-  static const String currentTrips = 'currentTrips';
-  static const String ridsScreen = 'ridsScreen';
-  static const String tripRoute = 'trip_route';
+  static const String examsRoute = "exams Route";
+  static const String passedExamRoute = "Passed Exam";
+  static const String myGradesRoute = "my Grades Route";
+  static const String pdfRoute = 'Pdf';
+  static const String notesRoute = 'Notes';
+  static const String notesBookedUnbookedRoute = 'notes Booked Unbooked';
+  static const String notesDetailsRoute = 'Notes Details Screen';
+  static const String reserveNoteRoute = "reserve Note Route";
+  static const String videoOfSessionRoute = "video Of Session Route";
+  static const String updateUserProfileRoute =
+      "update User Profile ScreenRoute";
+  static const String privateGroupsRoute = "private Groups";
+  static const String bookPrivateAppointmentGroupsRoute =
+      'bookPrivateAppointmentGroupsRoute';
+  static const String examQuestionRoute = 'ExamQuestionScreen';
+  static const String parentsRoute = 'Parents Screen';
+
+  static const String addParentRoute = 'add Parents Screen';
+
+  static const String liveRoute = 'Live Screen';
+  static const String teacherLiveRoute = 'teacher Live Route ';
+  static const String chatMassagesRoute = 'chatMassagesRoute';
+  //
+  static const String parentsDetailsRoute = 'parentsDetailsRoute';
+  //
+  static const String homeWorkRoute = 'homeWorkScreen';
+  //
+  static const String parentChildrenRoute = 'parentChildrenRoute';
+  //
+  // static const String liveRoute = 'Live Screen';
+
+//
+  //
 }
 
 class RouteGenerator {
@@ -179,7 +234,7 @@ class RouteGenerator {
             routeSettings: routeSettings);
       case Routes.subscriptionOfCourseDetailsRoute:
         return buildPageRoute(
-            child: const SubscriptionOfCourseDetailsScreen(),
+            child: SubscriptionOfCourseDetailsScreen(),
             routeSettings: routeSettings);
       case Routes.favoriteCourseVideoRoute:
         return buildPageRoute(
@@ -207,57 +262,128 @@ class RouteGenerator {
             child: AboutUsScreen(), routeSettings: routeSettings);
       case Routes.subscriptionGroupDetailsRoute:
         return buildPageRoute(
-            child: SubscriptionGroupDetailsScreen(), routeSettings: routeSettings);
+            child: SubscriptionGroupDetailsScreen(),
+            routeSettings: routeSettings);
       case Routes.privacyRoute:
         return buildPageRoute(
             child: const PrivacyPolicyScreen(), routeSettings: routeSettings);
       case Routes.studentGroupSessionsRoute:
-        return buildPageRoute(child: StudentGroupSessionsScreen(), routeSettings: routeSettings);
+        return buildPageRoute(
+            child: StudentGroupSessionsScreen(), routeSettings: routeSettings);
       case Routes.bookingDateRoute:
         return buildPageRoute(
-            child: BookingDateScreen(), routeSettings: routeSettings);
+            child: BookingAppointmentGroupScreen(),
+            routeSettings: routeSettings);
       //
-      // case Routes.myTripsRoute:
-      //   return buildPageRoute(
-      //       child: MyTripsScreen(), routeSettings: routeSettings);
+      case Routes.nearSchoolDetailsRoute:
+        return buildPageRoute(
+            child: NearSchoolDetailsScreen(), routeSettings: routeSettings);
       // //
-      // case Routes.forgetPassRoute:
-      //   return buildPageRoute(
-      //       child: ForgetPasswordScreen(), routeSettings: routeSettings);
+      case Routes.adsDetailsRoute:
+        return buildPageRoute(
+            child: AdsDetailsScreen(), routeSettings: routeSettings);
       //
-      // // case Routes.currentTrips:
-      // //   return buildPageRoute(child: BuildCurrentTrip(), routeSettings: routeSettings);
-      // case Routes.ridsScreen:
-      //   return buildPageRoute(
-      //       child: ScheduleRidesScreen(), routeSettings: routeSettings);
+      case Routes.examsRoute:
+        return buildPageRoute(
+            child: ExamsScreen(), routeSettings: routeSettings);
+      case Routes.studentTasksRoute:
+        return buildPageRoute(
+            child: StudentTasksScreen(), routeSettings: routeSettings);
+      case Routes.resultExamRoute:
+        return buildPageRoute(
+            child: ResultExamScreen(), routeSettings: routeSettings);
+
+      case Routes.passedExamRoute:
+        return buildPageRoute(
+          child: PassedExamScreen(),
+          routeSettings: routeSettings,
+        );
       //
-      // case Routes.newSavingTripRoute:
-      //   return buildPageRoute(
-      //     child: CreateSavingTripScreen(),
-      //     routeSettings: routeSettings,
-      //   );
-      //
-      // case Routes.trackingRoute:
-      //   return buildPageRoute(
-      //       child: TrackingScreen(), routeSettings: routeSettings);
-      // case Routes.walletRoute:
-      //   return buildPageRoute(
-      //       child: const MyWallet(), routeSettings: routeSettings);
-      // case Routes.subscribtions:
-      //   return buildPageRoute(
-      //       child: const MySubscribtions(), routeSettings: routeSettings);
+      case Routes.myGradesRoute:
+        return buildPageRoute(
+            child: MyGradesScreen(), routeSettings: routeSettings);
+      // case Routes.pdfRoute:
+      //   return buildPageRoute(child: PdfScreen(), routeSettings: routeSettings);
+      case Routes.notesBookedUnbookedRoute:
+        return buildPageRoute(
+            child: const NotesBookedUnbookedScreen(),
+            routeSettings: routeSettings);
       //
       case Routes.loginRoute:
         return buildPageRoute(
             child: LoginScreen(), routeSettings: routeSettings);
       //
       //
-      // case Routes.doneRoute:
-      //   return buildPageRoute(
-      //       child: DoneScreen(), routeSettings: routeSettings);
+      case Routes.notesRoute:
+        return buildPageRoute(
+            child: NotesScreen(), routeSettings: routeSettings);
       //
       // //*************************** settings rout ********************************/
       //
+      case Routes.parentChildrenRoute:
+        return buildPageRoute(
+            child: ParentChildrenScreen(), routeSettings: routeSettings);
+
+      case Routes.notesDetailsRoute:
+        return buildPageRoute(
+            child: NotesDetailsScreen(), routeSettings: routeSettings);
+      //   //
+      case Routes.reserveNoteRoute:
+        return buildPageRoute(
+            child: ReserveNoteScreen(), routeSettings: routeSettings);
+      //   //
+      case Routes.videoOfSessionRoute:
+        return buildPageRoute(
+            child: VideoOfSessionScreen(), routeSettings: routeSettings);
+      //   //
+      case Routes.updateUserProfileRoute:
+        return buildPageRoute(
+            child: UpdateUserProfileScreen(), routeSettings: routeSettings);
+      //   //
+      case Routes.privateGroupsRoute:
+        return buildPageRoute(
+            child: PrivateGroupsScreen(), routeSettings: routeSettings);
+      //   //
+      case Routes.bookPrivateAppointmentGroupsRoute:
+        return buildPageRoute(
+            child: BookPrivateAppointmentScreen(),
+            routeSettings: routeSettings);
+      //   //
+      case Routes.examQuestionRoute:
+        return buildPageRoute(
+            child: ExamQuestionScreen(), routeSettings: routeSettings);
+      case Routes.addParentRoute:
+        return buildPageRoute(
+            child: AddParentScreen(), routeSettings: routeSettings);
+
+      case Routes.parentsRoute:
+        return buildPageRoute(
+            child: ParentsScreen(), routeSettings: routeSettings);
+      case Routes.homeWorkRoute:
+        return buildPageRoute(
+            child: HomeWorkScreen(), routeSettings: routeSettings);
+      case Routes.liveRoute:
+        return buildPageRoute(
+            child: LiveScreen(), routeSettings: routeSettings);
+
+      case Routes.teacherLiveRoute:
+        return buildPageRoute(
+            child: TeacherLiveScreen(), routeSettings: routeSettings);
+      //
+      case Routes.chatMassagesRoute:
+        return buildPageRoute(
+            child: ChatGroupMassagesScreen(), routeSettings: routeSettings);
+      //
+      case Routes.parentsDetailsRoute:
+        return buildPageRoute(
+            child: ParentDetailsScreen(), routeSettings: routeSettings);
+      case Routes.statisticsRoute:
+        return buildPageRoute(
+            child: StatisticsScreen(), routeSettings: routeSettings);
+
+      //
+      //
+
       // case Routes.personalInformation:
       //   return buildPageRoute(
       //       child: BlocProvider(

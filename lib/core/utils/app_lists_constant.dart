@@ -1,25 +1,20 @@
-import 'package:flutter/cupertino.dart';
-import 'package:teaching/core/enums.dart';
+import 'package:teaching/agora/live_screen.dart';
 import 'package:teaching/core/export/export.dart';
-import 'package:teaching/core/model/generic_model.dart';
-import 'package:teaching/core/utils/app_assets.dart';
-import 'package:teaching/core/utils/app_strings.dart';
-import 'package:teaching/features/auth/presentation/manager/user_cubit/user_cubit.dart';
-import 'package:teaching/features/chat/presentation/pages/chat_screen.dart';
-import 'package:teaching/features/home/presentation/pages/home_screen.dart';
-import 'package:teaching/features/notification/presentation/pages/notification_screen.dart';
-import 'package:teaching/features/on_boarding/presentation/widgets/build_first_widget.dart';
-import 'package:teaching/features/on_boarding/presentation/widgets/build_inductor_widget.dart';
-import 'package:teaching/features/schedule/presentation/pages/schedule_screen.dart';
-import 'package:teaching/features/subscription/presentation/pages/subscription_screen.dart';
-import 'package:teaching/features/wallet/presentation/pages/wallet_screen.dart';
+import 'package:teaching/features/home_work/presentation/manager/homework_operation_cubit.dart';
 
 class AppListsConstant {
   static List<String> tabsBar = [
-   AppStrings().contents.trans,
+    AppStrings().contents.trans,
     AppStrings().comments.trans,
     AppStrings().attachments.trans,
     AppStrings().exams.trans,
+  ];
+  static List<String> sessionTabsBar = [
+    AppStrings().contents.trans,
+    AppStrings().comments.trans,
+    AppStrings().attachments.trans,
+    AppStrings().exams.trans,
+    AppStrings().homeWork.trans,
   ];
   // static  List<String> pathUrl = [
   //   'https://www.youtube.com/watch?v=c84s0JWdEKg',
@@ -73,7 +68,27 @@ class AppListsConstant {
     AppStrings().courses.trans,
     AppStrings().groups.trans,
   ];
+  static List<String> parentChildren = [
+    AppStrings().children.trans,
+    AppStrings().parentRequest.trans,
+  ];
+  static List<String> homeworkTab = [
+    AppStrings().delivered.trans,
+    AppStrings().notDelivered.trans,
+  ];
 
+  static List<String> private = [
+    AppStrings().groups.trans,
+    AppStrings().bookDate.trans,
+  ];
+  static List<String> parents = [
+    AppStrings().parents.trans,
+    AppStrings().parentRequest.trans,
+  ];
+  static List<String> notes = [
+    AppStrings().bookedNotes.trans,
+    AppStrings().unbookedNotes.trans,
+  ];
   static List<String> sessionsTab = [
     AppStrings().previousClasses.trans,
     AppStrings().nextClasses.trans,
@@ -125,10 +140,12 @@ class AppListsConstant {
     const WalletScreen()
   ];
 
-  static List<GenericModel> listOfStudentCategories = [];
-  static List<GenericModel> listOfTeacherCategories =[];
+  static List<GenericModel> listOfStudentCategories =  [];
+  static List<GenericModel> listOfSParentCategories =[];
+  static List<GenericModel> listOfTeacherCategories = [];
 
   static List<GenericModel> studentDrawerItems = [];
+  static List<GenericModel> parentDrawerItems = [];
 
   static List<GenericModel> drawerItems = [
     GenericModel(
@@ -179,6 +196,25 @@ class AppListsConstant {
     ),
   ];
 
+  static List<GenericModel> parentFeaturesItems = [
+    GenericModel(
+      // image: AppAssets().student,
+      // role: 'student',
+      title: 'اضافة ابناء',
+    ),
+    GenericModel(
+      // image: AppAssets().teacher,
+      // role: 'lecture',
+      title: 'اضافة معلم',
+    ),
+    GenericModel(
+      // image: AppAssets().teacher,
+      // role: 'lecture',
+      title: 'متابعة مدرس',
+    ),
+
+  ];
+
   static List<GenericModel> featuresItems = [
     GenericModel(
       // image: AppAssets().student,
@@ -219,5 +255,45 @@ class AppListsConstant {
     AppStrings().privacyPolice.trans,
     AppStrings().termsAndConditions.trans,
     AppStrings().logout.trans,
+  ];
+
+//////////////////////////appointment date of Group///////////////////////////////////
+  static List<GenericModel> subscriptionDurationGroup = [
+    GenericModel(
+      id: 1,
+      title: AppStrings().session.trans,
+    ),
+    GenericModel(
+      id: 2,
+      title: AppStrings().month.trans,
+    ),
+    GenericModel(
+      id: 3,
+      title: AppStrings().term.trans,
+    ),
+    GenericModel(
+      id: 4,
+      title: AppStrings().year.trans,
+    ),
+  ];
+  static List<GenericModel> periodOfDay = [
+    GenericModel(
+      id: 1,
+      title: AppStrings().morning.trans,
+    ),
+    GenericModel(
+      id: 2,
+      title: AppStrings().night.trans,
+    ),
+  ];
+  static List<GenericModel> groupType = [
+    GenericModel(
+      id: 1,
+      title: AppStrings().individual.trans,
+    ),
+    GenericModel(
+      id: 2,
+      title: AppStrings().group.trans,
+    ),
   ];
 }

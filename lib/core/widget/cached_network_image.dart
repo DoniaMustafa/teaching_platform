@@ -118,12 +118,19 @@ class CustomNetworkImage extends StatelessWidget {
                     : Container(
                         height: radius,
                         width: radius,
-                        color: AppColors.mainAppColor,
+                        decoration: BoxDecoration(
+                            // color: AppColors.mainAppColor,
+                            image: DecorationImage(
+                                image: AssetImage(defaultAsset!),
+                                fit: BoxFit.fill)),
                       )
             : Container(
                 height: radius,
                 width: radius,
-                color: AppColors.mainAppColor,
+                decoration: BoxDecoration(
+                    // color: AppColors.mainAppColor,
+                    image: DecorationImage(
+                        image: AssetImage(defaultAsset!), fit: BoxFit.fill)),
               ),
       );
   buildRectangleAsset(String? asset) => Container(
@@ -150,10 +157,9 @@ class CustomNetworkImage extends StatelessWidget {
                 height: height,
                 width: width,
                 decoration: BoxDecoration(
-                  // color: AppColors.mainAppColor,
-                  image: DecorationImage(
-                      image: AssetImage(defaultAsset!), fit: BoxFit.fill)
-                ),
+                    // color: AppColors.mainAppColor,
+                    image: DecorationImage(
+                        image: AssetImage(defaultAsset!), fit: BoxFit.fill)),
               ),
       );
 }

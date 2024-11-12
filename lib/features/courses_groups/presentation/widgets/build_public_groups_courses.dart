@@ -54,7 +54,8 @@ class BuildPublicCourses extends StatelessWidget {
   }
 
   Widget buildTeachersItem(CoursesModel data) => CustomItem(
-      onNavigateTap: () {
+      onNavigateTap: () {  AppService()
+          .getBlocData<CoursesGroupOperationCubit>().selectedIndex = null;
         // AppService().getBlocData<CoursesCubit>().getCourser(
         //     model: TeacherModel(
         //         subjectId: data.subjectId!, teacherId: data.teacherId!));

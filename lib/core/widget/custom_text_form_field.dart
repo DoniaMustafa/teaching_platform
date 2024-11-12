@@ -29,7 +29,7 @@ class CustomTextFormField extends StatefulWidget {
   final bool? isCirclePrefixIcon;
   final int? minLines;
   final EdgeInsetsGeometry? padding;
-  final bool isShadow;
+  final List<BoxShadow>? boxShadow;
   final Color? backColor;
   final double? r;
   final double startPadding;
@@ -64,7 +64,7 @@ class CustomTextFormField extends StatefulWidget {
       this.onSaved,
       this.prefixIcon,
       this.textDirection,
-      this.isShadow = true,
+      this.boxShadow,
       this.isPassword = false,
       this.label,
       this.height,
@@ -101,6 +101,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
     print("build custom aga9j");
     return Container(
       margin: widget.padding,
+      decoration: BoxDecoration(
+        boxShadow:widget.boxShadow.isNotNull?widget.boxShadow:null
+      ),
       child: TextFormField(
         style: widget.textStyle ??
             getBoldTextStyle(

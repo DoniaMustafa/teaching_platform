@@ -5,8 +5,11 @@ import 'package:teaching/features/course/courses_lessons_details/domain/reposito
 class CommentOnLessonsUseCase {
   CommentOnLessonsRepo repo;
   Future<Either<Failure, ResponseModel>> addCommentOnVideo(
-          {required int videoId, required String comment}) async =>
-      await repo.addCommentOnVideo(videoId: videoId, comment: comment);
+          {required int videoId,
+          required String comment,
+          bool isCourse = true}) async =>
+      await repo.addCommentOnVideo(
+          videoId: videoId, comment: comment, isCourse: isCourse);
 
   CommentOnLessonsUseCase(this.repo);
 }

@@ -1,0 +1,5 @@
+-keep class **.zego.** { *; }
+-dontwarn com.heytap.msp.push.**   # Suppresses warnings for all classes in Oppo's push service package
+-dontwarn com.huawei.hms.**        # Might need further refinement based on specific classes used
+-dontwarn com.vivo.push.**         # Suppresses warnings for all classes in Vivo's push service package
+-dontwarn com.xiaomi.mipush.sdk.**  # Suppresses warnings for all classes in Xiaomi's push service package

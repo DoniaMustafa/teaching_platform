@@ -58,6 +58,18 @@ class LoginErrorState extends UserState {
 
   LoginErrorState({required this.massage});
 }
+class GetStudentDataLoadingState extends UserState {}
+
+class GetStudentDataSuccessState extends UserState {
+  final UserModel user;
+  GetStudentDataSuccessState({required this.user});
+}
+
+class GetStudentDataErrorState extends UserState {
+  final String massage;
+
+  GetStudentDataErrorState({required this.massage});
+}
 
 // ///*************************************///
 // class UpdateUserLoadingState extends UserState {}
@@ -72,22 +84,33 @@ class LoginErrorState extends UserState {
 //
 //   UpdateUserErrorState({required this.massage});
 // }
-//
-// ///*************UpdatePassword*******************///
-//
-// class UpdatePasswordLoadingState extends UserState {}
-//
-// class UpdatePasswordLoadedState extends UserState {
-//   // final String massage;
-//   //  UpdatePasswordLoadedState({required this.massage});
-// }
-//
-// class UpdatePasswordErrorState extends UserState {
-//   String massage;
-//
-//   UpdatePasswordErrorState({required this.massage});
-// }
-//
+//// ///*************************************///
+class UpdateImageLoadingState extends UserState {}
+
+class UpdateImageSuccessState extends UserState {
+  // final LoginUserResponseModel response;
+  UpdateImageSuccessState();
+}
+
+class UpdateImageFailureState extends UserState {
+  final String massage;
+
+  UpdateImageFailureState({required this.massage});
+}
+// //
+///*************UpdatePassword*******************///
+
+class UpdatePasswordLoadingState extends UserState {}
+
+class UpdatePasswordLoadedState extends UserState {
+}
+
+class UpdatePasswordErrorState extends UserState {
+  String massage;
+
+  UpdatePasswordErrorState({required this.massage});
+}
+
 // ///*************************///
 class ResetPasswordLoadingState extends UserState {}
 
@@ -188,12 +211,21 @@ class LogoutErrorState extends UserState {
 //
 //   ConfirmCodeErrorState({required this.massage});
 // }
-// class EditUserDataLoadingState extends UserState {}
-//
-// class EditUserDataSuccessState extends UserState {}
-//
-// class EditUserDataErrorState extends UserState {
-//   final String massage;
-//
-//   EditUserDataErrorState({required this.massage});
-// }
+class EditUserDataLoadingState extends UserState {}
+
+class EditUserDataSuccessState extends UserState {}
+
+class EditUserDataErrorState extends UserState {
+  final String massage;
+
+  EditUserDataErrorState({required this.massage});
+}
+class ChangeUserImageLoadingState extends UserState {}
+
+class ChangeUserImageSuccessState extends UserState {}
+
+class ChangeUserImageErrorState extends UserState {
+  final String massage;
+
+  ChangeUserImageErrorState({required this.massage});
+}

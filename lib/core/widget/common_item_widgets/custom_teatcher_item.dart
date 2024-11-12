@@ -2,6 +2,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:teaching/core/enums.dart';
 import 'package:teaching/core/widget/build_rating_bar.dart';
 import 'package:teaching/features/home/data/models/teacher_respons_model.dart';
+import 'package:teaching/features/parent_children/presentation/widgets/build_children_drop_down_list.dart';
 import 'package:teaching/features/teacher/teacher_details/presentation/manager/teacher_details_cubit.dart';
 
 import '../../export/export.dart';
@@ -17,9 +18,13 @@ class CustomTeacherItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        AppService()
-            .getBlocData<TeacherDetailsCubit>()
-            .getTeacherDetails(model: TeacherModel(teacherId: teacher.id));
+        AppService().getBlocData<TeacherDetailsCubit>().getTeacherDetails(
+            model: TeacherModel(
+                infoType: AppPrefs.userRole == "3" ? 3 : null,
+                studentId: AppPrefs.userRole == "3"
+                    ? BuildChildrenDropDownList.childrenId
+                    : null,
+                teacherId: teacher.id!));
         Routes.teacherDetailsRoute.moveTo;
       },
       child: CustomCard(

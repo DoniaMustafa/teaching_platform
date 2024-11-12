@@ -3,6 +3,7 @@ import 'package:teaching/features/course/courses_details/presentation/manager/co
 import 'package:teaching/features/course/courses_details/presentation/pages/courses_details_screen.dart';
 import 'package:teaching/features/courses_groups/presentation/manager/public_group_cubit.dart';
 import 'package:teaching/features/group/groups_details/presentation/manager/group_details/group_details_cubit.dart';
+import 'package:teaching/features/group/groups_details/presentation/pages/groups_details_screen.dart';
 import 'package:teaching/features/home/presentation/manager/groups_cubit.dart';
 
 class BuildPublicGroupTabBarView extends StatelessWidget {
@@ -57,10 +58,11 @@ class BuildPublicGroupTabBarView extends StatelessWidget {
             .getBlocData<GroupDetailsCubit>()
             .getGroupDetails(teacherId: data.teacherId!);
         Routes.groupsDetailsRoute.moveToWithArgs({
-          CoursesDetailsScreen.whichScreenKey: "default",
+          GroupsDetailsScreen.whichScreenKey: "default",
           // CoursesDetailsScreen.subjectNameKey: data.subjectId!,
-          // CoursesDetailsScreen.teacherIdKey: data.teacherId!
+          GroupsDetailsScreen.teacherIdKey: data.teacherId
         });
+        print(data.teacherId);
       },
       isSubScribe: true,
       groupsModel: data);

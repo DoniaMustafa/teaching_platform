@@ -12,10 +12,17 @@ class UserUseCases {
   Future<Either<Failure, ResponseModel>> registerByPhoneNumber(
           {required UserModel user}) async =>
       await repo.registerByPhoneNumber(user: user);
-  Future<Either<Failure, ResponseModel>> register({PostParamsResumeModel? resumeModel,
-
-    UserModel? user,int? stepsNo,PostParamsEducationModel? education,}) async =>
-      repo.register(user: user,stepsNo: stepsNo,education: education,resumeModel: resumeModel);
+  Future<Either<Failure, ResponseModel>> register({
+    PostParamsResumeModel? resumeModel,
+    UserModel? user,
+    int? stepsNo,
+    PostParamsEducationModel? education,
+  }) async =>
+      repo.register(
+          user: user,
+          stepsNo: stepsNo,
+          education: education,
+          resumeModel: resumeModel);
   Future<Either<Failure, ResponseModel>> forgetPassword({
     required String phone,
   }) async =>
@@ -34,11 +41,19 @@ class UserUseCases {
         phone: phone,
         password: password,
       );
-  Future<Either<Failure, ResponseModel>> resetPassword( {required UserModel user}) async =>
-      await repo.resetPassword(user:user);
-  Future<Either<Failure, ResponseModel>> verifyForgetPassword({required String verificationCode, required String phone}) =>
-      repo.verifyForgetPassword(phone: phone, verificationCode: verificationCode);
 
+  Future<Either<Failure, ResponseModel>> getUsersData() async =>
+      await repo.getUsersData();
+  Future<Either<Failure, ResponseModel>> resetPassword(
+          {required UserModel user}) async =>
+      await repo.resetPassword(user: user);
+  Future<Either<Failure, ResponseModel>> verifyForgetPassword(
+          {required String verificationCode, required String phone}) =>
+      repo.verifyForgetPassword(
+          phone: phone, verificationCode: verificationCode);
+  // Future<Either<Failure, ResponseModel>> updateDriverImage(
+  //         {required String image}) async =>
+  //     await repo.updateDriverImage(image: image);
 
   // // Future<Either<Failure, OtpResponseModel>> resendOTP({required String phone}) async =>
   // //     await repositories.resendOTP(phone: phone);
@@ -49,17 +64,25 @@ class UserUseCases {
   //     repo.addAccount(user: user);
   // // Future<Either<Failure, UserResponseModel>> changeUserInfo({required UserModel user}) async =>
   // //     await repositories.changeUserInfo(user: user);
-  //
-  // // Future<Either<Failure, ResponseModel>> updatePassword(
-  // //         {required String oldPassword, required String newPassword}) async =>
-  // //     await repositories.updatePassword(newPassword: newPassword, oldPassword: oldPassword);
+  Future<Either<Failure, ResponseModel>> updatePassword(
+          {required String oldPassword,
+          required String newPassword,
+          required String confirmPassword}) async =>
+      await repo.updatePassword(
+          newPassword: newPassword,
+          oldPassword: oldPassword,
+          confirmPassword: confirmPassword);
   Future<Either<Failure, ResponseModel>> getUser() => repo.getUser();
   Future<Either<Failure, ResponseModel>> getToken() => repo.getToken();
-  // Future<Either<Failure, ResponseModel>> getFcmToken() => repo.getFcmToken();
-  // Future<Either<Failure,ResponseModel>> editUserData({required UserModel user})=>repo.editUserData(user: user);
+  Future<Either<Failure, ResponseModel>> getUserRole() => repo.getUserRole();
+  Future<Either<Failure, ResponseModel>> editUserData(
+          {required UpdateProfileParamsModel user}) =>
+      repo.editUserData(user: user);
   Future<Either<Failure, ResponseModel>> cacheToken(String token) async =>
       repo.cacheToken(token);
-
+  Future<Either<Failure, ResponseModel>> changeUserImage(
+          {required String image}) async =>
+      repo.changeUserImage(image: image);
   // logout()=>repo.logout();
   // Future<Either<Failure, ResponseModel>> cacheFcmToken(String fcmToken) async => await repo.cacheFcmToken(fcmToken);
 }

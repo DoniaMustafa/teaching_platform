@@ -6,7 +6,7 @@ import 'package:teaching/features/group/group_lessons_details/domain/use_cases/s
 class SubscriptionGroupCubit extends Cubit<CubitStates> {
   SubscriptionGroupCubit(this.useCase) : super(InitialState());
   SubscriptionGroupUseCase useCase;
-  bool isSubscribed=false;
+  bool isSubscribed=GroupsLessonDetailsScreen.isSubscribe;
   subscriptionGroup(int groupId) {
     executeWithDialog(
       either: useCase.subscriptionGroup(groupId: groupId),

@@ -3,9 +3,9 @@ import 'package:flutter/cupertino.dart';
 class GenericModel {
   int? id;
   String? title;
-  String? subTitle;
+  String? subTitle;bool? isSelected;
   String? image; IconData? icon;
   String? role;
    VoidCallback? onTap;
-  GenericModel({this.onTap,this.id,this.icon,this.role, this.title, this.subTitle, this.image});
+  GenericModel({this.onTap,this.id,this.isSelected,this.icon,this.role, this.title, this.subTitle, this.image});
 }

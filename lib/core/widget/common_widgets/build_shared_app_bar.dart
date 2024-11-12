@@ -1,9 +1,17 @@
 import '../../export/export.dart';
 
 class BuildSharedAppBar extends StatelessWidget {
-  const BuildSharedAppBar({super.key, required this.title,this.isBackIcon=false});
-  final String title;
+  const BuildSharedAppBar(
+      {super.key,
+      this.title,
+      this.paddingTop = 10.0,
+      this.widget,
+      this.isBackIcon = false});
+  final String? title;
+  final Widget? widget;
   final bool isBackIcon;
+
+  final double? paddingTop;
   @override
   Widget build(BuildContext context) {
     return CustomCard(
@@ -12,29 +20,32 @@ class BuildSharedAppBar extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if(isBackIcon)  15.hs,
-          if(isBackIcon)
-          GestureDetector(
-            onTap: ()=>pop(),
-            child: Padding(
-              padding: getPadding(top: 10.0),
-              child: const CustomIcon(
-                icon: Icons.arrow_back_ios,
-                color: AppColors.white,
-                size: 20,
+          if (isBackIcon) 15.hs,
+          if (isBackIcon)
+            GestureDetector(
+              onTap: () => pop(),
+              child: Padding(
+                padding: getPadding(top: paddingTop),
+                child: const CustomIcon(
+                  icon: Icons.arrow_back_ios,
+                  color: AppColors.white,
+                  size: 20,
+                ),
               ),
             ),
-          ),
-          Expanded(
-            child: CustomTextWidget(
-              align: TextAlign.center,
-              text: title,
-              style: getBoldTextStyle(
-                fontSize: 24,
-                color: AppColors.white,
+          if (title.isNotNull)
+            Expanded(
+              child: CustomTextWidget(
+                align: TextAlign.center,
+                text: title!,
+                style: getBoldTextStyle(
+                  fontSize: 24,
+                  color: AppColors.white,
+                ),
               ),
             ),
-          ),
+          if (widget.isNotNull) widget!,
+          30.hs
         ],
       ),
       // Expanded(

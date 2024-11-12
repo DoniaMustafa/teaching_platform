@@ -1,9 +1,6 @@
 import 'package:teaching/core/export/export.dart';
-import 'package:teaching/features/course/courses_lessons_details/presentation/manager/comment_on_lesson_cubit.dart';
-import 'package:teaching/features/course/courses_lessons_details/presentation/manager/lessons_details/lessons_details_cubit.dart';
-import 'package:teaching/features/course/courses_lessons_details/presentation/manager/lessons_details/video_operation_cubit.dart';
-
 import '../../data/models/course_Lesson_details_response_model.dart';
+import '../manager/lessons_details/lessons_details_cubit.dart';
 
 class BuildCommentsWidget extends StatelessWidget {
   BuildCommentsWidget({super.key, required this.videoModel});
@@ -37,9 +34,11 @@ class BuildCommentsWidget extends StatelessWidget {
               isFill: true,
               suffixIcon: AppAssets().send,
               suffixOnTap: () {
-                context.read<CommentOnLessonCubit>().addCommentOnVideo(
-                      videoId: context.read<VideoOperationCubit>().videoId!,
-                    );
+                if (context.read<CommentOnLessonCubit>().comment.text.isNotEmpty) {
+                  context.read<CommentOnLessonCubit>().addCommentOnVideo(
+                        videoId: context.read<VideoOperationCubit>().videoId!,
+                      );
+                }
               },
               suffixConstraints:
                   BoxConstraints(maxHeight: 40.h, maxWidth: 40.h),
@@ -68,14 +67,14 @@ class BuildCommentsWidget extends StatelessWidget {
                 children: [
                   CustomTextWidget(
                     text: comment.userName!,
-                    style: getBoldTextStyle(
-                        fontSize: 15, color: AppColors.mainAppColor),
+                    style: getRegularTextStyle(
+                        fontSize: 16, color: AppColors.mainAppColor),
                   ),
                   5.vs,
                   CustomTextWidget(
                     text: comment.comment ?? '',
                     style: getRegularTextStyle(
-                        fontSize: 15,
+                        fontSize: 14,
                         color: AppColors.darkGrey,
                         fontFamily: FontFamilies.interFamily),
                   )

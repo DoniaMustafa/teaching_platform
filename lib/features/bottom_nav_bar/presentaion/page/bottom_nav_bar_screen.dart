@@ -4,80 +4,6 @@ import 'package:teaching/local_notification.dart';
 
 import '../../../../core/export/export.dart';
 
-// mixin DrawerList {
-//   static List<GenericModel> studentDrawerItems = [
-//     GenericModel(
-//       onTap: () {},
-//       // image: AppAssets().student,
-//       // role: 'student',
-//       title: AppStrings().childrenSubscription.trans,
-//     ),
-//     GenericModel(
-//       onTap: () => Routes.teachersRoute.moveTo,
-//       // image: AppAssets().teacher,
-//       // role: 'lecture',
-//       title: AppStrings().tasks.trans,
-//     ),
-//     GenericModel(
-//       onTap: () => Routes.coursesGroupsRoute.moveTo,
-//       // image: AppAssets().teacher,
-//       // role: 'lecture',
-//       title: AppStrings().courses.trans,
-//     ),
-//     GenericModel(
-//       onTap: () {},
-//       // image: AppAssets().teacher,
-//       // role: 'lecture',
-//       title: AppStrings().parent.trans,
-//     ),
-//     GenericModel(
-//       onTap: () {},
-//       // image: AppAssets().student,
-//       // role: 'student',
-//       title: AppStrings().challenges.trans,
-//     ),
-//     GenericModel(
-//       onTap: () {},
-//       // image: AppAssets().teacher,
-//       // role: 'lecture',
-//       title: AppStrings().myGrades.trans,
-//     ),
-//     GenericModel(
-//       onTap: () {},
-//       // image: AppAssets().teacher,
-//       // role: 'lecture',
-//       title: AppStrings().firstStudents.trans,
-//     ),
-//     //
-//     GenericModel(
-//       onTap: () {},
-//       // image: AppAssets().teacher,
-//       // role: 'lecture',
-//       title: AppStrings().childrenGrades.trans,
-//     ),
-//     //
-//     // GenericModel(
-//     //   image: AppAssets().teacher,
-//     //   // role: 'lecture',
-//     //   title: AppStrings().homeWork.trans,
-//     // ),
-//     GenericModel(
-//       onTap: () =>
-//           // print('route');
-//           Routes.settingsRoute.moveTo,
-//       // image: AppAssets().teacher,
-//       // role: 'lecture',
-//       title: AppStrings().settings.trans,
-//     ),
-//     GenericModel(
-//       onTap: () {},
-//       // onTap: AppService().getBlocData<UserCubit>().logout(),
-//       // image: AppAssets().teacher,
-//       // role: 'lecture',
-//       title: AppStrings().logout.trans,
-//     ),
-//   ];
-// }
 
 class BottomNavBarScreen extends StatefulWidget {
   const BottomNavBarScreen({super.key});
@@ -95,7 +21,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen>
 
   @override
   Widget build(BuildContext context) {
-    // EnumService.userDrawerType(AppPrefs.user!.userRole!,);
+    // EnumService.userDrawerType(AppPrefs.userRole!,);
     return BlocBuilder<LanguageCubit, LanguageState>(
       builder: (context, state) {
         return BlocBuilder<BottomNavBarOperationCubit, CubitStates>(

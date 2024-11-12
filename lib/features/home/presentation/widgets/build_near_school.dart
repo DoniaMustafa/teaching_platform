@@ -1,5 +1,6 @@
 import 'package:teaching/core/widget/shimmer_widget.dart';
 import 'package:teaching/features/home/presentation/manager/school_cubit.dart';
+import 'package:teaching/features/near_school_details/presentation/manager/near_school_details_cubit.dart';
 
 import '../../../../core/export/export.dart';
 import '../../../../core/widget/custom_empty_widget.dart';
@@ -24,7 +25,8 @@ class BuildNearSchool extends StatelessWidget {
           if (state is LoadedState && state.data.isEmpty) {
             return const SizedBox.shrink();
           }
-          return CustomListView(      axisDirection: Axis.horizontal,
+          return CustomListView(
+            axisDirection: Axis.horizontal,
             separatorWidget: (context, index) => SizedBox(
               width: 20.w,
             ),
@@ -33,36 +35,47 @@ class BuildNearSchool extends StatelessWidget {
                 : AppConstants.nShimmerItems,
             widget: (context, index) {
               if (state is LoadedState) {
-                return Column(
-                  children: [
-                    CustomCard(
-                        width: 90.w,
-                        height: 90.h,
-                        borderWidth: 1,
-                        boxShadow: [
-                          BoxShadow(
-                              color: AppColors.black.withOpacity(0.2),
-                              offset:const Offset(0, 2),
-                              blurRadius: 5)
-                        ],
-                        radius: 10.r,
-                        borderColor: AppColors.textGrayColor1.withOpacity(0.2),
-                        padding: getPadding(vertical: 20.h, horizontal: 25.w),
-                        backgroundColor: AppColors.white,
-                        child: CustomNetworkImage.rectangle(
-                          imageUrl: state.data[index].image,
-                          defaultAsset: AppAssets().emptyImage,
-                        )),
-                    8.vs,
-                    Expanded(
-                      child: CustomTextWidget(
-                        text: state.data[index].name!,
-                        style: getRegularTextStyle(
-                            fontSize: 14,
-                            fontFamily: FontFamilies.outfitFamily),
-                      ),
-                    )
-                  ],
+                return GestureDetector(
+                  onTap: () {
+                    context
+                        .read<NearSchoolDetailsCubit>()
+                        .getNearSchoolDetails(id: state.data[index].id);
+                    // print(state.data[index].id);
+                    Routes.nearSchoolDetailsRoute.moveTo;
+                  },
+                  child: Column(
+                    children: [
+                      CustomCard(
+                          width: 90.w,
+                          height: 90.h,
+                          borderWidth: 1,
+                          boxShadow: [
+                            BoxShadow(
+                                color: AppColors.black.withOpacity(0.2),
+                                offset: const Offset(0, 2),
+                                blurRadius: 5)
+                          ],
+                          radius: 10.r,
+                          borderColor:
+                              AppColors.textGrayColor1.withOpacity(0.2),
+                          padding: getPadding(vertical: 20.h, horizontal: 25.w),
+                          backgroundColor: AppColors.white,
+                          child: CustomNetworkImage.rectangle(
+                            imageUrl:
+                                '${EndPoints.url}${state.data[index].image}',
+                            defaultAsset: AppAssets().emptyImage,
+                          )),
+                      8.vs,
+                      Expanded(
+                        child: CustomTextWidget(
+                          text: state.data[index].name!,
+                          style: getRegularTextStyle(
+                              fontSize: 14,
+                              fontFamily: FontFamilies.outfitFamily),
+                        ),
+                      )
+                    ],
+                  ),
                 );
               } else {
                 return Column(

@@ -1,5 +1,6 @@
 import 'package:teaching/features/course/courses_lessons_details/data/models/course_Lesson_details_response_model.dart';
 import 'package:teaching/features/course/courses_lessons_details/presentation/manager/attachments_operation_cubit.dart';
+import 'package:teaching/features/pdf_screen.dart';
 
 import '../../../../../core/export/export.dart';
 
@@ -22,14 +23,20 @@ class BuildAttachmentsWidget extends StatelessWidget {
       BlocBuilder<AttachmentsOperationCubit, CubitStates>(
         builder: (context, state) {
           return GestureDetector(
-            onTap: () => context
-                .read<AttachmentsOperationCubit>()
-                .launchURL('${EndPoints.url}${attach.attachmentUrl}'),
+            onTap: () {
+              // print('${EndPoints.url}${attach.attachmentUrl}');
+              // Routes.pdfRoute.moveToWithArgs({
+              //   PdfScreen.pdfKey: '${EndPoints.url}${attach.attachmentUrl}'
+              // });
+              context
+                  .read<AttachmentsOperationCubit>()
+                  .launchURL('${EndPoints.url}${attach.attachmentUrl}');
+            },
             child: CustomCard(
               boxShadow: [
                 BoxShadow(
                     color: AppColors.black.withOpacity(0.25),
-                    offset: Offset(0, 4),
+                    offset: const Offset(0, 4),
                     blurRadius: 4)
               ],
               padding: getPadding(horizontal: 10.w, vertical: 10.h),

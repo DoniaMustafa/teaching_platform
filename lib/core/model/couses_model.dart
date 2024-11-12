@@ -4,6 +4,7 @@ class CoursesModel {
   final String? courseTitleEn;
   final int? teacherId;
   final String? teacherName;
+  final String? gradeName;
   final String? teacherPicture;
   final int? subjectId;
   final String? subjectName;
@@ -14,6 +15,7 @@ class CoursesModel {
   CoursesModel({
     this.courseId,
     this.courseTitle,
+    this.gradeName,
     this.courseTitleEn,
     this.teacherId,
     this.teacherName,
@@ -32,7 +34,8 @@ class CoursesModel {
             json["CourseTitle"] == null ? 'arabic' : json["CourseTitle"]!,
         courseTitleEn:
             json["CourseTitleEN"] == null ? 'arabic' : json["CourseTitleEN"]!,
-        teacherId: json["TeacherId"],
+        teacherId: json["TeacherId"], gradeName: json["Grades"],
+
         teacherName: json["TeacherName"],
         teacherPicture: json["TeacherPicture"],
         subjectId: json["SubjectId"],

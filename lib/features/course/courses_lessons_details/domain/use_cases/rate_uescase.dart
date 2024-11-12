@@ -5,8 +5,8 @@ import 'package:teaching/features/course/courses_lessons_details/domain/reposito
 class RateUseCase {
   RateRepo repo;
   Future<Either<Failure, ResponseModel>> addRate(
-          {int? videoId, int? rate}) async =>
-      await repo.addRate(videoId: videoId, rate: rate);
+          {int? videoId, int? rate, bool isCourse = true}) async =>
+      await repo.addRate(videoId: videoId, rate: rate, isCourse: isCourse);
 
   RateUseCase(this.repo);
 }

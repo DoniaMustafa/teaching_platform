@@ -66,51 +66,91 @@ class UserDataModel {
 }
 
 class UserModel {
-  final String? phoneNumber;
+  final int? id;
   final String? userId;
-  final String? verifyCode;
-
-  final int? stepsNo;
   final String? name;
-  final String? image;
   final String? email;
-  final String? countryId;
-  final String? password;
-  final String? profilePicture;
-  final String? userRole;
-  final String? wallet;
-  final String? priviliges;
+  final String? phoneNumber;
+  final String? nationalId;
+  final int? stateId;
+  final String? stateName;
+  final int? cityId;
+  final String? cityName;
+  final int? countryId;
+  final String? countryName;
   final int? educationTypeId;
+  final String? educationTypeName;
   final int? programTypeId;
-  final int? gradeIds;
+  final String? programTypeName;
+  final int? gradeId;
+  final String? gradeName;
+  final String? schoolName;
+  final String? image;
+  final double? wallet;
+  final int? gender;
+  final String? genderName;
+  final String? password;
+
+  final String? verifyCode;
+  final String? userRoles;
+  final int? stepsNo;
   UserModel({
-    this.phoneNumber,
-    this.userId,
-    this.stepsNo,
-    this.name,
-    this.gradeIds,
-    this.verifyCode,
-    this.countryId,
-    this.programTypeId,
-    this.educationTypeId,
-    this.profilePicture,
-    this.userRole,
-    this.image,
-    this.email,
     this.password,
+    this.id,
+    this.userId,
+    this.name,
+    this.email,
+    this.phoneNumber,
+    this.nationalId,
+    this.stateId,
+    this.stateName,
+    this.cityId,
+    this.cityName,
+    this.countryId,
+    this.countryName,
+    this.educationTypeId,
+    this.educationTypeName,
+    this.programTypeId,
+    this.programTypeName,
+    this.gradeId,
+    this.gradeName,
+    this.schoolName,
+    this.image,
     this.wallet,
-    this.priviliges,
+    this.gender,
+    this.genderName,
+    this.userRoles,
+    this.verifyCode,
+    this.stepsNo,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-        phoneNumber: json["phoneNumber"],
-        userId: json["userId"],
+        id: json["Id"],
+        userId: json["UserId"],
+        name: json["Name"],
+        email: json["Email"],
+        phoneNumber: json["PhoneNumber"],
+        nationalId: json["NationalId"],
+        stateId: json["StateId"],
+        stateName: json["StateName"],
+        cityId: json["CityId"],
+        cityName: json["CityName"],
+        countryId: json["CountryId"],
+        countryName: json["CountryName"],
+        educationTypeId: json["EducationTypeId"],
+        educationTypeName: json["EducationTypeName"],
+        programTypeId: json["ProgramTypeId"],
+        programTypeName: json["ProgramTypeName"],
+        gradeId: json["GradeId"],
+        gradeName: json["GradeName"],
+        schoolName: json["SchoolName"],
+        image: json["Image"],
+        wallet: json["Wallet"],
+        gender: json["Gender"],
+        genderName: json["GenderName"],
+        verifyCode: json["VerifyCode"],
         stepsNo: json["stepsNo"],
-        name: json["name"],
-        profilePicture: json["profilePicture"],
-        userRole: json["userRole"],
-        wallet: json["wallet"],
-        priviliges: json["priviliges"],
+        userRoles: json["userRole"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -118,40 +158,59 @@ class UserModel {
         // "StepNo": stepsNo,
         "Email": email,
         "Name": name,
-
+        "Gender": gender,
         "Code": verifyCode,
         "CountryId": countryId,
         "Password": password,
       };
 
   Map<String, dynamic> userToJson() => {
-        "phoneNumber": phoneNumber,
-        "userId": userId,
+        "Id": id,
+        "UserId": userId,
+        "Name": name,
+        "Email": email,
+        "PhoneNumber": phoneNumber,
+        "NationalId": nationalId,
+        "StateId": stateId,
+        "StateName": stateName,
+        "CityId": cityId,
+        "CityName": cityName,
+        "CountryId": countryId,
+        "CountryName": countryName,
+        "EducationTypeId": educationTypeId,
+        "EducationTypeName": educationTypeName,
+        "ProgramTypeId": programTypeId,
+        "ProgramTypeName": programTypeName,
+        "GradeId": gradeId,
+        "GradeName": gradeName,
+        "SchoolName": schoolName,
+        "Image": image,
+        "Wallet": wallet,
+        "Gender": gender,
+        "GenderName": genderName,
+        // "userRole": userRoles,
         "StepNo": stepsNo,
-        "name": name,
-        "profilePicture": profilePicture,
-        "userRole": userRole,
-        "wallet": wallet,
-        "priviliges": priviliges,
+      };
+  //
+}
+
+class UserResponseModel extends ResponseModel {
+  UserResponseModel({
+    super.success,
+    super.message,
+    super.data,
+  });
+
+  factory UserResponseModel.fromJson(Map<String, dynamic> json) =>
+      UserResponseModel(
+        success: json["Success"],
+        message: json["Message"],
+        data: json["Data"] == null ? null : UserModel.fromJson(json["Data"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "status": success,
+        "message": message,
+        "data": data!.toJson(),
       };
 }
-// class UserResponseModel extends ResponseModel {
-//   UserResponseModel({
-//     super.success,
-//     super.message,
-//     super.data,
-//   });
-//
-//   factory UserResponseModel.fromJson(Map<String, dynamic> json) =>
-//       UserResponseModel(
-//         success: json["Success"],
-//         message: json["Message"],
-//         data: json["Data"] == null ? null : UserModel.fromJson(json["Data"]),
-//       );
-//
-//   Map<String, dynamic> toJson() => {
-//         "status": success,
-//         "message": message,
-//         "data": data!.toJson(),
-//       };
-// }

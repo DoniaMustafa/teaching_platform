@@ -22,8 +22,14 @@ class UserRepoImpl extends UserRepo {
           () async => userRemoteDataSource.login(
                 phone: phone,
                 password: password,
-              ),
-          local: (data) => userLocalDataSource.cacheUser(user: data.user));
+              ), local: (data) {
+
+          userLocalDataSource.cacheUser(user: data.user!);
+
+        userLocalDataSource.cacheUserRole(userRole: data.user!.userRoles!);
+        return userLocalDataSource.cacheToken(token: data.accessToken);
+      });
+
   @override
   Future<Either<Failure, ResponseModel>> registerByPhoneNumber(
           {required UserModel user}) async =>
@@ -34,12 +40,16 @@ class UserRepoImpl extends UserRepo {
   @override
   Future<Either<Failure, ResponseModel>> register({
     UserModel? user,
-    int? stepsNo, PostParamsResumeModel? resumeModel,
+    int? stepsNo,
+    PostParamsResumeModel? resumeModel,
     PostParamsEducationModel? education,
   }) async =>
       execute(
-        () => userRemoteDataSource.register(resumeModel: resumeModel,
-            user: user, stepsNo: stepsNo, education: education),
+        () => userRemoteDataSource.register(
+            resumeModel: resumeModel,
+            user: user,
+            stepsNo: stepsNo,
+            education: education),
       );
 
   @override
@@ -58,40 +68,40 @@ class UserRepoImpl extends UserRepo {
           ));
   @override
   Future<Either<Failure, ResponseModel>> verifyForgetPassword(
-      {required String phone, required String verificationCode}) =>
+          {required String phone, required String verificationCode}) =>
       execute(
-            () async => userRemoteDataSource.verifyForgetPassword(
+        () async => userRemoteDataSource.verifyForgetPassword(
             phone: phone, verificationCode: verificationCode),
       );
   @override
   Future<Either<Failure, ResponseModel>> resetPassword(
-      {required UserModel user}) async =>
+          {required UserModel user}) async =>
       execute(() => userRemoteDataSource.resetPassword(user: user));
   @override
   Future<Either<Failure, ResponseModel>> logout() async => execute(() async {
-    ResponseModel response = await userRemoteDataSource.logout();
-    if (response.success.isTrue) {
-      userLocalDataSource.clearCachedUser();
-      userLocalDataSource.clearCachedToken();
-      AppPrefs.user = null;
-      AppPrefs.token = null;
-    }
-    return response;
-  });
-
-
-  //   // @override
-//   // Future<Either<Failure, ResponseModel>> updatePassword(
-//   //     {required String oldPassword, required String newPassword}) async {
-//   //   try {
-//   //     ResponseModel response =
-//   //         await userRemoteDataSource.updatePassword(oldPassword: oldPassword, newPassword: newPassword);
-//   //     return Right(response);
-//   //   } on ServerException {
-//   //     return Left(ServerFailure());
-//   //   }
-//   // }
-//
+        ResponseModel response = await userRemoteDataSource.logout();
+        if (response.success.isTrue) {
+          userLocalDataSource.clearCachedUser();
+          userLocalDataSource.clearCachedToken();
+          userLocalDataSource.clearUserRole();
+          AppPrefs.user = null;
+          AppPrefs.userRole = null;
+          AppPrefs.token = null;
+        }
+        return response;
+      });
+  // @override
+  // Future<Either<Failure, ResponseModel>> updateDriverImage(
+  //     {required String image}) async {
+  //   return await execute(
+  //       () => userRemoteDataSource.updateDriverImage(image: image));
+  // }
+    @override
+  Future<Either<Failure, ResponseModel>> updatePassword(
+      {required String oldPassword, required String newPassword,required String  confirmPassword})=>
+        execute(() => userRemoteDataSource.updatePassword(
+            newPassword: newPassword,confirmPassword: confirmPassword,oldPassword: oldPassword
+        ));
 //   // @override
 //   // Future<Either<Failure, OtpResponseModel>> resendOTP({required String phone}) async {
 //   //   try {
@@ -102,8 +112,6 @@ class UserRepoImpl extends UserRepo {
 //   //   }
 //   // }
 //
-
-
 
   /* Future<Either<Failure, LoginUserResponseModel>> executeAndCacheUser(
       {required Future<LoginUserResponseModel> Function() function}) {
@@ -132,26 +140,7 @@ class UserRepoImpl extends UserRepo {
   @override
   Future<Either<Failure, ResponseModel>> getUser() async =>
       executeCache(() => userLocalDataSource.getCachedUser());
-//
-//   @override
-//   Future<Either<Failure, ResponseModel>> signUp({UserModel? user}) =>
-//       execute(() => userRemoteDataSource.register(user: user!));
-//   @override
-//   Future<Either<Failure, ResponseModel>> verifyOTP(
-//           {required String phone,
-//           required String verificationCode,
-//           required String fcmToken}) =>
-//       execute(
-//         () async => userRemoteDataSource.verifyOTP(
-//             phone: phone,
-//             verificationCode: verificationCode,
-//             fcmToken: fcmToken),
-//       );
-//   @override
-//   Future<Either<Failure, ResponseModel>> addAccount(
-//       {required UserModel user}) =>
-//       execute(() => userRemoteDataSource.addAccount(user: user),
-//           local: (data) => userLocalDataSource.cacheUser(user: data));
+
 //   @override
 //   Future<Either<Failure, ResponseModel>> deleteAccount() => execute(() async {
 //     ResponseModel response = await userRemoteDataSource.deleteAccount();
@@ -166,10 +155,7 @@ class UserRepoImpl extends UserRepo {
 //     }
 //     return response;
 //   });
-//   @override
-//   Future<Either<Failure, ResponseModel>> getFcmToken() =>
-//       executeCache(() => userLocalDataSource.getCachedFcmToken());
-//
+
   @override
   Future<Either<Failure, ResponseModel>> getToken() =>
       executeCache(() => userLocalDataSource.getCachedToken());
@@ -177,6 +163,10 @@ class UserRepoImpl extends UserRepo {
   @override
   Future<Either<Failure, ResponseModel>> cacheToken(String token) =>
       executeCache(() => userLocalDataSource.cacheToken(token: token));
+  @override
+  Future<Either<Failure, ResponseModel>> cacheUserRole(
+          {required String userRole}) =>
+      executeCache(() => userLocalDataSource.cacheUserRole(userRole: userRole));
 
   //  @override
   // logout() {
@@ -195,15 +185,40 @@ class UserRepoImpl extends UserRepo {
 //
 
 //
-//   @override
-//   Future<Either<Failure, ResponseModel>> editUserData(
-//           {required UserModel user}) =>
-//       execute(
-//         () => userRemoteDataSource.editUserData(user: user),
-//         local: (data) {
-//           userLocalDataSource.cacheUser(user: data);
-//           userLocalDataSource.cacheFcmToken(fcmToken: AppPrefs.deviceToken!);
-//           return userLocalDataSource.cacheToken(token: AppPrefs.token!);
-//         },
-//       );
+  @override
+  Future<Either<Failure, ResponseModel>> editUserData(
+          {required UpdateProfileParamsModel user}) =>
+      execute(
+        () => userRemoteDataSource.editUserData(user: user),
+        // local: (data) {
+        //   userLocalDataSource.cacheUserRole(userRole: AppPrefs.userRole!);
+        //   return userLocalDataSource.cacheToken(token: AppPrefs.token!);
+        // },
+      );
+
+  @override
+  Future<Either<Failure, ResponseModel>> getUsersData() => execute(
+        () => userRemoteDataSource.getUsersData(),
+        local: (data) {
+          userLocalDataSource.cacheUser(user: data);
+          userLocalDataSource.cacheUserRole(userRole: AppPrefs.userRole!);
+          return userLocalDataSource.cacheToken(token: AppPrefs.token!);
+        },
+      );
+
+  @override
+  Future<Either<Failure, ResponseModel>> getUserRole() =>
+      executeCache(() => userLocalDataSource.getUserRole());
+
+  @override
+  Future<Either<Failure, ResponseModel>> changeUserImage(
+          {required String image}) =>
+      execute(
+        () => userRemoteDataSource.changeUserImage(image: image),
+        // local: (data) {
+        //   userLocalDataSource.cacheUser(user: AppPrefs.user!);
+        //   userLocalDataSource.cacheUserRole(userRole: AppPrefs.userRole!);
+        //   return userLocalDataSource.cacheToken(token: AppPrefs.token!);
+        // },
+      );
 }

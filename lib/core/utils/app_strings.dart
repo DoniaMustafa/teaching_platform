@@ -3,11 +3,11 @@ class AppStrings {
   static final AppStrings _instance = AppStrings._internal();
   factory AppStrings() => _instance;
 
-
   final String chargeNow = "chargeNow";
   final String walletAddress2 = "walletAddress2";
 
   final String walletAddress = "walletAddress";
+  final String adsDetails = "adsDetails";
 
   final String ask = "ask";
   final String bookDate = "bookDate";
@@ -19,14 +19,18 @@ class AppStrings {
   final String signUp = 'signUp';
   final String registerByPhone = 'registerByPhone';
   final String free = 'free';
+  final String registerNow = 'register now';
+  final String ratting = 'ratting';
+  final String studentCount = 'studentCount';
 
   final String cancel = 'cancel';
   final String discount = 'discount';
-final String fromWallet="fromWallet";
+  final String fromWallet = "fromWallet";
   final String follower = 'follower';
-  final String wallet="wallet";
+  final String wallet = "wallet";
+  final String followers = 'followers';
 
-  final String currentBalance="currentBalance";
+  final String currentBalance = "currentBalance";
 
   final String otpCode = 'otpCode';
 
@@ -81,9 +85,13 @@ final String fromWallet="fromWallet";
   final String noInternetError = "no_internet_error";
 
 // /// ********************** verification screen ************
-
   final String chooseRole = 'chooseRole';
-  //
+
+  final String accept = 'accept';
+  final String reject = 'reject';
+  // final String accept = 'accept';
+  // final String accept = 'accept';
+
   final String eduType = 'eduType';
   final String curriculum = 'curriculum';
   final String stage = 'stage';
@@ -93,7 +101,8 @@ final String fromWallet="fromWallet";
   final String material = 'material';
   final String phoneError = 'phoneError';
   final String nameError = 'userNameError';
-  // final String userNameError = 'userNameError';
+  final String groupType = 'groupType';
+
   final String passwordError = 'passwordError';
   final String cacheWriteSuccess = "cache_write_success";
   final String deny = 'deny';
@@ -120,25 +129,30 @@ final String fromWallet="fromWallet";
   final String privacyPolice = 'privacyPolice';
 
   final String changePassword = 'changePassword';
+
   final String aboutUs = 'aboutUs';
 
   // /// ***************** validators ***********************
 
-  final welcome = "welcome";
-  final welcomeTo = "welcomeTo";
-  final welcomeBack = "welcomeBack";
-  final additionalCourses = "additionalCourses";
+  final String hello = "hello";
+  final String welcomeTo = "welcomeTo";
+  final String welcomeBack = "welcomeBack";
+  final String additionalCourses = "additionalCourses";
   final String fields = "fields";
+  final String privetCourses = "privetCourses";
 
   final String testYourself = "testYourself";
   final String myGrades = "MyGrades";
   final String grades = "grades";
 
   final String private = "private";
-  final String memoirs = "memoirs";
+  final String notes = "notes";
   final String live = "live";
   final String homeWork = "homeWork";
   final String questions = "questions";
+  final String question = "question";
+  final String studentAnswer = "Student's answer";
+
   final String tasks = "tasks";
   final String tests = "tests";
   final String student = "Student";
@@ -152,6 +166,9 @@ final String fromWallet="fromWallet";
   final String arabic = "arabic";
   final String english = "english";
   final String exams = "exams";
+  final String exam = "exam";
+  final String endExam = "endExam";
+
   final String serverError = 'serverError';
   final String coursesCount = 'coursesCount';
   final String groupsCount = 'groupsCount';
@@ -173,7 +190,8 @@ final String fromWallet="fromWallet";
   final String lecture = "lecture";
   final String assistant = "Assistant";
   final String parent = 'Parent';
-
+  final String parents = 'parents';
+  final String parentRequest = 'parentRequste';
   final String professionalLecturer = 'ProfessionalLecturer';
 
   final String professionalCourses = 'ProfessionalCourses';
@@ -184,8 +202,11 @@ final String fromWallet="fromWallet";
   final String emailHint = 'emailHint';
   final String login = 'login';
   final String country = 'country';
+  final String city = 'city';
+  final String region = 'region';
+
   final String professionalCourse = 'professionalCourse';
-  // final String confirmEmptyError = 'confirmEmptyError';
+  final String time = 'time';
   final String chooseAction = "chooseAction";
   // final String useCommentError = 'useCommentError';
   final String verificationCode = "verificationCode";
@@ -197,17 +218,22 @@ final String fromWallet="fromWallet";
 // final String changeImage = "changeImage";
   final String lecturers = "lecturers";
   final String latestNews = "latestNews";
-// final String startConversation = "startConversation";
+  final String notDelivered = "notDelivered";
+  final String delivered = "delivered";
 
-  // final String dialogText = "dialogText";
+  final String reserveNote = "reserveNote";
+  final String reserveNow = "reserveNow";
   final String closeSchools = "closeSchools";
-  // final String allowOnce = "allowOnce";
-  // final String allowWhileUsing = "allowWhileUsing";
+  final String reserveAnotherCopy = "reserveAnotherCopy";
+  final String booked = "booked";
   final String courses = "courses";
   final String groups = "groups";
-  final String store = "store";
+  final String coursesStore = "coursesStore";
+  final String groupsStore = "groupsStore";
   final String previousClasses = "previousClasses";
   final String nextClasses = "nextClasses";
+  final String bookedNotes = "bookedNotes";
+  final String unbookedNotes = "unbookedNotes";
 
   final String passed = "passed";
   final String notPassed = "notPassed";
@@ -221,8 +247,17 @@ final String fromWallet="fromWallet";
   final String childrenSubscription = "childrenSubscription";
   final String firstStudents = 'firstStudents';
   final String childrenGrades = 'childrenGrades';
-  //
+  final String children = 'children';
+  final String loadingChangePassword = 'loadingChangePassword';
+  final String genderType = 'genderType';
+  final String male = 'male';
+  final String female = 'female';
+  final String childrenHomeWork = 'childrenHomeWork';
   final String groupInfo = "groupInfo";
+
+  final String statistics = "statistics";
+
+  final String absenceAndPresence = "absenceAndPresence";
 
   final String lesson = "lesson";
   final String lessons = 'lessons';
@@ -235,7 +270,6 @@ final String fromWallet="fromWallet";
   final String uploadLatestCertificate = 'uploadLatestCertificate';
   final String uploadCV = "uploadCV";
   //
-  // final String vehicleColor = "vehicleColor";
   //
   final String price = "price";
   //
@@ -251,10 +285,10 @@ final String fromWallet="fromWallet";
   //
   final String addComment = "addComment";
   //
-  // final String backVehicleLicenseError = "backVehicleLicenseError";
-  //
-  // final String frontVehiclePictureError = "frontVehiclePictureError";
-  //
+  final String month = "month";
+
+  final String term = "term";
+  final String year = "year";
   // final String backVehiclePictureError = "backVehiclePictureError";
   //
   // final String allowSmoking = "allowSmoking";
@@ -305,16 +339,17 @@ final String fromWallet="fromWallet";
   //
   // final String addComment = 'addComment';
   //
-  // final String addTrip = "addTrip";
+  final String numberCopies = "numberCopies";
   //
-  // final String address = "address";
+  final String address = "address";
   //
-  // final String addressRequired = '"addressRequired';
+  final String addParent = "addParent";
   //
   final String all = "all";
   //
-  // final String appTitle = "appTitle";
-  //
+  final String yes = "yes";
+  final String no = "no";
+
   // final String askReport = 'askReport';
   //
   // final String bImage = 'bImage';
@@ -484,7 +519,7 @@ final String fromWallet="fromWallet";
   // final String license = 'license';
   final String loading = 'loading';
   // final String locationHint = 'locationHint';
-  // final String logIln = 'logIln';
+  final String editAccount = 'editAccount';
 
   //
   // final String loginSubTitle = 'loginSubTitle';
@@ -502,8 +537,10 @@ final String fromWallet="fromWallet";
   //
   // final String month = 'month';
   //
-  // final String more = 'more';
-  //
+  final String morning = 'morning';
+  final String night = 'night';
+  final String individual = 'individual';
+  // final String night = 'night';
   // final String myCity = 'myCity';
   //
   // final String privetOrders = 'privetOrders';
@@ -602,7 +639,7 @@ final String fromWallet="fromWallet";
   //
   // final String questions = 'questions';
   //
-  // final String ratePassenger = 'ratePassenger';
+  final String rate = 'rate';
   //
   // final String rateTrip = 'rateTrip';
   //
@@ -708,7 +745,7 @@ final String fromWallet="fromWallet";
   //
   final String subscribe = 'subscribe';
   //
-  // final String subscription = 'subscription';
+  final String subscribed = 'subscribed';
   //
   // final String successMSg = 'successMSg';
   //

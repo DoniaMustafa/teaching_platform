@@ -8,7 +8,9 @@
 //    }
 //}
 
-
+buildscript {
+    ext.kotlin_version = '1.8.0'
+}
 
 allprojects {
     repositories {

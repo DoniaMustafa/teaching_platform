@@ -1,10 +1,8 @@
 import 'package:teaching/features/course/courses_lessons_details/data/models/course_Lesson_details_response_model.dart';
 import 'package:teaching/features/course/courses_lessons_details/presentation/manager/lessons_details/lessons_details_cubit.dart';
-import 'package:teaching/features/course/courses_lessons_details/presentation/manager/lessons_details/video_operation_cubit.dart';
 import 'package:teaching/features/course/courses_lessons_details/presentation/pages/courses_lesson_details_screen.dart';
 
 import '../../../../../core/export/export.dart';
-import '../../../../exam/presentation/manager/exam_cubit.dart';
 
 class BuildContentsWidget extends StatefulWidget {
   const BuildContentsWidget(
@@ -19,7 +17,7 @@ class BuildContentsWidget extends StatefulWidget {
 class _BuildContentsWidgetState extends State<BuildContentsWidget> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LessonsDetailsCubit, CubitStates>(
+    return BlocBuilder<LessonsDetailsCubit, LessonsDetailsState>(
       builder: (context, state) {
         if (widget.videoModel.isEmpty) {
           return const CustomEmptyWidget();
@@ -27,7 +25,7 @@ class _BuildContentsWidgetState extends State<BuildContentsWidget> {
           return CustomListView(
               shrinkWrap: true,
               axisDirection: Axis.vertical,
-              itemCount: state is LoadedState
+              itemCount: state is LessonsDetailsLoadedState
                   ? state.data.courseVideos!.length
                   : AppConstants.shimmerItems,
               separatorWidget: (context, index) => 20.vs,
@@ -46,11 +44,15 @@ class _BuildContentsWidgetState extends State<BuildContentsWidget> {
   Widget _buildItem(CourseVideoModel model, int index) => GestureDetector(
         onTap: () {
           context.read<VideoOperationCubit>().onFetchUrl(
-              model.videoUrl!,
-              LessonDetailsScreen.courseId,
-              widget.lessonModel.lessonId!,
-              widget.lessonModel.courseVideos![index].courseVideoId!,
-              index);
+                model.videoUrl!,
+                LessonDetailsScreen.courseId,
+                widget.lessonModel.lessonId!,
+                widget.lessonModel.courseVideos![index].courseVideoId!,
+                index,
+                context.read<LanguageCubit>().isEn.isFalse
+                    ? widget.lessonModel.courseVideos![index].title ?? ''
+                    : widget.lessonModel.courseVideos![index].titleEn ?? '',
+              );
         },
         child: CustomCard(
           padding: getPadding(horizontal: 10.w, vertical: 10.h),
@@ -77,9 +79,20 @@ class _BuildContentsWidgetState extends State<BuildContentsWidget> {
                         : model.title!,
                     style: getMediumTextStyle(fontSize: 18),
                   ),
-                  CustomTextWidget(
-                    text: model.duration!,
-                    style: getRegularTextStyle(fontSize: 14),
+                  Row(
+                    children: [
+                      const CustomIcon(
+                        icon: Icons.access_time_outlined,
+                        size: 15,
+                      ),
+                      5.hs,
+                      CustomTextWidget(
+                        text: model.duration!.isEmpty
+                            ? "00:00"
+                            : model.duration ?? "00:00",
+                        style: getRegularTextStyle(fontSize: 14),
+                      ),
+                    ],
                   ),
                 ],
               ))

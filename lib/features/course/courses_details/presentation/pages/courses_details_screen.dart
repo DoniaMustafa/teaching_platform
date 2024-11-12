@@ -19,32 +19,34 @@ class CoursesDetailsScreen extends StatelessWidget {
       teacherId = data[teacherIdKey];
       // subjectName = data[subjectNameKey];
       whichScreen = data[whichScreenKey] ?? 'default';
+      print(teacherId);
     }
     return CustomBackground(
       statusBarColor: AppColors.mainAppColor,
       child: CustomSharedFullScreen(
-          isBackIcon: true,
-          title: AppStrings().coursesDetails.trans,
-          widget: BlocBuilder<CoursesDetailsCubit, CubitStates>(
-            builder: (context, state) {
-              if (state is FailedState) {
-                return CustomErrorWidget(
-                    message: state.message,
-                    onTap: () => context
-                        .read<CoursesDetailsCubit>()
-                        .getCoursesDetails(TeacherModel(
-                          teacherId: teacherId,
-                        )));
-              }
-              if (state is LoadedState && state.data.isEmpty) {
-                return const CustomEmptyWidget();
-              }
-              if (state is LoadedState) {
-                return buildCoursesDetails(state.data[0]);
-              }
-              return const CoursesDetailsShimmer();
-            },
-          )),
+        isBackIcon: true,
+        title: AppStrings().coursesDetails.trans,
+        widget: BlocBuilder<CoursesDetailsCubit, CubitStates>(
+          builder: (context, state) {
+            if (state is FailedState) {
+              return CustomErrorWidget(
+                  message: state.message,
+                  onTap: () => context
+                      .read<CoursesDetailsCubit>()
+                      .getCoursesDetails(TeacherModel(
+                        teacherId: teacherId,
+                      )));
+            }
+            if (state is LoadedState && state.data.isEmpty) {
+              return const CustomEmptyWidget();
+            }
+            if (state is LoadedState) {
+              return buildCoursesDetails(state.data[0]);
+            }
+            return const CoursesDetailsShimmer();
+          },
+        ),
+      ),
     );
   }
 
@@ -56,7 +58,7 @@ class CoursesDetailsScreen extends StatelessWidget {
           ),
           if (whichScreen == AppStrings().teacherDetails)
             CustomSubjectList(
-              teacherId: model.teacherId,
+              isCourse: true,
             ),
           BuildListOfLessons(
             model: model,

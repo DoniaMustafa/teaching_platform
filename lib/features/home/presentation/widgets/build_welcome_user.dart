@@ -1,11 +1,23 @@
 import 'package:teaching/core/enums.dart';
 import 'package:teaching/core/export/export.dart';
+import 'package:teaching/core/widget/common_widgets/custom_popup_menu.dart';
+import 'package:teaching/features/home/presentation/manager/home_operation_cubit.dart';
+import 'package:teaching/features/home/presentation/widgets/build_user_drop_down.dart';
 
 class BuildWelcomeUser extends StatelessWidget {
-  const BuildWelcomeUser({super.key});
+  BuildWelcomeUser({super.key});
 
+  List<String> user = [
+    AppStrings().privetCourses.trans,
+    AppStrings().additionalCourses.trans,
+    AppStrings().professionalCourse.trans,
+  ];
+  String? firstName;
   @override
   Widget build(BuildContext context) {
+    List<String>? nameParts = AppPrefs.user!.name!.split(' ');
+    firstName = nameParts[0];
+
     return CustomCard(
       margin: getPadding(
         horizontal: 20.w,
@@ -15,10 +27,14 @@ class BuildWelcomeUser extends StatelessWidget {
       child: Row(
         children: [
           GestureDetector(
-            onTap: ()=>Routes.profileRoute.moveTo,
-            child: const CustomIcon(
-              icon: Icons.info,
-              color: AppColors.black,
+            onTap: () => Routes.profileRoute.moveTo,
+            child: BlocBuilder<UserCubit, UserState>(
+              builder: (context, state) {
+                return CustomNetworkImage.circular(
+                  imageUrl: '${EndPoints.url}${AppPrefs.user!.image}',
+                  radius: 50.r,
+                );
+              },
             ),
           ),
           10.hs,
@@ -30,7 +46,7 @@ class BuildWelcomeUser extends StatelessWidget {
                   children: [
                     CustomTextWidget(
                       textScalar: const TextScaler.linear(0.9),
-                      text: '${AppStrings().welcomeTo.trans},',
+                      text: '${AppStrings().hello.trans},',
                       style: getSemiboldTextStyle(
                           fontFamily: FontFamilies.abhayaLibreFamily,
                           fontSize: 18,
@@ -38,7 +54,7 @@ class BuildWelcomeUser extends StatelessWidget {
                     ),
                     2.hs,
                     CustomTextWidget(
-                      text: AppPrefs.user!.name![0],
+                      text: firstName!,
                       textScalar: const TextScaler.linear(0.9),
                       style: getBoldTextStyle(
                           fontFamily: FontFamilies.abhayaLibreFamily,
@@ -64,32 +80,44 @@ class BuildWelcomeUser extends StatelessWidget {
               ],
             ),
           ),
-          if (AppPrefs.user!.userRole == '1')
-            CustomCard(
-              backgroundColor: AppColors.mainAppColor,
-              padding: getPadding(horizontal: 5.w, vertical: 5.h),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const CustomIcon(
-                    icon: Icons.keyboard_arrow_down_outlined,
-                    size: 15,
-                    color: AppColors.white,
-                  ),
-                  // 10.hs,
-                  CustomTextWidget(
-                    textScalar: const TextScaler.linear(0.9),
-                    text: AppStrings().additionalCourses.trans,
-                    style: getMediumTextStyle(
-                        fontFamily: FontFamilies.abhayaLibreFamily,
-                        fontSize: 14,
-                        color: AppColors.white),
-                  ),
-                ],
-              ),
-            )
+          if (AppPrefs.userRole == '1') _buildMenu()
         ],
       ),
+    );
+  }
+
+  Widget _buildMenu() {
+    return CustomPopupMenu(
+      backgroundColor: AppColors.mainAppColor,
+      items: user,
+      icon: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          // 9.hs,
+          BlocBuilder<HomeOperationCubit, CubitStates>(
+            builder: (context, state) {
+              return CustomTextWidget(
+                text: context.read<HomeOperationCubit>().selected.isNull
+                    ? user[0]
+                    : context.read<HomeOperationCubit>().selected!,
+                style: getMediumTextStyle(
+                  fontFamily: FontFamilies.interFamily,
+                  fontSize: 14,
+                  color: AppColors.white,
+                ),
+              );
+            },
+          ),
+          5.hs,
+          const CustomIcon(
+            icon: Icons.keyboard_arrow_down,
+            color: AppColors.white,
+          )
+        ],
+      ),
+      onTap: (int index) => AppService()
+          .getBlocData<HomeOperationCubit>()
+          .onChangeItem(user[index]),
     );
   }
 }

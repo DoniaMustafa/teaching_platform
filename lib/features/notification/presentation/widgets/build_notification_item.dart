@@ -7,7 +7,8 @@ import '../manager/notification_cubit.dart';
 class BuildNotificationItem extends StatelessWidget {
   BuildNotificationItem({super.key, required this.model, required this.index});
 
-  final NotificationDataModel model;final int index;
+  final NotificationDataModel model;
+  final int index;
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -19,12 +20,14 @@ class BuildNotificationItem extends StatelessWidget {
           return GestureDetector(
             onTap: () => context
                 .read<NotificationOperationCubit>()
-                .getMarkNotificationAsRead(id: model.id!,index:index),
+                .getMarkNotificationAsRead(id: model.id!, index: index),
             child: CustomCard(
-                backgroundColor:
-                    context.read<NotificationOperationCubit>().isRead[index].isTrue
-                        ? AppColors.white
-                        : AppColors.unreadeGreyColor,
+                backgroundColor: context
+                        .read<NotificationOperationCubit>()
+                        .isRead[index]
+                        .isTrue
+                    ? AppColors.white
+                    : AppColors.unreadeGreyColor,
                 margin: getMargin(
                   horizontal: 10.w,
                 ),
@@ -46,6 +49,8 @@ class BuildNotificationItem extends StatelessWidget {
                     8.vs,
                     CustomTextWidget(
                       text: model.text!,
+                      // lines: null,
+                      softWrap: true,
                       style: getRegularTextStyle(
                         fontSize: 14,
                         height: 1.4,
