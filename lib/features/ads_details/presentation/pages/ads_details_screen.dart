@@ -82,7 +82,7 @@ class AdsDetailsScreen extends StatelessWidget {
               CustomNetworkImage.rectangle(
                 height: 200,
                 imageUrl: '${EndPoints.url}${model.pathUrl}',
-                defaultAsset: AppAssets().professionalCourses,
+                defaultAsset: AppAssets().professionalCoursesSVG,
               ),
               20.vs,
               Padding(

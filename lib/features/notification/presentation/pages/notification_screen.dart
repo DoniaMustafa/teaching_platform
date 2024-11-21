@@ -18,7 +18,7 @@ class NotificationScreen extends StatelessWidget {
           if (state is LoadedState && state.data.isEmpty) {
             return const CustomEmptyWidget();
           }
-          return CustomListView(
+          return CustomListView(reverse: true,
               axisDirection: Axis.vertical,
               shrinkWrap: true,
               separatorWidget: (context, index) => 20.vs,

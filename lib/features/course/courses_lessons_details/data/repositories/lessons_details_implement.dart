@@ -10,4 +10,9 @@ class LessonsDetailsImplement extends LessonsDetailsRepo {
   @override
   Future<Either<Failure, ResponseModel>> getLessonsDetails({required int lessonId}) async=>
       execute(()=>dataSources.getLessonsDetails(lessonId: lessonId));
+
+  @override
+  Future<Either<Failure, ResponseModel>> getVimeoVideo({required int vimeoId})  async=>
+      execute(()=>dataSources.getVimeoVideo(vimeoId:vimeoId));
+
 }

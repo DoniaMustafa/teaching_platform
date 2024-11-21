@@ -40,9 +40,9 @@ class TeacherModel {
   final String? subjectName;
   final List<TeacherCourse>? teacherCourses;
   final int? infoType;
-
+  final String? profileImage;
   TeacherModel({
-    this.infoType,
+    this.infoType, this.profileImage,
     this.teacherName,
     this.teacherPicture,
     this.gradeName,
@@ -55,15 +55,15 @@ class TeacherModel {
   });
 
   factory TeacherModel.fromJson(Map<String, dynamic> json) => TeacherModel(
-        teacherName: json["TeacherName"]!,
-        teacherPicture: json["TeacherPicture"]!,
-        gradeName: json["GradeName"]!,
-        subjectId: json["SubjectId"],
-        subjectName: json["SubjectName"]!,
+        teacherName: json["TeacherName"],
+        teacherPicture: json["TeacherPicture"],
+        gradeName: json["GradeName"],
+        subjectId: json["SubjectId"],  profileImage: json["ProfileImage"],
+        subjectName: json["SubjectName"],
         teacherCourses: json["TeacherCourses"] == null
             ? []
             : List<TeacherCourse>.from(
-                json["TeacherCourses"]!.map((x) => TeacherCourse.fromJson(x))),
+                json["TeacherCourses"].map((x) => TeacherCourse.fromJson(x))),
       );
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -102,6 +102,8 @@ class TeacherCourse {
   final double? totalLessonsPrice;
   final int? lessonsCount;
   final bool? isSubscribed;
+
+  final String? courseImage;
   final List<CourseLesson>? courseLessons;
 
   TeacherCourse({
@@ -109,7 +111,7 @@ class TeacherCourse {
     this.title,
     this.titleEn,
     this.duration,
-    this.price,
+    this.price, this.courseImage,
     this.courseLessonId,
     this.currency,
     this.totalLessonsPrice,
@@ -122,7 +124,7 @@ class TeacherCourse {
         courseId: json["CourseId"],
         title: json["Title"] ?? '',
         titleEn: json["TitleEN"] ?? '',
-        duration: json["Duration"],
+        duration: json["Duration"],   courseImage: json["CourseImage"],
         price: json["Price"],
         currency: json["Currency"]!,
         totalLessonsPrice: json["TotalLessonsPrice"],

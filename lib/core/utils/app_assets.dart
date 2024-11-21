@@ -9,8 +9,10 @@ mixin class SvgImages {
   String about = "$svgPath/about.svg";
   String upload = "$svgPath/upload.svg";
   String uploadVideo = "$svgPath/upload_video.svg";
-
+  String coursesIcon = "$svgPath/courses.svg";
   String wallet = "$svgPath/wallet.svg";
+  String groupIcon = "$svgPath/groups.svg";
+
 
   String exam = "$svgPath/exam.svg";
 
@@ -42,7 +44,6 @@ mixin PngImages {
   String webinar = "$imagesPath/webinar.png";
   String assistant = "$imagesPath/assistant.png";
   String school = "$imagesPath/school.png";
-  String professionalCourses = "$imagesPath/professional_courses.png";
   String teacher = "$imagesPath/teacher.png";
   String student = "$imagesPath/student.png";
   String parent = "$imagesPath/parent.png";
@@ -55,7 +56,7 @@ mixin PngImages {
   String pinCode = "$imagesPath/pin_code.png";
   String qrCode = "$imagesPath/qr_code.png";
 
-  String coursesIcon = "$imagesPath/courses_icon.png";
+
   // String groupsIcon = "$imagesPath/groups_icon.png";
   String newsIcon = "$imagesPath/news_icon.png";
   // String schoolIcon = "$imagesPath/school_icon.png";
@@ -78,14 +79,19 @@ mixin PngImages {
     "$imagesPath/exam.png",
     "$imagesPath/grades.png",
     "$imagesPath/memoirs.png",
-
     "$imagesPath/homework.png",
     "$imagesPath/live.png",
     "$imagesPath/question.png",
 
-    // "$imagesPath/task.png",
-    // "$imagesPath/question.svg",
-    // "$imagesPath/question.svg",
+  ];
+  List<String> listOfProfessionalCoursesCategories = [
+    "$imagesPath/exam.png",
+    "$imagesPath/grades.png",
+    "$imagesPath/memoirs.png",
+    "$imagesPath/homework.png",
+    "$imagesPath/live.png",
+    "$imagesPath/question.png",
+
   ];
   List<String> parentFeaturesItems = [
     "$imagesPath/student.png",

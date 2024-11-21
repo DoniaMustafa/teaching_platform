@@ -14,7 +14,10 @@ class MainRegisterScreen extends StatefulWidget {
 }
 
 class _MainRegisterScreenState extends State<MainRegisterScreen> {
-  List items = [AppStrings().en.trans, AppStrings().ar.trans];
+  List<GenericModel> items = [
+    GenericModel(title: AppStrings().en.trans),
+    GenericModel(title: AppStrings().ar.trans),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -112,8 +115,8 @@ class _MainRegisterScreenState extends State<MainRegisterScreen> {
             9.hs,
             CustomTextWidget(
               text: context.read<LanguageCubit>().isEn
-                  ? AppStrings().en.trans
-                  : AppStrings().ar.trans,
+                  ? items[0].title!
+                  : items[1].title!,
               style: getMediumTextStyle(
                 fontFamily: FontFamilies.interFamily,
                 fontSize: 16,

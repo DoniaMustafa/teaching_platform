@@ -11,7 +11,7 @@ class PublicGroupsCoursesWithServer extends PublicGroupsCoursesDataSource {
   Future<ResponseModel> getPublicCourses({TeacherModel? model}) async =>
       remoteExecute(
           request: dioConsumer.getRequest(
-              path: AppPrefs.userRole == "1"
+              path: AppPrefs.userRole == "1"|| AppPrefs.userRole == "7"
                   ? EndPoints.getPublicTeachersGroupedCourses
                   : EndPoints.getPublicParentTeachersGroupedCourses,
               queryParams: model.isNotNull ? model!.toJson() : null),
@@ -23,7 +23,7 @@ class PublicGroupsCoursesWithServer extends PublicGroupsCoursesDataSource {
   Future<ResponseModel> getPublicGroups({TeacherModel? model}) async =>
       remoteExecute(
           request: dioConsumer.getRequest(
-              path: AppPrefs.userRole == "1"
+              path: AppPrefs.userRole == "1"|| AppPrefs.userRole == "7"
                   ? EndPoints.getPublicTeachersGroupedGroup
                   : EndPoints.getPublicParentTeachersGroupedGroup,
               queryParams: model.isNotNull ? model!.toJson() : null),

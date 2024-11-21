@@ -1,7 +1,7 @@
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:teaching/core/enums.dart';
 import 'package:teaching/core/widget/build_rating_bar.dart';
-import 'package:teaching/features/home/data/models/teacher_respons_model.dart';
+import 'package:teaching/features/teacher/teachers/data/models/teacher_respons_model.dart';
 import 'package:teaching/features/parent_children/presentation/widgets/build_children_drop_down_list.dart';
 import 'package:teaching/features/teacher/teacher_details/presentation/manager/teacher_details_cubit.dart';
 

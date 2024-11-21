@@ -1,25 +1,21 @@
 import 'package:teaching/core/export/export.dart';
-import 'package:teaching/features/auth/presentation/widgets/sign_up/build_education_drop_down/build_education_subject.dart';
-import 'package:teaching/features/group/group_lessons_details/presentation/manager/group_lessons_details/group_lessons_details_cubit.dart';
-import 'package:teaching/features/group/group_lessons_details/presentation/pages/groups_lesson_details_screen.dart';
-import 'package:teaching/features/group/groups_details/presentation/manager/group_details/group_details_cubit.dart';
-import 'package:teaching/features/group/groups_details/presentation/widgets/build_group_details_component.dart';
-import 'package:teaching/features/group/groups_details/presentation/widgets/group_details_shimmer.dart';
-import 'package:teaching/features/subscription_details/presentation/widgets/build_subscribe_list.dart';
+import 'package:teaching/features/booking_appointment_group/presentation/pages/booking_group_screen.dart';
 
 class GroupsDetailsScreen extends StatelessWidget {
   GroupsDetailsScreen({super.key});
   static const String whichScreenKey = 'whichScreenKey';
   String whichScreen = '';
   static const String teacherIdKey = 'teacherIdKey';
-  static String teacherId = '';
+  static int teacherId = 0;
 
   @override
   Widget build(BuildContext context) {
     Map<String, dynamic>? data = getArguments(context);
 
     if (data.isNotNull) {
-      whichScreen = data![whichScreenKey] ?? 'default';
+      teacherId = data![teacherIdKey];
+      whichScreen = data[whichScreenKey] ?? 'default';
+      print('dfffffffffffff>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> $teacherId');
     }
     return CustomBackground(
         statusBarColor: AppColors.mainAppColor,
@@ -33,7 +29,7 @@ class GroupsDetailsScreen extends StatelessWidget {
                     message: state.message,
                     onTap: () => context
                         .read<GroupDetailsCubit>()
-                        .getGroupDetails(teacherId: 94));
+                        .getGroupDetails(teacherId: teacherId,));
               } else if (state is LoadedState && state.data.isEmpty) {
                 return CustomEmptyWidget();
               } else if (state is LoadedState) {
@@ -52,6 +48,10 @@ class GroupsDetailsScreen extends StatelessWidget {
           CustomElevatedButton(
               width: 200.w,
               onPressed: () => Routes.bookingDateRoute.moveTo,
+              // .moveToWithArgs({
+              //   BookingAppointmentGroupScreen.subjectIdKey: model.subjectId,
+              //   // BookingAppointmentGroupScreen.teacherIdKey: teacherId,
+              // }),
               text: AppStrings().bookDate.trans),
         ],
       );
@@ -64,8 +64,8 @@ class GroupsDetailsScreen extends StatelessWidget {
           ),
           if (whichScreen == AppStrings().teacherDetails)
             CustomSubjectList(
-              // teacherId: model,
               isCourse: false,
+              isTeacher: false,
             ),
           Expanded(
             child: CustomListView(

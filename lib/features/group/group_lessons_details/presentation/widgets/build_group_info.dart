@@ -15,7 +15,8 @@ class BuildGroupInfo extends StatelessWidget {
         10.vs,
         _customGroupInfo(AppStrings().startDate.trans, model.startDate!),
         10.vs,
-        _customGroupInfo(AppStrings().subscribeNow.trans, model.groupPeriod!),
+        _customGroupInfo(
+            AppStrings().subscriptionDuration.trans, model.groupPeriod!),
         10.vs,
         _customGroupInfo(AppStrings().sessionsNumber.trans,
             '${model.sessionsCount!} ${AppStrings().session.trans}'),

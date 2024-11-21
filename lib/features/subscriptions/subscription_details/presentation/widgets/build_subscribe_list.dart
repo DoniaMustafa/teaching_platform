@@ -66,7 +66,8 @@ class BuildSubscribeList extends StatelessWidget {
         },
         color: AppColors.white,
         borderColor: AppColors.transparent,
-        asset: AppAssets().professionalCourses,
+        asset:
+            '${EndPoints.url}${model.teacherCourses![courseIndex].courseImage}',
         items: model.teacherCourses![courseIndex].courseLessons!,
         boxShadow: [
           BoxShadow(

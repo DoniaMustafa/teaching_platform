@@ -41,12 +41,21 @@ class _SplashScreenState extends State<SplashScreen>
         if (isNew.isTrue) {
           Routes.onBoardRoute.moveToAndRemoveCurrent;
         } else {
-          if (AppPrefs.user.isNotNull &&
-              AppPrefs.token.isNotNullOrEmpty &&
-              AppPrefs.userRole.isNotNullOrEmpty) {
-            Routes.bottomNavigationRoute.pushAndRemoveAllUntil;
+          if (AppPrefs.userRole == "7"||AppPrefs.userRole == "2") {
+            if (AppPrefs.token.isNotNullOrEmpty &&
+                AppPrefs.userRole.isNotNullOrEmpty) {
+              Routes.bottomNavigationRoute.pushAndRemoveAllUntil;
+            } else {
+              Routes.mainRoute.pushAndRemoveAllUntil;
+            }
           } else {
-            Routes.mainRoute.pushAndRemoveAllUntil;
+            if (AppPrefs.user.isNotNull &&
+                AppPrefs.token.isNotNullOrEmpty &&
+                AppPrefs.userRole.isNotNullOrEmpty) {
+              Routes.bottomNavigationRoute.pushAndRemoveAllUntil;
+            } else {
+              Routes.mainRoute.pushAndRemoveAllUntil;
+            }
           }
         }
       });

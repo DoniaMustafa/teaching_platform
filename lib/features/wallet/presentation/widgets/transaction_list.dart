@@ -17,6 +17,7 @@ class BuildTransactionList extends StatelessWidget {
         builder: (context, state) {
           return CustomListView(
               shrinkWrap: true,
+              reverse: true,
               scroll: const NeverScrollableScrollPhysics(),
               separatorWidget: (context, index) => CustomDivider(
                     height: 1,
@@ -48,15 +49,22 @@ class BuildTransactionList extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
+            SizedBox(
+                width: 30.w,
+                height: 30.h,
+                child: CustomSvg(asset: AppAssets().wallet)),
+            10.hs,
             Expanded(
               child: CustomTextWidget(
                 text: AppService().getBlocData<LanguageCubit>().isEn
-                    ? data.descriptionEn ?? ''
+                    ? data.descriptionEn ?? data.description
                     : data.description,
+                softWrap: true,
                 style: getSemiboldTextStyle(
                     fontSize: 14, color: AppColors.deepGray),
               ),
             ),
+            10.hs,
             Row(
               children: [
                 CustomTextWidget(
@@ -66,9 +74,11 @@ class BuildTransactionList extends StatelessWidget {
                 ),
                 5.hs,
                 CustomTextWidget(
-                  text: data.currencyName!.contains("جنيه مصرى").isTrue?AppStrings().egp.trans:'',
-                  style: getRegularTextStyle(
-                      fontSize: 14, color: AppColors.black),
+                  text: data.currencyName!.contains("جنيه مصرى").isTrue
+                      ? AppStrings().egp.trans
+                      : '',
+                  style:
+                      getRegularTextStyle(fontSize: 14, color: AppColors.black),
                 ),
               ],
             ),

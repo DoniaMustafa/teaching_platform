@@ -10,7 +10,8 @@ class BuildGroups extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PublicGroupCubit, CubitStates>(builder: (context, state) {
+    return BlocBuilder<PublicGroupCubit, CubitStates>(
+        builder: (context, state) {
       if (state is FailedState) {
         return SizedBox.shrink();
       }
@@ -23,7 +24,8 @@ class BuildGroups extends StatelessWidget {
   }
 
   Widget buildCoursesList(CubitStates state) {
-    return CustomListView( axisDirection: Axis.horizontal,
+    return CustomListView(
+        axisDirection: Axis.horizontal,
         separatorWidget: (context, index) => 20.hs,
         itemCount: state is LoadedState
             ? state.data.length
@@ -34,9 +36,11 @@ class BuildGroups extends StatelessWidget {
                   context
                       .read<GroupDetailsCubit>()
                       .getGroupDetails(teacherId: state.data[index].teacherId);
-                  Routes.groupsDetailsRoute
-                      .moveToWithArgs({GroupsDetailsScreen.whichScreenKey: "default",
-                    GroupsDetailsScreen.teacherIdKey: state.data[index].teacherId});
+                  Routes.groupsDetailsRoute.moveToWithArgs({
+                    GroupsDetailsScreen.whichScreenKey: "default",
+                    GroupsDetailsScreen.teacherIdKey:
+                        state.data[index].teacherId
+                  });
                 },
                 groupsModel: state.data[index],
               )

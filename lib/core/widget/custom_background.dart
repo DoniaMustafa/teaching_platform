@@ -43,6 +43,7 @@ class CustomBackground extends StatelessWidget {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: systemUiOverlayStyle,
       child: Scaffold(
+          // resizeToAvoidBottomInset: false,
           drawer: drawer,
           drawerEnableOpenDragGesture: false,
           backgroundColor: backgroundColor,

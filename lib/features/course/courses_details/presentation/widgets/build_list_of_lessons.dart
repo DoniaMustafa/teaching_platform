@@ -1,10 +1,7 @@
 import 'package:teaching/core/export/export.dart';
-import 'package:teaching/core/widget/custom_dialog.dart';
-import 'package:teaching/features/course/courses_details/presentation/manager/subscribe_course_cubit.dart';
 import 'package:teaching/features/course/courses_details/presentation/pages/courses_details_screen.dart';
 import 'package:teaching/features/course/courses_lessons_details/presentation/manager/lessons_details/lessons_details_cubit.dart';
 import 'package:teaching/features/course/courses_lessons_details/presentation/pages/courses_lesson_details_screen.dart';
-import 'package:teaching/features/exam/presentation/manager/exam_cubit.dart';
 
 class BuildListOfLessons extends StatelessWidget {
   const BuildListOfLessons({super.key, required this.model});
@@ -51,7 +48,7 @@ class BuildListOfLessons extends StatelessWidget {
             subTitle:
                 '${model.teacherCourses![index].lessonsCount!.toString()} '
                 '${model.teacherCourses![index].lessonsCount! > 1 ? AppStrings().lessons.trans : AppStrings().lesson.trans}',
-            asset: AppAssets().professionalCoursesSVG,
+            asset:'${EndPoints.url}${model.teacherCourses![index].courseImage}' ,
             titleStyle: getBoldTextStyle(
               fontSize: 16,
             ),
@@ -73,17 +70,23 @@ class BuildListOfLessons extends StatelessWidget {
                   model: ExamParamsModel(
                       courseId: model.teacherCourses![index].courseId,
                       courseLessonId: id));
-
+              context.read<VideoOperationCubit>().selectedIndex=0;
               model.teacherCourses![index].courseLessons![i].isSubscribed.isTrue
                   ? Routes.lessonDetailsRoute.moveToWithArgs({
                       LessonDetailsScreen.courseIdKey:
                           model.teacherCourses![index].courseId,
+                      LessonDetailsScreen.courseTitleKey:
+                          context.read<LanguageCubit>().isEn.isTrue
+                              ? model.teacherCourses![index].titleEn
+                              : model.teacherCourses![index].title,
                       LessonDetailsScreen.lessonTitleKey:
                           context.read<LanguageCubit>().isEn.isTrue
                               ? model.teacherCourses![index].courseLessons![i]
-                                  .lessonTitleEn
+                                      .lessonTitleEn ??
+                                  ''
                               : model.teacherCourses![index].courseLessons![i]
-                                  .lessonTitle
+                                      .lessonTitle ??
+                                  ''
                     })
                   : model.teacherCourses![index].courseLessons![i].isSubscribed
                               .isFalse &&
@@ -92,12 +95,18 @@ class BuildListOfLessons extends StatelessWidget {
                       ? Routes.lessonDetailsRoute.moveToWithArgs({
                           LessonDetailsScreen.courseIdKey:
                               model.teacherCourses![index].courseId,
+                          LessonDetailsScreen.courseTitleKey:
+                              context.read<LanguageCubit>().isEn.isTrue
+                                  ? model.teacherCourses![index].titleEn ?? ""
+                                  : model.teacherCourses![index].title ?? "",
                           LessonDetailsScreen.lessonTitleKey:
                               context.read<LanguageCubit>().isEn.isTrue
                                   ? model.teacherCourses![index]
-                                      .courseLessons![i].lessonTitleEn
+                                          .courseLessons![i].lessonTitleEn ??
+                                      ""
                                   : model.teacherCourses![index]
-                                      .courseLessons![i].lessonTitle
+                                          .courseLessons![i].lessonTitle ??
+                                      ""
                         })
                       : null;
 
@@ -149,16 +158,22 @@ class BuildListOfLessons extends StatelessWidget {
                                     context
                                         .read<SubscribeCourseCubit>()
                                         .addSubscribeCourseOrLesson(
-                                            // teacherId:
-                                            //     CoursesDetailsScreen.teacherId,
-                                            // teacherCourse: TeacherCourse(
-                                            //     courseId: courseId)
-                                            );
+                                            teacherId:
+                                                CoursesDetailsScreen.teacherId,
+                                            teacherCourse: TeacherCourse(
+                                                courseId: courseId));
+                                    context
+                                        .read<CoursesGroupOperationCubit>()
+                                        .selectedIndex = null;
                                   } else {
+                                    context
+                                        .read<CoursesGroupOperationCubit>()
+                                        .selectedIndex = null;
                                     context
                                         .read<SubscribeCourseCubit>()
                                         .addSubscribeCourseOrLesson(
-                                            // teacherId: 94,
+                                            teacherId:
+                                                CoursesDetailsScreen.teacherId,
                                             teacherCourse: TeacherCourse(
                                                 courseLessonId: courseLessonId,
                                                 courseId: courseId));

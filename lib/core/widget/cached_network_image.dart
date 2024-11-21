@@ -12,6 +12,7 @@ class CustomNetworkImage extends StatelessWidget {
   double? height;
   double? width;
   double? radius;
+  double? borderWidth;
   bool? isCircle;
   EdgeInsetsGeometry? padding;
   CustomNetworkImage._internal();
@@ -19,6 +20,7 @@ class CustomNetworkImage extends StatelessWidget {
       {this.radius,
       required this.imageUrl,
       this.bordWidth,
+      this.borderWidth,
       this.defaultAsset,
       super.key})
       : isCircle = true;
@@ -26,6 +28,7 @@ class CustomNetworkImage extends StatelessWidget {
       {this.height,
       this.width,
       this.radius,
+      this.borderWidth,
       required this.imageUrl,
       this.bordWidth,
       this.defaultAsset,
@@ -45,7 +48,8 @@ class CustomNetworkImage extends StatelessWidget {
         decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: bordWidth.isNotNull
-                ? Border.all(width: bordWidth!, color: AppColors.white)
+                ? Border.all(
+                    width: bordWidth!, color:AppColors.white)
                 : null),
         // radius: radius,
         child: imageUrl.validateNetworkAsset && imageUrl!.contains("svg").isTrue
@@ -78,7 +82,8 @@ class CustomNetworkImage extends StatelessWidget {
           borderRadius:
               radius.isNotNull ? BorderRadius.circular(radius!) : null,
           border: bordWidth.isNotNull
-              ? Border.all(width: bordWidth!, color: AppColors.white)
+              ? Border.all(
+                  width: bordWidth!, color:  AppColors.white)
               : null,
         ),
         // radius: radius,
@@ -106,12 +111,11 @@ class CustomNetworkImage extends StatelessWidget {
   buildDefaultCircularAsset(String? asset) => Container(
         color: AppColors.mainAppColor,
         child: asset.isNotNull
-            ? asset.validateNetworkAsset && asset!.contains("svg").isTrue
-                ? SvgPicture.asset(
-                    asset,
-                    height: radius,
-                    width: radius,
-                    fit: BoxFit.fill,
+            ? asset!.contains("svg").isTrue
+                ? CustomSvg(asset:asset,
+                    // height: radius,
+                    // width: radius,
+                    // fit: BoxFit.fill,
                   )
                 : asset.validateNetworkAsset
                     ? CachedNetworkImage(imageUrl: asset!)
@@ -136,7 +140,7 @@ class CustomNetworkImage extends StatelessWidget {
   buildRectangleAsset(String? asset) => Container(
         // color: AppColors.primaryColor,
         child: asset.isNotNull
-            ? asset.validateNetworkAsset && asset!.contains("svg").isTrue
+            ?  asset!.contains("svg").isTrue
                 ? SvgPicture.asset(
                     asset,
                     height: height,

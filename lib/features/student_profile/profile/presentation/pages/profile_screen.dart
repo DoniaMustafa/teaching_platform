@@ -83,13 +83,9 @@ class _ProfileScreenState extends State<ProfileScreen> with InputProfileData {
                 child: Stack(
                   alignment: AlignmentDirectional.bottomEnd,
                   children: [
-                    BlocBuilder<UserCubit, UserState>(
-                      builder: (context, state) {
-                        return CustomNetworkImage.circular(
-                          imageUrl: '${EndPoints.url}${AppPrefs.user!.image}',
-                          radius: 80.r,
-                        );
-                      },
+                    CustomNetworkImage.circular(
+                      imageUrl: '${EndPoints.url}${AppPrefs.user!.image}',
+                      radius: 80.r,
                     ),
                     GestureDetector(
                       onTap: () {

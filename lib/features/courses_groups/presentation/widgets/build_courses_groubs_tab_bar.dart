@@ -14,7 +14,7 @@ class BuildCoursesGroupsTabBar extends StatelessWidget {
             onTap: (index) => context
                 .read<CoursesGroupOperationCubit>()
                 .onChangePublicTabIndex(index),
-            text: AppListsConstant.subscribeTab,
+            text: AppListsConstant.publicCoursesGroupsTab,
             selectedIndex:
                 context.read<CoursesGroupOperationCubit>().publicTapIndex
             // : context.read<CoursesGroupOperationCubit>().tapIndex,

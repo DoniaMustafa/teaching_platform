@@ -34,7 +34,11 @@ class BuildCommentsWidget extends StatelessWidget {
               isFill: true,
               suffixIcon: AppAssets().send,
               suffixOnTap: () {
-                if (context.read<CommentOnLessonCubit>().comment.text.isNotEmpty) {
+                if (context
+                    .read<CommentOnLessonCubit>()
+                    .comment
+                    .text
+                    .isNotEmpty) {
                   context.read<CommentOnLessonCubit>().addCommentOnVideo(
                         videoId: context.read<VideoOperationCubit>().videoId!,
                       );
@@ -65,10 +69,22 @@ class BuildCommentsWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CustomTextWidget(
-                    text: comment.userName!,
-                    style: getRegularTextStyle(
-                        fontSize: 16, color: AppColors.mainAppColor),
+                  Row(
+                    children: [
+                      CustomTextWidget(
+                        text: comment.userName!,
+                        style: getRegularTextStyle(
+                            fontSize: 16, color: AppColors.mainAppColor),
+                      ),
+                      10.hs,
+                      CustomTextWidget(
+                        text: comment.createdAt == DateTime.now()
+                            ? AppStrings().now.trans
+                            : comment.createdAt.toString(),
+                        style: getRegularTextStyle(
+                            fontSize: 12, color: AppColors.black),
+                      ),
+                    ],
                   ),
                   5.vs,
                   CustomTextWidget(

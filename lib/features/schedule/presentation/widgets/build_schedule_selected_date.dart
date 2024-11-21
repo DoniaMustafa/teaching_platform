@@ -1,4 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:teaching/core/helper/toast_healper.dart';
+import 'package:teaching/features/parent_children/presentation/widgets/build_children_drop_down_list.dart';
+import 'package:teaching/features/parent_children/presentation/widgets/build_children_list.dart';
 import 'package:teaching/features/schedule/presentation/manager/schedule_cubit.dart';
 
 import '../../../../core/export/export.dart';
@@ -12,9 +15,22 @@ class BuildScheduleSelectedDate extends StatefulWidget {
 }
 
 class _BuildScheduleSelectedDateState extends State<BuildScheduleSelectedDate> {
-
-   DateTime? pickedDate=DateTime.now();
-   String date=DateFormat("EEE M/d/y").format(DateTime.now());
+  DateTime? pickedDate;
+  late String pickedNow;
+  late String date;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // pickedDate = DateTime.now();
+    date = DateFormat("EEE M/d/y").format(DateTime.now());
+    pickedNow = DateFormat("M/d/y").format(DateTime.now());
+    if (AppPrefs.userRole == "1") {
+      AppService()
+          .getBlocData<ScheduleCubit>()
+          .getSchedule(selectedDay: pickedNow);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +57,8 @@ class _BuildScheduleSelectedDateState extends State<BuildScheduleSelectedDate> {
                 fontSize: 16,
                 color: AppColors.black,
               ),
-            ),5.hs,
+            ),
+            5.hs,
             CustomTextWidget(
               text: date,
               style: getRegularTextStyle(
@@ -52,21 +69,41 @@ class _BuildScheduleSelectedDateState extends State<BuildScheduleSelectedDate> {
             const Spacer(),
             GestureDetector(
               onTap: () async {
-              pickedDate = await showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(1900),
-                  lastDate: DateTime(2060),
-                );
+                pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(1900),
+                    lastDate: DateTime(2060),
+                    selectableDayPredicate: (DateTime? dateTime) {
+                      return true;
+                    });
+
+                pickedNow = DateFormat("M/d/y").format(pickedDate!);
+                date = DateFormat("EEE M/d/y").format(pickedDate!);
+                if (pickedDate.isNotNull) {
+                  if (AppPrefs.userRole == "1" || AppPrefs.userRole == "7") {
+                    AppService()
+                        .getBlocData<ScheduleCubit>()
+                        .getSchedule(selectedDay: pickedNow);
+                  } else if (AppPrefs.userRole == "3") {
+                    if (BuildChildrenDropDownList.childrenId == null) {
+                      ToastHelper.buildToast(
+                          text: 'الرجاء اختار الابن اولا',
+                          tColor: ToastColors.ERROR);
+                    } else {
+                      AppService().getBlocData<ScheduleCubit>().getSchedule(
+                          selectedDay: pickedNow,
+                          studentId: BuildChildrenDropDownList.childrenId);
+                    }
+                  }
+                }
                 print(pickedDate);
-                AppService()
-                    .getBlocData<ScheduleCubit>()
-                    .getSchedule(pickedDate.toString());
+
                 setState(() {});
               },
               child: const CustomIcon(
                 icon: Icons.date_range,
-                size: 18,
+                size: 25,
                 color: AppColors.black,
               ),
             )

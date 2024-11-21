@@ -19,7 +19,7 @@ class _CoursesGroupsScreenState extends State<PublicCoursesGroupsScreen> {
   @override
   void initState() {
     super.initState();
-    if (AppPrefs.userRole == "1") {
+    if (AppPrefs.userRole == "1" || AppPrefs.userRole == "7") {
       context.read<PublicCourseCubit>().getPublicCourses();
       context.read<PublicGroupCubit>().getPublicGroups();
     }
@@ -35,7 +35,7 @@ class _CoursesGroupsScreenState extends State<PublicCoursesGroupsScreen> {
         widget: Column(
           children: [
             AppPrefs.userRole == "3" ? 40.vs : 20.vs,
-            if (AppPrefs.userRole == "1")
+            if (AppPrefs.userRole == "1" || AppPrefs.userRole == "7")
               CustomSubjectList(
                 isCourse: true,
                 isPublicTeacher: true,

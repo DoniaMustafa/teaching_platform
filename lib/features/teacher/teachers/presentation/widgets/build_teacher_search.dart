@@ -1,5 +1,5 @@
 import 'package:teaching/core/export/export.dart';
-import 'package:teaching/features/home/presentation/manager/teachers_of_student_cubit.dart';
+import 'package:teaching/features/teacher/teachers/presentation/manager/teachers_of_student_cubit.dart';
 
 class BuildTeacherSearch extends StatefulWidget {
   BuildTeacherSearch({

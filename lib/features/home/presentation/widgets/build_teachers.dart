@@ -1,7 +1,7 @@
 import 'package:teaching/core/widget/common_item_widgets/custom_item.dart';
 import 'package:teaching/core/widget/common_item_widgets/custom_teatcher_item.dart';
 import 'package:teaching/core/widget/shimmer_widget.dart';
-import 'package:teaching/features/home/presentation/manager/teachers_of_student_cubit.dart';
+import 'package:teaching/features/teacher/teachers/presentation/manager/teachers_of_student_cubit.dart';
 
 import '../../../../core/export/export.dart';
 

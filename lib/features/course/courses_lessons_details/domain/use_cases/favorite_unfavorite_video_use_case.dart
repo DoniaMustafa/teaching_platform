@@ -4,9 +4,9 @@ import 'package:teaching/features/course/courses_lessons_details/domain/reposito
  class FavoriteUnfavoriteVideoUseCase {
   FavoriteUnFavoriteVideoRepo repo;
   Future<Either<Failure, ResponseModel>> addFavoriteUnFavoriteVideo({
-    int? videoId,
+    int? videoId,bool isCourse=true
   }) =>
-      repo.addFavoriteUnFavoriteVideo(videoId: videoId);
+      repo.addFavoriteUnFavoriteVideo(videoId: videoId,isCourse:isCourse );
 
   FavoriteUnfavoriteVideoUseCase(this.repo);
 }

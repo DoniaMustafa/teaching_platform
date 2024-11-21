@@ -13,7 +13,7 @@ class BuildChooseToYou extends StatelessWidget {
           separatorWidget: (context, index) => SizedBox(
                 width: 20.w,
               ),
-          itemCount: AppListsConstant.listOfStudentCategories.length,
+          itemCount: 3,
           widget: (context, index) => _buildItem),
     );
   }
@@ -94,6 +94,7 @@ class BuildChooseToYou extends StatelessWidget {
                     ],
                   ),
                   10.vs,
+
                   CustomTextWidget(
                     text: '125.22 ج.م',
                     style: getMediumTextStyle(

@@ -15,18 +15,17 @@ class BuildDrawer extends StatelessWidget implements Drawer {
           child: Column(
             children: [
               40.vs,
-
-                GestureDetector(
-                  onTap: () => Routes.profileRoute.moveTo,
-                  child: CustomNetworkImage.circular(
-                    imageUrl: '${EndPoints.baseUrl}${AppPrefs.user!.image}',
-                    radius: 100.r,
-                    defaultAsset: '',
-                  ),
+              GestureDetector(
+                onTap: () => Routes.profileRoute.moveTo,
+                child: CustomNetworkImage.circular(
+                  imageUrl: '${EndPoints.url}${AppPrefs.user!.image}',
+                  radius: 100.r,
+                  defaultAsset: '',
                 ),
+              ),
               10.vs,
               CustomTextWidget(
-                text: AppPrefs.user!.name!,
+                text: AppPrefs.user!.name ?? '',
                 style: getSemiboldTextStyle(
                     fontSize: 18, fontFamily: FontFamilies.interFamily),
               ),

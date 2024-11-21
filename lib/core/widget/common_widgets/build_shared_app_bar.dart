@@ -38,8 +38,9 @@ class BuildSharedAppBar extends StatelessWidget {
               child: CustomTextWidget(
                 align: TextAlign.center,
                 text: title!,
+                textScalar: const TextScaler.linear(0.9),
                 style: getBoldTextStyle(
-                  fontSize: 24,
+                  fontSize: 22,
                   color: AppColors.white,
                 ),
               ),

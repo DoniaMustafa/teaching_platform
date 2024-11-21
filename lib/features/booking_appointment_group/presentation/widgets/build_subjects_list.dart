@@ -1,4 +1,5 @@
 import 'package:teaching/core/export/export.dart';
+import 'package:teaching/features/booking_appointment_group/presentation/manager/booking_appointment_operation_cubit.dart';
 
 class BuildSubjectsList extends StatelessWidget {
   BuildSubjectsList({super.key});
@@ -11,10 +12,12 @@ class BuildSubjectsList extends StatelessWidget {
             onSelected: (
               int id,
             ) {
-              subjectSelected = id;
-
+              context.read<SubjectsCubit>().subjectSelected = id;
+              context.read<BookingAppointmentOperationCubit>().onChangeDisplayTeacher();
               context.read<TeachersOfStudentCubit>().getTeacherOfStudent(
-                  teacher: TeacherModel(studentId: subjectSelected));
+                  teacher: TeacherModel(
+                      subjectId:
+                          context.read<SubjectsCubit>().subjectSelected));
             },
             items: getItems(state)!,
             title: AppStrings().material.trans,

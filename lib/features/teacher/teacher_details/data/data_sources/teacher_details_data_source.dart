@@ -3,7 +3,7 @@ import 'package:teaching/core/export/export.dart';
 abstract class TeacherDetailsDataSource {
   Future<ResponseModel> getTeachersDetails({TeacherModel? model});
   Future<ResponseModel> addTeachersReview({PostRateParamsModel? model});
-  Future<ResponseModel>followTeachers({TeacherModel? model});
+  Future<ResponseModel> followTeachers({TeacherModel? model});
 }
 
 class TeacherDetailsWithServer extends TeacherDetailsDataSource {
@@ -15,7 +15,9 @@ class TeacherDetailsWithServer extends TeacherDetailsDataSource {
   Future<ResponseModel> getTeachersDetails({TeacherModel? model}) async =>
       remoteExecute(
           request: consumer.getRequest(
-              path: EndPoints.getTeacherDetailsInStudent,
+              path: AppPrefs.userRole == "3"
+                  ? EndPoints.getParentTeacherDetails
+                  : EndPoints.getTeacherDetailsInStudent,
               queryParams: model!.toJson()),
           fromJsonFunction: TeacherDetailsResponseModel.fromJson);
 
@@ -30,6 +32,7 @@ class TeacherDetailsWithServer extends TeacherDetailsDataSource {
   Future<ResponseModel> followTeachers({TeacherModel? model}) async =>
       remoteExecute(
           request: consumer.postRequest(
-              path: EndPoints.studentFollowTeacher, queryParams: model!.toJson()),
+              path: EndPoints.studentFollowTeacher,
+              queryParams: model!.toJson()),
           fromJsonFunction: ResponseModel.fromJson);
 }

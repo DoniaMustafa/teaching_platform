@@ -1,9 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:teaching/features/auth/presentation/pages/choose_role_screen.dart';
 import 'package:teaching/features/auth/presentation/pages/login_screen.dart';
-import 'package:teaching/features/group/group_lessons_details/presentation/pages/groups_lesson_details_screen.dart';
+import 'package:teaching/features/auth/presentation/pages/main_register_screen.dart';
 import 'package:teaching/features/settings/presentation/pages/settings_screen.dart';
-
 import '../core/export/export.dart';
 
 class TeachingApp extends StatelessWidget {

@@ -58,7 +58,7 @@ class BuildNearSchool extends StatelessWidget {
                           radius: 10.r,
                           borderColor:
                               AppColors.textGrayColor1.withOpacity(0.2),
-                          padding: getPadding(vertical: 20.h, horizontal: 25.w),
+                          // padding: getPadding(vertical: 10.h, horizontal: 10.w),
                           backgroundColor: AppColors.white,
                           child: CustomNetworkImage.rectangle(
                             imageUrl:

@@ -6,7 +6,6 @@
 import 'dart:convert';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:inspection/inspection.dart';
-import 'package:teaching/config/routes/app_routes_helper.dart';
 import 'package:teaching/core/export/export.dart';
 
 extension StringExtension on String {

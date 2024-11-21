@@ -68,7 +68,7 @@ dependencies:
   get: ^4.6.6
   zego_uikit_prebuilt_live_streaming: ^3.13.5
   video_player: ^2.9.2
-  flick_video_player: ^0.9.0
+#  flick_video_player: ^0.9.0
   chewie: ^1.8.5
 #  video_thumbnail_imageview: ^0.0.6
 #  video_thumbnail: ^0.5.3

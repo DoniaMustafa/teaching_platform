@@ -11,7 +11,16 @@ class GroupsModel {
   final String? currencyName;
   final double? rate;
   final int? followersCount;
+  final int? studentsCount;
+  final int? sessionsCount;
+  final String? title;
+  final String? titleEN;
+
   GroupsModel({
+    this.studentsCount,
+    this.sessionsCount,
+    this.title,
+    this.titleEN,
     this.groupId,
     this.groupName,
     this.groupNameEn,
@@ -27,17 +36,21 @@ class GroupsModel {
   });
 
   factory GroupsModel.fromJson(Map<String, dynamic> json) => GroupsModel(
-        groupId: json["GroupId"],
-        groupName: json["GroupName"] == null ? '' : json["GroupName"]!,
-        groupNameEn: json["GroupNameEN"] == null ? '' : json["GroupNameEN"]!,
-        teacherId: json["TeacherId"],
-        rate: json["Rate"] ?? null,
-        teacherName: json["TeacherName"],
-        teacherPicture: json["TeacherPicture"]!,
-        subjectId: json["SubjectId"],
-        subjectName: json["SubjectName"]!,
-        price: json["Price"],
-        currencyName: json["CurrencyName"] == null ? '' : json["CurrencyName"]!,
+      groupId: json["GroupId"],
+      groupName: json["GroupName"] == null ? '' : json["GroupName"]!,
+      groupNameEn: json["GroupNameEN"] == null ? '' : json["GroupNameEN"]!,
+      teacherId: json["TeacherId"],
+      rate: json["Rate"] ?? null,
+      teacherName: json["TeacherName"],
+      teacherPicture: json["TeacherPicture"]?? null,
+      subjectId: json["SubjectId"],
+      subjectName: json["SubjectName"],
+      studentsCount: json["StudentsCount"],
+      sessionsCount: json["SessionsCount"],
+      title: json["Title"],
+      titleEN: json["TitleEN"],
+      price: json["Price"],
+      currencyName: json["CurrencyName"] == null ? '' : json["CurrencyName"]!,
       );
 
   // Map<String, dynamic> toJson() => {

@@ -1,12 +1,19 @@
 import 'package:teaching/core/export/export.dart';
 import 'package:teaching/features/courses_groups/presentation/manager/public_course_cubit.dart';
-import 'package:teaching/features/home/data/models/teacher_respons_model.dart';
-import 'package:teaching/features/home/presentation/manager/teachers_of_student_cubit.dart';
+import 'package:teaching/features/teacher/teachers/data/models/teacher_respons_model.dart';
+import 'package:teaching/features/teacher/teachers/presentation/manager/teachers_of_student_cubit.dart';
+import 'package:teaching/features/parent_children/presentation/widgets/build_children_drop_down_list.dart';
 import 'package:teaching/features/teacher/teacher_details/presentation/manager/teacher_details_cubit.dart';
+import 'package:teaching/features/teacher/teachers/presentation/widgets/build_teacher_item.dart';
 
-class BuildTeachers extends StatelessWidget {
+class BuildTeachers extends StatefulWidget {
   const BuildTeachers({super.key});
 
+  @override
+  State<BuildTeachers> createState() => _BuildTeachersState();
+}
+
+class _BuildTeachersState extends State<BuildTeachers> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -30,7 +37,22 @@ class BuildTeachers extends StatelessWidget {
               separatorWidget: (BuildContext context, int index) => 20.vs,
               axisDirection: Axis.vertical,
               widget: (BuildContext context, int index) => state is LoadedState
-                  ? buildTeachersItem(state.data[index])
+                  ? BuildTeacherItem(
+                      teacher: state.data[index],
+                      onTap: () {
+                        AppService()
+                            .getBlocData<TeacherDetailsCubit>()
+                            .getTeacherDetails(
+                                model: TeacherModel(
+                                    infoType:
+                                        AppPrefs.userRole == "3" ? 3 : null,
+                                    studentId: AppPrefs.userRole == "3"
+                                        ? BuildChildrenDropDownList.childrenId
+                                        : null,
+                                    teacherId: state.data[index].id!),);
+                        Routes.teacherDetailsRoute.moveTo;
+                      },
+                    )
                   : CustomShimmer.fromRectangle(
                       width: width,
                       height: 90,
@@ -39,34 +61,5 @@ class BuildTeachers extends StatelessWidget {
       ),
     );
   }
-
-  Widget buildTeachersItem(TeacherDataModel teacher) => GestureDetector(
-        onTap: () {
-          AppService()
-              .getBlocData<TeacherDetailsCubit>()
-              .getTeacherDetails(model: TeacherModel(teacherId: teacher.id));
-          Routes.teacherDetailsRoute.moveTo;
-        },
-        child: CustomCard(
-          radius: 0,
-          backgroundColor: AppColors.white,
-          boxShadow: [
-            BoxShadow(
-                offset: const Offset(0, 2),
-                color: AppColors.black.withOpacity(0.25),
-                blurRadius: 8)
-          ],
-          child: CustomListTile(
-            title: teacher.name!,
-            subtitle: teacher.subjects!,
-            image: '${EndPoints.url}${teacher.profileImage!}',
-            rate: teacher.rate,
-            height: height / 8.9,
-            followers:
-                '${teacher.followersCount} ${AppStrings().follower.trans} ',
-            padding: getPadding(horizontal: 10.w, vertical: 10.h),
-          ),
-        ),
-      );
 }
 // return

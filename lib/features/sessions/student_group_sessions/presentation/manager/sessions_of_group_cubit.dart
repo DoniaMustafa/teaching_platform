@@ -4,47 +4,48 @@ import 'package:meta/meta.dart';
 import 'package:teaching/core/export/export.dart';
 import 'package:teaching/features/sessions/student_group_sessions/data/models/sessions_of_group_response_model.dart';
 import 'package:teaching/features/sessions/student_group_sessions/domain/use_cases/sessions_of_group_use_case.dart';
+import 'package:teaching/features/sessions/student_group_sessions/presentation/manager/sessions_of_group_operation_cubit.dart';
 
 class SessionsOfGroupCubit extends Cubit<CubitStates> {
   SessionsOfGroupCubit(this.useCase) : super(InitialState());
 
   SessionsOfGroupUseCase useCase;
-  List<SessionsOfGroupData> videos = [];
+  List<SessionsOfGroupData> previousVideos = [];
+  List<SessionsOfGroupData> nextVideos = [];
   getSessionsOfGroup({required int groupId}) {
     managerExecute<List<SessionsOfGroupData>>(
         useCase.getSessionsOfGroup(groupId: groupId),
-        onStart: () => emit(LoadingState()),
+        onStart: () {
+          previousVideos = [];
+          nextVideos = [];
+          emit(LoadingState());
+        },
         onFail: (message) => emit(FailedState(message: message)),
-        beforeSuccess: (data)async{
-          // videos= data;
-          if (data!.isNotEmpty) {
-            for (var element in data) {
-              DateTime date1 = DateTime(element.classAt!.year,
-                  element.classAt!.month, element.classAt!.day);
-              DateTime date2 = DateTime(DateTime.now().year,
-                  DateTime.now().month, DateTime.now().day);
-
-              if (date1.isBefore(date2) || date1.isEqualTo(date2)) {
-                for (var sessionsElement in data) {
-                  videos.addAll({sessionsElement});
-                  print('${AppStrings().previousClasses.trans} $videos');
-                }
-              } else {
-                for (var sessionsElement in data) {
-                  videos.addAll({sessionsElement});
-                  print('${AppStrings().nextClasses.trans} $videos');
-                }
-              }
-
+        beforeSuccess: (List<SessionsOfGroupData>? data) {
+          for (var element in data!) {
+            DateTime date1 = DateTime(
+                element.classAt!.year,
+                element.classAt!.month,
+                element.classAt!.day,
+                element.classAt!.hour,
+                element.classAt!.minute,
+                element.classAt!.second);
+            DateTime date2 = DateTime(
+                DateTime.now().year,
+                DateTime.now().month,
+                DateTime.now().day,
+                DateTime.now().hour,
+                DateTime.now().minute,
+                DateTime.now().second);
+            if (date1.isBefore(date2) || date1.isEqualTo(date2)) {
+              previousVideos.addAll({element});
+            } else {
+              nextVideos.addAll({element});
             }
-          } else {
-            videos = [];
-
           }
-
         },
         onSuccess: (List<SessionsOfGroupData>? data) {
-          // emit(LoadedState<List<SessionsOfGroupData>>(data: videos));
+          emit(LoadedState<List<SessionsOfGroupData>>(data: data!));
         });
   }
 }

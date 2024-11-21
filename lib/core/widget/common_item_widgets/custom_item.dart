@@ -88,7 +88,7 @@ class CustomItem extends StatelessWidget {
                             itemCount: 5,
                             rate: coursesModel.isNotNull
                                 ? coursesModel!.rate
-                                : groupsModel!.rate??0.0,
+                                : groupsModel!.rate ?? 0.0,
                             isIgnoreRate: true,
                           )
                         : GestureDetector(

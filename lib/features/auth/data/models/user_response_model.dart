@@ -188,7 +188,6 @@ class UserModel {
         "Wallet": wallet,
         "Gender": gender,
         "GenderName": genderName,
-        // "userRole": userRoles,
         "StepNo": stepsNo,
       };
   //

@@ -7,16 +7,13 @@ import 'package:teaching/features/home/presentation/widgets/build_user_drop_down
 class BuildWelcomeUser extends StatelessWidget {
   BuildWelcomeUser({super.key});
 
-  List<String> user = [
-    AppStrings().privetCourses.trans,
-    AppStrings().additionalCourses.trans,
-    AppStrings().professionalCourse.trans,
-  ];
   String? firstName;
   @override
   Widget build(BuildContext context) {
-    List<String>? nameParts = AppPrefs.user!.name!.split(' ');
-    firstName = nameParts[0];
+    if (AppPrefs.userRole == "1" || AppPrefs.userRole == "3") {
+      List<String>? nameParts = AppPrefs.user!.name!.split(' ');
+      firstName = nameParts[0];
+    }
 
     return CustomCard(
       margin: getPadding(
@@ -27,16 +24,11 @@ class BuildWelcomeUser extends StatelessWidget {
       child: Row(
         children: [
           GestureDetector(
-            onTap: () => Routes.profileRoute.moveTo,
-            child: BlocBuilder<UserCubit, UserState>(
-              builder: (context, state) {
-                return CustomNetworkImage.circular(
-                  imageUrl: '${EndPoints.url}${AppPrefs.user!.image}',
-                  radius: 50.r,
-                );
-              },
-            ),
-          ),
+              onTap: () => Routes.profileRoute.moveTo,
+              child: CustomNetworkImage.circular(
+                imageUrl: '${EndPoints.url}${AppPrefs.user!.image}',
+                radius: 50.r,
+              )),
           10.hs,
           Expanded(
             child: Column(
@@ -45,7 +37,7 @@ class BuildWelcomeUser extends StatelessWidget {
                 Row(
                   children: [
                     CustomTextWidget(
-                      textScalar: const TextScaler.linear(0.9),
+                      textScalar: const TextScaler.linear(0.85),
                       text: '${AppStrings().hello.trans},',
                       style: getSemiboldTextStyle(
                           fontFamily: FontFamilies.abhayaLibreFamily,
@@ -54,8 +46,10 @@ class BuildWelcomeUser extends StatelessWidget {
                     ),
                     2.hs,
                     CustomTextWidget(
-                      text: firstName!,
-                      textScalar: const TextScaler.linear(0.9),
+                      text: AppPrefs.userRole == "1" || AppPrefs.userRole == "3"
+                          ? firstName!
+                          : "",
+                      textScalar: const TextScaler.linear(0.85),
                       style: getBoldTextStyle(
                           fontFamily: FontFamilies.abhayaLibreFamily,
                           fontSize: 18,
@@ -72,6 +66,7 @@ class BuildWelcomeUser extends StatelessWidget {
                 ),
                 CustomTextWidget(
                   text: AppStrings().welcomeBack.trans,
+                  textScalar: const TextScaler.linear(0.85),
                   style: getSemiboldTextStyle(
                       fontFamily: FontFamilies.abhayaLibreFamily,
                       fontSize: 18,
@@ -89,7 +84,7 @@ class BuildWelcomeUser extends StatelessWidget {
   Widget _buildMenu() {
     return CustomPopupMenu(
       backgroundColor: AppColors.mainAppColor,
-      items: user,
+      items: AppListsConstant().user,
       icon: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -98,8 +93,9 @@ class BuildWelcomeUser extends StatelessWidget {
             builder: (context, state) {
               return CustomTextWidget(
                 text: context.read<HomeOperationCubit>().selected.isNull
-                    ? user[0]
+                    ? AppListsConstant().user[0].title!
                     : context.read<HomeOperationCubit>().selected!,
+                textScalar: const TextScaler.linear(0.9),
                 style: getMediumTextStyle(
                   fontFamily: FontFamilies.interFamily,
                   fontSize: 14,
@@ -117,7 +113,8 @@ class BuildWelcomeUser extends StatelessWidget {
       ),
       onTap: (int index) => AppService()
           .getBlocData<HomeOperationCubit>()
-          .onChangeItem(user[index]),
+          .onChangeItem(AppListsConstant().user[index].title!,
+              AppListsConstant().user[index].id!),
     );
   }
 }

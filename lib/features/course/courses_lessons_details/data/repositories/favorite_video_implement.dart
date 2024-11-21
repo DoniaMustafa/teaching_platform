@@ -13,6 +13,6 @@ class FavoriteVideoImplement extends FavoriteUnFavoriteVideoRepo {
       FavoriteVideoImplement(this.dataSource);
 
   @override
-  Future<Either<Failure, ResponseModel>> addFavoriteUnFavoriteVideo({int? videoId})=>
-      execute(() => dataSource.addFavoriteVideo( videoId: videoId));
+  Future<Either<Failure, ResponseModel>> addFavoriteUnFavoriteVideo({int? videoId,bool isCourse=true})=>
+      execute(() => dataSource.addFavoriteVideo( videoId: videoId,isCourse: isCourse));
 }

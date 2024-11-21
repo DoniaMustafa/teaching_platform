@@ -12,7 +12,7 @@ class GroupsWithServer extends GroupsDataSource {
   @override
   Future<ResponseModel> getGroups({int? subjectId}) async =>  remoteExecute(
       request: dioConsumer.getRequest(
-        path: EnumService.groupsEndPointType(AppPrefs.user!.userRole),queryParams: {"subjectId":subjectId}
+        path: EnumService.groupsEndPointType(AppPrefs.userRole!),queryParams: {"subjectId":subjectId}
         ,
       ),
       fromJsonFunction: GroupsResponseModel.fromJson);

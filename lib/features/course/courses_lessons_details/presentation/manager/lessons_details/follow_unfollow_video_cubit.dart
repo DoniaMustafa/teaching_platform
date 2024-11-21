@@ -6,29 +6,23 @@ import 'package:teaching/features/course/courses_lessons_details/domain/use_case
 class FavoriteUnFavoriteVideoCubit extends Cubit<CubitStates> {
   FavoriteUnFavoriteVideoCubit(this.uesCase) : super(InitialState());
   FavoriteUnfavoriteVideoUseCase uesCase;
- bool isFavorite=false;
+  bool isFavorite = false;
 
-  addFavoriteUnFavoriteVideo({int? videoId, int? rate}) {
+  addFavoriteUnFavoriteVideo({int? videoId, bool isCourse = true}) {
     managerExecute(
-         uesCase.addFavoriteUnFavoriteVideo( videoId: videoId),
+        uesCase.addFavoriteUnFavoriteVideo(
+            videoId: videoId, isCourse: isCourse),
         // startingMessage: AppStrings().loading.trans,
         onSuccess: (data) {
-          isFavorite= !isFavorite;
-           // if(rate! < 1){
-          //   isRate=false;
-          // }else{
-          //   isRate=true;
-          // }
-          // isRate = !isRate;
-          emit(LoadedState(data: data));
-        },
-        onStart: () {
-          isFavorite=true;
-          emit(LoadingState());
-        },
-        onFail: (message) {
-          isFavorite=false;
-          emit(FailedState(message: message));
-        });
+      isFavorite = !isFavorite;
+
+      emit(LoadedState(data: data));
+    }, onStart: () {
+      isFavorite = true;
+      emit(LoadingState());
+    }, onFail: (message) {
+      isFavorite = false;
+      emit(FailedState(message: message));
+    });
   }
 }

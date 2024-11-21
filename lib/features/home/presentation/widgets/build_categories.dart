@@ -37,7 +37,8 @@ class BuildCategories extends StatelessWidget {
                       child: CustomImageWidget(
                           height: 40.h,
                           width: 41.w,
-                          asset: AppAssets().listOfStudentCategories[index])),
+                          asset: EnumService.userCategoryImageType(
+                              AppPrefs.userRole!)[index])),
                 if (index == 6)
                   CustomCard(
                     gradient: const LinearGradient(
@@ -57,11 +58,11 @@ class BuildCategories extends StatelessWidget {
                       height: 40.h,
                       radius: 40.r,
                       borderWidth: 3,
-                      borderColor: AppColors.announcementBgColor,
+                      borderColor: AppColors.white,
                       color: AppColors.transparent,
                       child: CustomTextWidget(
                         text: '40',
-                        style: getRegularTextStyle(fontSize: 14),
+                        style: getRegularTextStyle(fontSize: 14,color: AppColors.white,),
                       ),
                     ),
                   ),

@@ -8,7 +8,7 @@ class ScheduleImplement extends ScheduleRepo {
 
   ScheduleDataSource dataSource;
   @override
-  Future<Either<Failure,ResponseModel>> getSchedule({required String selectedDay})async =>
-  execute(()=>dataSource.getSchedule(selectedDay: selectedDay));
+  Future<Either<Failure,ResponseModel>> getSchedule({int? studentId, required String selectedDay})async =>
+  execute(()=>dataSource.getSchedule(selectedDay: selectedDay,studentId: studentId));
 
 }

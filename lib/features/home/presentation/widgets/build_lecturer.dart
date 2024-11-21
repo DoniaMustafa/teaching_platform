@@ -10,11 +10,12 @@ class BuildLecturer extends StatelessWidget {
     return AspectRatio(
       aspectRatio: 1.3 / 0.6,
       // height: 200.h,
-      child: CustomListView( axisDirection: Axis.horizontal,
+      child: CustomListView(
+          axisDirection: Axis.horizontal,
           separatorWidget: (context, index) => SizedBox(
                 width: 20.w,
               ),
-          itemCount: AppListsConstant.listOfStudentCategories.length,
+          itemCount: 5,
           widget: (context, index) => _buildLecturerItem),
     );
   }

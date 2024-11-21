@@ -49,7 +49,7 @@ export 'package:teaching/features/courses_groups/presentation/manager/public_gro
 export 'package:teaching/features/exam/exams/presentation/manager/exam_cubit.dart';
 export 'package:teaching/features/group/group_lessons_details/presentation/manager/subscription_group_cubit.dart';
 export 'package:teaching/features/home/presentation/manager/school_cubit.dart';
-export 'package:teaching/features/home/presentation/manager/teachers_of_student_cubit.dart';
+export 'package:teaching/features/teacher/teachers/presentation/manager/teachers_of_student_cubit.dart';
 export 'package:teaching/features/language/presentation/managers/language_oepration_cubit/language_oepration_cubit.dart';
 export 'package:teaching/features/near_school_details/presentation/manager/near_school_details_cubit.dart';
 export 'package:teaching/features/notification/presentation/manager/notification_cubit.dart';

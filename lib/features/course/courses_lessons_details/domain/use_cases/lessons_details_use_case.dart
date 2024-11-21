@@ -1,11 +1,16 @@
- import 'package:dartz/dartz.dart';
+import 'package:dartz/dartz.dart';
 import 'package:teaching/core/export/export.dart';
 import 'package:teaching/features/course/courses_lessons_details/domain/repositories/lessons_details_repo.dart';
 
 class LessonsDetailsUseCase {
-   LessonsDetailsRepo repo;
+  LessonsDetailsRepo repo;
 
-   LessonsDetailsUseCase(this.repo);
+  LessonsDetailsUseCase(this.repo);
 
-   Future<Either<Failure,ResponseModel>> getLessonsDetails({required int lessonId})async=>await repo.getLessonsDetails(lessonId: lessonId);
+  Future<Either<Failure, ResponseModel>> getLessonsDetails(
+          {required int lessonId}) async =>
+      await repo.getLessonsDetails(lessonId: lessonId);
+  Future<Either<Failure, ResponseModel>> getVimeoVideo(
+          {required int vimeoId}) async =>
+      await repo.getVimeoVideo(vimeoId: vimeoId);
 }

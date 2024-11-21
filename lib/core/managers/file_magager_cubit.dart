@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:teaching/core/export/export.dart';
 
 class FileManagerCubit extends Cubit<CubitStates> {
@@ -20,11 +21,34 @@ class FileManagerCubit extends Cubit<CubitStates> {
   }
 
   File? image;
-  Future getImage({bool isCamera = false}) async {
+  Future getImage({bool isCamera = false, bool isProfile = false}) async {
     image = await getCameraImage(isCamera: isCamera);
-    print('image>>>>>>>>>>>>>>${image!.path}');
-    emit(LoadedState<dynamic>(data: image));
+
+    if (image.isNotNull) {
+      if (isProfile.isTrue) {
+        AppService()
+            .getBlocData<UserCubit>()
+            .changeUserImage(image: image!.path);
+        print('image>>>>>>>>>>>>>>${image!.path}');
+      }
+      print('image>>>>>>>>>>>>>>${image!.path}');
+      emit(LoadingState());
+    }
   }
+  // Future getImage({bool isCamera = true, bool isProfile = false}) async {
+  //   final pickedImage = await ImagePicker().pickImage(
+  //       imageQuality: 60,
+  //       source: isCamera ? ImageSource.camera : ImageSource.gallery);
+  //   if (pickedImage.isNotNull) {
+  //     image = pickedImage!.path;
+  //     if (isProfile.isTrue) {
+  //       AppService().getBlocData<UserCubit>().changeUserImage(image: image!);
+  //     }
+  //
+  //     print('image>>>>>>>>>>>>>>${image!}');
+  //   }
+  //
+  // }
 
   File? video;
   Future getVideo() async {

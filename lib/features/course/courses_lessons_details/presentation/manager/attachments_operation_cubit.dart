@@ -7,12 +7,6 @@ class AttachmentsOperationCubit extends Cubit<CubitStates> {
   Future<void> launchURL(String url) async {
     String pathUrl = url;
 
-    // if (!await launchUrl(pathUrl)) {
-    //   await launchUrl(pathUrl, mode: LaunchMode.externalApplication);
-    //   print(pathUrl);
-    //   throw Exception('Could not launch $pathUrl');
-    // }
-    // //
     if (await canLaunchUrl(Uri.parse(url))) {
       Uri uri = Uri.parse(pathUrl);
       print(url);
@@ -22,4 +16,5 @@ class AttachmentsOperationCubit extends Cubit<CubitStates> {
     }
     // emit(LoadedState<dynamic>(data: pathUrl));
   }
+
 }

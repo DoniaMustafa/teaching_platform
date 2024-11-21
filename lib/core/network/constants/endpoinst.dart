@@ -9,6 +9,10 @@ abstract class EndPoints {
   static const String country = '${api}Country/GetCountries';
   static const String city = '${api}City/GetCitiesByCountryId';
 
+  static const String refreshToken = '${api}Account/RefreshToken';
+
+
+
   static const String region = '${api}state/get-states';
 
   static const String account = '${api}Account/';
@@ -29,7 +33,6 @@ abstract class EndPoints {
       '${api}Account/Resetpassword_SendVerifyCode';
   static const String resetPassword =
       '${api}Account/Resetpassword_SetPasswword';
-  static const String refreshToken = '${api}logout';
   static const String updateProfileImage = '${api}Account/UpdateProfileImage';
 
   static const String changePassword = '${api}Account/ChangePassword';
@@ -60,6 +63,8 @@ abstract class EndPoints {
   static const String ads = '${api}Advertisement/GetAdvertisements';
   static const String getTeachers = '${api}Teacher/GetTeachers';
   static const String getParentTeachers = '${api}/Parent/GetParentTeachers';
+  static const String getParentChildrensTeachers = '${api}/Parent/GetParentChildrensTeachers';
+  static const String getFollowingTeachers = '${api}/Teacher/GetFollowingTeachers';
 
 
   static const String getStudentSubscriptions =
@@ -85,6 +90,8 @@ abstract class EndPoints {
   static const String getParentStudentHomeworks=
       '${api}Parent/GetParentStudentHomeworks';
 
+  static const String getStudentHomeworksQuestion=
+      '${api}Exam/GetExam';
 
 ////////////////////// teacher home /////////////////////////////////
   static const String getHomeTeacherCourses =
@@ -115,7 +122,10 @@ abstract class EndPoints {
   static const String getStudentDegrees = '${api}Student/GetStudentDegrees';
   static const String getNotebooks = '${api}Notebook/GetNotebooks';
   static const String getParentNotebooks = '${api}Parent/GetParentNotebooks';
+  static const String getGroupedNotebooks = '${api}Notebook/GetGroupedNotebooks';
 
+
+  static const String getParentStudentDegrees = '${api}Parent/GetParentStudentDegrees';
 
 
   static const String getParentChildrenList = '${api}Parent/GetChildrensList';
@@ -194,6 +204,10 @@ abstract class EndPoints {
 
   static const String getSessionsVideo = '${api}GroupVideo/GetGroupVideoById';
   static const String getVideo = '${api}GroupVideo/GetGroupVideo';
+  static const String getGroupVideoView = '${api}GroupVideo/GetGroupVideoView';
+  static const String addGroupVideoView = '${api}GroupVideo/AddGroupVideoView';
+
+
 
   //   /////////////////////////// Transaction //////////////////////////////////////////////
   static const String getTransaction = '${api}Transaction/GetUserTransaction';
@@ -218,11 +232,18 @@ abstract class EndPoints {
   static const String getParentRequestCount =
       '${api}ParentRequest/GetParentRequestCount';
   static const String getParentsToAddRequest = '${api}Parent/GetParents';
+  static const String getStudentCoursesRate = '${api}Parent/GetStudentCoursesRate';
+  static const String getStudentOpenGroupVideosRate = '${api}Parent/GetStudentOpenGroupVideosRate';
+  static const String getParentStudentExamSuccessRate = '${api}Parent/GetParentStudentExamSuccessRate';
+  static const String getStudentOpenCourseVideosRate = '${api}Parent/GetStudentOpenCourseVideosRate';
+  // static const String productsDetails = '${api}Parent/GetStudentCoursesRate';
+  // static const String productsDetails = '${api}Parent/GetStudentCoursesRate';
+  // static const String productsDetails = '${api}Parent/GetStudentCoursesRate';
 
   //   /////////////////////////// private //////////////////////////////////////////////
   static const String getPrivateGroups = '${api}Group/GetPrivateGroups';
   static const String getTeachersPrivateGroups =
-      '${api}Group/GetTeachersPrivateGroups';
+      '${api}Group/GetStudentFreeSubscriptions';
 
 //   /////////////////////////// Chat //////////////////////////////////////////////
 
@@ -244,8 +265,7 @@ abstract class EndPoints {
 //   static const String productsDetails = '${api}Product/get_product';
 //   static const String productsDetails = '${api}Product/get_product';
 
-//
+////   /////////////////////////// Professional courses //////////////////////////////////////////////
 
-//
 //   static const String info = "${api}info";
 }

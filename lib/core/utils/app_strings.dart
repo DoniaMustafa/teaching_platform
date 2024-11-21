@@ -3,11 +3,15 @@ class AppStrings {
   static final AppStrings _instance = AppStrings._internal();
   factory AppStrings() => _instance;
 
+  final String now = "now";
+
   final String chargeNow = "chargeNow";
   final String walletAddress2 = "walletAddress2";
-
+  final String confirmReservation = "confirmReservation";
   final String walletAddress = "walletAddress";
   final String adsDetails = "adsDetails";
+
+
 
   final String ask = "ask";
   final String bookDate = "bookDate";
@@ -89,8 +93,8 @@ class AppStrings {
 
   final String accept = 'accept';
   final String reject = 'reject';
-  // final String accept = 'accept';
-  // final String accept = 'accept';
+  final String subject = 'subject';
+  final String teacherName = 'teacherName';
 
   final String eduType = 'eduType';
   final String curriculum = 'curriculum';
@@ -147,6 +151,16 @@ class AppStrings {
 
   final String private = "private";
   final String notes = "notes";
+  final String library = "library";
+  final String addTeachers = "addTeachers";
+  final String addTeacher = "addTeacher";
+
+  final String onlineCourses = "onlineCourses";
+  final String childernTeachers = "childernTeachers";
+  final String parentRequest = 'parentRequest';
+  final String childrenRequest = 'childrenRequest';
+  final String requestAccepted = 'requestAccepted';
+  final String requestDeleted = 'requestDeleted';
   final String live = "live";
   final String homeWork = "homeWork";
   final String questions = "questions";
@@ -171,6 +185,8 @@ class AppStrings {
 
   final String serverError = 'serverError';
   final String coursesCount = 'coursesCount';
+
+
   final String groupsCount = 'groupsCount';
   final String subscriberCount = 'subscriberCount';
   final String workingHours = 'workingHours';
@@ -191,7 +207,6 @@ class AppStrings {
   final String assistant = "Assistant";
   final String parent = 'Parent';
   final String parents = 'parents';
-  final String parentRequest = 'parentRequste';
   final String professionalLecturer = 'ProfessionalLecturer';
 
   final String professionalCourses = 'ProfessionalCourses';
@@ -248,6 +263,7 @@ class AppStrings {
   final String firstStudents = 'firstStudents';
   final String childrenGrades = 'childrenGrades';
   final String children = 'children';
+  final String location = "location";
   final String loadingChangePassword = 'loadingChangePassword';
   final String genderType = 'genderType';
   final String male = 'male';
@@ -261,20 +277,19 @@ class AppStrings {
 
   final String lesson = "lesson";
   final String lessons = 'lessons';
-  //
+
   final String browse = "browse";
-  //
+
   final String promoUpload = "promoUpload";
-  //
+
   final String challenges = "challenges";
   final String uploadLatestCertificate = 'uploadLatestCertificate';
   final String uploadCV = "uploadCV";
-  //
-  //
+
   final String price = "price";
-  //
+
   final String date = "date";
-  //
+
   final String startDate = "startDate";
   //
   final String subscriptionDuration = "subscriptionDuration";
@@ -344,7 +359,7 @@ class AppStrings {
   final String address = "address";
   //
   final String addParent = "addParent";
-  //
+
   final String all = "all";
   //
   final String yes = "yes";
@@ -477,7 +492,7 @@ class AppStrings {
   // final String firstOnboardingSubTitle = 'firstOnboardingSubTitle';
   // final String firstOnboardingTitle = 'firstOnboardingTitle';
   //
-  final String following = 'following';
+  final String followingTeachers = 'followingTeachers';
 
   // final String faqs = 'faqs';
   // final String fqsQ = '';

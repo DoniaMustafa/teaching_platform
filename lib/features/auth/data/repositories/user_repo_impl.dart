@@ -24,10 +24,10 @@ class UserRepoImpl extends UserRepo {
                 password: password,
               ), local: (data) {
 
-          userLocalDataSource.cacheUser(user: data.user!);
-
+        userLocalDataSource.cacheUser(user: data.user!);
         userLocalDataSource.cacheUserRole(userRole: data.user!.userRoles!);
         return userLocalDataSource.cacheToken(token: data.accessToken);
+
       });
 
   @override
@@ -96,12 +96,15 @@ class UserRepoImpl extends UserRepo {
   //   return await execute(
   //       () => userRemoteDataSource.updateDriverImage(image: image));
   // }
-    @override
+  @override
   Future<Either<Failure, ResponseModel>> updatePassword(
-      {required String oldPassword, required String newPassword,required String  confirmPassword})=>
-        execute(() => userRemoteDataSource.updatePassword(
-            newPassword: newPassword,confirmPassword: confirmPassword,oldPassword: oldPassword
-        ));
+          {required String oldPassword,
+          required String newPassword,
+          required String confirmPassword}) =>
+      execute(() => userRemoteDataSource.updatePassword(
+          newPassword: newPassword,
+          confirmPassword: confirmPassword,
+          oldPassword: oldPassword));
 //   // @override
 //   // Future<Either<Failure, OtpResponseModel>> resendOTP({required String phone}) async {
 //   //   try {
@@ -190,10 +193,6 @@ class UserRepoImpl extends UserRepo {
           {required UpdateProfileParamsModel user}) =>
       execute(
         () => userRemoteDataSource.editUserData(user: user),
-        // local: (data) {
-        //   userLocalDataSource.cacheUserRole(userRole: AppPrefs.userRole!);
-        //   return userLocalDataSource.cacheToken(token: AppPrefs.token!);
-        // },
       );
 
   @override
@@ -215,10 +214,6 @@ class UserRepoImpl extends UserRepo {
           {required String image}) =>
       execute(
         () => userRemoteDataSource.changeUserImage(image: image),
-        // local: (data) {
-        //   userLocalDataSource.cacheUser(user: AppPrefs.user!);
-        //   userLocalDataSource.cacheUserRole(userRole: AppPrefs.userRole!);
-        //   return userLocalDataSource.cacheToken(token: AppPrefs.token!);
-        // },
+
       );
 }

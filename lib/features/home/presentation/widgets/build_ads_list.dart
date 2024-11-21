@@ -3,6 +3,7 @@ import 'package:teaching/core/widget/custom_empty_widget.dart';
 import 'package:teaching/core/widget/custom_error_widget.dart';
 import 'package:teaching/features/ads_details/presentation/manager/ads_details_cubit.dart';
 import 'package:teaching/features/home/presentation/manager/ads_cubit.dart';
+import 'package:teaching/features/home/presentation/manager/home_operation_cubit.dart';
 import 'package:teaching/features/home/presentation/widgets/shimmer/ads_shimmer.dart';
 
 import '../../../../core/export/export.dart';
@@ -43,8 +44,6 @@ class _BuildAdsListState extends State<BuildAdsList> {
                 if (state is LoadedState) {
                   return GestureDetector(
                     onTap: () {
-                      currentIndex = index;
-                      setState(() {});
                       context
                           .read<AdsDetailsCubit>()
                           .getAdvertisementsDetails(id: state.data[index].id);
@@ -56,7 +55,7 @@ class _BuildAdsListState extends State<BuildAdsList> {
                       child: CustomNetworkImage.rectangle(
                         width: width,
                         imageUrl: '${EndPoints.url}${state.data[index].image}',
-                        defaultAsset: AppAssets().professionalCourses,
+                        defaultAsset: AppAssets().professionalCoursesSVG,
                       ),
                     ),
                   );
@@ -76,7 +75,8 @@ class _BuildAdsListState extends State<BuildAdsList> {
                 autoPlayCurve: Curves.easeOut,
                 enlargeCenterPage: false,
                 onPageChanged:
-                    (int i, CarouselPageChangedReason changedReason) {
+                    (int index, CarouselPageChangedReason changedReason) {
+                  context.read<HomeOperationCubit>().onChangeIndicator(index);
                   // BlocProvider.of<IndicatorCubit>(context).change(i);
                 },
                 scrollDirection: Axis.horizontal,
@@ -89,14 +89,24 @@ class _BuildAdsListState extends State<BuildAdsList> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: List.generate(
             state is LoadedState ? state.data.length : 3,
-            (index) => CustomCard(
-              margin: getPadding(end: 3.w),
-                  backgroundColor: currentIndex == index
-                      ? AppColors.mainAppColor
-                      : AppColors.profileDivider,
-                  radius: 5,
-                  height: 5,
-                  width: currentIndex == index ? 10 : 5,
+            (index) => BlocBuilder<HomeOperationCubit, CubitStates>(
+                  builder: (context, state) {
+                    return CustomCard(
+                      margin: getPadding(end: 3.w),
+                      backgroundColor:
+                          context.read<HomeOperationCubit>().selectedInductor ==
+                                  index
+                              ? AppColors.mainAppColor
+                              : AppColors.profileDivider,
+                      radius: 5,
+                      height: 5,
+                      width:
+                          context.read<HomeOperationCubit>().selectedInductor ==
+                                  index
+                              ? 10
+                              : 5,
+                    );
+                  },
                 )),
       );
 }

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:teaching/agora/cubit/teacher_live_screen.dart';
-import 'package:teaching/agora/live_screen.dart';
+import 'package:teaching/features/notes/presentation/pages/public_note_screen.dart';
+import 'package:teaching/features/teacher/teacher_details/presentation/pages/teacher_for_parent_details_screen.dart';
+import 'package:teaching/features/teacher/teachers/presentation/pages/following_teachers_screen.dart';
+import 'package:teaching/features/teacher/teachers/presentation/pages/teachers_of_parent_screen.dart';
+import 'package:teaching/zego_live/live_screen.dart';
 import 'package:teaching/core/utils/app_colors.dart';
 import 'package:teaching/core/utils/extensions.dart';
 import 'package:teaching/features/Task/Tasks/presentation/pages/student_tasks_screen.dart';
@@ -33,9 +36,9 @@ import 'package:teaching/features/notes/presentation/pages/notes_booked_unbooked
 import 'package:teaching/features/notes/presentation/pages/notes_details_screen.dart';
 import 'package:teaching/features/notes/presentation/pages/notes_screen.dart';
 import 'package:teaching/features/notes/presentation/pages/reserve_note_screen.dart';
-import 'package:teaching/features/parent/presentation/pages/add_parent_screen.dart';
-import 'package:teaching/features/parent/presentation/pages/manage_parent_screen.dart';
-import 'package:teaching/features/parent/presentation/pages/parent_details_screen.dart';
+import 'package:teaching/features/parent/presentation/pages/parent_as_student_pages/add_parent_screen.dart';
+import 'package:teaching/features/parent/presentation/pages/parent_as_student_pages/manage_parent_screen.dart';
+// import 'package:teaching/features/parent/presentation/pages/parent_as_student_pages/parent_details_screen.dart';
 import 'package:teaching/features/parent_children/presentation/pages/parent_children_screen.dart';
 import 'package:teaching/features/privacy_policy/presentation/pages/privacy_policy_screen.dart';
 import 'package:teaching/features/private/presentation/pages/book_private_appoinment_screen.dart';
@@ -96,11 +99,15 @@ class Routes {
       "choose Professional Course Route";
   static const String publicCoursesGroupsRoute = "Public Courses Groups";
   static const String profileRoute = "profile Route";
-  // static const String favoriteRoutes = "favorite Route";
+  static const String followingTeachersRoute = "followingTeachers Route";
   static const String subscriptionOfCourseDetailsRoute =
       "subscription of Course Details";
 
+  static const String privateTeacherDetailsRoute = "PrivateTeacherDetails";
+
   ///*********************************************************************************\\\
+
+  static const String teachersOfParentRoute = "Teacher Parent Screen";
 
   static const String teacherDetailsRoute = "Teacher Details Screen";
   static const String teachersRoute = "/Teachers";
@@ -132,6 +139,7 @@ class Routes {
   static const String myGradesRoute = "my Grades Route";
   static const String pdfRoute = 'Pdf';
   static const String notesRoute = 'Notes';
+  static const String publicNotesRoute = 'publicNotesRoute';
   static const String notesBookedUnbookedRoute = 'notes Booked Unbooked';
   static const String notesDetailsRoute = 'Notes Details Screen';
   static const String reserveNoteRoute = "reserve Note Route";
@@ -243,9 +251,13 @@ class RouteGenerator {
       case Routes.teacherDetailsRoute:
         return buildPageRoute(
             child: TeacherDetailsScreen(), routeSettings: routeSettings);
-      // case Routes.chatRoute:
-      //   return buildPageRoute(
-      //       child: ChatScreen(), routeSettings: routeSettings);
+      case Routes.teachersOfParentRoute:
+        return buildPageRoute(
+            child: TeachersOfParentScreen(), routeSettings: routeSettings);
+
+      case Routes.privateTeacherDetailsRoute:
+        return buildPageRoute(
+            child: PrivateTeacherDetailsScreen(), routeSettings: routeSettings);
       case Routes.teachersRoute:
         return buildPageRoute(
             child: const TeachersScreen(), routeSettings: routeSettings);
@@ -317,7 +329,10 @@ class RouteGenerator {
       case Routes.notesRoute:
         return buildPageRoute(
             child: NotesScreen(), routeSettings: routeSettings);
-      //
+      case Routes.publicNotesRoute:
+        return buildPageRoute(
+            child: PublicNoteScreen(), routeSettings: routeSettings);
+
       // //*************************** settings rout ********************************/
       //
       case Routes.parentChildrenRoute:
@@ -366,17 +381,17 @@ class RouteGenerator {
         return buildPageRoute(
             child: LiveScreen(), routeSettings: routeSettings);
 
-      case Routes.teacherLiveRoute:
+      case Routes.followingTeachersRoute:
         return buildPageRoute(
-            child: TeacherLiveScreen(), routeSettings: routeSettings);
+            child: FollowingTeachersScreen(), routeSettings: routeSettings);
       //
       case Routes.chatMassagesRoute:
         return buildPageRoute(
             child: ChatGroupMassagesScreen(), routeSettings: routeSettings);
       //
-      case Routes.parentsDetailsRoute:
-        return buildPageRoute(
-            child: ParentDetailsScreen(), routeSettings: routeSettings);
+      // case Routes.parentsDetailsRoute:
+      //   return buildPageRoute(
+      //       child: ParentDetailsScreen(), routeSettings: routeSettings);
       case Routes.statisticsRoute:
         return buildPageRoute(
             child: StatisticsScreen(), routeSettings: routeSettings);
